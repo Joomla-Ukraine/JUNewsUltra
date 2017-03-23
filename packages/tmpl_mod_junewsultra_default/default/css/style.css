@@ -1,0 +1,81 @@
+/**
+* @package Joomla! 1.7
+* @author 2008 (c)  Denys Nosov (aka Dutch)
+* @author web-site: www.joomla-ua.org
+* @copyright This module is licensed under a Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License.
+**/
+
+.junewsultra,
+.junewsultra .jn,
+.junewsultra .jn-head{
+	overflow: hidden;
+}
+.junewsultra .jn-head,
+.junewsultra .jn .jn-intro,
+.junewsultra .jn .jn-more{
+	clear: both;
+	padding: 6px 4px;
+}
+.junewsultra .jn a,
+.junewsultra .jn a:link	,
+.junewsultra .jn a:visited{
+	text-decoration: none;
+	background: transparent;
+	border: none;
+}	
+.junewsultra .jn a:hover,
+.junewsultra .jn a:focus,
+.junewsultra .jn a:active{
+	text-decoration: underline;
+	color: inherit;
+	border: none;
+}
+	.junewsultra .jn{
+		margin: 10px 0;
+		padding: 0;
+		border: 1px #e0e0e0 solid;
+		clear: both;
+		display: block;
+	}
+		.junewsultra .jn .jn-head{
+			background: #f4f4f4 repeat-x 0 100%;		
+		}		
+			.junewsultra .jn .jn-left{
+				float: left;
+				width: 22%;
+			}
+				.junewsultra .jn .jn-left img{
+					padding: 1px;
+					border: 1px #a7b3be solid;
+				}
+			.junewsultra .jn .jn-right{
+				float: right;
+				width: 67%;
+			}		
+				.junewsultra .jn .jn-right h4{
+					font-size: 98%;
+					font-weight: bolder;
+				}	
+				.junewsultra .jn .jn-right .jn-info{
+					font-size: 90%;
+					color: #778899;
+					padding: 5px 0 0 0;
+				}
+					.junewsultra .jn .jn-right .jn-hit-n-rating{
+						padding-top: 3px;
+					}
+						.junewsultra .jn .jn-right .jn-hit-n-rating .jn-small{
+							float: left;
+							padding-right: 3px;
+						}
+						.junewsultra .jn .jn-right .jn-hit-n-rating .jn-rating img{
+							border: none;
+							padding: 0;
+							margin: 0;
+						}	
+		.junewsultra .jn .jn-more{
+			text-align: right;
+		}	
+			.junewsultra .jn .jn-more a{
+				padding-left: 5px;
+			}				

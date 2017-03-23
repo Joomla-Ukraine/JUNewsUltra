@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="file" version="1.7" method="upgrade">
+	<name>JUNewsUltra - Default template</name>
+	<creationDate>05.12.2016</creationDate>
+	<author>Joomla! Ukraine</author>
+	<authorEmail>denys@joomla-ua.org</authorEmail>
+	<authorUrl>www.joomla-ua.org</authorUrl>
+	<copyright>Copyright (C) 2008-2015 Joomla! Ukraine. All rights reserved</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<version>3.8</version>
+	<description>Default template for module JUNewsUltra</description>
+	<fileset>
+		<files target="modules/mod_junewsultra/tmpl">
+			<folder>default</folder>
+			<file writable="yes">default.php</file>
+			<file>default.xml</file>
+		</files>
+	</fileset>
+</extension>

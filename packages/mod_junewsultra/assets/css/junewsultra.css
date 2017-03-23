@@ -1,0 +1,199 @@
+/*
+-----------------------------------------------
+File:    junewsultra.css
+Author:  Denys Nosov at http://www.denysdesign.com
+Version: 12.11.2012
+License: GNU General Public License version 2 or later
+----------------------------------------------- */
+/* Field label widths - short label */
+/*fieldset.adminform label,
+fieldset.panelform label,
+fieldset.adminform span.faux-label,
+div.current label, div.current span.faux-label { min-width: 10%; max-width: 30%; width: 30%; padding: 0 5px 0 0; }
+div.current fieldset.radio label { width: 95px; max-width: 40%; }
+div.current select { margin-top: 10px; margin-bottom: 5px; }
+#rules label, #rules span.faux-label { min-width: 150px; }
+#module-sliders fieldset.radio label, #module-sliders fieldset.radio span.faux-label { min-width: 70px; max-width: 40%; width: auto; }*/
+
+/* Module description */
+/*.module-desc { overflow: hidden; }*/
+
+/* JUNewsUltra Pro */
+/*.width-60 { width: 55%!important; }
+.width-40 { width: 45%!important; }
+.pane-sliders code { font-size: 12px; color: #993366; }
+.pane-sliders .modal { margin-left: 15px; margin-right: 15px; font-weight: bolder; color: #146295; }
+.nntoggler { border: 1px solid #ccc; padding: 12px; margin-left: 4%; margin-top: 3px; }
+	.nntoggler .nntoggler { border: 0 none; border-top: 1px dotted #ccc; padding: 12px 0 0 4%; margin-left: 0; }*/
+	
+/* fields */
+/*.spacer hr { border: 1px dotted #ccc; }
+.jumultithumb-text { width: 99%; clear: both; display: block; overflow: hiden; font-weight: normal; }
+.jumultithumb-link { clear: both; display: block; font-weight: normal; }
+
+.label {
+  display: inline-block;
+  padding: 2px 3px;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 12px;
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  white-space: nowrap;
+  vertical-align: baseline;
+  background-color: #999999;
+  -webkit-border-radius: 3px;
+     -moz-border-radius: 3px;
+          border-radius: 3px;
+}
+
+.fltrt a.label:hover{
+  color: #ffffff;
+  text-decoration: none;
+  cursor: pointer;
+}
+.fltrt .modal {
+	padding: 0!important;
+	margin: 0!important;
+	line-height: 28px;
+	display: block;
+}
+	.fltrt .modal span {
+		padding: 0!important;
+		margin: 0!important;
+	}
+	
+.fltrt #jform_params_select_comments-lbl {
+	display: none;
+}
+.fltrt #jform_params_select_comments,
+.fltrt #jform_params_select_comments div {
+	display: block;
+	width: 100%;
+	overflow: hidden;
+}*/
+
+/* Joomla 3.0 */
+.nntoggler { border: 1px solid #ccc; padding: 12px; margin-left: 4%; margin-top: 3px; }
+.nntoggler .nntoggler { border: 0 none; border-top: 1px dotted #ccc; padding: 12px 0 0 4%; margin-left: 0; }
+
+/* fields */
+.spacer hr { border: 1px dotted #ccc; }
+
+/*.label {
+  display: inline-block;
+  padding: 2px 3px;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 12px;
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  white-space: nowrap;
+  vertical-align: baseline;
+  background-color: #999999;
+  -webkit-border-radius: 3px;
+     -moz-border-radius: 3px;
+          border-radius: 3px;
+}*/
+
+.fltrt a.label:hover{
+  color: #ffffff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+
+.tab-pane .span9,
+.tab-pane {
+	background: #fafafa;
+	border: 1px solid #ccc;
+	padding: 15px 0 15px 10px;
+}
+
+.nntoggler {
+	background: #fff;
+	width: 92%;
+}
+
+.control-group .control-label {
+	min-width: 15%!important;
+	max-width: 28%!important;
+	width: 28%!important;
+	padding: 0 5px 0 0!important;
+}
+
+.control-group .spacer {	
+	white-space: nowrap;
+}
+	.control-group .spacer .text label {
+		font-weight: bold!important;
+		font-size: 16px;	
+		line-height: normal!important;
+	}
+		.nntoggler .control-group .spacer .text label {
+			font-size: 14px;
+		}
+		.control-group .spacer .text label span{
+			font-weight: normal;
+			font-size: 12px!important;
+		}
+.control-group hr {
+	width: 100%!important;
+	display: block;
+	margin: 0!important;
+}
+.control-group .controls .radio label {
+	float: left;
+	margin: 3px 40px 0 5px;
+}
+.control-group .controls .btn-group  label {
+	float: none;
+	margin: 0 -1px 0 0;
+}
+.nntoggler {
+	margin: -10px 0 18px 18px;
+}
+
+.controls #jform_params_components {
+	float: left;
+	width: auto;
+	margin: -65px 0 0 45px;
+}
+
+#jform_params_components-lbl {
+	display: none;
+}
+
+.controls #jform_params_utmtags {
+	width: 80%;
+}
+
+#myTabContent {
+	float: left;
+	width: 60%;
+	clear: none;
+}
+
+#general .span9 {
+	width: 68%;
+}
+
+#permissions-sliders {
+	width: 95%;
+}
+
+#description {
+	overflow: hidden;
+}
+
+#jusocial {
+	position: absolute;
+	top: 310px;
+	right: 20px;
+	width: 30%;
+	min-height: 400px;
+
+	overflow: hidden;
+}
+
