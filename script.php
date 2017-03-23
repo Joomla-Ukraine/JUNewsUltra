@@ -4,7 +4,7 @@
  *
  * @package    JUNewsUltra Pro
  *
- * @copyright  Copyright (C) 2007-2012 Denys Nosov. All rights reserved.
+ * @copyright  Copyright (C) 2007-2017 Denys Nosov. All rights reserved.
  * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  *
  */
@@ -13,7 +13,7 @@
  * Installation class to perform additional changes during install/uninstall/update
  *
  * @package  JUNewsUltra Pro
- * @since    4.0
+ * @since    6.0
  */
 class Pkg_JUNewsUltraInstallerScript
 {
@@ -26,14 +26,15 @@ class Pkg_JUNewsUltraInstallerScript
 	{
 		if (version_compare(JVERSION, '3.1.0', 'lt'))
 		{
-			JError::raiseNotice(null, 'Update for Joomla! 3.4+');
+            JFactory::getApplication()->enqueueMessage('Update for Joomla! 3.4+', 'error');
+
 			return false;
 		}
 
 		// Check to see if the database type is supported
 		if (!in_array(JFactory::getDbo()->name, $this->dbSupport))
 		{
-			JError::raiseNotice(null, JText::_('MOD_JUNEWS_ERROR_DB_SUPPORT'));
+            JFactory::getApplication()->enqueueMessage(JText::_('MOD_JUNEWS_ERROR_DB_SUPPORT'), 'error');
 			return false;
 		}
 
@@ -190,6 +191,7 @@ class Pkg_JUNewsUltraInstallerScript
                     $path .'fields/imagesetting.php',
                     $path .'fields/juradio30.php',
                     $path .'fields/toggler25.php',
+                    $path .'fields/donate.php',
 
                     $path .'tmpl/default/images/bg.jpg',
                     $path .'tmpl/default/images/rating_star.png_',
@@ -260,7 +262,8 @@ class Pkg_JUNewsUltraInstallerScript
 
 		if($joomla < '3.4') {
 			echo $html;
-		} else {
+		}
+        else {
 			$app->enqueueMessage($html, 'message');
 		}
 

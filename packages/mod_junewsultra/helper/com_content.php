@@ -52,7 +52,8 @@ class com_content extends modJUNewsUltraHelper
 		$user_id			= $params->get('user_id');
 		$uid				= $params->get('uid');
 
-		if($useaccess == '1') {
+		if($useaccess == '1')
+        {
 			$groups = implode(',', $user->getAuthorisedViewLevels());
 		}
 
@@ -145,7 +146,8 @@ class com_content extends modJUNewsUltraHelper
 		}
 
 		// Access filter
-		if($useaccess == '1') {
+		if($useaccess == '1')
+        {
 			$access = !JComponentHelper::getParams('com_content')->get('show_noauth');
 			$authorised = JAccess::getAuthorisedViewLevels($user->get('id'));
 		}
@@ -157,17 +159,19 @@ class com_content extends modJUNewsUltraHelper
 		if (is_array($catid))
         {
 		    $cat_arr = array();
-			foreach($catid as $key=>$curr) {
+			foreach($catid as $key=>$curr)
+            {
 		        if (intval($curr)) $cat_arr[$key] = intval($curr);
 		    }
 		}
         else {
 		    $cat_arr = array();
+
 		    if (intval($catid)) $cat_arr[] = intval($catid);
         }
 
 		// Selects data
-		$query->select('a.id,a.state,a.alias,a.publish_up, a.publish_down');
+		$query->select('a.id, a.state, a.alias, a.publish_up, a.publish_down');
 
 		if($junews['show_title'] == '1' || $junews['show_image'] == '1') {
 			$query->select('a.title');
@@ -288,7 +292,8 @@ class com_content extends modJUNewsUltraHelper
 
 		if($dateuser_filtering == 1 || !empty($uid))
 		{
-			if (is_array($cat_arr) && count($cat_arr)) {
+			if (is_array($cat_arr) && count($cat_arr))
+            {
 				$ji_catids = 'WHERE `catid` IN ('. implode(',', $cat_arr) .')';
 			}
 
@@ -391,7 +396,7 @@ class com_content extends modJUNewsUltraHelper
                 }
             }
             else {
-                $query->where( implode(' OR ', $sqls) );
+                $query->where('('. implode(' OR ', $sqls) .')');
             }
 		}
 
@@ -486,7 +491,7 @@ class com_content extends modJUNewsUltraHelper
                 }
             }
             else {
-                JError::raiseNotice( 100, JText::_('MOD_JUNEWS_COMMENTS_NOT_INSTALLED') );
+                JFactory::getApplication()->enqueueMessage(JText::_('MOD_JUNEWS_COMMENTS_NOT_INSTALLED'), 'error');
             }
         }
 
@@ -672,7 +677,8 @@ class com_content extends modJUNewsUltraHelper
                             $item->imagelink = $junuimgsource;
                             $item->imagesource = $junuimgsource;
                         }
-                        elseif($junews['defaultimg'] == 1) {
+                        elseif($junews['defaultimg'] == 1)
+                        {
                             $item->image    = $blankimage;
                         	$item->imagelink = '';
                         	$item->imagesource = '';
@@ -785,7 +791,6 @@ class com_content extends modJUNewsUltraHelper
 									}
 									$srcset = ' srcset="'. implode(', ', $attr_imgset) .'" ';
 								    break;
-
 								case '2':
 									$imgset = $junews['srcsetpixeldensity'];
 									$attr_imgset = array();
@@ -825,7 +830,6 @@ class com_content extends modJUNewsUltraHelper
 									}
 									$srcset = ' srcset="'. implode(', ', $attr_imgset) .'" ';
 								    break;
-
 								default:
 								case '0':
 									$srcset = ' ';

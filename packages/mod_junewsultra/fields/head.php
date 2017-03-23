@@ -5,10 +5,11 @@
  * @version 	6.x
  * @package 	UNewsUltra Pro
  * @author 		Denys D. Nosov (denys@joomla-ua.org)
- * @copyright 	(C) 2007-2015 by Denys D. Nosov (http://joomla-ua.org)
+ * @copyright 	(C) 2007-2017 by Denys D. Nosov (http://joomla-ua.org)
  * @license 	GNU/GPL: http://www.gnu.org/copyleft/gpl.html
  *
  **/
+
 defined('JPATH_BASE') or die;
 
 $document   = JFactory::getDocument();
@@ -24,7 +25,7 @@ $db->setQuery(
 	' FROM #__modules' .
 	' WHERE id = '.(int) $_GET["id"]
 );
-$rows       = $db->loadResult();
+$rows = $db->loadResult();
 
 $curent_tmp = json_decode($rows, true);
 $tmpl_link	= $tmpl. $curent_tmp['template'] .'.php';
@@ -58,13 +59,6 @@ $snipets = '
             // Placeholder
             $("#jform_params_rmtext").attr({placeholder: "'.JText::_('MOD_JUNEWS_READ_MORE_TITLE').'"});
             $("#jform_params_text_all_in, #jform_params_text_all_in2, #jform_params_text_all_in12, #jform_params_text_all_in22").attr({placeholder: "'.JText::_('MOD_JUNEWS_ALL_NEWS_TITLE').'"});
-
-	        // Social
-	        $("#jusocial").appendTo("#myTabContent").show();
-			SqueezeBox.assign($$(\'a#donation\'), {
-			    parse: \'rel\'
-	   		});
-
         });
     })(jQuery);
 ';
@@ -72,12 +66,3 @@ $snipets = '
 JHtml::_('jquery.framework');
 
 $document->addScriptDeclaration( $snipets );
-$margindonat = 'padding: 30px 0;';
-$donat = 'margin: -3px 0 0 10px;';
-
-?>
-<div id="jusocial" style="<?php echo $margindonat; ?>clear:both;display:none;">
-    <div id="donat" style="float:left;<?php echo $donat; ?>">
-        <a id="donation" href="<?php echo $adm_url .'modules/mod_junewsultra/fields/donate.php'; ?>" rel="{handler: 'iframe', size: {x: 350, y: 500}}"><img src="<?php echo $adm_url;?>modules/mod_junewsultra/assets/donate2.gif" alt="" /></a>
-    </div>
-</div>

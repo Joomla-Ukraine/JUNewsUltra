@@ -15,8 +15,8 @@ defined('_JEXEC') or die;
 $app        = JFactory::getApplication('site');
 $document   = JFactory::getDocument();
 
-require_once (JPATH_SITE .'/modules/mod_junewsultra/lib/julib.php');
-require_once( JPATH_SITE .'/libraries/julib/image.php');
+require_once(JPATH_SITE .'/modules/mod_junewsultra/lib/julib.php');
+require_once(JPATH_SITE .'/libraries/julib/image.php');
 
 $junews	= array(
 			'count'    		=> (int) $params->get('count', '5'),
@@ -86,24 +86,30 @@ $junews	= array(
 
 $component = trim( $params->def('component', 'com_content') );
 
-require_once(__DIR__ . '/helper.php');
-require_once(__DIR__ . '/helper/'. $component .'.php');
+require_once(__DIR__ .'/helper.php');
+require_once(__DIR__ .'/helper/'. $component .'.php');
 
 $object = new $component;
 $list = $object->getList($params, $junews);
 
-if($params->get('empty_mod', 0) == 0) if(count($list) == 0) return;
+if($params->get('empty_mod', 0) == 0 || count($list) == 0) {
+    return;
+}
 
 $layoutpath = JModuleHelper::getLayoutPath('mod_junewsultra', $params->def('template') );
 
-if($params->def('jquery') == 1) JHtml::_('jquery.framework');
+if($params->def('jquery') == 1) {
+    JHtml::_('jquery.framework');
+}
 
-if($params->def('bootstrap_js') == 1) JHtml::_('bootstrap.framework');
+if($params->def('bootstrap_js') == 1) {
+    JHtml::_('bootstrap.framework');
+}
 
 if($params->def('bootstrap_css') == 1)
 {
-    $lang       = JFactory::getLanguage();
-    $direction  = ($lang->isRTL() ? 'rtl' : 'ltr');
+    $lang = JFactory::getLanguage();
+    $direction = ($lang->isRTL() ? 'rtl' : 'ltr');
 	JHtmlBootstrap::loadCss($includeMaincss = true, $direction);
 }
 
