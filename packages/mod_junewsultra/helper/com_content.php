@@ -412,7 +412,7 @@ class com_content extends modJUNewsUltraHelper
         if ($params->def('use_comments') == 1 && count($items))
         {
             $comments_system = $params->def('select_comments');
-            $comments        = JPATH_SITE .'/components/com_'. $comments_system .'/'. $comments_system .'.php';
+            $comments = JPATH_SITE .'/components/com_'. $comments_system .'/'. $comments_system .'.php';
 
             if (file_exists($comments))
             {
@@ -443,19 +443,6 @@ class com_content extends modJUNewsUltraHelper
                         $comment_link   = '#section-komento';
                         $comment_add    = $comment_link;
                         $comment_text1  = 'COM_KOMENTO_FRONTPAGE_COMMENT';
-                        $comment_text2  = $comment_text1;
-                        $comment_plural = 0;
-    				    break;
-    				case 'slicomments':
-        			    $query->select('article_id, count(article_id) AS cnt');
-        			    $query->from('#__slicomments');
-        			    $query->where('article_id IN ('. implode(',', $ids) .') AND status = "1"');
-        			    $query->group('article_id');
-        			    $db->setQuery($query);
-                        $commentsCount  = $db->loadObjectList('article_id');
-                        $comment_link   = '#comments';
-                        $comment_add    = $comment_link;
-                        $comment_text1  = 'COM_COMMENTS_LABEL_TEXT';
                         $comment_text2  = $comment_text1;
                         $comment_plural = 0;
     				    break;

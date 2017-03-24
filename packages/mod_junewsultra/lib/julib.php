@@ -73,26 +73,30 @@ class JULibs
             {
 		        case '1':
 		            $description = trim(implode(" ", array_slice(explode(" ", $description), 0, $text_limit)));
+                    $dots = 1;
 		            break;
 		        case '2':
 		            $description = preg_replace('#<p(.*)>"#is', '<p>', $description);
 
 		            if(preg_match('#<p[^>]*>(.*)<\/p>#isU', $description, $matches)) {
 		                $description = $matches[0];
+                        $dots = 0;
 		            }
 		            break;
 		        case '3':
 		            if(preg_match('#^.{100}.*?[.!?]#is', strip_tags($description), $matches)){
 		              $description = $matches[0];
+                      $dots = 0;
 		            }
 		            break;
 		        case '0':
 		        default:
 		            $description = trim(JString::substr($description, 0, $text_limit));
+                    $dots = 1;
 		            break;
 		    }
 
-            if (!preg_match('#(\.|\?|\!)$#ismu', $description))
+            if ((!preg_match('#(\.|\?|\!)$#ismu', $description)) && ($dots == 1))
             {
                 $description = preg_replace('#^\s?(\,|\;|\:|\-)#ismu', '', $description);
                 $description = ($description ? $description . $end_limit_text : '');

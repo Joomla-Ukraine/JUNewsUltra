@@ -909,7 +909,6 @@
 						<field name="select_comments" type="commentsradio" default="jcomments" label="">
 							<option value="jcomments">JComments</option>
 							<option value="komento">Komento</option>
-							<option value="slicomments">sliComments</option>
 						</field>
 
 					<field name="@toggler_showsuccessmessage29858_b" type="nn_toggler"/>
@@ -931,7 +930,5 @@
             </fieldset>
 
         </fields>
-
     </config>
-
 </extension>

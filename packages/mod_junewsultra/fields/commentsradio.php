@@ -5,12 +5,12 @@
  * @version 	6.x
  * @package 	UNewsUltra Pro
  * @author 		Denys D. Nosov (denys@joomla-ua.org)
- * @copyright 	(C) 2007-2015 by Denys D. Nosov (http://joomla-ua.org)
+ * @copyright 	(C) 2007-2017 by Denys D. Nosov (http://joomla-ua.org)
  * @license 	GNU/GPL: http://www.gnu.org/copyleft/gpl.html
  *
  **/
 
-defined('JPATH_PLATFORM') or die;
+defined('_JEXEC') or die;
 
 class JFormFieldCommentsRadio extends JFormField
 {
@@ -33,12 +33,15 @@ class JFormFieldCommentsRadio extends JFormField
 
             $commets_system = htmlspecialchars($option->value, ENT_COMPAT, 'UTF-8');
             $comments       = JPATH_SITE . '/components/com_'. $commets_system .'/'. $commets_system .'.php';
-            if (!file_exists($comments)) {
+
+            if (!file_exists($comments))
+            {
     			$disabled   = ' disabled="disabled"';
     			$color      = 'color: #999;';
                 $tips       = ' <sup class="label label-inverse">'. JText::_('MOD_JUNEWS_NOTINSTALL') .'</sup>';
                 $check      = '';
-            } else {
+            }
+            else {
                 $disabled   = '';
                 $color      = '';
                 $tips       = '';
@@ -67,9 +70,7 @@ class JFormFieldCommentsRadio extends JFormField
 
 		foreach ($this->element->children() as $option)
 		{
-			if ($option->getName() != 'option') {
-				continue;
-			}
+			if ($option->getName() != 'option') continue;
 
 			$tmp = JHtml::_(
 				'select.option', (string) $option['value'], trim((string) $option), 'value', 'text',
