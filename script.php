@@ -180,6 +180,7 @@ class Pkg_JUNewsUltraInstallerScript
 
 		$path  = JPATH_SITE .'/modules/mod_junewsultra/';
         $files = array(
+                    $path .'assets/donate2.gif',
                     $path .'assets/gear.png',
                     $path .'assets/toggler.js',
                     $path .'assets/script.js',
