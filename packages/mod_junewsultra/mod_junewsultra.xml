@@ -273,7 +273,7 @@
 						<field
                             name="ordering"
                             type="list"
-                            default="id_desc"
+                            default="created_desc"
                             label="MOD_JUNEWS_FIELD_ORDERING_LABEL"
                             >
 							<option value="created_desc">MOD_JUNEWS_BY_DATE1</option>
