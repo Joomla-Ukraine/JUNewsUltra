@@ -14,6 +14,14 @@ defined('_JEXEC') or die;
 
 abstract class modJUNewsUltraHelper
 {
+	/**
+	 * @param $params
+	 * @param $junews
+	 *
+	 * @return string items
+	 *
+	 * @since 6.0
+	 */
 	public static function getList($params, $junews)
     {
 		$items = 'ROOT';

@@ -16,6 +16,12 @@ class JFormFieldCommentsRadio extends JFormField
 {
 	protected $type = 'CommentsRadio';
 
+	/**
+	 *
+	 * @return string
+	 *
+	 * @since version
+	 */
 	protected function getInput()
 	{
 		$html = array();
@@ -64,6 +70,12 @@ class JFormFieldCommentsRadio extends JFormField
 		return implode($html);
 	}
 
+	/**
+	 *
+	 * @return array
+	 *
+	 * @since version
+	 */
 	protected function getOptions()
 	{
 		$options = array();

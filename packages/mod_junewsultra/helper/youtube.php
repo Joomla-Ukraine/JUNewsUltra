@@ -14,6 +14,14 @@ defined('_JEXEC') or die;
 
 class youtube extends modJUNewsUltraHelper
 {
+	/**
+	 * @param $params
+	 * @param $junews
+	 *
+	 * @return array|SimpleXMLElement[]|void
+	 *
+	 * @since 6.0
+	 */
 	public static function getList($params, $junews)
     {
 		// Load libs
@@ -151,7 +159,7 @@ class youtube extends modJUNewsUltraHelper
                         if($junews['defaultimg'] == 1)
                         {
                             if(!$junuimgsource) {
-                                $junuimgsource = $JUImg->Render('media/mod_junewsultra/'. $junews['noimage'], $imgparams);
+                                $junuimgsource = 'media/mod_junewsultra/'. $junews['noimage'];
                             }
                         }
 
@@ -188,10 +196,14 @@ class youtube extends modJUNewsUltraHelper
                             'f'     => $junews['f'],
                             'q'     => $junews['q'],
                             'cache' => 'img'
-                        )
-						+ $newimgparams;
+                        );
 
-                        $thumb_img = $JUImg->Render($junuimgsource, $imgparams);
+				        $imgparams_merge = array_merge(
+					        $imgparams,
+					        $newimgparams
+				        );
+
+                        $thumb_img = $JUImg->Render($junuimgsource, $imgparams_merge);
                         $contentimage = $imlink .'<img src="'. $thumb_img .'" alt="'. $title_alt .'" />'. $imlink2;
 
                         $item->image = $contentimage;

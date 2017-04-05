@@ -44,7 +44,6 @@ class JFormFieldJUMultiThumbRadio extends JFormField
 
 				$html[] = '<label for="' . $this->id . $i . '" id="' . $this->id . $i . '">'
 					. JText::alt($option->text, preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)) .'</label>';
-
 			}
 
 		   	$html[] = '</fieldset>';
@@ -59,10 +58,7 @@ class JFormFieldJUMultiThumbRadio extends JFormField
 
 		foreach ($this->element->children() as $option)
 		{
-			if ($option->getName() != 'option')
-			{
-				continue;
-			}
+			if ($option->getName() != 'option') continue;
 
 			$tmp = JHtml::_(
 				'select.option', (string) $option['value'], trim((string) $option), 'value', 'text',

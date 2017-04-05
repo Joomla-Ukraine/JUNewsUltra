@@ -15,17 +15,21 @@ defined('JPATH_BASE') or die;
 jimport('joomla.html.html');
 jimport('joomla.form.formfield');
 
-
 class JFormFieldTemplate extends JFormField
 {
 
 	protected $type = 'Template';
 
+	/**
+	 *
+	 * @return string|void
+	 *
+	 * @since 6.0
+	 */
 	protected function getInput()
 	{
-        if(!isset($_GET["id"])){
-          echo JText::_('MOD_JUNEWS_NOT_EDIT_TEMPLATE');
-          return;
+        if(!isset($_GET["id"])) {
+          return JText::_('MOD_JUNEWS_NOT_EDIT_TEMPLATE');
         }
 
 		JHtml::_('behavior.modal', 'a.modal');
@@ -38,15 +42,18 @@ class JFormFieldTemplate extends JFormField
 		);
 		$rows = $db->loadResult();
 
-        if (preg_match("#\"template\":\"_:(.*?)\"#is",$rows,$ok)):
-            if($ok[1] == 1){
-                $tmpl = 'default';
-            } else {
-                $tmpl = $ok[1];
-            }
-        else:
-            $tmpl = 'default';
-        endif;
+        if (preg_match("#\"template\":\"_:(.*?)\"#is",$rows,$ok))
+        {
+	        if ($ok[1] == 1) {
+		        $tmpl = 'default';
+	        }
+	        else {
+		        $tmpl = $ok[1];
+	        }
+        }
+        else {
+	        $tmpl = 'default';
+        }
 
 		$html	= array();
 		$link	= str_replace('/administrator', '', JURI::base()).'modules/mod_junewsultra/fields/edittemplate.php?file='.$tmpl.'.php';
@@ -63,7 +70,8 @@ class JFormFieldTemplate extends JFormField
 
 		if (0 == (int)$this->value) {
 			$value = '';
-		} else {
+		}
+		else {
 			$value = (int)$this->value;
 		}
 

@@ -20,6 +20,12 @@ class JFormFieldUpload extends JFormField
 
 	protected $type = 'Upload';
 
+	/**
+	 *
+	 * @return string|void
+	 *
+	 * @since 6.0
+	 */
 	protected function getInput()
 	{
         if(!isset($_GET["id"])){

@@ -12,6 +12,14 @@
 
 class JULibs
 {
+	/**
+	 * @param $params
+	 * @param $title
+	 *
+	 * @return title
+	 *
+	 * @since 6.0
+	 */
 	public static function _Title($params, $title)
     {
     	$title = strip_tags( $title );
@@ -38,6 +46,20 @@ class JULibs
         return $title;
     }
 
+	/**
+	 * @param $params
+	 * @param $description
+	 * @param $cleartag
+	 * @param $allowed_tags
+	 * @param $li
+	 * @param $text_limit
+	 * @param $lmttext
+	 * @param $end_limit_text
+	 *
+	 * @return description
+	 *
+	 * @since 6.0
+	 */
 	static function _Description($params, $description, $cleartag, $allowed_tags, $li, $text_limit, $lmttext, $end_limit_text)
     {
         if($params->def('content_prepare') == 1) {
@@ -106,7 +128,15 @@ class JULibs
         return $description;
 	}
 
-    public static function aspect($html, $_cropaspect)
+	/**
+	 * @param $html
+	 * @param $_cropaspect
+	 *
+	 * @return float|int
+	 *
+	 * @since 6.0
+	 */
+	public static function aspect($html, $_cropaspect)
     {
 		$size 	= getimagesize( rawurldecode(JPATH_SITE .'/'. $html) );
 		$width 	= $size[0];
@@ -116,6 +146,14 @@ class JULibs
     	return $aspect;
     }
 
+	/**
+	 * @param $params
+	 * @param $rating
+	 *
+	 * @return string
+	 *
+	 * @since v6.0
+	 */
 	public static function _RatingStar($params, $rating)
     {
         $app = JFactory::getApplication();
@@ -152,7 +190,19 @@ class JULibs
         return $img;
 	}
 
-    static function ParceXML($feed_url, $xmlcount, $cache_file, $time, $path, $ordering_xml)
+	/**
+	 * @param $feed_url
+	 * @param $xmlcount
+	 * @param $cache_file
+	 * @param $time
+	 * @param $path
+	 * @param $ordering_xml
+	 *
+	 * @return array|SimpleXMLElement[]|void
+	 *
+	 * @since 6.0
+	 */
+	static function ParceXML($feed_url, $xmlcount, $cache_file, $time, $path, $ordering_xml)
     {
         $timedif = @(time()-filemtime($cache_file));
 
@@ -191,6 +241,7 @@ class JULibs
 		}
 
 		libxml_use_internal_errors(TRUE);
+
 		try
         {
 		    $xml = new SimpleXmlElement($string);
@@ -221,7 +272,15 @@ class JULibs
         return $items;
     }
 
-    public static function video($url, $return = 'hqthumb')
+	/**
+	 * @param        $url
+	 * @param string $return
+	 *
+	 * @return mixed|string
+	 *
+	 * @since 6.0
+	 */
+	public static function video($url, $return = 'hqthumb')
     {
         $urls = parse_url($url);
 
@@ -238,7 +297,7 @@ class JULibs
             $yid = $url;
         }
         else {
-            parse_str($urls['query']);
+	        $v = parse_str($urls['query']);
             $yid = $v;
             if(!empty($feature))
             {
@@ -271,8 +330,15 @@ class JULibs
             }
         }
     }
-	
-    public static function absoluteURL($html)
+
+	/**
+	 * @param $html
+	 *
+	 * @return url
+	 *
+	 * @since 6.0
+	 */
+	public static function absoluteURL($html)
     {
     	$root_url = JURI::base();
     	$html = preg_replace('@href="(?!http://)(?!https://)(?!mailto:)([^"]+)"@i', "href=\"{$root_url}\${1}\"", $html);
@@ -281,12 +347,18 @@ class JULibs
     	return $html;
     }
 
-
-    public static function htmlCompress($html)
+	/**
+	 * @param $html
+	 *
+	 * @return html
+	 *
+	 * @since 6.0
+	 */
+	public static function htmlCompress($html)
     {
         preg_match_all('!(<(?:code|pre|textarea|script).*?>.*?</(?:code|pre|textarea|script)>)!si',$html,$pre);
         $html = preg_replace('!<(?:code|pre|textarea|script).*?>.*?</(?:code|pre|textarea|script)>!si', '#pre#', $html);
-        $html = preg_replace('#<!–[^\[].+–>#', '', $html);
+        $html = preg_replace('#<!â€“[^\[].+â€“>#', '', $html);
         $html = preg_replace('/[\r\n\t]+/', '', $html);
         $html = str_replace('  ', '', $html);
 

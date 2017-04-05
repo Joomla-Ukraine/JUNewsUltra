@@ -16,11 +16,23 @@ class JFormFieldNN_Toggler extends JFormField
 {
 	public $type = 'Toggler';
 
+	/**
+	 *
+	 * @return string
+	 *
+	 * @since 6.0
+	 */
 	protected function getLabel()
 	{
 		return '';
 	}
 
+	/**
+	 *
+	 * @return string
+	 *
+	 * @since 6.0
+	 */
 	protected function getInput()
 	{
 		$field = new nnFieldToggler;
@@ -38,11 +50,6 @@ class nnFieldToggler
 
 		$option = JFactory::getApplication()->input->get('option');
 
-		// do not place toggler stuff on JoomFish pages
-		if ($option == 'com_joomfish') {
-			return '';
-		}
-
 		$param = $this->def('param');
 		$value = $this->def('value');
 		$nofx = $this->def('nofx');
@@ -57,17 +64,21 @@ class nnFieldToggler
 		$param = preg_replace('#\s*\|\s*#', '|', $param);
 
 		$html = array();
-		if ($param != '') {
+		if ($param != '')
+		{
 			$param = preg_replace('#[^a-z0-9-\.\|\@]#', '_', $param);
 			$param = str_replace('@', '_', $param);
 			$set_groups = explode('|', $param);
 			$set_values = explode('|', $value);
+
 			$ids = array();
-			foreach ($set_groups as $i => $group) {
+			foreach ($set_groups as $i => $group)
+			{
 				$count = $i;
 				if ($count >= count($set_values)) {
 					$count = 0;
 				}
+
 				$value = explode(',', $set_values[$count]);
 				foreach ($value as $val) {
 					$ids[] = $group . '.' . $val;
@@ -82,23 +93,32 @@ class nnFieldToggler
 			if ($nofx) {
 				$html[] = ' nntoggler_nofx';
 			}
+
 			if ($method == 'and') {
 				$html[] = ' nntoggler_and';
 			}
+
 			$html[] = '">';
 
 			if (!$div) {
 				$html[] = '<div><div>';
 			}
-
-
-		} else {
+		}
+		else {
 			$html[] = '</div>';
 		}
 
 		return implode('', $html);
 	}
 
+	/**
+	 * @param        $val
+	 * @param string $default
+	 *
+	 * @return string
+	 *
+	 * @since 6.0
+	 */
 	private function def($val, $default = '')
 	{
 		return (isset($this->params[$val]) && (string) $this->params[$val] != '') ? (string) $this->params[$val] : $default;

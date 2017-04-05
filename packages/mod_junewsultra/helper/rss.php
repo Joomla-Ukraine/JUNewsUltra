@@ -14,6 +14,14 @@ defined('_JEXEC') or die;
 
 class rss extends modJUNewsUltraHelper
 {
+	/**
+	 * @param $params
+	 * @param $junews
+	 *
+	 * @return array|SimpleXMLElement[]|void
+	 *
+	 * @since 6.0
+	 */
 	public static function getList($params, $junews)
     {
 		// Load libs
@@ -43,15 +51,8 @@ class rss extends modJUNewsUltraHelper
             $item->title_alt = htmlspecialchars( strip_tags( $JULibs->_Title($params, $item->title) ) );
 
             // category title
-            if($junews['show_cat'] == 1)
-            {
-                $cattitle = strip_tags( $item->category );
-                if($params->get('showcatlink') == 1) {
-                    $item->cattitle = '<a href="'. $catlink .'">'. $cattitle .'</a>';
-                }
-                else {
-                    $item->cattitle = $cattitle;
-                }
+            if($junews['show_cat'] == 1) {
+	            $item->cattitle = strip_tags( $item->category );
             }
 
             // rawtext
@@ -122,7 +123,8 @@ class rss extends modJUNewsUltraHelper
 			    $_text = (isset($item->content_encoded) ? $item->content_encoded : $item->description);
 
                 $title_alt = $item->title_alt;
-                if ($junews['imglink'] == 1) {
+                if ($junews['imglink'] == 1)
+                {
                     $imlink  = '<a href="'. $item->link .'"'. ($params->get('tips') == 1 ? ' title="'. $title_alt .'"' : '') .'>';
                     $imlink2 = '</a>';
                 }
@@ -131,7 +133,8 @@ class rss extends modJUNewsUltraHelper
                     $imlink2 = '';
                 }
 
-		        if(isset($item->enclosure->attributes()->url)) {
+		        if(isset($item->enclosure->attributes()->url))
+		        {
 		        	$junuimgsource = $item->enclosure->attributes()->url;
 		            $item->source_image = $junuimgsource;
 		        }
@@ -146,8 +149,7 @@ class rss extends modJUNewsUltraHelper
         		switch ($junews['thumb_width'])
                 {
         			case '0':
-						if($junews['defaultimg'] == 1 && (!$junuimgsource))
-						{
+						if($junews['defaultimg'] == 1 && (!$junuimgsource)) {
                             $junuimgsource = 'media/mod_junewsultra/' . $junews['noimage'];
                         }
 
@@ -166,7 +168,8 @@ class rss extends modJUNewsUltraHelper
                                 $item->image    = $imlink .'<img src="'. $yimg .'" width="'. $junews['w'] .'" alt="'. $title_alt .'" />'. $imlink2;
                                 $item->imagesource = $yimg;
                             }
-                            elseif (preg_match($regex2, $_text, $match)) {
+                            elseif (preg_match($regex2, $_text, $match))
+                            {
                                 $yimg           = $JULibs->video('http://vimeo.com/'. $match[2],'hqthumb');
                                 $item->image    = $imlink .'<img src="'. $yimg .'" width="'. $junews['w'] .'" alt="'. $title_alt .'" />'. $imlink2;
                                 $item->imagesource = $yimg;
@@ -175,31 +178,32 @@ class rss extends modJUNewsUltraHelper
                                 $item->image    = $contentimage;
                             }
                             elseif($junews['defaultimg'] == 1) {
-                                $item->image    = $blankimage;
+                                $item->image    = '';
                             }
                         }
 
-                        if( $junuimgsource ) {
+                        if( $junuimgsource )
+                        {
                             $item->image    = $contentimage;
                             $item->imagesource = $junuimgsource;
                         }
                         elseif($junews['defaultimg'] == 1) {
-                            $item->image    = $blankimage;
+                            $item->image    = '';
                         }
         			    break;
 
                     case '1':
         			default:
-                        if($junews['defaultimg'] == 1 && (!$junuimgsource))
-                        {
-                            $junuimgsource = $JUImg->Render('media/mod_junewsultra/'. $junews['noimage'], $imgparams);
+                        if($junews['defaultimg'] == 1 && (!$junuimgsource)) {
+                            $junuimgsource = 'media/mod_junewsultra/'. $junews['noimage'];
                         }
 
 						if($junews['auto_zoomcrop'] == '1') {
 							$aspect = $JULibs->aspect($junuimgsource);
 						}
 
-						if ($aspect >= '1' && $junews['auto_zoomcrop'] == '1') {
+						if ($aspect >= '1' && $junews['auto_zoomcrop'] == '1')
+						{
 							$newimgparams = array(
 							    'far' => '1',
 								'bg'   => $junews['zoomcropbg']
@@ -229,10 +233,14 @@ class rss extends modJUNewsUltraHelper
                             'f'     => $junews['f'],
                             'q'     => $junews['q'],
                             'cache' => 'img'
-                            )
-							+ $newimgparams;
+                            );
 
-                        $thumb_img = $JUImg->Render($junuimgsource, $imgparams);
+				        $imgparams_merge = array_merge(
+					        $imgparams,
+					        $newimgparams
+				        );
+
+                        $thumb_img = $JUImg->Render($junuimgsource, $imgparams_merge);
                         $contentimage = $imlink .'<img src="'. $thumb_img .'" alt="'. $title_alt .'" />'. $imlink2;
 
                         if(($junews['youtube_img_show'] == 1) && ($junews['link_enabled'] == 1) && ($junuimgsource != ''))
@@ -240,8 +248,7 @@ class rss extends modJUNewsUltraHelper
                             $regex1 = '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^>"&?/ ]{11})%i';
                             $regex2 = '#(player.vimeo.com)/video/([0-9]+)#i';
 
-                            if (preg_match($regex1, $_text, $match))
-                            {
+                            if (preg_match($regex1, $_text, $match)) {
                                 $yimg = $JULibs->video('http://youtu.be/'. $match[1],'hqthumb');
                             }
                             elseif(preg_match($regex2, $_text, $match))
@@ -250,7 +257,7 @@ class rss extends modJUNewsUltraHelper
                             }
 
                             $thumb_img = $JUImg->Render($yimg, $imgparams);
-                            $item->image = $imlink .'<img src="'. $video_img .'" alt="'. $title_alt .'" />'. $imlink2;
+                            $item->image = $imlink .'<img src="'. $thumb_img .'" alt="'. $title_alt .'" />'. $imlink2;
                             $item->imagesource = $yimg;
                         }
 

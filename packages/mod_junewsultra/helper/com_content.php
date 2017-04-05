@@ -16,9 +16,16 @@ $com_path = JPATH_SITE .'/components/com_content/';
 require_once $com_path .'router.php';
 require_once $com_path .'helpers/route.php';
 
-//abstract class modJUNewsUltraHelper
 class com_content extends modJUNewsUltraHelper
 {
+	/**
+	 * @param $params
+	 * @param $junews
+	 *
+	 * @return mixed
+	 *
+	 * @since 6.0
+	 */
 	public static function getList($params, $junews)
     {
 		// Load libs
@@ -52,8 +59,7 @@ class com_content extends modJUNewsUltraHelper
 		$user_id			= $params->get('user_id');
 		$uid				= $params->get('uid');
 
-		if($useaccess == '1')
-        {
+		if($useaccess == '1') {
 			$groups = implode(',', $user->getAuthorisedViewLevels());
 		}
 
@@ -63,30 +69,6 @@ class com_content extends modJUNewsUltraHelper
         $relative_date      = $params->get('relative_date', 0);
 		$date_type			= $params->get('date_type', 'created');
 		$date_field			= $params->get('date_field', 'a.created');
-
-		// images
-        //$source_rectangle   = $params->def( 'source_rectangle', 1 );
-		//$zc                 = intval($params->get( 'zoomcrop', 1 ));
-
-/*
-		$thumb_filtercolor  = intval($params->get( 'thumb_filtercolor', 0 ));
-        $colorized          = $params->get( 'colorized', '25' );
-        $colorpicker        = $params->get( 'colorpicker', '#0000ff' );
-        $thumb_th           = $params->def( 'thumb_th', 0 );
-        $thumb_th_seting    = $params->def( 'thumb_th_seting', 0 );
-        $error_image        = JPATH_BASE .'/media/mod_junewsultra/'. $params->def( 'noimage' );
-        $thumb_filters      = $params->def( 'thumb_filters', 1 );
-        $usm                = $params->def( 'thumb_unsharp', 1 );
-        $thumb_unsharp_amount = $params->def( 'thumb_unsharp_amount', 80 );
-        $thumb_unsharp_radius = $params->def( 'thumb_unsharp_radius', 1 );
-        $thumb_unsharp_threshold = $params->def( 'thumb_unsharp_threshold', 3 );
-        $thumb_blur         = $params->def( 'thumb_blur', 0 );
-        $thumb_blur_seting  = $params->def( 'thumb_blur_seting', 1 );
-        $thumb_brit         = $params->def( 'thumb_brit', 0 );
-        $thumb_brit_seting  = $params->def( 'thumb_brit_seting', 50 );
-        $thumb_cont         = $params->def( 'thumb_cont', 0 );
-        $thumb_cont_seting  = $params->def( 'thumb_cont_seting', 50 );
-*/
 
 		// Ordering
 		switch ($ordering)
@@ -237,7 +219,7 @@ class com_content extends modJUNewsUltraHelper
         }
 
 		if($junews['featured'] != '0') {
-		    $query->select('a.featured');
+			$query->select('a.featured');
         }
 
 		if(
@@ -265,7 +247,7 @@ class com_content extends modJUNewsUltraHelper
 			$query->select('a.hits');
         }
 
-		if(is_array($catid) || $access || in_array($item->access, $authorised)) {
+		if(is_array($catid) || $access) {
 			$query->select('a.catid');
         }
 
@@ -292,8 +274,7 @@ class com_content extends modJUNewsUltraHelper
 
 		if($dateuser_filtering == 1 || !empty($uid))
 		{
-			if (is_array($cat_arr) && count($cat_arr))
-            {
+			if (is_array($cat_arr) && count($cat_arr)) {
 				$ji_catids = 'WHERE `catid` IN ('. implode(',', $cat_arr) .')';
 			}
 
@@ -412,7 +393,7 @@ class com_content extends modJUNewsUltraHelper
         if ($params->def('use_comments') == 1 && count($items))
         {
             $comments_system = $params->def('select_comments');
-            $comments = JPATH_SITE .'/components/com_'. $comments_system .'/'. $comments_system .'.php';
+            $comments        = JPATH_SITE .'/components/com_'. $comments_system .'/'. $comments_system .'.php';
 
             if (file_exists($comments))
             {
@@ -554,7 +535,6 @@ class com_content extends modJUNewsUltraHelper
 	                    $junuimgsource  = $junuimgsource[1];
 	                    $imglist        = explode("|", $junuimgsource);
 	                    $junuimgsource  = $imglist[0];
-	                    $imglist        = '';
 	                    $root           = JPATH_BASE .'/';
 	                    $folder         = 'images/'. $junuimgsource;
 	                    $img_folder     = $root . $folder;
@@ -563,19 +543,24 @@ class com_content extends modJUNewsUltraHelper
 	                    {
 							$images = scandir($img_folder);
 
-							$files          = array();
+							$files = array();
 							foreach ($images as $file)
 							{
 							    if(
 									$file !== '.' && $file !== '..'
                                     &&
                                     (
+										strtolower(substr($file, -4)) === 'jpeg' ||
 										strtolower(substr($file, -3)) === 'jpg' ||
 										strtolower(substr($file, -3)) === 'png' ||
+										strtolower(substr($file, -3)) === 'bmp' ||
+										strtolower(substr($file, -3)) === 'tif' ||
+										strtolower(substr($file, -4)) === 'tiff' ||
 										strtolower(substr($file, -3)) === 'gif'
 									)
 								) {
 							    	$files[] = $file;
+
 							        break;
 							    }
 							}
@@ -666,7 +651,7 @@ class com_content extends modJUNewsUltraHelper
                         }
                         elseif($junews['defaultimg'] == 1)
                         {
-                            $item->image    = $blankimage;
+                            $item->image    = '';
                         	$item->imagelink = '';
                         	$item->imagesource = '';
                         }
@@ -726,8 +711,12 @@ class com_content extends modJUNewsUltraHelper
 	                            'f'     => $junews['f'],
 	                            'q'     => $junews['q'],
 	                            'cache' => 'img'
-	                        )
-							+ $newimgparams;
+	                        );
+
+							$imgparams_merge = array_merge(
+								$imgparams,
+								$newimgparams
+							);
 
 							switch ($junews['usesrcset'])
 							{
@@ -823,7 +812,7 @@ class com_content extends modJUNewsUltraHelper
 								    break;
 							}
 
-	                        $thumb_img = JURI::base() . $JUImg->Render($junuimgsource, $imgparams);
+	                        $thumb_img = JURI::base() . $JUImg->Render($junuimgsource, $imgparams_merge);
 	                        $item->image = $imlink .'<img src="'. $thumb_img .'"'. $srcset .'alt="'. $title_alt .'" />'. $imlink2;
 	                        $item->imagelink = $thumb_img;
 	                        $item->imagesource = $junuimgsource;
@@ -906,11 +895,6 @@ class com_content extends modJUNewsUltraHelper
                 $item->df_d = JHtml::date($_date_type, $junews['date_day']);
                 $item->df_m = JHtml::date($_date_type, $junews['date_month']);
                 $item->df_y = JHtml::date($_date_type, $junews['date_year']);
-            }
-
-            // hits
-            if ($junews['show_hits'] == 1) {
-                $item->hits = $item->hits;
             }
 
             // rating

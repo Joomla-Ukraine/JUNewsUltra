@@ -12,8 +12,8 @@
 
 defined( '_JEXEC' ) or die();
 
-$version    = new JVersion;
-$joomla     = $version->getShortVersion();
+$version = new JVersion;
+$joomla = $version->getShortVersion();
 
 include('head.php'); 
 
