@@ -202,6 +202,7 @@ class Pkg_JUNewsUltraInstallerScript
 			        $path .'assets/css/elegant.css',
 			        $path .'assets/css/docs.css',
 
+                    $path .'fields/jumultithumbradio.php',
                     $path .'fields/colorpicker.php',
                     $path .'fields/imagesetting.php',
                     $path .'fields/juradio30.php',

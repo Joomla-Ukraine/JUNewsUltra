@@ -60,8 +60,7 @@ $junews	= array(
 	'noimage'		=> $params->def('noimage'),
 	'imglink'		=> $params->def('imglink'),
 	'link_enabled'	=> $params->get('link_enabled', 1),
-	'youtube_img_show' => $params->def('youtube_img_show', 1),
-	'gallery' 		=> $params->def('gallery', 1),
+
 	'sx' 			=> intval($params->get('sx')),
 	'sy' 			=> intval($params->get('sy')),
 	'sw' 			=> intval($params->get('sw')),
@@ -79,7 +78,11 @@ $junews	= array(
 
 	'usesrcset'		=> $params->def('usesrcset', '0'),
 	'srcsetviewport' => $params->def('srcsetviewport', '480'),
-	'srcsetpixeldensity' => $params->def('srcsetpixeldensity', '1')
+	'srcsetpixeldensity' => $params->def('srcsetpixeldensity', '1'),
+
+	'youtube_img_show' => $params->def('youtube_img_show', 1),
+	'gallery' 		=> $params->def('gallery', 1),
+	'multicat' 		=> $params->def('contentmulticategories', 0)
  );
 
 $component = trim( $params->def('component', 'com_content') );

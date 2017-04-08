@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" version="3.3" client="site" method="upgrade">
 	<name>MOD_JUNEWSULTRA</name>
-	<creationDate>05.04.2017</creationDate>
+	<creationDate>08.04.2017</creationDate>
 	<author>Denys Nosov</author>
 	<authorEmail>denys@joomla-ua.org</authorEmail>
 	<authorUrl>http://www.joomla-ua.org</authorUrl>
 	<copyright>This module is licensed under a Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License.</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-	<version>6.5.1</version>
+	<version>6.5.2</version>
 	<description>MOD_JUNEWS_XML_DESCRIPTION</description>
     <files>
         <filename module="mod_junewsultra">mod_junewsultra.php</filename>
@@ -529,28 +529,57 @@
 
                 <field type="spacer" name="a001" hr="true" />
 
-                <field name="show_title" type="radio" class="btn-group" default="1" label="MOD_JUNEWS_SHOW_TITLE">
+                <field
+                    name="show_title"
+                    type="radio"
+                    class="btn-group"
+                    default="1"
+                    label="MOD_JUNEWS_SHOW_TITLE"
+                    >
                     <option value="0">JHIDE</option>
                     <option value="1">JSHOW</option>
                 </field>
 
                 <field name="@toggler_choose_settings5658921_a" type="nn_toggler" param="show_title" value="1"/>
 
-                    <field name="title_limit" type="radio" class="btn-group" default="0" label="MOD_JUNEWS_LIMIT_TEXT">
+                    <field
+                        name="title_limit"
+                        type="radio"
+                        class="btn-group"
+                        default="0"
+                        label="MOD_JUNEWS_LIMIT_TEXT"
+                        >
                         <option value="0">JNO</option>
                         <option value="1">JYES</option>
                     </field>
 
                         <field name="@toggler_choose_settings548521_a" type="nn_toggler" param="title_limit" value="1"/>
 
-                            <field name="title_limit_mode" type="list" default="1" label="MOD_JUNEWS_LIMIT_METOD" description="MOD_JUNEWS_LIMIT_METODS_DESC">
+                            <field
+                                name="title_limit_mode"
+                                type="list"
+                                default="1"
+                                label="MOD_JUNEWS_LIMIT_METOD"
+                                description="MOD_JUNEWS_LIMIT_METODS_DESC"
+                                >
                                 <option value="1">MOD_JUNEWS_WORDS_LIMIT</option>
                                 <option value="0">MOD_JUNEWS_CHARACTERS_LIMIT</option>
                             </field>
 
-                            <field name="title_limit_count" type="text" default="20" label="MOD_JUNEWS_NUMBER_WORDS_CHARACTERS_LIMIT" description="MOD_JUNEWS_NUMBER_WORDS_CHARACTERS_LIMIT_DESC" />
+                            <field
+                                name="title_limit_count"
+                                type="text"
+                                default="20"
+                                label="MOD_JUNEWS_NUMBER_WORDS_CHARACTERS_LIMIT"
+                                description="MOD_JUNEWS_NUMBER_WORDS_CHARACTERS_LIMIT_DESC"
+                                />
 
-                            <field name="end_limit_title" type="text" default="..." label="MOD_JUNEWS_END_LIMIT_TITLE" />
+                            <field
+                                name="end_limit_title"
+                                type="text"
+                                default="..."
+                                label="MOD_JUNEWS_END_LIMIT_TITLE"
+                                />
 
                         <field name="@toggler_showsuccessmessage548521_b" type="nn_toggler"/>
 
@@ -1048,7 +1077,6 @@
                 <field name="@toggler_showsuccessmessage912_b" type="nn_toggler"/>
 
             </fieldset>
-			
 
             <fieldset name="comments_integration" label="MOD_JUNEWS_JUNEWSULTRA_INTEGRATION" >
 			
@@ -1057,28 +1085,57 @@
 						<option value="1">JYES</option>
 				</field>
                 				
-					<field name="@toggler_choose_settings29858_a" type="nn_toggler" param="use_comments" value="1"/>
+				<field name="@toggler_choose_settings29858_a" type="nn_toggler" param="use_comments" value="1"/>
 
-						<field name="select_comments" type="commentsradio" default="jcomments" label="">
-							<option value="jcomments">JComments</option>
-							<option value="komento">Komento</option>
-						</field>
-
-					<field name="@toggler_showsuccessmessage29858_b" type="nn_toggler"/>
-					
-					<field type="spacer" name="im14589451" hr="true" />					
-
-					<field name="youtube_img_show" type="radio" class="btn-group" default="1" label="MOD_JUNEWS_IMAGE_VIDEO" description="MOD_JUNEWS_IMAGE_VIDEO_DESC">
-						<option value="0">JNO</option>
-						<option value="1">JYES</option>
+					<field name="select_comments" type="commentsradio" default="jcomments" label="">
+						<option value="jcomments">JComments</option>
+						<option value="komento">Komento</option>
 					</field>
 
-					<field type="spacer" name="im145891" hr="true" />
+				<field name="@toggler_showsuccessmessage29858_b" type="nn_toggler"/>
 
-					<field name="gallery" type="jumultithumbradio" class="btn-group" default="1" label="MOD_JUNEWS_IMAGE_JUMULTITHUMB_GALLERY">
-						<option value="0">JNO</option>
-						<option value="1">JYES</option>
-					</field>
+				<field type="spacer" name="im14589451" hr="true" />
+
+				<field
+					name="youtube_img_show"
+					type="radio"
+					class="btn-group"
+					default="1"
+					label="MOD_JUNEWS_IMAGE_VIDEO"
+					description="MOD_JUNEWS_IMAGE_VIDEO_DESC"
+				>
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+
+				<field type="spacer" name="im145891" hr="true" />
+
+				<field
+					name="gallery"
+					path="/plugins/content/jumultithumb_gallery/jumultithumb_gallery.php"
+					type="Integration"
+					class="btn-group"
+					default="1"
+					label="MOD_JUNEWS_IMAGE_JUMULTITHUMB_GALLERY"
+				>
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+
+
+				<field type="spacer" name="im145892" hr="true" />
+
+				<field
+					name="contentmulticategories"
+					path="/plugins/system/contentmulticategories/contentmulticategories.php"
+					type="Integration"
+					class="btn-group"
+					default="0"
+					label="MOD_JUNEWS_PLG_CONTENTMULTICATEGORIES"
+				>
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
 
             </fieldset>
 

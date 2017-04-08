@@ -254,26 +254,38 @@ class com_content extends modJUNewsUltraHelper
 		// From
 		$query->from('#__content AS a');
 
+        // Categories
 		if($junews['show_cat'] == '1')
         {
 			$query->select('cc.title AS category_title');
 			$query->join('LEFT', '#__categories AS cc ON cc.id = a.catid');
 		}
 
+        // Multicategories plugin integration
+        if($junews['multicat'] == 1)
+        {
+            $query->select('cmc.category_id AS cmc_cat');
+            $query->join('LEFT', '#__contentmulticategories_categories AS cmc ON cmc.article_id = a.id');
+        }
+
+        // User
 		if($junews['show_author'] == 1)
         {
 			$query->select('u.name AS author');
 			$query->join('LEFT', '#__users AS u on u.id = a.created_by');
 		}
 
+        // Rating
 		if($junews['show_rating'] == 1)
         {
 		  	$query->select('ROUND(v.rating_sum / v.rating_count, 0) AS rating');
 			$query->join('LEFT', '#__content_rating AS v ON a.id = v.content_id');
 		}
 
+        // Uniq author post
 		if($dateuser_filtering == 1 || !empty($uid))
 		{
+		    $ji_catids = '';
 			if (is_array($cat_arr) && count($cat_arr)) {
 				$ji_catids = 'WHERE `catid` IN ('. implode(',', $cat_arr) .')';
 			}
@@ -323,8 +335,15 @@ class com_content extends modJUNewsUltraHelper
 	    		}
 			}
 
-			if (is_array($cat_arr) && count($cat_arr)) {
-			    $query->where('a.catid IN ('. implode(',', $cat_arr) .')');
+            // Standart categories or multicategories (plugin integration)
+            if (is_array($cat_arr) && count($cat_arr))
+            {
+                if($junews['multicat'] == 1) {
+                    $query->where('( a.catid IN ('. implode(',', $cat_arr) .') OR cmc.category_id IN ('. implode(',', $cat_arr) .') )');
+                }
+                else {
+                    $query->where('a.catid IN ('. implode(',', $cat_arr) .')');
+                }
             }
 
     		$excluded_articles = $params->get('excluded_articles', NULL);
@@ -470,7 +489,7 @@ class com_content extends modJUNewsUltraHelper
 				$item->slug 	= $item->id . ($item->alias ? ':'. $item->alias : '');
 				$language 		= (JLanguageMultilang::isEnabled() ? $item->language : '');
 
-				$item->link 	= JRoute::_(ContentHelperRoute::getArticleRoute($item->slug, $item->catid, $language));
+				$item->link 	= JRoute::_(ContentHelperRoute::getArticleRoute($item->slug, ($item->cmc_cat ? $item->cmc_cat : $item->catid), $language));
 				$item->catlink 	= JRoute::_(ContentHelperRoute::getCategoryRoute($item->catid));
 			}
             else {

@@ -36,34 +36,25 @@ class JFormFieldModal_Article extends JFormField
 		$allowEdit		= ((string) $this->element['edit'] == 'true') ? true : false;
 		$allowClear		= ((string) $this->element['clear'] != 'false') ? true : false;
 
-		// Load language
 		JFactory::getLanguage()->load('com_content', JPATH_ADMINISTRATOR);
-
-		// Load the modal behavior script.
 		JHtml::_('behavior.modal', 'a.modal');
 
-		// Build the script.
 		$script = array();
-
-		// Select button script
 		$script[] = '	function jSelectArticle_' . $this->id . '(id, title, catid, object) {';
 		$script[] = '		document.getElementById("' . $this->id . '_id").value = id;';
 		$script[] = '		document.getElementById("' . $this->id . '_name").value = title;';
 
-		if ($allowEdit)
-		{
+		if ($allowEdit) {
 			$script[] = '		jQuery("#' . $this->id . '_edit").removeClass("hidden");';
 		}
 
-		if ($allowClear)
-		{
+		if ($allowClear) {
 			$script[] = '		jQuery("#' . $this->id . '_clear").removeClass("hidden");';
 		}
 
 		$script[] = '		jModalClose();';
 		$script[] = '	}';
 
-		// Clear button script
 		static $scriptClear;
 
 		if ($allowClear && !$scriptClear)
@@ -82,10 +73,8 @@ class JFormFieldModal_Article extends JFormField
 			$script[] = '	}';
 		}
 
-		// Add the script to the document head.
 		JFactory::getDocument()->addScriptDeclaration(implode("\n", $script));
 
-		// Setup variables for display.
 		$html	= array();
 		$link	= 'index.php?option=com_content&amp;view=articles&amp;layout=modal&amp;tmpl=component&amp;function=jSelectArticle_' . $this->id;
 
@@ -103,8 +92,7 @@ class JFormFieldModal_Article extends JFormField
 				->where($db->quoteName('id') . ' = ' . (int) $this->value);
 			$db->setQuery($query);
 
-			try
-			{
+			try {
 				$title = $db->loadResult();
 			}
 			catch (RuntimeException $e)
@@ -113,35 +101,27 @@ class JFormFieldModal_Article extends JFormField
 			}
 		}
 
-		if (empty($title))
-		{
+		if (empty($title)) {
 			$title = JText::_('COM_CONTENT_SELECT_AN_ARTICLE');
 		}
 		$title = htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
 
-		// The active article id field.
-		if (0 == (int) $this->value)
-		{
+		if (0 == (int) $this->value) {
 			$value = '';
 		}
-		else
-		{
+		else {
 			$value = (int) $this->value;
 		}
 
-		// The current article display field.
 		$html[] = '<span class="input-append">';
 		$html[] = '<input type="text" class="input-medium" id="' . $this->id . '_name" value="' . $title . '" disabled="disabled" size="35" />';
 		$html[] = '<a class="modal btn hasTooltip" title="' . JHtml::tooltipText('COM_CONTENT_CHANGE_ARTICLE') . '"  href="' . $link . '&amp;' . JSession::getFormToken() .
 			'=1" rel="{handler: \'iframe\', size: {x: 800, y: 450}}"><i class="icon-file"></i> ' . JText::_('JSELECT') . '</a>';
 
-		// Edit article button
-		if ($allowEdit)
-		{
+		if ($allowEdit) {
 			$html[] = '<a class="btn hasTooltip' . ($value ? '' : ' hidden') . '" href="index.php?option=com_content&layout=modal&tmpl=component&task=article.edit&id=' . $value . '" target="_blank" title="' . JHtml::tooltipText('COM_CONTENT_EDIT_ARTICLE') . '" ><span class="icon-edit"></span>' . JText::_('JACTION_EDIT') . '</a>';
 		}
 
-		// Clear article button
 		if ($allowClear)
 		{
 			$html[] = '<button id="' . $this->id . '_clear" class="btn' . ($value ? '' : ' hidden') . '" onclick="return jClearArticle(\'' .
@@ -150,11 +130,8 @@ class JFormFieldModal_Article extends JFormField
 
 		$html[] = '</span>';
 
-		// The class='required' for client side validation
 		$class = '';
-
-		if ($this->required)
-		{
+		if ($this->required) {
 			$class = ' class="required modal-value"';
 		}
 
