@@ -27,7 +27,7 @@
 *
 * $item->sourcetext		- display raw intro and fulltext
 *
-* $item->introtext      - display introtex
+* $item->introtext      - display introtext
 * $item->fulltext       - display fulltext
 *
 * $item->author         - display author or created by alias
