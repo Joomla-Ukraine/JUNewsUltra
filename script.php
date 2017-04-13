@@ -32,15 +32,14 @@ class Pkg_JUNewsUltraInstallerScript
 	 */
 	public function preflight($type, $parent)
 	{
-		if (version_compare(JVERSION, '3.1.0', 'lt'))
+		if(version_compare(JVERSION, '3.1.0', 'lt'))
 		{
 			JFactory::getApplication()->enqueueMessage('Update for Joomla! 3.4+', 'error');
 
 			return false;
 		}
 
-		// Check to see if the database type is supported
-		if (!in_array(JFactory::getDbo()->name, $this->dbSupport))
+		if(!in_array(JFactory::getDbo()->name, $this->dbSupport))
 		{
 			JFactory::getApplication()->enqueueMessage(JText::_('MOD_JUNEWS_ERROR_DB_SUPPORT'), 'error');
 
@@ -49,7 +48,7 @@ class Pkg_JUNewsUltraInstallerScript
 
 		$this->MakeDirectory($dir = JPATH_SITE . '/img', $mode = 0777);
 
-		if (!is_dir(JPATH_SITE . '/img/'))
+		if(!is_dir(JPATH_SITE . '/img/'))
 		{
 			JFactory::getApplication()->enqueueMessage('Error creating folder \'img\'. Please manually create the folder \'img\' in the root of the site where you installed Joomla!', 'message');
 		}
@@ -98,8 +97,6 @@ class Pkg_JUNewsUltraInstallerScript
 		$db    = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$app   = JFactory::getApplication();
-
-		$adm_url = str_replace('/administrator', '', JURI::base());
 
 		$version = new JVersion;
 		$joomla  = substr($version->getShortVersion(), 0, 3);
@@ -179,7 +176,7 @@ class Pkg_JUNewsUltraInstallerScript
 
 			$html .= '<tr><td>';
 
-			if ($extension == 'MOD_JUNEWSULTRA')
+			if($extension == 'MOD_JUNEWSULTRA')
 			{
 				$html .= JText::_($extension);
 			}
@@ -191,7 +188,7 @@ class Pkg_JUNewsUltraInstallerScript
 			$html .= '</td><td>
 			<strong>';
 
-			if ($result['result'] == true)
+			if($result['result'] == true)
 			{
 				$html .= '<span class="label label-success">' . JText::_('MOD_JUNEWS_INSTALLED') . '</span>';
 			}
@@ -203,7 +200,7 @@ class Pkg_JUNewsUltraInstallerScript
 			$html .= '</strong>
         	</td><td>';
 
-			if ($enabled[$extension] == 1)
+			if($enabled[$extension] == 1)
 			{
 				$html .= '<span class="label label-success">' . JText::_('JYES') . '</span>';
 			}
@@ -269,23 +266,23 @@ class Pkg_JUNewsUltraInstallerScript
 		$i = 0;
 		foreach ($files AS $file)
 		{
-			if (file_exists($file)) $i++;
+			if(file_exists($file)) $i++;
 		}
 
 		$j = 0;
 		foreach ($folders AS $folder)
 		{
-			if (is_dir($folder)) $j++;
+			if(is_dir($folder)) $j++;
 		}
 
-		if (($i + $j) > 0)
+		if(($i + $j) > 0)
 		{
 			$html .= '<h2>' . JText::_('MOD_JUNEWS_REMOVE_OLD_FILES') . '</h2>
         	<table class="table table-striped"><tbody>';
 
 			foreach ($files AS $file)
 			{
-				if (file_exists($file))
+				if(file_exists($file))
 				{
 					$filepath = str_replace($path, '', $file);
 					unlink($file);
@@ -299,7 +296,7 @@ class Pkg_JUNewsUltraInstallerScript
 
 			foreach ($folders AS $folder)
 			{
-				if (is_dir($folder))
+				if(is_dir($folder))
 				{
 					$folderpath = str_replace($path, '', $folder);
 					$this->unlinkRecursive($folder, 1);
@@ -317,7 +314,7 @@ class Pkg_JUNewsUltraInstallerScript
 		$html .= '</div>
         </div>';
 
-		if ($joomla < '3.4')
+		if($joomla < '3.4')
 		{
 			echo $html;
 		}
@@ -339,10 +336,10 @@ class Pkg_JUNewsUltraInstallerScript
 	 */
 	public function MakeDirectory($dir, $mode)
 	{
-		if (is_dir($dir) || @mkdir($dir, $mode))
+		if(is_dir($dir) || @mkdir($dir, $mode))
 		{
 			$indexfile = $dir . '/index.html';
-			if (!file_exists($indexfile))
+			if(!file_exists($indexfile))
 			{
 				$file = fopen($indexfile, 'w');
 				fputs($file, '<!DOCTYPE html><title></title>');
@@ -352,7 +349,7 @@ class Pkg_JUNewsUltraInstallerScript
 			return true;
 		}
 
-		if (!$this->MakeDirectory(dirname($dir), $mode)) return false;
+		if(!$this->MakeDirectory(dirname($dir), $mode)) return false;
 
 		return @mkdir($dir, $mode);
 	}
@@ -366,18 +363,18 @@ class Pkg_JUNewsUltraInstallerScript
 	 */
 	public function unlinkRecursive($dir, $deleteRootToo)
 	{
-		if (!$dh = @opendir($dir)) return;
+		if(!$dh = @opendir($dir)) return;
 
 		while (false !== ($obj = readdir($dh)))
 		{
-			if ($obj == '.' || $obj == '..') continue;
+			if($obj == '.' || $obj == '..') continue;
 
-			if (!@unlink($dir . '/' . $obj)) $this->unlinkRecursive($dir . '/' . $obj, true);
+			if(!@unlink($dir . '/' . $obj)) $this->unlinkRecursive($dir . '/' . $obj, true);
 		}
 
 		closedir($dh);
 
-		if ($deleteRootToo) @rmdir($dir);
+		if($deleteRootToo) @rmdir($dir);
 
 		return;
 	}

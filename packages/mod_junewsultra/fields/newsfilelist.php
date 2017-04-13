@@ -2,11 +2,11 @@
 /**
  * JUNewsUltra Pro
  *
- * @version 	6.x
- * @package 	UNewsUltra Pro
- * @author 		Denys D. Nosov (denys@joomla-ua.org)
- * @copyright 	(C) 2007-2015 by Denys D. Nosov (http://joomla-ua.org)
- * @license 	GNU/GPL: http://www.gnu.org/copyleft/gpl.html
+ * @version          6.x
+ * @package          UNewsUltra Pro
+ * @author           Denys D. Nosov (denys@joomla-ua.org)
+ * @copyright    (C) 2007-2015 by Denys D. Nosov (http://joomla-ua.org)
+ * @license          GNU/GPL: http://www.gnu.org/copyleft/gpl.html
  *
  **/
 
@@ -22,23 +22,26 @@ class JFormFieldNewsFileList extends JFormFieldList
 
 	protected function getOptions()
 	{
-		$options    = array();
-		$filter     = (string) $this->element['filter'];
-		$exclude    = (string) $this->element['exclude'];
-		$stripExt   = (string) $this->element['stripext'];
-		$hideNone   = (string) $this->element['hide_none'];
+		$options     = array();
+		$filter      = (string) $this->element['filter'];
+		$exclude     = (string) $this->element['exclude'];
+		$stripExt    = (string) $this->element['stripext'];
+		$hideNone    = (string) $this->element['hide_none'];
 		$hideDefault = (string) $this->element['hide_default'];
 
 		$path = (string) $this->element['directory'];
-		if (!is_dir($path)) {
+		if (!is_dir($path))
+		{
 			$path = JPATH_ROOT . '/' . $path;
 		}
 
-		if (!$hideNone) {
+		if (!$hideNone)
+		{
 			$options[] = JHtml::_('select.option', '-1', JText::alt('JOPTION_DO_NOT_USE', preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)));
 		}
 
-		if (!$hideDefault) {
+		if (!$hideDefault)
+		{
 			$options[] = JHtml::_('select.option', '', JText::alt('JOPTION_USE_DEFAULT', preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)));
 		}
 
@@ -61,7 +64,7 @@ class JFormFieldNewsFileList extends JFormFieldList
 					$file = JFile::stripExt($file);
 				}
 
-				$options[] = JHtml::_('select.option', $file, JText::_('MOD_JUNEWS_INTEGR_'. strtoupper($file)));
+				$options[] = JHtml::_('select.option', $file, JText::_('MOD_JUNEWS_INTEGR_' . strtoupper($file)));
 			}
 		}
 

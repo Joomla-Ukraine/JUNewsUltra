@@ -80,30 +80,6 @@ div.current select { margin-top: 10px; margin-bottom: 5px; }
 /* fields */
 .spacer hr { border: 1px dotted #ccc; }
 
-/*.label {
-  display: inline-block;
-  padding: 2px 3px;
-  font-size: 11px;
-  font-weight: bold;
-  line-height: 12px;
-  color: #ffffff;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  white-space: nowrap;
-  vertical-align: baseline;
-  background-color: #999999;
-  -webkit-border-radius: 3px;
-     -moz-border-radius: 3px;
-          border-radius: 3px;
-}*/
-
-.fltrt a.label:hover{
-  color: #ffffff;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-
-
 .tab-pane .span9,
 .tab-pane {
 	background: #fafafa;
@@ -186,14 +162,3 @@ div.current select { margin-top: 10px; margin-bottom: 5px; }
 #description {
 	overflow: hidden;
 }
-
-#jusocial {
-	position: absolute;
-	top: 310px;
-	right: 20px;
-	width: 30%;
-	min-height: 400px;
-
-	overflow: hidden;
-}
-

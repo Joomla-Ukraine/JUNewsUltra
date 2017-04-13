@@ -59,8 +59,8 @@
                         default="static"
                         label="Cache Mode"
                         >
-	    				<option value="static"></option>
-						<option value="itemid"></option>
+	    				<option value="static">static</option>
+						<option value="itemid">itemid</option>
 	    			</field>
 
 	            <field name="@toggler_showsuccessmessage71_b" type="nn_toggler"/>
@@ -741,7 +741,7 @@
                     <option value="0">JHIDE</option>
                     <option value="1">JSHOW</option>
                 </field>
-				
+
 				<field name="@toggler_choose_settings6_a" type="nn_toggler" param="showcat" value="1"/>
 
 					<field name="showcatlink" type="radio" class="btn-group" default="0" label="MOD_JUNEWS_SHOW_CATEGORY_LINK">
@@ -891,8 +891,8 @@
 
 
             </fieldset>
-			
-            
+
+
             <fieldset name="settings_images" label="MOD_JUNEWS_IMAGE_PARAMETERS" >
 
                 <field name="pik" type="radio" class="btn-group" default="1" label="MOD_JUNEWS_IMAGE_DISPLAY">
@@ -1079,12 +1079,12 @@
             </fieldset>
 
             <fieldset name="comments_integration" label="MOD_JUNEWS_JUNEWSULTRA_INTEGRATION" >
-			
+
 				<field name="use_comments" type="radio" class="btn-group" default="0" label="MOD_JUNEWS_USE_COMMENTS">
 						<option value="0">JNO</option>
 						<option value="1">JYES</option>
 				</field>
-                				
+
 				<field name="@toggler_choose_settings29858_a" type="nn_toggler" param="use_comments" value="1"/>
 
 					<field name="select_comments" type="commentsradio" default="jcomments" label="">

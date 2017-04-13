@@ -4,7 +4,7 @@
  * JUNewsUltra Pro
  *
  * @version          6.x
- * @package          UNewsUltra Pro
+ * @package          JUNewsUltra Pro
  * @author           Denys D. Nosov (denys@joomla-ua.org)
  * @copyright    (C) 2007-2017 by Denys D. Nosov (http://joomla-ua.org)
  * @license          GNU/GPL: http://www.gnu.org/copyleft/gpl.html
@@ -282,9 +282,7 @@ class JULibs
 		}
 		catch (Exception $e)
 		{
-			echo '<div class="alert alert-warning">' . JText::_('MOD_JUNEWS_RSSXML_ERROR') . '</div>';
-
-			return;
+			return '<div class="alert alert-warning">' . JText::_('MOD_JUNEWS_RSSXML_ERROR') . '</div>';
 		}
 
 		return $items;
@@ -306,15 +304,15 @@ class JULibs
 		{
 			$vid = ltrim($urls['path'], '/');
 		}
-		else if ($urls['host'] == 'youtu.be')
+		elseif ($urls['host'] == 'youtu.be')
 		{
 			$yid = ltrim($urls['path'], '/');
 		}
-		else if (strpos($urls['path'], 'embed') == 1)
+		elseif (strpos($urls['path'], 'embed') == 1)
 		{
 			$yid = end(explode('/', $urls['path']));
 		}
-		else if (strpos($url, '/') === false)
+		elseif (strpos($url, '/') === false)
 		{
 			$yid = $url;
 		}
@@ -341,7 +339,7 @@ class JULibs
 				return $yid;
 			}
 		}
-		else if ($vid)
+		elseif ($vid)
 		{
 			$vimeoObject = json_decode(file_get_contents("http://vimeo.com/api/v2/video/" . $vid . ".json"));
 			if (!empty($vimeoObject))
