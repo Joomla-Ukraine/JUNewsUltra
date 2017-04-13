@@ -25,11 +25,14 @@ class JULibs
 		$title = strip_tags($title);
 		$title = htmlspecialchars($title);
 
-		if ($params->def('title_prepare') == 1) $title = JHtml::_('content.prepare', $title);
-
-		if ($params->get('title_limit', 0) == '1')
+		if($params->def('title_prepare') == 1)
 		{
-			if ($params->get('title_limit_mode') == '1')
+			$title = JHtml::_('content.prepare', $title);
+		}
+
+		if($params->get('title_limit', 0) == '1')
+		{
+			if($params->get('title_limit_mode') == '1')
 			{
 				$title = trim(implode(" ", array_slice(explode(" ", $title), 0, $params->get('title_limit_count'))));
 			}
@@ -38,7 +41,7 @@ class JULibs
 				$title = trim(JString::substr($title, 0, $params->get('title_limit_count')));
 			}
 
-			if (!preg_match('#(\.|\?|\!)$#ismu', $title))
+			if(!preg_match('#(\.|\?|\!)$#ismu', $title))
 			{
 				$title = preg_replace('#^\s?(\,|\;|\:|\-)#ismu', '', $title);
 				$title = ($title ? $title . $params->get('end_limit_title', '...') : '');
@@ -58,13 +61,13 @@ class JULibs
 	 * @param $lmttext
 	 * @param $end_limit_text
 	 *
-	 * @return description
+	 * @return mixed
 	 *
 	 * @since 6.0
 	 */
 	static function _Description($params, $description, $cleartag, $allowed_tags, $li, $text_limit, $lmttext, $end_limit_text)
 	{
-		if ($params->def('content_prepare') == 1)
+		if($params->def('content_prepare') == 1)
 		{
 			$description = JHtml::_('content.prepare', $description);
 		}
@@ -79,10 +82,10 @@ class JULibs
 		$description = preg_replace('/::introtext::(.*?)::\/introtext::/i', '\\1', $description);
 		$description = preg_replace('/::fulltext::(.*?)::\/fulltext::/i', '\\2', $description);
 
-		if ($cleartag == '1')
+		if($cleartag == '1')
 		{
 			$description = str_replace('&nbsp;', ' ', $description);
-			if ($allowed_tags)
+			if($allowed_tags)
 			{
 				$allowed_tags = str_replace(array(' ', '&nbsp;', '    '), '', $allowed_tags);
 				$tags         = '<' . str_replace(',', '><', $allowed_tags) . '>';
@@ -94,38 +97,38 @@ class JULibs
 			}
 		}
 
-		if ($li == '1')
+		if($li == '1')
 		{
+			$dots = 1;
+
 			switch ($lmttext)
 			{
 				case '1':
 					$description = trim(implode(" ", array_slice(explode(" ", $description), 0, $text_limit)));
-					$dots        = 1;
 					break;
 				case '2':
 					$description = preg_replace('#<p(.*)>"#is', '<p>', $description);
 
-					if (preg_match('#<p[^>]*>(.*)<\/p>#isU', $description, $matches))
+					if(preg_match('#<p[^>]*>(.*)<\/p>#isU', $description, $matches))
 					{
 						$description = $matches[0];
 						$dots        = 0;
 					}
 					break;
 				case '3':
-					if (preg_match('#^.{100}.*?[.!?]#is', strip_tags($description), $matches))
+					if(preg_match('#^.{100}.*?[.!?]#is', strip_tags($description), $matches))
 					{
 						$description = $matches[0];
 						$dots        = 0;
 					}
 					break;
-				case '0':
 				default:
+				case '0':
 					$description = trim(JString::substr($description, 0, $text_limit));
-					$dots        = 1;
 					break;
 			}
 
-			if ((!preg_match('#(\.|\?|\!)$#ismu', $description)) && ($dots == 1))
+			if((!preg_match('#(\.|\?|\!)$#ismu', $description)) && ($dots == 1))
 			{
 				$description = preg_replace('#^\s?(\,|\;|\:|\-)#ismu', '', $description);
 				$description = ($description ? $description . $end_limit_text : '');
@@ -166,7 +169,7 @@ class JULibs
 		$app = JFactory::getApplication();
 		$tpl = explode(":", $params->def('template'));
 
-		if ($tpl[0] == '_')
+		if($tpl[0] == '_')
 		{
 			$jtpl = $app->getTemplate();
 		}
@@ -176,13 +179,13 @@ class JULibs
 		}
 
 		$starImageOn = JHtml::_('image', 'system/rating_star.png', $rating, null, true);
-		if (is_file(JPATH_SITE . '/modules/mod_junewsultra/tmpl/' . $tpl[1] . '/images/rating_star.png'))
+		if(is_file(JPATH_SITE . '/modules/mod_junewsultra/tmpl/' . $tpl[1] . '/images/rating_star.png'))
 		{
 			$starImageOn = JHTML::_('image', JURI::base() . 'modules/mod_junewsultra/tmpl/' . $tpl[1] . '/images/rating_star.png', $rating, null, true);
 		}
 
 		$starImageOff = JHtml::_('image', 'system/rating_star_blank.png', $rating, null, true);
-		if (is_file(JPATH_SITE . '/modules/mod_junewsultra/tmpl/' . $tpl[1] . '/images/rating_star_blank.png'))
+		if(is_file(JPATH_SITE . '/modules/mod_junewsultra/tmpl/' . $tpl[1] . '/images/rating_star_blank.png'))
 		{
 			$starImageOff = JHTML::_('image', JURI::base() . 'modules/mod_junewsultra/tmpl/' . $tpl[1] . '/images/rating_star_blank.png', $rating, null, true);
 		}
@@ -217,7 +220,7 @@ class JULibs
 	{
 		$timedif = @(time() - filemtime($cache_file));
 
-		if (file_exists($cache_file) && $timedif < $time)
+		if(file_exists($cache_file) && $timedif < $time)
 		{
 			$string = file_get_contents(JURI::root() . $cache_file);
 		}
@@ -225,7 +228,7 @@ class JULibs
 		{
 			try
 			{
-				if (strpos($http_response_header[0], "200"))
+				if(strpos($http_response_header[0], "200"))
 				{
 					$string = @file_get_contents($feed_url);
 				}
@@ -239,7 +242,7 @@ class JULibs
 				$string = preg_replace('/<(\/)?([a-z0-9]+):([a-z0-9]+)/i', '<$1$2_$3', $string);
 				$string = preg_replace('/<feed.*?>/i', '<feed>', $string);
 
-				if ($f = @fopen($cache_file, 'w'))
+				if($f = @fopen($cache_file, 'w'))
 				{
 					fwrite($f, $string, strlen($string));
 					fclose($f);
@@ -253,7 +256,7 @@ class JULibs
 			}
 		}
 
-		if ($error == 1 && is_file(JPATH_SITE . '/' . $cache_file))
+		if($error == 1 && is_file(JPATH_SITE . '/' . $cache_file))
 		{
 			$string = file_get_contents(JURI::root() . $cache_file);
 		}
@@ -300,27 +303,27 @@ class JULibs
 	{
 		$urls = parse_url($url);
 
-		if ($urls['host'] == 'vimeo.com')
+		if($urls['host'] == 'vimeo.com')
 		{
 			$vid = ltrim($urls['path'], '/');
 		}
-		elseif ($urls['host'] == 'youtu.be')
+		elseif($urls['host'] == 'youtu.be')
 		{
 			$yid = ltrim($urls['path'], '/');
 		}
-		elseif (strpos($urls['path'], 'embed') == 1)
+		elseif(strpos($urls['path'], 'embed') == 1)
 		{
 			$yid = end(explode('/', $urls['path']));
 		}
-		elseif (strpos($url, '/') === false)
+		elseif(strpos($url, '/') === false)
 		{
 			$yid = $url;
 		}
 		else
 		{
-			$v   = parse_str($urls['query'], $output);
+			parse_str($urls['query'], $output);
 			$yid = $output['v'];
-			if (!empty($feature))
+			if(!empty($feature))
 			{
 				$yid = end(explode('v=', $urls['query']));
 				$arr = explode('&', $yid);
@@ -328,9 +331,9 @@ class JULibs
 			}
 		}
 
-		if ($yid)
+		if($yid)
 		{
-			if ($return == 'hqthumb')
+			if($return == 'hqthumb')
 			{
 				return 'http://i1.ytimg.com/vi/' . $yid . '/hqdefault.jpg';
 			}
@@ -339,12 +342,12 @@ class JULibs
 				return $yid;
 			}
 		}
-		elseif ($vid)
+		elseif($vid)
 		{
 			$vimeoObject = json_decode(file_get_contents("http://vimeo.com/api/v2/video/" . $vid . ".json"));
-			if (!empty($vimeoObject))
+			if(!empty($vimeoObject))
 			{
-				if ($return == 'hqthumb')
+				if($return == 'hqthumb')
 				{
 					return $vimeoObject[0]->thumbnail_large;
 				}
@@ -359,7 +362,7 @@ class JULibs
 	/**
 	 * @param $html
 	 *
-	 * @return url
+	 * @return mixed
 	 *
 	 * @since 6.0
 	 */
@@ -369,34 +372,6 @@ class JULibs
 
 		$html = preg_replace('@href="(?!http://)(?!https://)(?!mailto:)([^"]+)"@i', "href=\"{$root_url}\${1}\"", $html);
 		$html = preg_replace('@src="(?!http://)(?!https://)([^"]+)"@i', "src=\"{$root_url}\${1}\"", $html);
-
-		return $html;
-	}
-
-	/**
-	 * @param $html
-	 *
-	 * @return html
-	 *
-	 * @since 6.0
-	 */
-	public static function htmlCompress($html)
-	{
-		preg_match_all('!(<(?:code|pre|textarea|script).*?>.*?</(?:code|pre|textarea|script)>)!si', $html, $pre);
-		$html = preg_replace('!<(?:code|pre|textarea|script).*?>.*?</(?:code|pre|textarea|script)>!si', '#pre#', $html);
-		$html = preg_replace('#<!–[^\[].+–>#', '', $html);
-		$html = preg_replace('/[\r\n\t]+/', '', $html);
-		$html = str_replace('  ', '', $html);
-
-		if (!empty($pre[0]))
-		{
-			foreach ($pre[0] as $tag)
-			{
-				$html = preg_replace('!#pre#!', $tag, $html, 1);
-				$html = preg_replace('#<\/script>\s*#', "</script>", $html);
-				$html = preg_replace('#\s*<script#', "<script", $html);
-			}
-		}
 
 		return $html;
 	}

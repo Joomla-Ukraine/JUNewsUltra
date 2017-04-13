@@ -2,7 +2,7 @@
 <extension type="package" version="3" method="upgrade">
     <name>pkg_junewsultra</name>
     <packagename>junewsultra</packagename>
-    <creationDate>12.04.2017</creationDate>
+    <creationDate>13.04.2017</creationDate>
     <packager>Joomla! Ukraine</packager>
     <copyright>(C) 2009-2017 Denys Nosov, Joomla! Ukraine</copyright>
     <packagerurl>http://joomla-ua.org</packagerurl>

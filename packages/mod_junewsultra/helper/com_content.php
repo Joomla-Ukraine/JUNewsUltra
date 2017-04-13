@@ -59,7 +59,7 @@ class com_content extends modJUNewsUltraHelper
 		$user_id   = $params->get('user_id');
 		$uid       = $params->get('uid');
 
-		if ($useaccess == '1')
+		if($useaccess == '1')
 		{
 			$groups = implode(',', $user->getAuthorisedViewLevels());
 		}
@@ -129,7 +129,7 @@ class com_content extends modJUNewsUltraHelper
 		}
 
 		// Access filter
-		if ($useaccess == '1')
+		if($useaccess == '1')
 		{
 			$access     = !JComponentHelper::getParams('com_content')->get('show_noauth');
 			$authorised = JAccess::getAuthorisedViewLevels($user->get('id'));
@@ -140,30 +140,30 @@ class com_content extends modJUNewsUltraHelper
 			$authorised = array();
 		}
 
-		if (is_array($catid))
+		if(is_array($catid))
 		{
 			$cat_arr = array();
 			foreach ($catid as $key => $curr)
 			{
-				if (intval($curr)) $cat_arr[$key] = intval($curr);
+				if(intval($curr)) $cat_arr[$key] = intval($curr);
 			}
 		}
 		else
 		{
 			$cat_arr = array();
 
-			if (intval($catid)) $cat_arr[] = intval($catid);
+			if(intval($catid)) $cat_arr[] = intval($catid);
 		}
 
 		// Selects data
 		$query->select('a.id, a.state, a.alias, a.publish_up, a.publish_down');
 
-		if ($junews['show_title'] == '1' || $junews['show_image'] == '1')
+		if($junews['show_title'] == '1' || $junews['show_image'] == '1')
 		{
 			$query->select('a.title');
 		}
 
-		if ($junews['sourcetext'] == '1' || $junews['show_intro'] == '1' ||
+		if($junews['sourcetext'] == '1' || $junews['show_intro'] == '1' ||
 			($junews['show_image'] == '1' && $junews['image_source'] == '0' &&
 				($junews['introfulltext'] == '0' || $junews['introfulltext'] == '2'))
 		)
@@ -171,7 +171,7 @@ class com_content extends modJUNewsUltraHelper
 			$query->select('a.introtext');
 		}
 
-		if ($junews['sourcetext'] == '1' || $junews['show_full'] == '1' ||
+		if($junews['sourcetext'] == '1' || $junews['show_full'] == '1' ||
 			($junews['show_image'] == '1' && $junews['image_source'] == '0' &&
 				($junews['introfulltext'] == '1' || $junews['introfulltext'] == '2'))
 		)
@@ -179,17 +179,17 @@ class com_content extends modJUNewsUltraHelper
 			$query->select('a.fulltext');
 		}
 
-		if (JLanguageMultilang::isEnabled())
+		if(JLanguageMultilang::isEnabled())
 		{
 			$query->select('a.language');
 		}
 
-		if ($junews['image_source'] > '0' && $junews['show_image'] == '1')
+		if($junews['image_source'] > '0' && $junews['show_image'] == '1')
 		{
 			$query->select('a.images');
 		}
 
-		if (
+		if(
 			($junews['show_date'] == '1' || $ordering == 'created_asc' || $ordering == 'created_desc')
 			&&
 			(
@@ -204,7 +204,7 @@ class com_content extends modJUNewsUltraHelper
 			$query->select('a.created');
 		}
 
-		if (
+		if(
 			(
 				$junews['show_date'] == '1' || $ordering == 'modified_asc' || $ordering == 'modified_desc' ||
 				$ordering == 'modified_created_dsc' || $ordering == 'modified_touch_dsc'
@@ -220,22 +220,22 @@ class com_content extends modJUNewsUltraHelper
 			$query->select('a.modified');
 		}
 
-		if ($user_id)
+		if($user_id)
 		{
 			$query->select('a.modified_by');
 		}
 
-		if ($useaccess == '1')
+		if($useaccess == '1')
 		{
 			$query->select('a.access');
 		}
 
-		if ($junews['featured'] != '0')
+		if($junews['featured'] != '0')
 		{
 			$query->select('a.featured');
 		}
 
-		if (
+		if(
 			$junews['show_author'] == '1' ||
 			$dateuser_filtering == '1' ||
 			$user_id ||
@@ -245,27 +245,27 @@ class com_content extends modJUNewsUltraHelper
 			$query->select('a.created_by');
 		}
 
-		if ($junews['show_author'] == '1')
+		if($junews['show_author'] == '1')
 		{
 			$query->select('a.created_by_alias');
 		}
 
-		if ($show_attribs == '1')
+		if($show_attribs == '1')
 		{
 			$query->select('a.attribs');
 		}
 
-		if ($ordering == 'ordering_asc' || $ordering == 'ordering_desc')
+		if($ordering == 'ordering_asc' || $ordering == 'ordering_desc')
 		{
 			$query->select('a.ordering');
 		}
 
-		if ($junews['show_hits'] == '1' || $ordering == 'hits_asc' || $ordering == 'hits_desc')
+		if($junews['show_hits'] == '1' || $ordering == 'hits_asc' || $ordering == 'hits_desc')
 		{
 			$query->select('a.hits');
 		}
 
-		if (is_array($catid) || $access)
+		if(is_array($catid) || $access)
 		{
 			$query->select('a.catid');
 		}
@@ -274,38 +274,38 @@ class com_content extends modJUNewsUltraHelper
 		$query->from('#__content AS a');
 
 		// Categories
-		if ($junews['show_cat'] == '1')
+		if($junews['show_cat'] == '1')
 		{
 			$query->select('cc.title AS category_title');
 			$query->join('LEFT', '#__categories AS cc ON cc.id = a.catid');
 		}
 
 		// Multicategories plugin integration
-		if ($junews['multicat'] == 1)
+		if($junews['multicat'] == 1)
 		{
 			$query->select('cmc.category_id AS cmc_cat');
 			$query->join('LEFT', '#__contentmulticategories_categories AS cmc ON cmc.article_id = a.id');
 		}
 
 		// User
-		if ($junews['show_author'] == 1)
+		if($junews['show_author'] == 1)
 		{
 			$query->select('u.name AS author');
 			$query->join('LEFT', '#__users AS u on u.id = a.created_by');
 		}
 
 		// Rating
-		if ($junews['show_rating'] == 1)
+		if($junews['show_rating'] == 1)
 		{
 			$query->select('ROUND(v.rating_sum / v.rating_count, 0) AS rating');
 			$query->join('LEFT', '#__content_rating AS v ON a.id = v.content_id');
 		}
 
 		// Uniq author post
-		if ($dateuser_filtering == 1 || !empty($uid))
+		if($dateuser_filtering == 1 || !empty($uid))
 		{
 			$ji_catids = '';
-			if (is_array($cat_arr) && count($cat_arr))
+			if(is_array($cat_arr) && count($cat_arr))
 			{
 				$ji_catids = 'WHERE `catid` IN (' . implode(',', $cat_arr) . ')';
 			}
@@ -319,13 +319,13 @@ class com_content extends modJUNewsUltraHelper
 		$query->where('( a.publish_down = ' . $db->Quote($nullDate) . ' OR a.publish_down > ' . $db->Quote($now) . ' )');
 
 		// Select article or categories
-		if ($display_article == '1')
+		if($display_article == '1')
 		{
 			$query->where('a.id = ' . (int) $params->def('articleid'));
 		}
 		else
 		{
-			if ($date_filtering == 1)
+			if($date_filtering == 1)
 			{
 				switch ($relative_date)
 				{
@@ -357,9 +357,9 @@ class com_content extends modJUNewsUltraHelper
 			}
 
 			// Standart categories or multicategories (plugin integration)
-			if (is_array($cat_arr) && count($cat_arr))
+			if(is_array($cat_arr) && count($cat_arr))
 			{
-				if ($junews['multicat'] == 1)
+				if($junews['multicat'] == 1)
 				{
 					$query->where('( a.catid IN (' . implode(',', $cat_arr) . ') OR cmc.category_id IN (' . implode(',', $cat_arr) . ') )');
 				}
@@ -370,7 +370,7 @@ class com_content extends modJUNewsUltraHelper
 			}
 
 			$excluded_articles = $params->get('excluded_articles', null);
-			if ($excluded_articles)
+			if($excluded_articles)
 			{
 				$excluded_articles = explode("\r\n", $excluded_articles);
 				$query->where('a.id NOT IN (' . implode(',', $excluded_articles) . ')');
@@ -389,7 +389,7 @@ class com_content extends modJUNewsUltraHelper
 			switch ($user_id)
 			{
 				case '0':
-					if ($uid > '0') $query->where('a.created_by = ' . $db->Quote((int) $uid));
+					if($uid > '0') $query->where('a.created_by = ' . $db->Quote((int) $uid));
 					break;
 				case 'by_me':
 					$query->where('(a.created_by = ' . (int) $user->get('id') . ' OR a.modified_by = ' . (int) $user->get('id') . ')');
@@ -400,21 +400,21 @@ class com_content extends modJUNewsUltraHelper
 			}
 		}
 
-		if (JLanguageMultilang::isEnabled())
+		if(JLanguageMultilang::isEnabled())
 		{
 			$query->where('a.language in (' . $db->quote(JFactory::getLanguage()->getTag()) . ',' . $db->quote('*') . ')');
 		}
 
-		if ($useaccess == '1')
+		if($useaccess == '1')
 		{
 			$query->where('a.access IN (' . $groups . ')');
 		}
 
 		// Custom WHERE SQL
-		if ($wheresql == 1)
+		if($wheresql == 1)
 		{
 			$sqls = explode("\r\n", $where);
-			if ($params->get('sql_operator', 1) == '1')
+			if($params->get('sql_operator', 1) == '1')
 			{
 				foreach ($sqls as $sql)
 				{
@@ -436,12 +436,12 @@ class com_content extends modJUNewsUltraHelper
 		$items = $db->loadObjectList();
 
 		// Comments integration
-		if ($params->def('use_comments') == 1 && count($items))
+		if($params->def('use_comments') == 1 && count($items))
 		{
 			$comments_system = $params->def('select_comments');
 			$comments        = JPATH_SITE . '/components/com_' . $comments_system . '/' . $comments_system . '.php';
 
-			if (file_exists($comments))
+			if(file_exists($comments))
 			{
 				$ids = array();
 				foreach ($items as &$item)
@@ -467,6 +467,7 @@ class com_content extends modJUNewsUltraHelper
 						$query->where('component = "com_content" AND cid IN (' . implode(',', $ids) . ') AND published = "1"');
 						$query->group('cid');
 						$db->setQuery($query);
+
 						$commentsCount  = $db->loadObjectList('cid');
 						$comment_link   = '#section-komento';
 						$comment_add    = $comment_link;
@@ -481,6 +482,7 @@ class com_content extends modJUNewsUltraHelper
 						$query->where('object_group = "com_content" AND object_id IN (' . implode(',', $ids) . ') AND published = "1"');
 						$query->group('object_id');
 						$db->setQuery($query);
+
 						$commentsCount  = $db->loadObjectList('object_id');
 						$comment_link   = '#comments';
 						$comment_add    = '#addcomments';
@@ -497,7 +499,7 @@ class com_content extends modJUNewsUltraHelper
 					$item->commentstext  = ($comment_plural == 1 ? JText::plural($comment_text1, $item->comments) : JText::_($comment_text1) . ' (' . $item->comments . ')');
 					$item->commentscount = $item->comments;
 
-					if ($item->comments == 0)
+					if($item->comments == 0)
 					{
 						$item->comments     = '';
 						$item->commentslink = $comment_add;
@@ -513,13 +515,14 @@ class com_content extends modJUNewsUltraHelper
 
 		foreach ($items as &$item)
 		{
-			if ($access || in_array($item->access, $authorised))
+			if($access || in_array($item->access, $authorised))
 			{
 				$item->slug = $item->id . ($item->alias ? ':' . $item->alias : '');
 				$language   = (JLanguageMultilang::isEnabled() ? $item->language : '');
+				$catid      = ($item->cmc_cat && $junews['multicat'] == 1 ? $item->cmc_cat : $item->catid);
 
-				$item->link    = JRoute::_(ContentHelperRoute::getArticleRoute($item->slug, ($item->cmc_cat ? $item->cmc_cat : $item->catid), $language));
-				$item->catlink = JRoute::_(ContentHelperRoute::getCategoryRoute($item->catid));
+				$item->link    = JRoute::_(ContentHelperRoute::getArticleRoute($item->slug, $catid, $language));
+				$item->catlink = JRoute::_(ContentHelperRoute::getCategoryRoute($catid));
 			}
 			else
 			{
@@ -528,7 +531,7 @@ class com_content extends modJUNewsUltraHelper
 			}
 
 			// article title
-			if ($junews['show_title'] == 1)
+			if($junews['show_title'] == 1)
 			{
 				$item->title = $JULibs->_Title($params, $item->title);
 			}
@@ -537,11 +540,11 @@ class com_content extends modJUNewsUltraHelper
 			$item->title_alt = $JULibs->_Title($params, $item->title);
 
 			// category title
-			if ($junews['show_cat'] == 1)
+			if($junews['show_cat'] == 1)
 			{
 				$cattitle = strip_tags($item->category_title);
 
-				if ($params->get('showcatlink') == 1)
+				if($params->get('showcatlink') == 1)
 				{
 					$item->cattitle = '<a href="' . $item->catlink . '">' . $cattitle . '</a>';
 				}
@@ -551,7 +554,7 @@ class com_content extends modJUNewsUltraHelper
 				}
 			}
 
-			if ($junews['show_image'] == 1)
+			if($junews['show_image'] == 1)
 			{
 				switch ($junews['introfulltext'])
 				{
@@ -571,61 +574,49 @@ class com_content extends modJUNewsUltraHelper
 
 				$imlink  = '';
 				$imlink2 = '';
-				if ($junews['imglink'] == 1)
+				if($junews['imglink'] == 1)
 				{
 					$imlink  = '<a href="' . $item->link . '"' . ($params->get('tips') == 1 ? ' title="' . $title_alt . '"' : '') . '>';
 					$imlink2 = '</a>';
 				}
 
-				if ($junews['image_source'] == '0')
+				if($junews['image_source'] == '0')
 				{
-					if (preg_match('/<img(.*?)src="(.*?)"(.*?)>\s*(<\/img>)?/', $_text, $junuimgsource))
+					if(preg_match('/<img(.*?)src="(.*?)"(.*?)>\s*(<\/img>)?/', $_text, $junuimgsource))
 					{
 						$junuimgsource = $junuimgsource[2];
 					}
-					elseif (preg_match('/{gallery\s+(.*?)}/i', $_text, $junuimgsource) && $junews['gallery'] == '1')
+					elseif(preg_match('/{gallery\s+(.*?)}/i', $_text, $junuimgsource) && $junews['gallery'] == '1')
 					{
-						$junuimgsource = $junuimgsource[1];
-						$imglist       = explode("|", $junuimgsource);
-						$junuimgsource = $imglist[0];
-						$root          = JPATH_BASE . '/';
-						$folder        = 'images/' . $junuimgsource;
-						$img_folder    = $root . $folder;
+						$folder_match = $junuimgsource[1];
+						$imglist      = explode("|", $folder_match);
+						$imgsource    = $imglist[0];
+						$root         = JPATH_BASE . '/';
+						$folder       = 'images/' . $imgsource;
+						$img_folder   = $root . $folder;
+						$galleries    = glob($img_folder . '/{*.[jJ][pP][gG],*.[jJ][pP][eE][gG],*.[gG][iI][fF],*.[pP][nN][gG],*.[bB][mM][pP],*.[tT][iI][fF],*.[tT][iI][fF][fF]}', GLOB_BRACE);
 
-						if (is_dir($img_folder))
+						if(count($galleries) > 0 && is_dir($img_folder))
 						{
-							$images = scandir($img_folder);
-
-							$files = array();
-							foreach ($images as $file)
+							$i    = 0;
+							$html = array();
+							natcasesort($galleries);
+							foreach ($galleries as $gallery)
 							{
-								if (
-									$file !== '.' && $file !== '..'
-									&&
-									(
-										strtolower(substr($file, -4)) === 'jpeg' ||
-										strtolower(substr($file, -3)) === 'jpg' ||
-										strtolower(substr($file, -3)) === 'png' ||
-										strtolower(substr($file, -3)) === 'bmp' ||
-										strtolower(substr($file, -3)) === 'tif' ||
-										strtolower(substr($file, -4)) === 'tiff' ||
-										strtolower(substr($file, -3)) === 'gif'
-									)
-								)
-								{
-									$files[] = $file;
+								if($i > 0) break;
 
-									break;
-								}
+								$html[] = str_replace(JPATH_BASE . '/', JURI::base(), $gallery);
+								$i++;
 							}
-							$junuimgsource = $folder . '/' . $files[0];
+
+							$junuimgsource = $html[0];
 						}
 						else
 						{
 							$junuimgsource = '';
 						}
 					}
-					elseif ($junews['youtube_img_show'] == 1)
+					elseif($junews['youtube_img_show'] == 1)
 					{
 						//Youtube
 						$_text = str_replace(
@@ -641,51 +632,51 @@ class com_content extends modJUNewsUltraHelper
 							$_text
 						);
 
-						if (preg_match_all('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^>"&?/ ]{11})%i', $_text, $match))
+						if(preg_match_all('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^>"&?/ ]{11})%i', $_text, $match))
 						{
 							$junuimgsource = $JULibs->video('http://youtu.be/' . $match[1][0], 'hqthumb');
 						}
 
 						//Vimeo
-						if (preg_match_all('#(player.vimeo.com)/video/([0-9]+)#i', $_text, $match))
+						if(preg_match_all('#(player.vimeo.com)/video/([0-9]+)#i', $_text, $match))
 						{
 							$junuimgsource = $JULibs->video('http://vimeo.com/' . $match[2], 'hqthumb');
 						}
 					}
 				}
 
-				if ($junews['image_source'] == '1' || $junews['image_source'] == '2' || $junews['image_source'] == '3')
+				if($junews['image_source'] == '1' || $junews['image_source'] == '2' || $junews['image_source'] == '3')
 				{
 					// images from article parameters
 					$images = json_decode($item->images);
-					if (
+					if(
 						($junews['image_source'] > '0') &&
 						((isset($images->image_intro) && !empty($images->image_intro)) ||
 							(isset($images->image_fulltext) && !empty($images->image_fulltext)))
 					)
 					{
-						if ($junews['image_source'] == '1')
+						if($junews['image_source'] == '1')
 						{
-							if (isset($images->image_intro) && !empty($images->image_intro))
+							if(isset($images->image_intro) && !empty($images->image_intro))
 							{
 								$junuimgsource = htmlspecialchars($images->image_intro);
 								// raw image source
 								$item->imagesource = htmlspecialchars($images->image_intro);
 							}
-							elseif (isset($images->image_fulltext) && !empty($images->image_fulltext))
+							elseif(isset($images->image_fulltext) && !empty($images->image_fulltext))
 							{
 								$junuimgsource = htmlspecialchars($images->image_fulltext);
 								// raw image source
 								$item->imagesource = htmlspecialchars($images->image_fulltext);
 							}
 						}
-						elseif ($junews['image_source'] == '2' && (isset($images->image_intro) && !empty($images->image_intro)))
+						elseif($junews['image_source'] == '2' && (isset($images->image_intro) && !empty($images->image_intro)))
 						{
 							$junuimgsource = htmlspecialchars($images->image_intro);
 							// raw image source
 							$item->imagesource = htmlspecialchars($images->image_intro);
 						}
-						elseif ($junews['image_source'] == '3' && (isset($images->image_fulltext) && !empty($images->image_fulltext)))
+						elseif($junews['image_source'] == '3' && (isset($images->image_fulltext) && !empty($images->image_fulltext)))
 						{
 							$junuimgsource = htmlspecialchars($images->image_fulltext);
 							// raw image source
@@ -697,18 +688,18 @@ class com_content extends modJUNewsUltraHelper
 				switch ($junews['thumb_width'])
 				{
 					case '0':
-						if ($junews['defaultimg'] == 1 && (!$junuimgsource))
+						if($junews['defaultimg'] == 1 && (!$junuimgsource))
 						{
 							$junuimgsource = 'media/mod_junewsultra/' . $junews['noimage'];
 						}
 
-						if ($junuimgsource)
+						if($junuimgsource)
 						{
 							$item->image       = $imlink . '<img src="' . $junuimgsource . '" alt="' . $title_alt . '" />' . $imlink2;
 							$item->imagelink   = $junuimgsource;
 							$item->imagesource = $junuimgsource;
 						}
-						elseif ($junews['defaultimg'] == 1)
+						elseif($junews['defaultimg'] == 1)
 						{
 							$item->image       = '';
 							$item->imagelink   = '';
@@ -717,16 +708,13 @@ class com_content extends modJUNewsUltraHelper
 						break;
 					case '1':
 					default:
-						if (!$junuimgsource)
+						if(!$junuimgsource)
 						{
-							if ($junews['defaultimg'] == 1)
+							$blank = 0;
+							if($junews['defaultimg'] == 1)
 							{
 								$junuimgsource = 'media/mod_junewsultra/' . $junews['noimage'];
 								$blank         = 1;
-							}
-							else
-							{
-								$blank = 0;
 							}
 						}
 						else
@@ -734,15 +722,15 @@ class com_content extends modJUNewsUltraHelper
 							$blank = 1;
 						}
 
-						if ($blank == 1)
+						if($blank == 1)
 						{
 							$aspect = 0;
-							if ($junews['auto_zoomcrop'] == '1')
+							if($junews['auto_zoomcrop'] == '1')
 							{
 								$aspect = $JULibs->aspect($junuimgsource, $junews['cropaspect']);
 							}
 
-							if ($aspect >= '1' && $junews['auto_zoomcrop'] == '1')
+							if($aspect >= '1' && $junews['auto_zoomcrop'] == '1')
 							{
 								$newimgparams = array(
 									'far' => '1',
@@ -756,7 +744,7 @@ class com_content extends modJUNewsUltraHelper
 								);
 							}
 
-							if ($junews['farcrop'] == '1')
+							if($junews['farcrop'] == '1')
 							{
 								$newimgparams = array(
 									'far' => $junews['farcrop_params'],
@@ -789,7 +777,7 @@ class com_content extends modJUNewsUltraHelper
 
 									for ($i = 0; $i <= 4; $i++)
 									{
-										if ($imgset[$i])
+										if($imgset[$i])
 										{
 											switch ($imgset[$i])
 											{
@@ -812,19 +800,23 @@ class com_content extends modJUNewsUltraHelper
 											}
 
 											$imgsetparams = array(
-													'w'     => round($junews['w'] * $zoom),
-													'h'     => round($junews['h'] * $zoom),
-													'sx'    => ($junews['sx'] ? $junews['sx'] : ''),
-													'sy'    => ($junews['sy'] ? $junews['sy'] : ''),
-													'sw'    => ($junews['sw'] ? $junews['sw'] : ''),
-													'sh'    => ($junews['sh'] ? $junews['sh'] : ''),
-													'f'     => $junews['f'],
-													'q'     => $junews['q'],
-													'cache' => 'img'
-												)
-												+ $newimgparams;
+												'w'     => round($junews['w'] * $zoom),
+												'h'     => round($junews['h'] * $zoom),
+												'sx'    => ($junews['sx'] ? $junews['sx'] : ''),
+												'sy'    => ($junews['sy'] ? $junews['sy'] : ''),
+												'sw'    => ($junews['sw'] ? $junews['sw'] : ''),
+												'sh'    => ($junews['sh'] ? $junews['sh'] : ''),
+												'f'     => $junews['f'],
+												'q'     => $junews['q'],
+												'cache' => 'img'
+											);
 
-											$thumb_imgset  = JURI::base() . $JUImg->Render($junuimgsource, $imgsetparams);
+											$imgsetparams_merge = array_merge(
+												$imgsetparams,
+												$newimgparams
+											);
+
+											$thumb_imgset  = JURI::base() . $JUImg->Render($junuimgsource, $imgsetparams_merge);
 											$attr_imgset[] = $thumb_imgset . ' ' . $imgset[$i] . 'w';
 										}
 									}
@@ -835,7 +827,7 @@ class com_content extends modJUNewsUltraHelper
 									$attr_imgset = array();
 									for ($i = 0; $i <= 2; $i++)
 									{
-										if ($imgset[$i])
+										if($imgset[$i])
 										{
 											switch ($imgset[$i])
 											{
@@ -845,25 +837,30 @@ class com_content extends modJUNewsUltraHelper
 												case '3':
 													$zoom = 3;
 													break;
+												default:
 												case '1':
 													$zoom = 1;
 													break;
 											}
 
 											$imgsetparams = array(
-													'w'     => round($junews['w'] * $zoom),
-													'h'     => round($junews['h'] * $zoom),
-													'sx'    => ($junews['sx'] ? $junews['sx'] : ''),
-													'sy'    => ($junews['sy'] ? $junews['sy'] : ''),
-													'sw'    => ($junews['sw'] ? $junews['sw'] : ''),
-													'sh'    => ($junews['sh'] ? $junews['sh'] : ''),
-													'f'     => $junews['f'],
-													'q'     => $junews['q'],
-													'cache' => 'img'
-												)
-												+ $newimgparams;
+												'w'     => round($junews['w'] * $zoom),
+												'h'     => round($junews['h'] * $zoom),
+												'sx'    => ($junews['sx'] ? $junews['sx'] : ''),
+												'sy'    => ($junews['sy'] ? $junews['sy'] : ''),
+												'sw'    => ($junews['sw'] ? $junews['sw'] : ''),
+												'sh'    => ($junews['sh'] ? $junews['sh'] : ''),
+												'f'     => $junews['f'],
+												'q'     => $junews['q'],
+												'cache' => 'img'
+											);
 
-											$thumb_imgset  = JURI::base() . $JUImg->Render($junuimgsource, $imgsetparams);
+											$imgsetparams_merge = array_merge(
+												$imgsetparams,
+												$newimgparams
+											);
+
+											$thumb_imgset  = JURI::base() . $JUImg->Render($junuimgsource, $imgsetparams_merge);
 											$attr_imgset[] = $thumb_imgset . ' ' . $imgset[$i] . 'x';
 										}
 									}
@@ -891,13 +888,13 @@ class com_content extends modJUNewsUltraHelper
 			}
 
 			// rawtext
-			if ($junews['sourcetext'] == '1')
+			if($junews['sourcetext'] == '1')
 			{
 				$item->sourcetext = $item->introtext . $item->fulltext;
 			}
 
 			// introtext
-			if ($junews['show_intro'] == '1')
+			if($junews['show_intro'] == '1')
 			{
 				$item->introtext = $JULibs->_Description(
 					$params,
@@ -912,7 +909,7 @@ class com_content extends modJUNewsUltraHelper
 			}
 
 			// fulltext
-			if ($junews['show_full'] == '1')
+			if($junews['show_full'] == '1')
 			{
 				$item->fulltext = $JULibs->_Description(
 					$params,
@@ -927,20 +924,13 @@ class com_content extends modJUNewsUltraHelper
 			}
 
 			// author
-			if ($junews['show_author'] == 1)
+			if($junews['show_author'] == 1 && $item->created_by_alias)
 			{
-				if ($item->created_by_alias)
-				{
-					$item->author = $item->created_by_alias;
-				}
-				else
-				{
-					$item->author = $item->author;
-				}
+				$item->author = $item->created_by_alias;
 			}
 
 			// date
-			if ($junews['show_date'] == 1)
+			if($junews['show_date'] == 1)
 			{
 				switch ($date_type)
 				{
@@ -965,7 +955,7 @@ class com_content extends modJUNewsUltraHelper
 			}
 
 			// rating
-			if ($junews['show_rating'] == 1)
+			if($junews['show_rating'] == 1)
 			{
 				$item->rating = $JULibs->_RatingStar($params, $item->rating);
 			}

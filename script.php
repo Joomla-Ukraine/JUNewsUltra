@@ -244,6 +244,7 @@ class Pkg_JUNewsUltraInstallerScript
 			$path . 'fields/juradio30.php',
 			$path . 'fields/toggler25.php',
 			$path . 'fields/donate.php',
+			$path . 'fields/article.php',
 
 			$path . 'tmpl/default/images/bg.jpg',
 			$path . 'tmpl/default/images/rating_star.png_',
