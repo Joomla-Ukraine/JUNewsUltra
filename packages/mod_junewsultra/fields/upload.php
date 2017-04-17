@@ -2,13 +2,13 @@
 /**
  * JUNewsUltra Pro
  *
- * @version          6.x
- * @package          UNewsUltra Pro
- * @author           Denys D. Nosov (denys@joomla-ua.org)
- * @copyright    (C) 2007-2015 by Denys D. Nosov (http://joomla-ua.org)
- * @license          GNU/GPL: http://www.gnu.org/copyleft/gpl.html
+ * @package          Joomla.Site
+ * @subpackage       mod_junewsultra
  *
- **/
+ * @author           Denys Nosov, denys@joomla-ua.org
+ * @copyright        2007-2017 (C) Joomla! Ukraine, http://joomla-ua.org. All rights reserved.
+ * @license          GNU General Public License version 2 or later; see LICENSE.txt
+ */
 
 defined('JPATH_BASE') or die;
 
