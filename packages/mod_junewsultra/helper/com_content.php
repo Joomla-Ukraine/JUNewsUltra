@@ -526,7 +526,7 @@ class com_content extends modJUNewsUltraHelper
             {
                 $item->slug = $item->id . ($item->alias ? ':' . $item->alias : '');
                 $language   = (JLanguageMultilang::isEnabled() ? $item->language : '');
-                $catid      = ($item->cmc_cat && $junews['multicat'] == 1 ? $item->cmc_cat : $item->catid);
+                $catid      = (!empty($item->cmc_cat) && $junews['multicat'] == 1 ? $item->cmc_cat : $item->catid);
 
                 $item->link    = JRoute::_(ContentHelperRoute::getArticleRoute($item->slug, $catid, $language));
                 $item->catlink = JRoute::_(ContentHelperRoute::getCategoryRoute($catid));
