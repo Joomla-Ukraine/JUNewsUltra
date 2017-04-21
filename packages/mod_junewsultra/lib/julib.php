@@ -94,6 +94,7 @@ class JULibs
         if($cleartag == '1')
         {
             $description = str_replace('&nbsp;', ' ', $description);
+            $description = preg_replace('/(<\/[^>]+?>)(<[^>\/][^>]*?>)/', '$1 $2', $description);
             if($allowed_tags)
             {
                 $allowed_tags = str_replace(array(' ', '&nbsp;', '    '), '', $allowed_tags);
