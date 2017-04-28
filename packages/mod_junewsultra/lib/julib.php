@@ -300,10 +300,11 @@ class JULibs
      *
      * @since 6.0
      */
-    public static function video($url, $return = 'hqthumb')
+    public static function video($url)
     {
         $urls = parse_url($url);
         $yid  = '';
+        $vid  = '';
 
         if($urls['host'] == 'vimeo.com')
         {
@@ -335,30 +336,44 @@ class JULibs
 
         if($yid)
         {
-            if($return == 'hqthumb')
+            $ytpath = 'https://img.youtube.com/vi/' . $yid;
+
+            if(JULib::http($ytpath . '/maxresdefault.jpg') == '200')
             {
-                return 'http://i1.ytimg.com/vi/' . $yid . '/hqdefault.jpg';
+                $img = $ytpath . '/maxresdefault.jpg';
+            }
+            elseif(JULib::http($ytpath . '/hqdefault.jpg') == '200')
+            {
+                $img = $ytpath . '/hqdefault.jpg';
+            }
+            elseif(JULib::http($ytpath . '/mqdefault.jpg') == '200')
+            {
+                $img = $ytpath . '/mqdefault.jpg';
+            }
+            elseif(JULib::http($ytpath . '/sddefault.jpg') == '200')
+            {
+                $img = $ytpath . '/sddefault.jpg';
             }
             else
             {
-                return $yid;
+                $img = $ytpath . '/default.jpg';
             }
+
+            return $img;
         }
         elseif($vid)
         {
-            $vimeoObject = json_decode(file_get_contents("http://vimeo.com/api/v2/video/" . $vid . ".json"));
+            $vimeoObject = json_decode(
+                file_get_contents("http://vimeo.com/api/v2/video/" . $vid . ".json")
+            );
+
             if(!empty($vimeoObject))
             {
-                if($return == 'hqthumb')
-                {
-                    return $vimeoObject[0]->thumbnail_large;
-                }
-                else
-                {
-                    return $vid;
-                }
+                return $vimeoObject[0]->thumbnail_large;
             }
         }
+
+        return true;
     }
 
     /**

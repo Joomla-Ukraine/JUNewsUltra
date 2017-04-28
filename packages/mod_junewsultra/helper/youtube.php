@@ -79,7 +79,9 @@ class youtube extends modJUNewsUltraHelper
             if($junews['show_cat'] == 1) $item->cattitle = '';
 
             // rawtext
-            if($junews['sourcetext'] == '1') $item->sourcetext = (isset($item->media_group->media_description) ? $item->media_group->media_description : '');
+            if($junews['sourcetext'] == '1') {
+                $item->sourcetext = (isset($item->media_group->media_description) ? $item->media_group->media_description : '');
+            }
 
             // introtext
             if($junews['show_intro'] == '1')
@@ -170,6 +172,7 @@ class youtube extends modJUNewsUltraHelper
                             }
                         }
 
+                        $aspect = 0;
                         if($junews['auto_zoomcrop'] == '1')
                         {
                             $aspect = $JULibs->aspect($junuimgsource);

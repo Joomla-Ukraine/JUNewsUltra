@@ -587,6 +587,8 @@ class com_content extends modJUNewsUltraHelper
                     $imlink2 = '</a>';
                 }
 
+                $junuimgsource = '';
+
                 if($junews['image_source'] == '0')
                 {
                     if(preg_match('/<img(.*?)src="(.*?)"(.*?)>\s*(<\/img>)?/', $_text, $junuimgsource))
@@ -641,13 +643,13 @@ class com_content extends modJUNewsUltraHelper
 
                         if(preg_match_all('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^>"&?/ ]{11})%i', $_text, $match))
                         {
-                            $junuimgsource = $JULibs->video('http://youtu.be/' . $match[1][0], 'hqthumb');
+                            $junuimgsource = $JULibs->video('http://youtu.be/' . $match[1][0]);
                         }
 
                         //Vimeo
                         if(preg_match_all('#(player.vimeo.com)/video/([0-9]+)#i', $_text, $match))
                         {
-                            $junuimgsource = $JULibs->video('http://vimeo.com/' . $match[2], 'hqthumb');
+                            $junuimgsource = $JULibs->video('http://vimeo.com/' . $match[2]);
                         }
                     }
                 }
