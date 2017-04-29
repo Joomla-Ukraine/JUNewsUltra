@@ -25,7 +25,7 @@ class JULibs
      * @param $params
      * @param $title
      *
-     * @return title
+     * @return string
      *
      * @since 6.0
      */
@@ -207,9 +207,9 @@ class JULibs
     /**
      * @param $feed_url
      * @param $xmlcount
-     * @param $cache_file
+     * @param string $cache_file
      * @param $time
-     * @param $path
+     * @param string $path
      * @param $ordering_xml
      *
      * @return array|SimpleXMLElement[]
@@ -293,8 +293,7 @@ class JULibs
     }
 
     /**
-     * @param        $url
-     * @param string $return
+     * @param        string $url
      *
      * @return mixed|string
      *
@@ -379,7 +378,7 @@ class JULibs
     /**
      * @param $html
      *
-     * @return mixed
+     * @return string
      *
      * @since 6.0
      */
