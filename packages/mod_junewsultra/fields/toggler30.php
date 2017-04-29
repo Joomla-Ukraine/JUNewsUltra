@@ -120,7 +120,7 @@ class nnFieldToggler
 	}
 
 	/**
-	 * @param        $val
+	 * @param        string $val
 	 * @param string $default
 	 *
 	 * @return string
