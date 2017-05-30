@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" version="3.3" client="site" method="upgrade">
     <name>MOD_JUNEWSULTRA</name>
-    <creationDate>08.04.2017</creationDate>
+    <creationDate>30.05.2017</creationDate>
     <author>Denys Nosov</author>
     <authorEmail>denys@joomla-ua.org</authorEmail>
     <authorUrl>http://www.joomla-ua.org</authorUrl>
@@ -9,7 +9,7 @@
         License.
     </copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-    <version>6.5.3</version>
+    <version>6.5.4</version>
     <description>MOD_JUNEWS_XML_DESCRIPTION</description>
     <files>
         <filename module="mod_junewsultra">mod_junewsultra.php</filename>
