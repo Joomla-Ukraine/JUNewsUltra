@@ -338,19 +338,19 @@ class JULibs
         {
             $ytpath = 'https://img.youtube.com/vi/' . $yid;
 
-            if(JULib::_http($ytpath . '/maxresdefault.jpg') == '200')
+            if(JULibs::_http($ytpath . '/maxresdefault.jpg') == '200')
             {
                 $img = $ytpath . '/maxresdefault.jpg';
             }
-            elseif(JULib::_http($ytpath . '/hqdefault.jpg') == '200')
+            elseif(JULibs::_http($ytpath . '/hqdefault.jpg') == '200')
             {
                 $img = $ytpath . '/hqdefault.jpg';
             }
-            elseif(JULib::_http($ytpath . '/mqdefault.jpg') == '200')
+            elseif(JULibs::_http($ytpath . '/mqdefault.jpg') == '200')
             {
                 $img = $ytpath . '/mqdefault.jpg';
             }
-            elseif(JULib::_http($ytpath . '/sddefault.jpg') == '200')
+            elseif(JULibs::_http($ytpath . '/sddefault.jpg') == '200')
             {
                 $img = $ytpath . '/sddefault.jpg';
             }
