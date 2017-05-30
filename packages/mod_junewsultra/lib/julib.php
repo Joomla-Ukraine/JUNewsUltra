@@ -240,6 +240,7 @@ class JULibs
                     curl_setopt($ch, CURLOPT_USERAGENT, array('User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Safari/534.45'));
                     $string = curl_exec($ch);
                 }
+
                 $string = preg_replace('/<(\/)?([a-z0-9]+):([a-z0-9]+)/i', '<$1$2_$3', $string);
                 $string = preg_replace('/<feed.*?>/i', '<feed>', $string);
 
@@ -337,19 +338,19 @@ class JULibs
         {
             $ytpath = 'https://img.youtube.com/vi/' . $yid;
 
-            if(JULib::http($ytpath . '/maxresdefault.jpg') == '200')
+            if(JULib::_http($ytpath . '/maxresdefault.jpg') == '200')
             {
                 $img = $ytpath . '/maxresdefault.jpg';
             }
-            elseif(JULib::http($ytpath . '/hqdefault.jpg') == '200')
+            elseif(JULib::_http($ytpath . '/hqdefault.jpg') == '200')
             {
                 $img = $ytpath . '/hqdefault.jpg';
             }
-            elseif(JULib::http($ytpath . '/mqdefault.jpg') == '200')
+            elseif(JULib::_http($ytpath . '/mqdefault.jpg') == '200')
             {
                 $img = $ytpath . '/mqdefault.jpg';
             }
-            elseif(JULib::http($ytpath . '/sddefault.jpg') == '200')
+            elseif(JULib::_http($ytpath . '/sddefault.jpg') == '200')
             {
                 $img = $ytpath . '/sddefault.jpg';
             }
@@ -374,6 +375,38 @@ class JULibs
 
         return true;
     }
+
+
+	/**
+	 * @param $url
+	 *
+	 * @return bool|string
+	 */
+	public static function _http($url)
+	{
+		if(function_exists('curl_version'))
+		{
+			$ch = curl_init();
+
+			curl_setopt($ch, CURLOPT_URL, $url);
+			curl_setopt($ch, CURLOPT_HEADER, true);
+			curl_setopt($ch, CURLOPT_NOBODY, true);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+			curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+
+			$header = curl_exec($ch);
+			$head   = substr($header, 9, 3);
+		}
+		else
+		{
+			$header = get_headers($url);
+			$head   = substr($header[0], 9, 3);
+		}
+
+		return $head;
+	}
 
     /**
      * @param $html
