@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<extension type="package" version="3" method="upgrade">
+<extension type="package" version="3.3" method="upgrade">
     <name>pkg_junewsultra</name>
     <packagename>junewsultra</packagename>
-    <creationDate>17.11.2017</creationDate>
+    <creationDate>@date@</creationDate>
     <packager>Joomla! Ukraine</packager>
-    <copyright>(C) 2009-2017 Denys Nosov, Joomla! Ukraine</copyright>
+    <copyright>(C) 2009-2018 Denys Nosov, Joomla! Ukraine</copyright>
     <packagerurl>http://joomla-ua.org</packagerurl>
     <author>Denys Nosov, Joomla! Ukraine</author>
     <authorEmail>denys@joomla-ua.org</authorEmail>
-    <authorUrl>http://joomla-ua.org</authorUrl>
-    <version>6.5.6</version>
-    <license>GNU/GPL Version 2 or later and Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License
-    </license>
+    <authorUrl>https://joomla-ua.org</authorUrl>
+    <version>@version@</version>
+    <license>GNU/GPL Version 2 or later and Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License</license>
     <description>PKG_MOD_JUNEWS_DESCRIPTION</description>
+
     <scriptfile>script.php</scriptfile>
     <update>http://joomla-ua.org/update/mod/junewsultra.xml</update>
+
     <updateservers>
-        <server type="extension" priority="1" name="JUNewsUltra">http://joomla-ua.org/update/mod/junewsultra.xml
-        </server>
+        <server type="extension" priority="1" name="JUNewsUltra">https://joomla-ua.org/update/mod/junewsultra.xml</server>
     </updateservers>
+
     <files folder="packages">
         <file type="module" id="mod_junewsultra" client="site">mod_junewsultra.zip</file>
         <file type="file" id="tmpl_mod_junewsultra_default" client="site">tmpl_mod_junewsultra_default.zip</file>
-        <file type="library" id="julib">lib_julib.zip</file>
+        <file type="library" id="julib">lib_julib_v@julib@.zip</file>
     </files>
+
     <languages folder="language">
         <language tag="en-GB">en-GB/en-GB.pkg_junewsultra.ini</language>
         <language tag="en-GB">en-GB/en-GB.pkg_junewsultra.sys.ini</language>

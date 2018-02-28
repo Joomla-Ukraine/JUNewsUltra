@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" version="3.3" client="site" method="upgrade">
     <name>MOD_JUNEWSULTRA</name>
-    <creationDate>17.11.2017</creationDate>
+    <creationDate>@date@</creationDate>
     <author>Denys Nosov</author>
     <authorEmail>denys@joomla-ua.org</authorEmail>
-    <authorUrl>http://www.joomla-ua.org</authorUrl>
+    <authorUrl>https://www.joomla-ua.org</authorUrl>
     <copyright>This module is licensed under a Creative Commons Attribution-Noncommercial-No Derivative Works 3.0
         License.
     </copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-    <version>6.5.6</version>
+    <version>@version@</version>
     <description>MOD_JUNEWS_XML_DESCRIPTION</description>
+
     <files>
         <filename module="mod_junewsultra">mod_junewsultra.php</filename>
         <filename>helper.php</filename>
@@ -20,13 +21,14 @@
         <folder>helper</folder>
         <folder>lib</folder>
     </files>
+
     <media destination="mod_junewsultra" folder="media">
         <filename>index.html</filename>
         <filename writable="yes">notfoundimage.png</filename>
     </media>
+
     <updateservers>
-        <server type="extension" priority="1" name="JUNewsUltra">http://joomla-ua.org/update/mod/junewsultra.xml
-        </server>
+        <server type="extension" priority="1" name="JUNewsUltra">https://joomla-ua.org/update/mod/junewsultra.xml</server>
     </updateservers>
 
     <config addfieldpath="/modules/mod_junewsultra/fields">

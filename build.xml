@@ -1,0 +1,125 @@
+<project name="junewsultra" default="dist" basedir=".">
+
+    <property name="VERSION" value="6.5.7"/>
+
+    <tstamp>
+        <format property="DATE" pattern="%d.%m.%Y" />
+    </tstamp>
+
+    <property name="julib" value="2.7.7"/>
+
+    <property name="build" value="build"/>
+
+    <property name="temp" value="temp"/>
+
+    <property name="dist" value="dist"/>
+
+    <property name="filename" value="pkg_junewsultra_pro_v${VERSION}.zip"/>
+
+    <target name="init" depends="clean">
+        <mkdir dir="${build}"/>
+        <mkdir dir="${temp}"/>
+        <mkdir dir="${dist}"/>
+    </target>
+
+    <target name="temp">
+
+        <copy todir="${temp}/language">
+            <fileset dir="language">
+                <include name="**"/>
+            </fileset>
+        </copy>
+
+        <copy todir="${temp}">
+            <fileset dir="packages">
+                <include name="**"/>
+            </fileset>
+        </copy>
+
+    </target>
+
+    <target name="replace">
+
+        <copy file="pkg_junewsultra.xml" todir="${build}">
+            <filterchain>
+                <replacetokens>
+                    <token key="version" value="${VERSION}" />
+                    <token key="date" value="${DATE}" />
+                    <token key="julib" value="${julib}" />
+                </replacetokens>
+            </filterchain>
+        </copy>
+
+        <copy file="packages/mod_junewsultra/mod_junewsultra.xml" todir="${temp}/temp/mod_junewsultra">
+            <filterchain>
+                <replacetokens>
+                    <token key="version" value="${VERSION}" />
+                    <token key="date" value="${DATE}" />
+                </replacetokens>
+            </filterchain>
+        </copy>
+
+        <delete file="${temp}/mod_junewsultra/mod_junewsultra.xml"/>
+        <copy file="${temp}/temp/mod_junewsultra/mod_junewsultra.xml" todir="${temp}/mod_junewsultra"/>
+
+
+        <copy file="packages/tmpl_mod_junewsultra_default/default.xml" todir="${temp}/temp/tmpl_mod_junewsultra_default">
+            <filterchain>
+                <replacetokens>
+                    <token key="version" value="${VERSION}" />
+                    <token key="date" value="${DATE}" />
+                </replacetokens>
+            </filterchain>
+        </copy>
+
+        <delete file="${temp}/tmpl_mod_junewsultra_default/default.xml"/>
+        <copy file="${temp}/temp/tmpl_mod_junewsultra_default/default.xml" todir="${temp}/tmpl_mod_junewsultra_default"/>
+
+    </target>
+
+    <target name="pack-plugins">
+
+        <mkdir dir="${build}/packages"/>
+
+        <zip destfile="${build}/packages/mod_junewsultra.zip" description="mod_junewsultra">
+            <fileset dir="${temp}/mod_junewsultra"/>
+        </zip>
+
+        <zip destfile="${build}/packages/tmpl_mod_junewsultra_default.zip" description="tmpl_mod_junewsultra_default">
+            <fileset dir="${temp}/tmpl_mod_junewsultra_default"/>
+        </zip>
+
+        <copy file="../JULib/dist/lib_julib_v${julib}.zip" todir="${build}/packages"/>
+
+        <copy todir="${build}/language">
+            <fileset dir="${temp}/language">
+                <include name="**"/>
+            </fileset>
+        </copy>
+
+        <copy file="pkg_junewsultra.xml" todir="${build}"/>
+
+        <copy file="script.php" todir="${build}"/>
+
+    </target>
+
+    <target name="dist" depends="init, temp, replace, pack-plugins">
+        <zip destfile="${dist}/${filename}">
+            <fileset dir="${build}/">
+                <include name="**/**"/>
+            </fileset>
+        </zip>
+
+        <delete dir="${build}"/>
+        <delete dir="${temp}"/>
+
+    </target>
+
+    <target name="clean">
+
+        <delete dir="${build}"/>
+        <delete dir="${temp}"/>
+
+    </target>
+
+</project>

@@ -6,7 +6,7 @@
  * @subpackage       mod_junewsultra
  *
  * @author           Denys Nosov, denys@joomla-ua.org
- * @copyright        2007-2017 (C) Joomla! Ukraine, http://joomla-ua.org. All rights reserved.
+ * @copyright        2007-2018 (C) Joomla! Ukraine, http://joomla-ua.org. All rights reserved.
  * @license          GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -451,7 +451,7 @@ class com_content extends modJUNewsUltraHelper
 			{
 				$ids = array();
 
-				foreach($items as &$item)
+				foreach($items as $item)
 				{
 					$ids[] = $item->id;
 				}
@@ -500,7 +500,7 @@ class com_content extends modJUNewsUltraHelper
 						break;
 				}
 
-				foreach($items as &$item)
+				foreach($items as $item)
 				{
 					$item->comments      = isset($commentsCount[ $item->id ]) ? $commentsCount[ $item->id ]->cnt : 0;
 					$item->commentslink  = $comment_link;
