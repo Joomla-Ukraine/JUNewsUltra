@@ -16,7 +16,6 @@ define('MAX_SIZE', '500');
 
 require_once JPATH_BASE . '/includes/defines.php';
 require_once JPATH_BASE . '/includes/framework.php';
-require_once JPATH_BASE . '/libraries/joomla/factory.php';
 
 $mainframe  = JFactory::getApplication('administrator');
 $joomlaUser = JFactory::getUser();

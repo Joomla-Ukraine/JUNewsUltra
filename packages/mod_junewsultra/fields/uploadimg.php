@@ -11,13 +11,11 @@
  */
 
 define('_JEXEC', 1);
-define('DS', DIRECTORY_SEPARATOR);
-define('JPATH_BASE', __DIR__ . DS . '..' . DS . '..' . DS . '..');
+define('JPATH_BASE', __DIR__ . '/../../..');
 define('MAX_SIZE', '500');
 
-require_once JPATH_BASE . DS . 'includes' . DS . 'defines.php';
-require_once JPATH_BASE . DS . 'includes' . DS . 'framework.php';
-require_once JPATH_BASE . DS . 'libraries' . DS . 'joomla' . DS . 'factory.php';
+require_once JPATH_BASE . '/includes/defines.php';
+require_once JPATH_BASE . '/includes/framework.php';
 
 $mainframe  = JFactory::getApplication('administrator');
 $joomlaUser = JFactory::getUser();
@@ -31,9 +29,9 @@ $csslink = '
 <link href="../../../../../administrator/templates/isis/css/template.css" rel="stylesheet" type="text/css" />
 <link href="../../../../../media/jui/css/bootstrap.css" rel="stylesheet" type="text/css" />
 
-<script src="../../../../../media/jui/js/jquery.min.js" type="text/javascript"></script>
-<script src="../../../../../modules/mod_junewsultra/assets/js/jquery.custom-input-file.js" type="text/javascript"></script>
-<script type="text/javascript">
+<script src="../../../../../media/jui/js/jquery.min.js"></script>
+<script src="../../../../../modules/mod_junewsultra/assets/js/jquery.custom-input-file.js"></script>
+<script>
     jQuery.noConflict();
     (function($) {
         $(function() {
@@ -84,7 +82,7 @@ function alert($text, $error)
 	return;
 endif;
 
-$path             = str_replace('modules' . DS . 'mod_junewsultra' . DS . 'fields' . DS . '..' . DS . '..' . DS . '..', 'media/mod_junewsultra', JPATH_BASE);
+$path             = str_replace('modules/mod_junewsultra/fields/../../..', 'media/mod_junewsultra', JPATH_BASE);
 $max_image_width  = 800;
 $max_image_height = 800;
 $max_image_size   = 1024 * 1024;

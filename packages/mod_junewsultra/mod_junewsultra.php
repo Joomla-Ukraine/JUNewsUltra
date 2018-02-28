@@ -115,6 +115,7 @@ if($params->def('bootstrap_css') == 1)
 {
 	$lang      = JFactory::getLanguage();
 	$direction = ($lang->isRTL() ? 'rtl' : 'ltr');
+
 	JHtmlBootstrap::loadCss($includeMaincss = true, $direction);
 }
 
@@ -212,6 +213,7 @@ if(file_exists($layoutpath))
 
 		$item_heading2 = trim($params->get('item_heading2'));
 		$titletag2     = explode('_', $item_heading2);
+
 		if($titletag2[1])
 		{
 			$_tag_open2  = '<' . $titletag2[1] . '>';
@@ -249,7 +251,7 @@ if(file_exists($layoutpath))
 		echo $read_all2;
 	}
 
-	require $layoutpath;
+	require_once $layoutpath;
 
 	if($params->def('all_in') == 1 && $params->def('all_in_position') == 1)
 	{
@@ -260,7 +262,6 @@ if(file_exists($layoutpath))
 	{
 		echo $read_all2;
 	}
-
 }
 else
 {
