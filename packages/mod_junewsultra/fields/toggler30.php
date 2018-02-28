@@ -43,13 +43,11 @@ class JFormFieldNN_Toggler extends JFormField
 
 class nnFieldToggler
 {
-	var $_version = 'ju_201211';
+	public $_version = 'ju_201211';
 
-	function getInput($params)
+	public function getInput($params)
 	{
 		$this->params = $params;
-
-		$option = JFactory::getApplication()->input->get('option');
 
 		$param  = $this->def('param');
 		$value  = $this->def('value');
@@ -93,13 +91,13 @@ class nnFieldToggler
 				$html[] = '</div></div>';
 			}
 
-			$html[] = '<div id="' . rand(1000000, 9999999) . '___' . implode('___', $ids) . '" class="nntoggler';
+			$html[] = '<div id="' . mt_rand(1000000, 9999999) . '___' . implode('___', $ids) . '" class="nntoggler';
 			if ($nofx)
 			{
 				$html[] = ' nntoggler_nofx';
 			}
 
-			if ($method == 'and')
+			if ($method === 'and')
 			{
 				$html[] = ' nntoggler_and';
 			}

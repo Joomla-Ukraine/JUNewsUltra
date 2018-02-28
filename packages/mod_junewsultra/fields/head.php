@@ -23,7 +23,7 @@ $db = JFactory::getDBO();
 $db->setQuery(
 	'SELECT params' .
 	' FROM #__modules' .
-	' WHERE id = ' . (int) $_GET["id"]
+	' WHERE id = ' . (int) $_GET[ 'id' ]
 );
 $rows = $db->loadResult();
 

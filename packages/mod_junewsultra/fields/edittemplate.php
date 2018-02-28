@@ -11,12 +11,12 @@
  */
 
 define('_JEXEC', 1);
-define('JPATH_BASE', dirname(__FILE__) . "/../../..");
-define("MAX_SIZE", "500");
+define('JPATH_BASE', __DIR__ . '/../../..');
+define('MAX_SIZE', '500');
 
-require_once(JPATH_BASE . '/includes/defines.php');
-require_once(JPATH_BASE . '/includes/framework.php');
-require_once(JPATH_BASE . '/libraries/joomla/factory.php');
+require_once JPATH_BASE . '/includes/defines.php';
+require_once JPATH_BASE . '/includes/framework.php';
+require_once JPATH_BASE . '/libraries/joomla/factory.php';
 
 $mainframe  = JFactory::getApplication('administrator');
 $joomlaUser = JFactory::getUser();
@@ -30,11 +30,11 @@ $csslink = '<link href="../../../../../administrator/templates/isis/css/template
 
 function alert($text, $error)
 {
-	if ($error == 'message')
+	if ($error === 'message')
 	{
 		$error = 'alert-info';
 	}
-	if ($error == 'notice')
+	if ($error === 'notice')
 	{
 		$error = 'alert-error';
 	}
@@ -60,7 +60,7 @@ if ($joomlaUser->get('id') < 1)
 }
 
 $app         = JFactory::getApplication('site');
-$current_tpl = explode(":", $_GET["file"]);
+$current_tpl = explode(':', $_GET[ 'file' ]);
 
 $jtpl = $current_tpl[0];
 
@@ -77,7 +77,7 @@ if (is_file(JPATH_SITE . '/templates/' . $jtpl . '/html/mod_junewsultra/' . str_
 	$css          = '1';
 }
 
-if (isset($_GET["css"]))
+if (isset($_GET[ 'css' ]))
 {
 	$filename = $css_filename;
 }
@@ -94,18 +94,21 @@ else
 	}
 }
 
-if (isset($_POST['newd'])) $newdata = $_POST['newd'];
+if (isset($_POST['newd']))
+{
+	$newdata = $_POST[ 'newd' ];
+}
 
 if (isset($newdata) != '')
 {
-	$fw = fopen($filename, 'w') or die('Could not open file!');
+	$fw = fopen($filename, 'wb') or die('Could not open file!');
 	$fb = fwrite($fw, stripslashes($newdata)) or die('Could not write to file');
 	fclose($fw);
 	chmod($filename, 0777);
 }
 
-$fh = fopen($filename, "r") or die("Could not open file!");
-$data = fread($fh, filesize($filename)) or die("Could not read file!");
+$fh = fopen($filename, 'rb') or die('Could not open file!');
+$data = fread($fh, filesize($filename)) or die('Could not read file!');
 
 fclose($fh);
 chmod($filename, 0777);
@@ -149,7 +152,7 @@ chmod($filename, 0777);
     <div class="wells">
         <div class="btn-group left" style="margin-left: 10px;">
 			<?php if ($css == 1): ?>
-				<?php if (isset($_GET["css"])): ?>
+				<?php if (isset($_GET[ 'css' ])): ?>
 					<?php echo '<a href="' . JURI::base() . 'edittemplate.php?file=' . $_GET['file'] . '" class="btn btn-success">Edit template: ' . $_GET['file'] . '</a>'; ?>
 					<?php echo '<span class="btn disabled">style.css</span>'; ?>
 				<?php else: ?>

@@ -28,7 +28,7 @@ class JFormFieldTemplate extends JFormField
 	 */
 	protected function getInput()
 	{
-		if (!isset($_GET["id"]))
+		if (!isset($_GET[ 'id' ]))
 		{
 			return JText::_('MOD_JUNEWS_NOT_EDIT_TEMPLATE');
 		}
@@ -39,11 +39,11 @@ class JFormFieldTemplate extends JFormField
 		$db->setQuery(
 			'SELECT params' .
 			' FROM #__modules' .
-			' WHERE id = ' . (int) $_GET["id"]
+			' WHERE id = ' . (int) $_GET[ 'id' ]
 		);
 		$rows = $db->loadResult();
 
-		if (preg_match("#\"template\":\"_:(.*?)\"#is", $rows, $ok))
+		if (preg_match('#"template":"_:(.*?)"#is', $rows, $ok))
 		{
 			if ($ok[1] == 1)
 			{
@@ -67,7 +67,7 @@ class JFormFieldTemplate extends JFormField
 			JFactory::getApplication()->enqueueMessage($error, 'error');
 		}
 
-		if ($_GET["id"])
+		if ($_GET[ 'id' ])
 		{
 			$html[] = '<a class="modal btn"  href="' . $link . '" rel="{handler: \'iframe\', size: {x: 1000, y: 650}}"><i class="class="icon-cog""></i> ' . JText::_('MOD_JUNEWS_TEMPLATE_BUTTON') . '</a>';
 		}

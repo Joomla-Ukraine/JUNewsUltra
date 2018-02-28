@@ -39,7 +39,7 @@ class Pkg_JUNewsUltraInstallerScript
 			return false;
 		}
 
-		if(!in_array(JFactory::getDbo()->name, $this->dbSupport))
+		if(!in_array(JFactory::getDbo()->name, $this->dbSupport, true))
 		{
 			JFactory::getApplication()->enqueueMessage(JText::_('MOD_JUNEWS_ERROR_DB_SUPPORT'), 'error');
 
@@ -176,7 +176,7 @@ class Pkg_JUNewsUltraInstallerScript
 
 			$html .= '<tr><td>';
 
-			if($extension == 'MOD_JUNEWSULTRA')
+			if($extension === 'MOD_JUNEWSULTRA')
 			{
 				$html .= JText::_($extension);
 			}
@@ -267,13 +267,19 @@ class Pkg_JUNewsUltraInstallerScript
 		$i = 0;
 		foreach ($files AS $file)
 		{
-			if(file_exists($file)) $i++;
+			if(file_exists($file))
+			{
+				$i++;
+			}
 		}
 
 		$j = 0;
 		foreach ($folders AS $folder)
 		{
-			if(is_dir($folder)) $j++;
+			if(is_dir($folder))
+			{
+				$j++;
+			}
 		}
 
 		if(($i + $j) > 0)
@@ -337,20 +343,23 @@ class Pkg_JUNewsUltraInstallerScript
 	 */
 	public function MakeDirectory($dir, $mode)
 	{
-		if(is_dir($dir) || @mkdir($dir, $mode))
+		if(mkdir($dir, $mode) || is_dir($dir))
 		{
 			$indexfile = $dir . '/index.html';
 			if(!file_exists($indexfile))
 			{
-				$file = fopen($indexfile, 'w');
-				fputs($file, '<!DOCTYPE html><title></title>');
+				$file = fopen($indexfile, 'wb');
+				fwrite($file, '<!DOCTYPE html><title></title>');
 				fclose($file);
 			}
 
 			return true;
 		}
 
-		if(!$this->MakeDirectory(dirname($dir), $mode)) return false;
+		if(!$this->MakeDirectory(dirname($dir), $mode))
+		{
+			return false;
+		}
 
 		return @mkdir($dir, $mode);
 	}
@@ -364,19 +373,29 @@ class Pkg_JUNewsUltraInstallerScript
 	 */
 	public function unlinkRecursive($dir, $deleteRootToo)
 	{
-		if(!$dh = @opendir($dir)) return;
+		if(!$dh = @opendir($dir))
+		{
+			return;
+		}
 
 		while (false !== ($obj = readdir($dh)))
 		{
-			if($obj == '.' || $obj == '..') continue;
+			if($obj === '.' || $obj === '..')
+			{
+				continue;
+			}
 
-			if(!@unlink($dir . '/' . $obj)) $this->unlinkRecursive($dir . '/' . $obj, true);
+			if(!@unlink($dir . '/' . $obj))
+			{
+				$this->unlinkRecursive($dir . '/' . $obj, true);
+			}
 		}
 
 		closedir($dh);
 
-		if($deleteRootToo) @rmdir($dir);
-
-		return;
+		if($deleteRootToo)
+		{
+			@rmdir($dir);
+		}
 	}
 }

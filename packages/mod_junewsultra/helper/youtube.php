@@ -40,9 +40,11 @@ class youtube extends modJUNewsUltraHelper
             case '2':
                 $ytxml = 'https://www.youtube.com/feeds/videos.xml?user=' . $params->get('ytaccount');
                 break;
+
             case '1':
                 $ytxml = 'https://www.youtube.com/feeds/videos.xml?playlist_id=' . $params->get('ytplaylist');
                 break;
+
             case '3':
                 $ytxml = 'https://www.youtube.com/feeds/videos.xml?channel_id==' . $params->get('ytchannel');
                 break;
@@ -76,7 +78,10 @@ class youtube extends modJUNewsUltraHelper
             $item->title_alt = htmlspecialchars(strip_tags($JULibs->_Title($params, $item->title)));
 
             // category title
-            if($junews['show_cat'] == 1) $item->cattitle = '';
+            if($junews['show_cat'] == 1)
+            {
+	            $item->cattitle = '';
+            }
 
             // rawtext
             if($junews['sourcetext'] == '1') {
@@ -102,14 +107,17 @@ class youtube extends modJUNewsUltraHelper
             $item->fulltext = '';
 
             // author
-            if($junews['show_author'] == 1) $item->author = $item->author->name;
+            if($junews['show_author'] == 1)
+            {
+	            $item->author = $item->author->name;
+            }
 
             // date
             if($junews['show_date'] == 1)
             {
-                $_date_type = date("Y-m-d H:i:s", strtotime($item->published));;
+                $_date_type = date('Y-m-d H:i:s', strtotime($item->published));
 
-                $item->sqldate = $_date_type;
+	            $item->sqldate = $_date_type;
 
                 $item->date = JHtml::date($_date_type, $junews['data_format']);
                 $item->df_d = JHtml::date($_date_type, $junews['date_day']);
@@ -161,6 +169,7 @@ class youtube extends modJUNewsUltraHelper
                         $item->imagesource = $junuimgsource;
 
                         break;
+
                     case '1':
                     default:
 
@@ -188,7 +197,7 @@ class youtube extends modJUNewsUltraHelper
                         else
                         {
                             $newimgparams = array(
-                                'zc' => ($junews['zoomcrop'] == 1 ? $junews['zoomcrop_params'] : '')
+                                'zc' => $junews[ 'zoomcrop'] == 1 ? $junews[ 'zoomcrop_params'] : ''
                             );
                         }
 
@@ -201,15 +210,15 @@ class youtube extends modJUNewsUltraHelper
                         }
 
                         $imgparams = array(
-                            'w'     => $junews['w'],
-                            'h'     => $junews['h'],
-                            'sx'    => ($junews['sx'] ? $junews['sx'] : ''),
-                            'sy'    => ($junews['sy'] ? $junews['sy'] : ''),
-                            'sw'    => ($junews['sw'] ? $junews['sw'] : ''),
-                            'sh'    => ($junews['sh'] ? $junews['sh'] : ''),
-                            'f'     => $junews['f'],
-                            'q'     => $junews['q'],
-                            'cache' => 'img'
+	                        'w'     => $junews['w'],
+	                        'h'     => $junews['h'],
+	                        'sx'    => $junews[ 'sx'] ? : '',
+	                        'sy'    => $junews[ 'sy'] ? : '',
+	                        'sw'    => $junews[ 'sw'] ? : '',
+	                        'sh'    => $junews[ 'sh'] ? : '',
+	                        'f'     => $junews['f'],
+	                        'q'     => $junews['q'],
+	                        'cache' => 'img'
                         );
 
                         $imgparams_merge = array_merge(

@@ -31,8 +31,6 @@ abstract class modJUNewsUltraHelper
 	 */
 	public static function getList($params, $junews)
 	{
-		$items = 'ROOT';
-
-		return $items;
+		return 'ROOT';
 	}
 }

@@ -12,12 +12,12 @@
 
 define('_JEXEC', 1);
 define('DS', DIRECTORY_SEPARATOR);
-define('JPATH_BASE', dirname(__FILE__) . DS . ".." . DS . ".." . DS . "..");
-define("MAX_SIZE", "500");
+define('JPATH_BASE', __DIR__ . DS . '..' . DS . '..' . DS . '..');
+define('MAX_SIZE', '500');
 
-require_once(JPATH_BASE . DS . 'includes' . DS . 'defines.php');
-require_once(JPATH_BASE . DS . 'includes' . DS . 'framework.php');
-require_once(JPATH_BASE . DS . 'libraries' . DS . 'joomla' . DS . 'factory.php');
+require_once JPATH_BASE . DS . 'includes' . DS . 'defines.php';
+require_once JPATH_BASE . DS . 'includes' . DS . 'framework.php';
+require_once JPATH_BASE . DS . 'libraries' . DS . 'joomla' . DS . 'factory.php';
 
 $mainframe  = JFactory::getApplication('administrator');
 $joomlaUser = JFactory::getUser();
@@ -88,7 +88,12 @@ $path             = str_replace('modules' . DS . 'mod_junewsultra' . DS . 'field
 $max_image_width  = 800;
 $max_image_height = 800;
 $max_image_size   = 1024 * 1024;
-$valid_types      = array("gif", "jpg", "png", "jpeg");
+$valid_types      = array(
+	'gif',
+	'jpg',
+	'png',
+	'jpeg'
+);
 
 ?>
 <!DOCTYPE html>
@@ -110,25 +115,25 @@ $valid_types      = array("gif", "jpg", "png", "jpeg");
     </form>
 </fieldset>
 <?php
-if (isset($_FILES["userfile"]))
+if (isset($_FILES[ 'userfile' ]))
 {
 	if (is_uploaded_file($_FILES['userfile']['tmp_name']))
 	{
 		$filename = $_FILES['userfile']['tmp_name'];
-		$ext      = substr($_FILES['userfile']['name'], 1 + strrpos($_FILES['userfile']['name'], "."));
+		$ext      = substr($_FILES['userfile']['name'], 1 + strrpos($_FILES['userfile']['name'], '.'));
 
 		if (filesize($filename) > $max_image_size)
 		{
 			echo alert(JText::_('MOD_JUNEWS_ERROR1') . $max_image_size . ' KB', 'notice');
 		}
-        elseif (!in_array($ext, $valid_types))
+        elseif (!in_array($ext, $valid_types, true))
 		{
 			echo alert(JText::_('MOD_JUNEWS_ERROR2'), 'notice');
 		}
 		else
 		{
-			$size = GetImageSize($filename);
-			if (($size) && ($size[0] < $max_image_width) && ($size[1] < $max_image_height))
+			$size = getimagesize($filename);
+			if ($size && ($size[ 0] < $max_image_width) && ($size[ 1] < $max_image_height))
 			{
 				if (@move_uploaded_file($filename, $path . '/jn_' . $_FILES['userfile']['name']))
 				{

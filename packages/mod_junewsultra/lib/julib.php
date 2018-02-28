@@ -43,7 +43,7 @@ class JULibs
         {
             if($params->get('title_limit_mode') == '1')
             {
-                $title = trim(implode(" ", array_slice(explode(" ", $title), 0, $params->get('title_limit_count'))));
+                $title = trim(implode(' ', array_slice(explode(' ', $title), 0, $params->get('title_limit_count'))));
             }
             else
             {
@@ -74,7 +74,7 @@ class JULibs
      *
      * @since 6.0
      */
-    static function _Description($params, $description, $cleartag, $allowed_tags, $li, $text_limit, $lmttext, $end_limit_text)
+    public static function _Description($params, $description, $cleartag, $allowed_tags, $li, $text_limit, $lmttext, $end_limit_text)
     {
         if($params->def('content_prepare') == 1)
         {
@@ -114,7 +114,7 @@ class JULibs
             switch ($lmttext)
             {
                 case '1':
-                    $description = trim(implode(" ", array_slice(explode(" ", $description), 0, $text_limit)));
+                    $description = trim(implode(' ', array_slice(explode(' ', $description), 0, $text_limit)));
                     break;
                 case '2':
                     $description = preg_replace('#<p(.*)>"#is', '<p>', $description);
@@ -161,9 +161,8 @@ class JULibs
         $size   = getimagesize(rawurldecode(JPATH_SITE . '/' . $html));
         $width  = $size[0];
         $height = $size[1] * ($_cropaspect != '' ? $_cropaspect : '0');
-        $aspect = $height / $width;
 
-        return $aspect;
+	    return $height / $width;
     }
 
     /**
@@ -176,7 +175,7 @@ class JULibs
      */
     public static function _RatingStar($params, $rating)
     {
-        $tpl = explode(":", $params->def('template'));
+        $tpl = explode(':', $params->def('template'));
 
         $starImageOn = JHtml::_('image', 'system/rating_star.png', $rating, null, true);
         if(is_file(JPATH_SITE . '/modules/mod_junewsultra/tmpl/' . $tpl[1] . '/images/rating_star.png'))
@@ -216,7 +215,7 @@ class JULibs
      *
      * @since 6.0
      */
-    static function ParceXML($feed_url, $xmlcount, $cache_file, $time, $path, $ordering_xml)
+    public static function ParceXML($feed_url, $xmlcount, $cache_file, $time, $path, $ordering_xml)
     {
         $timedif = @(time() - filemtime($cache_file));
 
@@ -229,7 +228,7 @@ class JULibs
         {
             try
             {
-                if(strpos($http_response_header[0], "200"))
+                if(strpos($http_response_header[0], '200'))
                 {
                     $string = @file_get_contents($feed_url);
                 }
@@ -237,14 +236,14 @@ class JULibs
                 {
                     $ch = curl_init($feed_url);
                     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                    curl_setopt($ch, CURLOPT_USERAGENT, array('User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Safari/534.45'));
+                    curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Safari/534.45');
                     $string = curl_exec($ch);
                 }
 
                 $string = preg_replace('/<(\/)?([a-z0-9]+):([a-z0-9]+)/i', '<$1$2_$3', $string);
                 $string = preg_replace('/<feed.*?>/i', '<feed>', $string);
 
-                if($f = @fopen($cache_file, 'w'))
+                if($f = @fopen($cache_file, 'wb'))
                 {
                     fwrite($f, $string, strlen($string));
                     fclose($f);
@@ -306,11 +305,11 @@ class JULibs
         $yid  = '';
         $vid  = '';
 
-        if($urls['host'] == 'vimeo.com')
+        if($urls['host'] === 'vimeo.com')
         {
             $vid = ltrim($urls['path'], '/');
         }
-        elseif($urls['host'] == 'youtu.be')
+        elseif($urls['host'] === 'youtu.be')
         {
             $yid = ltrim($urls['path'], '/');
         }
@@ -334,53 +333,55 @@ class JULibs
             }
         }
 
-        if($yid)
-        {
-            $ytpath = 'https://img.youtube.com/vi/' . $yid;
+	    if($yid)
+	    {
+	        $ytpath = 'https://img.youtube.com/vi/' . $yid;
 
-            if(JULibs::_http($ytpath . '/maxresdefault.jpg') == '200')
-            {
-                $img = $ytpath . '/maxresdefault.jpg';
-            }
-            elseif(JULibs::_http($ytpath . '/hqdefault.jpg') == '200')
-            {
-                $img = $ytpath . '/hqdefault.jpg';
-            }
-            elseif(JULibs::_http($ytpath . '/mqdefault.jpg') == '200')
-            {
-                $img = $ytpath . '/mqdefault.jpg';
-            }
-            elseif(JULibs::_http($ytpath . '/sddefault.jpg') == '200')
-            {
-                $img = $ytpath . '/sddefault.jpg';
-            }
-            else
-            {
-                $img = $ytpath . '/default.jpg';
-            }
+	        if(self::_http($ytpath . '/maxresdefault.jpg') == '200')
+	        {
+	            $img = $ytpath . '/maxresdefault.jpg';
+	        }
+	        elseif(self::_http($ytpath . '/hqdefault.jpg') == '200')
+	        {
+	            $img = $ytpath . '/hqdefault.jpg';
+	        }
+	        elseif(self::_http($ytpath . '/mqdefault.jpg') == '200')
+	        {
+	            $img = $ytpath . '/mqdefault.jpg';
+	        }
+	        elseif(self::_http($ytpath . '/sddefault.jpg') == '200')
+	        {
+	            $img = $ytpath . '/sddefault.jpg';
+	        }
+	        else
+	        {
+	            $img = $ytpath . '/default.jpg';
+	        }
 
-            return $img;
-        }
-        elseif($vid)
-        {
-            $vimeoObject = json_decode(
-                file_get_contents("http://vimeo.com/api/v2/video/" . $vid . ".json")
-            );
+	        return $img;
+	    }
 
-            if(!empty($vimeoObject))
-            {
-                return $vimeoObject[0]->thumbnail_large;
-            }
-        }
+	    if($vid)
+	    {
+	        $vimeoObject = json_decode(
+	            file_get_contents('http://vimeo.com/api/v2/video/' . $vid . '.json')
+	        );
 
-        return true;
+	        if(!empty($vimeoObject))
+	        {
+	            return $vimeoObject[0]->thumbnail_large;
+	        }
+	    }
+
+	    return true;
     }
-
 
 	/**
 	 * @param $url
 	 *
 	 * @return bool|string
+	 *
+	 * @since 6.0
 	 */
 	public static function _http($url)
 	{
@@ -392,8 +393,8 @@ class JULibs
 			curl_setopt($ch, CURLOPT_HEADER, true);
 			curl_setopt($ch, CURLOPT_NOBODY, true);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
 			curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 
 			$header = curl_exec($ch);

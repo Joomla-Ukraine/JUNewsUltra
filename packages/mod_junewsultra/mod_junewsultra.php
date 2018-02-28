@@ -16,8 +16,8 @@ defined('_JEXEC') or die;
 $app      = JFactory::getApplication('site');
 $document = JFactory::getDocument();
 
-require_once(JPATH_SITE . '/modules/mod_junewsultra/lib/julib.php');
-require_once(JPATH_SITE . '/libraries/julib/image.php');
+require_once JPATH_SITE . '/modules/mod_junewsultra/lib/julib.php';
+require_once JPATH_SITE . '/libraries/julib/image.php';
 
 $junews = array(
 	'count'       => (int) $params->get('count', '5'),
@@ -41,13 +41,13 @@ $junews = array(
 	'li'                  => $params->get('li'),
 	'lmttext'             => $params->get('lmttext'),
 	'cleartag'            => $params->get('clear_tag'),
-	'introtext_limit'     => intval($params->get('introtext_limit')),
+	'introtext_limit'     => (int) $params->get('introtext_limit'),
 	'end_limit_introtext' => $params->get('end_limit_introtext', '...'),
 	'allowed_intro_tags'  => trim($params->get('allowed_intro_tags')),
 	'li_full'             => $params->get('li_full'),
 	'lmttext_full'        => $params->get('lmttext_full'),
 	'clear_tag_full'      => $params->get('clear_tag_full'),
-	'fulltext_limit'      => intval($params->get('fulltext_limit')),
+	'fulltext_limit'      => (int) $params->get('fulltext_limit'),
 	'end_limit_fulltext'  => $params->get('end_limit_fulltext', '...'),
 	'allowed_full_tags'   => trim($params->get('allowed_full_tags')),
 
@@ -55,24 +55,24 @@ $junews = array(
 	'introfulltext' => $params->def('introfulltext', 0),
 	'defaultimg'    => $params->def('defaultimg', 1),
 	'image_source'  => $params->def('image_source', 0),
-	'w'             => intval($params->get('imageWidth')),
-	'h'             => intval($params->get('imageHeight')),
-	'thumb_width'   => intval($params->get('thumb_width')),
+	'w'             => (int) $params->get('imageWidth'),
+	'h'             => (int) $params->get('imageHeight'),
+	'thumb_width'   => (int) $params->get('thumb_width'),
 	'noimage'       => $params->def('noimage'),
 	'imglink'       => $params->def('imglink'),
 	'link_enabled'  => $params->get('link_enabled', 1),
 
-	'sx'              => intval($params->get('sx')),
-	'sy'              => intval($params->get('sy')),
-	'sw'              => intval($params->get('sw')),
-	'sh'              => intval($params->get('sh')),
-	'zoomcrop'        => intval($params->get('zoomcrop', 1)),
+	'sx'              => (int) $params->get('sx'),
+	'sy'              => (int) $params->get('sy'),
+	'sw'              => (int) $params->get('sw'),
+	'sh'              => (int) $params->get('sh'),
+	'zoomcrop'        => (int) $params->get('zoomcrop', 1),
 	'zoomcrop_params' => $params->get('zoomcrop_params', 1),
-	'auto_zoomcrop'   => intval($params->get('auto_zoomcrop')),
-	'cropaspect'      => str_replace(',', '.', intval($params->get('cropaspect'))),
+	'auto_zoomcrop'   => (int) $params->get('auto_zoomcrop'),
+	'cropaspect'      => str_replace(',', '.', (int) $params->get('cropaspect')),
 	'zoomcropbg'      => str_replace('#', '', $params->def('zoomcropbg')),
 	'farcrop_params'  => $params->get('farcrop_params', 1),
-	'farcrop'         => intval($params->get('farcrop', 0)),
+	'farcrop'         => (int) $params->get('farcrop', 0),
 	'farcropbg'       => str_replace('#', '', $params->def('farcropbg')),
 	'q'               => $params->get('q', '75'),
 	'f'               => $params->def('img_ext', 'jpg'),
@@ -88,13 +88,16 @@ $junews = array(
 
 $component = trim($params->def('component', 'com_content'));
 
-require_once(__DIR__ . '/helper.php');
-require_once(__DIR__ . '/helper/' . $component . '.php');
+require_once __DIR__ . '/helper.php';
+require_once __DIR__ . '/helper/' . $component . '.php';
 
 $object = new $component;
 $list   = $object->getList($params, $junews);
 
-if($params->get('empty_mod', 0) == 0) if(count($list) == 0) return;
+if($params->get('empty_mod', 0) == 0 && count($list) == 0)
+{
+	return;
+}
 
 $layoutpath = JModuleHelper::getLayoutPath('mod_junewsultra', $params->def('template'));
 
@@ -117,9 +120,9 @@ if($params->def('bootstrap_css') == 1)
 
 if($params->get('cssstyle') == 1)
 {
-	$tpl = explode(":", $params->def('template'));
+	$tpl = explode(':', $params->def('template'));
 
-	if($tpl[0] == '_')
+	if($tpl[0] === '_')
 	{
 		$jtpl = $app->getTemplate();
 	}
@@ -156,12 +159,17 @@ if(file_exists($layoutpath))
 			$menu        = $application->getMenu();
 
 			$text_all_in12 = trim($params->get('text_all_in12'));
-			$heading       = ($text_all_in12 ? $text_all_in12 : JRoute::_($menu->getItem($params->get('link_menuitem'))->title));
+			$heading       = ($text_all_in12 ? : JRoute::_($menu->getItem($params->get('link_menuitem'))->title));
 			$heading_link  = JRoute::_($menu->getItem($params->get('link_menuitem'))->link . '&amp;Itemid=' . $params->get('link_menuitem'));
 		}
 
-		$heading = str_replace('[', '<', $heading);
-		$heading = str_replace(']', '>', $heading);
+		$heading = str_replace(array(
+			'[',
+			']'
+		), array(
+			'<',
+			'>'
+		), $heading);
 
 		if($heading_link)
 		{
@@ -190,15 +198,20 @@ if(file_exists($layoutpath))
 			$menu        = $application->getMenu();
 
 			$text_all_in22 = trim($params->get('text_all_in22'));
-			$heading2      = ($text_all_in22 ? $text_all_in22 : JRoute::_($menu->getItem($params->get('link_menuitem2'))->title));
+			$heading2      = ($text_all_in22 ? : JRoute::_($menu->getItem($params->get('link_menuitem2'))->title));
 			$heading_link2 = JRoute::_($menu->getItem($params->get('link_menuitem2'))->link . '&amp;Itemid=' . $params->get('link_menuitem2'));
 		}
 
-		$heading2 = str_replace('[', '<', $heading2);
-		$heading2 = str_replace(']', '>', $heading2);
+		$heading2 = str_replace(array(
+			'[',
+			']'
+		), array(
+			'<',
+			'>'
+		), $heading2);
 
 		$item_heading2 = trim($params->get('item_heading2'));
-		$titletag2     = explode("_", $item_heading2);
+		$titletag2     = explode('_', $item_heading2);
 		if($titletag2[1])
 		{
 			$_tag_open2  = '<' . $titletag2[1] . '>';
@@ -226,20 +239,32 @@ if(file_exists($layoutpath))
 		$read_all2 = '<' . $titletag2[0] . ($class_all_in2 ? ' class="' . $class_all_in2 . '"' : '') . '>' . $heading_link2 . '</' . $titletag2[0] . '>';
 	}
 
-	if($params->def('all_in') == 1 && $params->def('all_in_position') == 0) echo $read_all;
+	if($params->def('all_in') == 1 && $params->def('all_in_position') == 0)
+	{
+		echo $read_all;
+	}
 
-	if($params->def('all_in2') == 1 && $params->def('all_in_position2') == 0) echo $read_all2;
+	if($params->def('all_in2') == 1 && $params->def('all_in_position2') == 0)
+	{
+		echo $read_all2;
+	}
 
-	require($layoutpath);
+	require $layoutpath;
 
-	if($params->def('all_in') == 1 && $params->def('all_in_position') == 1) echo $read_all;
+	if($params->def('all_in') == 1 && $params->def('all_in_position') == 1)
+	{
+		echo $read_all;
+	}
 
-	if($params->def('all_in2') == 1 && $params->def('all_in_position2') == 1) echo $read_all2;
+	if($params->def('all_in2') == 1 && $params->def('all_in_position2') == 1)
+	{
+		echo $read_all2;
+	}
 
 }
 else
 {
-	$tpl = explode(":", $params->def('template'));
+	$tpl = explode(':', $params->def('template'));
 
 	echo "<strong>Template <span style=\"color: green;\">$tpl</span> do is not found!</strong><br />Please, upload new template to <em>modules/mod_junewsultra/tmpl</em> or <em>templates/$tpl[0]/html/mod_junewsultra/</em> folder or select other template from back-end!";
 }
