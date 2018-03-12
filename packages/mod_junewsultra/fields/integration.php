@@ -69,7 +69,7 @@ class JFormFieldIntegration extends JFormField
 
 		foreach ($this->element->children() as $option)
 		{
-			if ($option->getName() !== 'option')
+			if ($option->getName() != 'option')
 			{
 				continue;
 			}

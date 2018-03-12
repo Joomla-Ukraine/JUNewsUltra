@@ -29,11 +29,11 @@ $csslink = '<link href="../../../../../administrator/templates/isis/css/template
 
 function alert($text, $error)
 {
-	if ($error === 'message')
+	if ($error == 'message')
 	{
 		$error = 'alert-info';
 	}
-	if ($error === 'notice')
+	if ($error == 'notice')
 	{
 		$error = 'alert-error';
 	}

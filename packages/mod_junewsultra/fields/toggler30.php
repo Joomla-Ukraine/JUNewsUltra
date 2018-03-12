@@ -45,9 +45,18 @@ class nnFieldToggler
 {
 	public $_version = 'ju_201211';
 
+	/**
+	 * @param $params
+	 *
+	 * @return string
+	 *
+	 * @since 6.0
+	 */
 	public function getInput($params)
 	{
 		$this->params = $params;
+
+		$option = JFactory::getApplication()->input->get('option');
 
 		$param  = $this->def('param');
 		$value  = $this->def('value');
@@ -97,7 +106,7 @@ class nnFieldToggler
 				$html[] = ' nntoggler_nofx';
 			}
 
-			if ($method === 'and')
+			if ($method == 'and')
 			{
 				$html[] = ' nntoggler_and';
 			}

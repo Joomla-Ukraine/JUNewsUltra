@@ -4,7 +4,7 @@
  *
  * @package    JUNewsUltra Pro
  *
- * @copyright  Copyright (C) 2007-2017 Denys Nosov. All rights reserved.
+ * @copyright  Copyright (C) 2007-2018 Denys Nosov. All rights reserved.
  * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  *
  */
@@ -18,8 +18,11 @@
 class Pkg_JUNewsUltraInstallerScript
 {
 	protected $dbSupport = array('mysql', 'mysqli', 'postgresql', 'sqlsrv', 'sqlazure');
+
 	protected $message;
+
 	protected $status;
+
 	protected $sourcePath;
 
 	/**

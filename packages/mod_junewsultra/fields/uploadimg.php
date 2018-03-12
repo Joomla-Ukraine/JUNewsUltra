@@ -11,11 +11,12 @@
  */
 
 define('_JEXEC', 1);
-define('JPATH_BASE', __DIR__ . '/../../..');
+define('DS', DIRECTORY_SEPARATOR);
+define('JPATH_BASE', __DIR__ . DS . '..' . DS . '..' . DS . '..');
 define('MAX_SIZE', '500');
 
-require_once JPATH_BASE . '/includes/defines.php';
-require_once JPATH_BASE . '/includes/framework.php';
+require_once JPATH_BASE . DS . 'includes' . DS . 'defines.php';
+require_once JPATH_BASE . DS . 'includes' . DS . 'framework.php';
 
 $mainframe  = JFactory::getApplication('administrator');
 $joomlaUser = JFactory::getUser();
@@ -29,9 +30,9 @@ $csslink = '
 <link href="../../../../../administrator/templates/isis/css/template.css" rel="stylesheet" type="text/css" />
 <link href="../../../../../media/jui/css/bootstrap.css" rel="stylesheet" type="text/css" />
 
-<script src="../../../../../media/jui/js/jquery.min.js"></script>
-<script src="../../../../../modules/mod_junewsultra/assets/js/jquery.custom-input-file.js"></script>
-<script>
+<script src="../../../../../media/jui/js/jquery.min.js" type="text/javascript"></script>
+<script src="../../../../../modules/mod_junewsultra/assets/js/jquery.custom-input-file.js" type="text/javascript"></script>
+<script type="text/javascript">
     jQuery.noConflict();
     (function($) {
         $(function() {
@@ -82,7 +83,7 @@ function alert($text, $error)
 	return;
 endif;
 
-$path             = str_replace('modules/mod_junewsultra/fields/../../..', 'media/mod_junewsultra', JPATH_BASE);
+$path             = str_replace('modules' . DS . 'mod_junewsultra' . DS . 'fields' . DS . '..' . DS . '..' . DS . '..', 'media/mod_junewsultra', JPATH_BASE);
 $max_image_width  = 800;
 $max_image_height = 800;
 $max_image_size   = 1024 * 1024;
@@ -124,13 +125,13 @@ if (isset($_FILES[ 'userfile' ]))
 		{
 			echo alert(JText::_('MOD_JUNEWS_ERROR1') . $max_image_size . ' KB', 'notice');
 		}
-        elseif (!in_array($ext, $valid_types, true))
+        elseif (!in_array($ext, $valid_types))
 		{
 			echo alert(JText::_('MOD_JUNEWS_ERROR2'), 'notice');
 		}
 		else
 		{
-			$size = getimagesize($filename);
+			$size = GetImageSize($filename);
 			if ($size && ($size[ 0] < $max_image_width) && ($size[ 1] < $max_image_height))
 			{
 				if (@move_uploaded_file($filename, $path . '/jn_' . $_FILES['userfile']['name']))

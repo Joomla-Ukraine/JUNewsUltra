@@ -40,11 +40,9 @@ class youtube extends modJUNewsUltraHelper
             case '2':
                 $ytxml = 'https://www.youtube.com/feeds/videos.xml?user=' . $params->get('ytaccount');
                 break;
-
             case '1':
                 $ytxml = 'https://www.youtube.com/feeds/videos.xml?playlist_id=' . $params->get('ytplaylist');
                 break;
-
             case '3':
                 $ytxml = 'https://www.youtube.com/feeds/videos.xml?channel_id==' . $params->get('ytchannel');
                 break;
@@ -169,7 +167,6 @@ class youtube extends modJUNewsUltraHelper
                         $item->imagesource = $junuimgsource;
 
                         break;
-
                     case '1':
                     default:
 

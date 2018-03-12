@@ -84,67 +84,51 @@ class com_content extends modJUNewsUltraHelper
 			case 'title_asc':
 				$orderBy = 'a.title';
 				break;
-
 			case 'title_desc':
 				$orderBy = 'a.title DESC';
 				break;
-
 			case 'id_asc':
 				$orderBy = 'a.id';
 				break;
-
 			case 'id_desc':
 				$orderBy = 'a.id DESC';
 				break;
-
 			case 'hits_asc':
 				$orderBy = 'a.hits';
 				break;
-
 			case 'hits_desc':
 				$orderBy = 'a.hits DESC';
 				break;
-
 			case 'rating_asc':
 				$orderBy = 'rating';
 				break;
-
 			case 'rating_desc':
 				$orderBy = 'rating DESC';
 				break;
-
 			case 'created_asc':
 				$orderBy = 'a.created';
 				break;
-
 			case 'modified_desc':
 				$orderBy = 'a.modified DESC';
 				break;
-
 			case 'modified_created_dsc':
 				$orderBy = 'a.modified DESC, a.created';
 				break;
-
 			case 'modified_touch_dsc':
 				$orderBy = 'CASE WHEN (a.modified = ' . $db->quote($nullDate) . ') THEN a.created ELSE a.modified END';
 				break;
-
 			case 'ordering_asc':
 				$orderBy = 'a.ordering';
 				break;
-
 			case 'ordering_desc':
 				$orderBy = 'a.ordering DESC';
 				break;
-
 			case 'rand':
 				$orderBy = 'rand()';
 				break;
-
 			case 'publish_dsc':
 				$orderBy = 'a.publish_up DESC';
 				break;
-
 			case 'created_desc':
 			default:
 				$orderBy = 'a.created DESC';
@@ -152,24 +136,25 @@ class com_content extends modJUNewsUltraHelper
 		}
 
 		// Access filter
-		$access     = '1';
-		$authorised = array();
-
 		if($useaccess == '1')
 		{
 			$access     = !JComponentHelper::getParams('com_content')->get('show_noauth');
 			$authorised = JAccess::getAuthorisedViewLevels($user->get('id'));
 		}
+		else
+		{
+			$access     = '1';
+			$authorised = array();
+		}
 
 		if(is_array($catid))
 		{
 			$cat_arr = array();
-
 			foreach($catid as $key => $curr)
 			{
 				if((int) $curr)
 				{
-					$cat_arr[ $key ] = (int) $curr;
+					$cat_arr[ $key ] = intval($curr);
 				}
 			}
 		}
@@ -179,7 +164,7 @@ class com_content extends modJUNewsUltraHelper
 
 			if((int) $catid)
 			{
-				$cat_arr[] = (int) $catid;
+				$cat_arr[] = intval($catid);
 			}
 		}
 
@@ -204,7 +189,8 @@ class com_content extends modJUNewsUltraHelper
 		if(JLanguageMultilang::isEnabled())
 		{
 			$query->select('a.language');
-			$query->where('a.language IN (' . $db->quote(JFactory::getLanguage()->getTag()) . ',' . $db->quote('*') . ')');
+			$query->where('a.language IN (' . $db->quote(JFactory::getLanguage()
+			                                                     ->getTag()) . ',' . $db->quote('*') . ')');
 		}
 
 		if($junews[ 'image_source' ] > '0' && $junews[ 'show_image' ] == '1')
@@ -212,12 +198,12 @@ class com_content extends modJUNewsUltraHelper
 			$query->select('a.images');
 		}
 
-		if(($junews[ 'show_date' ] == '1' || $ordering === 'created_asc' || $ordering === 'created_desc') && ($ordering === 'created_asc' || $ordering === 'created_desc' || $ordering === 'modified_created_dsc' || $ordering === 'modified_touch_dsc' || $date_type === 'created' || $date_field === 'a.created' || $date_filtering == '1' || $dateuser_filtering == '1'))
+		if(($junews[ 'show_date' ] == '1' || $ordering == 'created_asc' || $ordering == 'created_desc') && ($ordering == 'created_asc' || $ordering == 'created_desc' || $ordering == 'modified_created_dsc' || $ordering == 'modified_touch_dsc' || $date_type == 'created' || $date_field == 'a.created' || $date_filtering == '1' || $dateuser_filtering == '1'))
 		{
 			$query->select('a.created');
 		}
 
-		if(($junews[ 'show_date' ] == '1' || $ordering === 'modified_asc' || $ordering === 'modified_desc' || $ordering === 'modified_created_dsc' || $ordering === 'modified_touch_dsc') && ($ordering === 'modified_asc' || $ordering === 'modified_desc' || $ordering === 'modified_created_dsc' || $ordering === 'modified_touch_dsc' || $date_type === 'modified' || $date_field === 'a.modified' || $date_filtering == '1'))
+		if(($junews[ 'show_date' ] == '1' || $ordering == 'modified_asc' || $ordering == 'modified_desc' || $ordering == 'modified_created_dsc' || $ordering == 'modified_touch_dsc') && ($ordering == 'modified_asc' || $ordering == 'modified_desc' || $ordering == 'modified_created_dsc' || $ordering == 'modified_touch_dsc' || $date_type == 'modified' || $date_field == 'a.modified' || $date_filtering == '1'))
 		{
 			$query->select('a.modified');
 		}
@@ -252,12 +238,12 @@ class com_content extends modJUNewsUltraHelper
 			$query->select('a.attribs');
 		}
 
-		if($ordering === 'ordering_asc' || $ordering === 'ordering_desc')
+		if($ordering == 'ordering_asc' || $ordering == 'ordering_desc')
 		{
 			$query->select('a.ordering');
 		}
 
-		if($junews[ 'show_hits' ] == '1' || $ordering === 'hits_asc' || $ordering === 'hits_desc')
+		if($junews[ 'show_hits' ] == '1' || $ordering == 'hits_asc' || $ordering == 'hits_desc')
 		{
 			$query->select('a.hits');
 		}
@@ -302,7 +288,6 @@ class com_content extends modJUNewsUltraHelper
 		if($dateuser_filtering == 1 || !empty($uid))
 		{
 			$ji_catids = '';
-
 			if(is_array($cat_arr) && count($cat_arr))
 			{
 				$ji_catids = 'WHERE `catid` IN (' . implode(',', $cat_arr) . ')';
@@ -332,27 +317,21 @@ class com_content extends modJUNewsUltraHelper
 						$endDateRange   = $db->quote($params->get('end_date_range', date('Y-m-d H:i:s')));
 						$query->where('(' . $date_field . ' > ' . $startDateRange . ' AND ' . $date_field . ' < ' . $endDateRange . ')');
 						break;
-
 					case '2':
 						$query->where($date_field . ' > DATE_SUB(' . $db->Quote($now) . ', INTERVAL 7 DAY)');
 						break;
-
 					case '3':
 						$query->where($date_field . ' > DATE_SUB(' . $db->Quote($now) . ', INTERVAL 14 DAY)');
 						break;
-
 					case '4':
 						$query->where($date_field . ' > DATE_SUB(' . $db->Quote($now) . ', INTERVAL ' . cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y')) . ' DAY)');
 						break;
-
 					case '5':
 						$query->where($date_field . ' > DATE_SUB(' . $db->Quote($now) . ', INTERVAL 365 DAY)');
 						break;
-
 					case '6':
 						$query->where($date_field . ' > DATE_SUB(' . $db->Quote($now) . ', INTERVAL ' . $params->get('custom_days', '30') . ' DAY)');
 						break;
-
 					case '0':
 					default:
 						$query->where($date_field . ' > DATE_SUB(' . $db->Quote($now) . ', INTERVAL 1 DAY)');
@@ -374,7 +353,6 @@ class com_content extends modJUNewsUltraHelper
 			}
 
 			$excluded_articles = $params->get('excluded_articles', null);
-
 			if($excluded_articles)
 			{
 				$excluded_articles = explode("\r\n", $excluded_articles);
@@ -386,7 +364,6 @@ class com_content extends modJUNewsUltraHelper
 				case '1':
 					$query->where('a.featured = 1');
 					break;
-
 				case '0':
 					$query->where('a.featured = 0');
 					break;
@@ -400,11 +377,9 @@ class com_content extends modJUNewsUltraHelper
 						$query->where('a.created_by = ' . $db->Quote((int) $uid));
 					}
 					break;
-
 				case 'by_me':
 					$query->where('(a.created_by = ' . (int) $user->get('id') . ' OR a.modified_by = ' . (int) $user->get('id') . ')');
 					break;
-
 				case 'not_me':
 					$query->where('(a.created_by <> ' . (int) $user->get('id') . ' AND a.modified_by <> ' . (int) $user->get('id') . ')');
 					break;
@@ -450,18 +425,14 @@ class com_content extends modJUNewsUltraHelper
 			if(file_exists($comments))
 			{
 				$ids = array();
-
-				foreach($items as $item)
+				foreach($items as &$item)
 				{
 					$ids[] = $item->id;
 				}
 
-				switch(!$comments_system)
+				if($comments_system == 'jcomments')
 				{
-					default:
-					case 'jcomments':
-						$lang->load('com_' . $comments_system, JPATH_SITE);
-						break;
+					$lang->load('com_' . $comments_system, JPATH_SITE);
 				}
 
 				$query = $db->getQuery(true);
@@ -482,7 +453,6 @@ class com_content extends modJUNewsUltraHelper
 						$comment_text2  = $comment_text1;
 						$comment_plural = 0;
 						break;
-
 					default:
 					case 'jcomments':
 						$query->select('object_id, count(object_id) AS cnt');
@@ -500,7 +470,7 @@ class com_content extends modJUNewsUltraHelper
 						break;
 				}
 
-				foreach($items as $item)
+				foreach($items as &$item)
 				{
 					$item->comments      = isset($commentsCount[ $item->id ]) ? $commentsCount[ $item->id ]->cnt : 0;
 					$item->commentslink  = $comment_link;
@@ -523,7 +493,7 @@ class com_content extends modJUNewsUltraHelper
 
 		foreach($items as &$item)
 		{
-			if($access || in_array($item->access, $authorised, true))
+			if($access || in_array($item->access, $authorised))
 			{
 				$item->slug = $item->id . ($item->alias ? ':' . $item->alias : '');
 				$language   = (JLanguageMultilang::isEnabled() ? $item->language : '');
@@ -552,11 +522,13 @@ class com_content extends modJUNewsUltraHelper
 			{
 				$cattitle = strip_tags($item->category_title);
 
-				$item->cattitle = $cattitle;
-
 				if($params->get('showcatlink') == 1)
 				{
 					$item->cattitle = '<a href="' . $item->catlink . '">' . $cattitle . '</a>';
+				}
+				else
+				{
+					$item->cattitle = $cattitle;
 				}
 			}
 
@@ -582,7 +554,6 @@ class com_content extends modJUNewsUltraHelper
 
 				$imlink  = '';
 				$imlink2 = '';
-
 				if($junews[ 'imglink' ] == 1)
 				{
 					$imlink  = '<a href="' . $item->link . '"' . ($params->get('tips') == 1 ? ' title="' . $title_alt . '"' : '') . '>';
@@ -607,8 +578,6 @@ class com_content extends modJUNewsUltraHelper
 						$img_folder   = $root . $folder;
 						$galleries    = glob($img_folder . '/{*.[jJ][pP][gG],*.[jJ][pP][eE][gG],*.[gG][iI][fF],*.[pP][nN][gG],*.[bB][mM][pP],*.[tT][iI][fF],*.[tT][iI][fF][fF]}', GLOB_BRACE);
 
-						$junuimgsource = '';
-
 						if(count($galleries) > 0 && is_dir($img_folder))
 						{
 							$i    = 0;
@@ -626,6 +595,10 @@ class com_content extends modJUNewsUltraHelper
 							}
 
 							$junuimgsource = $html[ 0 ];
+						}
+						else
+						{
+							$junuimgsource = '';
 						}
 					}
 					elseif($junews[ 'youtube_img_show' ] == 1)
@@ -718,9 +691,6 @@ class com_content extends modJUNewsUltraHelper
 
 					case '1':
 					default:
-
-						$blank = 1;
-
 						if(!$junuimgsource)
 						{
 							$blank = 0;
@@ -729,6 +699,10 @@ class com_content extends modJUNewsUltraHelper
 								$junuimgsource = 'media/mod_junewsultra/' . $junews[ 'noimage' ];
 								$blank         = 1;
 							}
+						}
+						else
+						{
+							$blank = 1;
 						}
 
 						if($blank == 1)
@@ -827,14 +801,12 @@ class com_content extends modJUNewsUltraHelper
 											$attr_imgset[] = $thumb_imgset . ' ' . $imgset[ $i ] . 'w';
 										}
 									}
-
 									$srcset = ' srcset="' . implode(', ', $attr_imgset) . '" ';
 									break;
 
 								case '2':
 									$imgset      = $junews[ 'srcsetpixeldensity' ];
 									$attr_imgset = array();
-
 									for($i = 0; $i <= 2; $i++)
 									{
 										if($imgset[ $i ])
@@ -873,7 +845,6 @@ class com_content extends modJUNewsUltraHelper
 											$attr_imgset[] = $thumb_imgset . ' ' . $imgset[ $i ] . 'x';
 										}
 									}
-
 									$srcset = ' srcset="' . implode(', ', $attr_imgset) . '" ';
 									break;
 

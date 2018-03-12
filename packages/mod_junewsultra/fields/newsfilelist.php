@@ -51,9 +51,12 @@ class JFormFieldNewsFileList extends JFormFieldList
 		{
 			foreach ($files as $file)
 			{
-				if ($exclude && preg_match(chr(1) . $exclude . chr(1), $file))
+				if ($exclude)
 				{
-					continue;
+					if (preg_match(chr(1) . $exclude . chr(1), $file))
+					{
+						continue;
+					}
 				}
 
 				if ($stripExt)

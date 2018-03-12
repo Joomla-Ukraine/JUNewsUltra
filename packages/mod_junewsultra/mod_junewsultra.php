@@ -94,9 +94,12 @@ require_once __DIR__ . '/helper/' . $component . '.php';
 $object = new $component;
 $list   = $object->getList($params, $junews);
 
-if($params->get('empty_mod', 0) == 0 && count($list) == 0)
+if($params->get('empty_mod', 0) == 0)
 {
-	return;
+	if(count($list) == 0)
+	{
+		return;
+	}
 }
 
 $layoutpath = JModuleHelper::getLayoutPath('mod_junewsultra', $params->def('template'));
@@ -115,7 +118,6 @@ if($params->def('bootstrap_css') == 1)
 {
 	$lang      = JFactory::getLanguage();
 	$direction = ($lang->isRTL() ? 'rtl' : 'ltr');
-
 	JHtmlBootstrap::loadCss($includeMaincss = true, $direction);
 }
 
@@ -123,7 +125,7 @@ if($params->get('cssstyle') == 1)
 {
 	$tpl = explode(':', $params->def('template'));
 
-	if($tpl[0] === '_')
+	if($tpl[0] == '_')
 	{
 		$jtpl = $app->getTemplate();
 	}
@@ -213,7 +215,6 @@ if(file_exists($layoutpath))
 
 		$item_heading2 = trim($params->get('item_heading2'));
 		$titletag2     = explode('_', $item_heading2);
-
 		if($titletag2[1])
 		{
 			$_tag_open2  = '<' . $titletag2[1] . '>';
@@ -251,7 +252,7 @@ if(file_exists($layoutpath))
 		echo $read_all2;
 	}
 
-	require_once $layoutpath;
+	require $layoutpath;
 
 	if($params->def('all_in') == 1 && $params->def('all_in_position') == 1)
 	{
@@ -262,6 +263,7 @@ if(file_exists($layoutpath))
 	{
 		echo $read_all2;
 	}
+
 }
 else
 {
