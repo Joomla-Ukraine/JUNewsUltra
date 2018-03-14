@@ -102,9 +102,9 @@ class rss extends modJUNewsUltraHelper
             // date
             if($junews['show_date'] == 1)
             {
-                $_date_type = date('Y-m-d H:i:s', strtotime($item->pubDate));
+	            $item->sqldate = date('Y-m-d H:i:s', strtotime($item->pubDate));
 
-	            $item->sqldate = $_date_type;
+	            $_date_type = strtotime($item->pubDate);
 
                 $item->date = JHtml::date($_date_type, $junews['data_format']);
                 $item->df_d = JHtml::date($_date_type, $junews['date_day']);

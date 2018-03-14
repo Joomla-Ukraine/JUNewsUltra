@@ -113,14 +113,14 @@ class youtube extends modJUNewsUltraHelper
             // date
             if($junews['show_date'] == 1)
             {
-                $_date_type = date('Y-m-d H:i:s', strtotime($item->published));
+	            $item->sqldate = date('Y-m-d H:i:s', strtotime($item->published));
 
-	            $item->sqldate = $_date_type;
+	            $_date_type = strtotime($item->published);
 
-                $item->date = JHtml::date($_date_type, $junews['data_format']);
-                $item->df_d = JHtml::date($_date_type, $junews['date_day']);
-                $item->df_m = JHtml::date($_date_type, $junews['date_month']);
-                $item->df_y = JHtml::date($_date_type, $junews['date_year']);
+	            $item->date = JHtml::date($_date_type, $junews['data_format']);
+	            $item->df_d = JHtml::date($_date_type, $junews['date_day']);
+	            $item->df_m = JHtml::date($_date_type, $junews['date_month']);
+	            $item->df_y = JHtml::date($_date_type, $junews['date_year']);
             }
 
             // hits
