@@ -1,12 +1,12 @@
 <project name="junewsultra" default="dist" basedir=".">
 
-    <property name="VERSION" value="6.5.9"/>
+    <property name="VERSION" value="6.5.10"/>
 
     <tstamp>
         <format property="DATE" pattern="%d.%m.%Y" />
     </tstamp>
 
-    <property name="julib" value="2.7.7"/>
+    <property name="julib" value="2.7.8"/>
 
     <property name="build" value="build"/>
 

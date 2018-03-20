@@ -94,12 +94,9 @@ require_once __DIR__ . '/helper/' . $component . '.php';
 $object = new $component;
 $list   = $object->getList($params, $junews);
 
-if($params->get('empty_mod', 0) == 0)
+if($params->get('empty_mod', 0) == 0 && count($list) == 0)
 {
-	if(count($list) == 0)
-	{
-		return;
-	}
+	return;
 }
 
 $layoutpath = JModuleHelper::getLayoutPath('mod_junewsultra', $params->def('template'));

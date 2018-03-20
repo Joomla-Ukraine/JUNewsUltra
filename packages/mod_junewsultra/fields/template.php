@@ -28,7 +28,7 @@ class JFormFieldTemplate extends JFormField
 	 */
 	protected function getInput()
 	{
-		if (!isset($_GET[ 'id' ]))
+		if(!isset($_GET[ 'id' ]))
 		{
 			return JText::_('MOD_JUNEWS_NOT_EDIT_TEMPLATE');
 		}
@@ -43,15 +43,15 @@ class JFormFieldTemplate extends JFormField
 		);
 		$rows = $db->loadResult();
 
-		if (preg_match('#"template":"_:(.*?)"#is', $rows, $ok))
+		if(preg_match('#"template":"_:(.*?)"#is', $rows, $ok))
 		{
-			if ($ok[1] == 1)
+			if($ok[ 1 ] == 1)
 			{
 				$tmpl = 'default';
 			}
 			else
 			{
-				$tmpl = $ok[1];
+				$tmpl = $ok[ 1 ];
 			}
 		}
 		else
@@ -62,21 +62,21 @@ class JFormFieldTemplate extends JFormField
 		$html = array();
 		$link = str_replace('/administrator', '', JURI::base()) . 'modules/mod_junewsultra/fields/edittemplate.php?file=' . $tmpl . '.php';
 
-		if ($error = $db->getErrorMsg())
+		if($error = $db->getErrorMsg())
 		{
 			JFactory::getApplication()->enqueueMessage($error, 'error');
 		}
 
-		if ($_GET[ 'id' ])
+		if($_GET[ 'id' ])
 		{
-			$html[] = '<a class="modal btn"  href="' . $link . '" rel="{handler: \'iframe\', size: {x: 1000, y: 650}}"><i class="class="icon-cog""></i> ' . JText::_('MOD_JUNEWS_TEMPLATE_BUTTON') . '</a>';
+			$html[] = '<a class="modal btn"  href="' . $link . '" rel="{handler: \'iframe\', size: {x: 1000, y: 650}}"><i class="icon-cog"></i> ' . JText::_('MOD_JUNEWS_TEMPLATE_BUTTON') . '</a>';
 		}
 		else
 		{
 			$html[] = JText::_('MOD_JUNEWS_NOT_EDIT_TEMPLATE');
 		}
 
-		if (0 == (int) $this->value)
+		if(0 == (int) $this->value)
 		{
 			$value = '';
 		}
@@ -86,7 +86,7 @@ class JFormFieldTemplate extends JFormField
 		}
 
 		$class = '';
-		if ($this->required)
+		if($this->required)
 		{
 			$class = ' class="required modal-value"';
 		}

@@ -17,8 +17,6 @@
  */
 class Pkg_JUNewsUltraInstallerScript
 {
-	protected $dbSupport = array('mysql', 'mysqli', 'postgresql', 'sqlsrv', 'sqlazure');
-
 	protected $message;
 
 	protected $status;
@@ -38,13 +36,6 @@ class Pkg_JUNewsUltraInstallerScript
 		if(version_compare(JVERSION, '3.1.0', 'lt'))
 		{
 			JFactory::getApplication()->enqueueMessage('Update for Joomla! 3.4+', 'error');
-
-			return false;
-		}
-
-		if(!in_array(JFactory::getDbo()->name, $this->dbSupport, true))
-		{
-			JFactory::getApplication()->enqueueMessage(JText::_('MOD_JUNEWS_ERROR_DB_SUPPORT'), 'error');
 
 			return false;
 		}
@@ -188,8 +179,7 @@ class Pkg_JUNewsUltraInstallerScript
 				$html .= $extension;
 			}
 
-			$html .= '</td><td>
-			<strong>';
+			$html .= '</td><td><strong>';
 
 			if($result['result'] == true)
 			{
@@ -200,8 +190,7 @@ class Pkg_JUNewsUltraInstallerScript
 				$html .= '<span class="label label-important">' . JText::_('MOD_JUNEWS_NOT_INSTALLED') . '</span>';
 			}
 
-			$html .= '</strong>
-        	</td><td>';
+			$html .= '</strong></td><td>';
 
 			if($enabled[$extension] == 1)
 			{
@@ -287,8 +276,7 @@ class Pkg_JUNewsUltraInstallerScript
 
 		if(($i + $j) > 0)
 		{
-			$html .= '<h2>' . JText::_('MOD_JUNEWS_REMOVE_OLD_FILES') . '</h2>
-        	<table class="table table-striped"><tbody>';
+			$html .= '<h2>' . JText::_('MOD_JUNEWS_REMOVE_OLD_FILES') . '</h2><table class="table table-striped"><tbody>';
 
 			foreach ($files AS $file)
 			{
@@ -297,10 +285,7 @@ class Pkg_JUNewsUltraInstallerScript
 					$filepath = str_replace($path, '', $file);
 					unlink($file);
 
-					$html .= '<tr>
-            		<td><span class="label">File:</span> <code>' . $filepath . '</code></td>
-            		<td><span class="label label-inverse">Delete</span></td>
-            		</tr>';
+					$html .= '<tr><td><span class="label">File:</span> <code>' . $filepath . '</code></td><td><span class="label label-inverse">Delete</span></td></tr>';
 				}
 			}
 
@@ -311,18 +296,14 @@ class Pkg_JUNewsUltraInstallerScript
 					$folderpath = str_replace($path, '', $folder);
 					$this->unlinkRecursive($folder, 1);
 
-					$html .= '<tr>
-            		<td><span class="label">Folder:</span> <code>' . $folderpath . '</code></td>
-            		<td><span class="label label-inverse">Delete</span></td>
-            		</tr>';
+					$html .= '<tr><td><span class="label">Folder:</span> <code>' . $folderpath . '</code></td><td><span class="label label-inverse">Delete</span></td></tr>';
 				}
 			}
 
 			$html .= '</tbody></table>';
 		}
 
-		$html .= '</div>
-        </div>';
+		$html .= '</div></div>';
 
 		if($joomla < '3.4')
 		{

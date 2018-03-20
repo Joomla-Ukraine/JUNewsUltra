@@ -131,7 +131,7 @@ if (isset($_FILES[ 'userfile' ]))
 		}
 		else
 		{
-			$size = GetImageSize($filename);
+			$size = getimagesize($filename);
 			if ($size && ($size[ 0] < $max_image_width) && ($size[ 1] < $max_image_height))
 			{
 				if (@move_uploaded_file($filename, $path . '/jn_' . $_FILES['userfile']['name']))

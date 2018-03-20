@@ -154,7 +154,7 @@ class com_content extends modJUNewsUltraHelper
 			{
 				if((int) $curr)
 				{
-					$cat_arr[ $key ] = intval($curr);
+					$cat_arr[ $key ] = (int) $curr;
 				}
 			}
 		}
@@ -164,7 +164,7 @@ class com_content extends modJUNewsUltraHelper
 
 			if((int) $catid)
 			{
-				$cat_arr[] = intval($catid);
+				$cat_arr[] = (int) $catid;
 			}
 		}
 

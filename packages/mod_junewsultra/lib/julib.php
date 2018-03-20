@@ -221,7 +221,7 @@ class JULibs
 
         if(file_exists($cache_file) && $timedif < $time)
         {
-            $string = file_get_contents(JURI::root() . $cache_file);
+            $string = @file_get_contents(JURI::root() . $cache_file);
             $error  = 0;
         }
         else
@@ -323,6 +323,8 @@ class JULibs
         }
         else
         {
+	        $feature = '';
+
             parse_str($urls['query'], $output);
             $yid = $output['v'];
             if(!empty($feature))
