@@ -20,11 +20,7 @@ $tmpl    = $adm_url . 'modules/mod_junewsultra/fields/edittemplate.php?file=';
 $document->addStyleSheet($adm_url . 'modules/mod_junewsultra/assets/css/junewsultra.css?v=6');
 
 $db = JFactory::getDBO();
-$db->setQuery(
-	'SELECT params' .
-	' FROM #__modules' .
-	' WHERE id = ' . (int) $_GET[ 'id' ]
-);
+$db->setQuery('SELECT params FROM #__modules WHERE id = ' . (int) $_GET[ 'id' ]);
 $rows = $db->loadResult();
 
 $curent_tmp = json_decode($rows, true);

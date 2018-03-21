@@ -33,6 +33,7 @@ function alert($text, $error)
 	{
 		$error = 'alert-info';
 	}
+
 	if($error == 'notice')
 	{
 		$error = 'alert-error';
@@ -50,26 +51,24 @@ if($joomlaUser->get('id') < 1)
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<?php echo $csslink; ?>
 	</head>
-	<body>
-	<?php echo alert(JText::_('MOD_JUNEWS_LOGIN'), 'notice'); ?>
-	</body>
+	<body><?php echo alert(JText::_('MOD_JUNEWS_LOGIN'), 'notice'); ?></body>
 	</html>
 	<?php
+
 	return;
 }
 
-$app         = JFactory::getApplication('site');
+$app = JFactory::getApplication('site');
 $current_tpl = explode(':', $_GET[ 'file' ]);
-
-$jtpl = $current_tpl[ 0 ];
-
-$css = '0';
+$jtpl        = $current_tpl[ 0 ];
+$css         = '0';
 
 if(is_file(JPATH_SITE . '/modules/mod_junewsultra/tmpl/' . str_replace('.php', '', $current_tpl[ 1 ]) . '/css/style.css'))
 {
 	$css_filename = JPATH_BASE . '/modules/mod_junewsultra/tmpl/' . str_replace('.php', '', $current_tpl[ 1 ]) . '/css/style.css';
 	$css          = '1';
 }
+
 if(is_file(JPATH_SITE . '/templates/' . $jtpl . '/html/mod_junewsultra/' . str_replace('.php', '', $current_tpl[ 1 ]) . '/css/style.css'))
 {
 	$css_filename = JPATH_BASE . '/templates/' . $jtpl . '/html/mod_junewsultra/' . str_replace('.php', '', $current_tpl[ 1 ]) . '/css/style.css';
@@ -108,7 +107,6 @@ if(isset($newdata) != '')
 
 $fh = fopen($filename, 'rb') or die('Could not open file!');
 $data = fread($fh, filesize($filename)) or die('Could not read file!');
-
 fclose($fh);
 chmod($filename, 0777);
 
@@ -124,15 +122,12 @@ chmod($filename, 0777);
 			font-size: 102%;
 			margin: 0 20px 0 20px;
 		}
-
 		.left {
 			float: left;
 		}
-
 		.right {
 			float: right;
 		}
-
 		.wells {
 			position: fixed;
 			z-index: 100;
