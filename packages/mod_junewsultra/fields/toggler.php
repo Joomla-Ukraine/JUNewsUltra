@@ -17,7 +17,7 @@ $joomla  = $version->getShortVersion();
 
 include 'head.php';
 
-if (substr($joomla, 0, 3) >= '3.0')
+if(substr($joomla, 0, 3) >= '3.0')
 {
 	include 'toggler30.php';
 }

@@ -28,7 +28,7 @@ $db->setQuery(
 $rows = $db->loadResult();
 
 $curent_tmp = json_decode($rows, true);
-$tmpl_link  = $tmpl . $curent_tmp['template'] . '.php';
+$tmpl_link  = $tmpl . $curent_tmp[ 'template' ] . '.php';
 
 $snipets = '
     jQuery.noConflict();

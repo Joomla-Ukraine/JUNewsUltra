@@ -65,14 +65,16 @@ class nnFieldToggler
 		$div    = $this->def('div', 0);
 
 		JHtml::_('jquery.framework');
-		JFactory::getDocument()->addScript(JURI::root(true) . '/modules/mod_junewsultra/assets/js/script30.js?v=' . $this->_version);
-		JFactory::getDocument()->addScript(JURI::root(true) . '/modules/mod_junewsultra/assets/js/toggler30.js?v=' . $this->_version);
+		JFactory::getDocument()
+		        ->addScript(JURI::root(true) . '/modules/mod_junewsultra/assets/js/script30.js?v=' . $this->_version);
+		JFactory::getDocument()
+		        ->addScript(JURI::root(true) . '/modules/mod_junewsultra/assets/js/toggler30.js?v=' . $this->_version);
 
 		$param = preg_replace('#^\s*(.*?)\s*$#', '\1', $param);
 		$param = preg_replace('#\s*\|\s*#', '|', $param);
 
 		$html = array();
-		if ($param != '')
+		if($param != '')
 		{
 			$param      = preg_replace('#[^a-z0-9-\.\|\@]#', '_', $param);
 			$param      = str_replace('@', '_', $param);
@@ -80,40 +82,40 @@ class nnFieldToggler
 			$set_values = explode('|', $value);
 
 			$ids = array();
-			foreach ($set_groups as $i => $group)
+			foreach($set_groups as $i => $group)
 			{
 				$count = $i;
-				if ($count >= count($set_values))
+				if($count >= count($set_values))
 				{
 					$count = 0;
 				}
 
-				$value = explode(',', $set_values[$count]);
-				foreach ($value as $val)
+				$value = explode(',', $set_values[ $count ]);
+				foreach($value as $val)
 				{
 					$ids[] = $group . '.' . $val;
 				}
 			}
 
-			if (!$div)
+			if(!$div)
 			{
 				$html[] = '</div></div>';
 			}
 
 			$html[] = '<div id="' . mt_rand(1000000, 9999999) . '___' . implode('___', $ids) . '" class="nntoggler';
-			if ($nofx)
+			if($nofx)
 			{
 				$html[] = ' nntoggler_nofx';
 			}
 
-			if ($method == 'and')
+			if($method == 'and')
 			{
 				$html[] = ' nntoggler_and';
 			}
 
 			$html[] = '">';
 
-			if (!$div)
+			if(!$div)
 			{
 				$html[] = '<div><div>';
 			}
@@ -128,7 +130,7 @@ class nnFieldToggler
 
 	/**
 	 * @param        string $val
-	 * @param string $default
+	 * @param string        $default
 	 *
 	 * @return string
 	 *
@@ -136,6 +138,6 @@ class nnFieldToggler
 	 */
 	private function def($val, $default = '')
 	{
-		return (isset($this->params[$val]) && (string) $this->params[$val] != '') ? (string) $this->params[$val] : $default;
+		return (isset($this->params[ $val ]) && (string) $this->params[ $val ] != '') ? (string) $this->params[ $val ] : $default;
 	}
 }

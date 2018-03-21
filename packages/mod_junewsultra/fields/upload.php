@@ -28,7 +28,7 @@ class JFormFieldUpload extends JFormField
 	 */
 	protected function getInput()
 	{
-		if (!isset($_GET[ 'id' ]))
+		if(!isset($_GET[ 'id' ]))
 		{
 			return JText::_('MOD_JUNEWS_NOT_EDIT_TEMPLATE');
 		}

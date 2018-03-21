@@ -29,11 +29,11 @@ $csslink = '<link href="../../../../../administrator/templates/isis/css/template
 
 function alert($text, $error)
 {
-	if ($error == 'message')
+	if($error == 'message')
 	{
 		$error = 'alert-info';
 	}
-	if ($error == 'notice')
+	if($error == 'notice')
 	{
 		$error = 'alert-error';
 	}
@@ -41,19 +41,19 @@ function alert($text, $error)
 	return '<div class="alert ' . $error . '">' . $text . '</div>';
 }
 
-if ($joomlaUser->get('id') < 1)
+if($joomlaUser->get('id') < 1)
 {
 	?>
-    <!DOCTYPE html>
-    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $language; ?>" lang="<?php echo $language; ?>">
-    <head>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<!DOCTYPE html>
+	<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $language; ?>" lang="<?php echo $language; ?>">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<?php echo $csslink; ?>
-    </head>
-    <body>
+	</head>
+	<body>
 	<?php echo alert(JText::_('MOD_JUNEWS_LOGIN'), 'notice'); ?>
-    </body>
-    </html>
+	</body>
+	</html>
 	<?php
 	return;
 }
@@ -61,44 +61,44 @@ if ($joomlaUser->get('id') < 1)
 $app         = JFactory::getApplication('site');
 $current_tpl = explode(':', $_GET[ 'file' ]);
 
-$jtpl = $current_tpl[0];
+$jtpl = $current_tpl[ 0 ];
 
 $css = '0';
 
-if (is_file(JPATH_SITE . '/modules/mod_junewsultra/tmpl/' . str_replace('.php', '', $current_tpl[1]) . '/css/style.css'))
+if(is_file(JPATH_SITE . '/modules/mod_junewsultra/tmpl/' . str_replace('.php', '', $current_tpl[ 1 ]) . '/css/style.css'))
 {
-	$css_filename = JPATH_BASE . '/modules/mod_junewsultra/tmpl/' . str_replace('.php', '', $current_tpl[1]) . '/css/style.css';
+	$css_filename = JPATH_BASE . '/modules/mod_junewsultra/tmpl/' . str_replace('.php', '', $current_tpl[ 1 ]) . '/css/style.css';
 	$css          = '1';
 }
-if (is_file(JPATH_SITE . '/templates/' . $jtpl . '/html/mod_junewsultra/' . str_replace('.php', '', $current_tpl[1]) . '/css/style.css'))
+if(is_file(JPATH_SITE . '/templates/' . $jtpl . '/html/mod_junewsultra/' . str_replace('.php', '', $current_tpl[ 1 ]) . '/css/style.css'))
 {
-	$css_filename = JPATH_BASE . '/templates/' . $jtpl . '/html/mod_junewsultra/' . str_replace('.php', '', $current_tpl[1]) . '/css/style.css';
+	$css_filename = JPATH_BASE . '/templates/' . $jtpl . '/html/mod_junewsultra/' . str_replace('.php', '', $current_tpl[ 1 ]) . '/css/style.css';
 	$css          = '1';
 }
 
-if (isset($_GET[ 'css' ]))
+if(isset($_GET[ 'css' ]))
 {
 	$filename = $css_filename;
 }
 else
 {
-	if (is_file(JPATH_SITE . '/modules/mod_junewsultra/tmpl/' . $current_tpl[1]))
+	if(is_file(JPATH_SITE . '/modules/mod_junewsultra/tmpl/' . $current_tpl[ 1 ]))
 	{
-		$filename = JPATH_BASE . '/modules/mod_junewsultra/tmpl/' . $current_tpl[1];
+		$filename = JPATH_BASE . '/modules/mod_junewsultra/tmpl/' . $current_tpl[ 1 ];
 	}
 
-	if (is_file(JPATH_SITE . '/templates/' . $jtpl . '/html/mod_junewsultra/' . $current_tpl[1]))
+	if(is_file(JPATH_SITE . '/templates/' . $jtpl . '/html/mod_junewsultra/' . $current_tpl[ 1 ]))
 	{
-		$filename = JPATH_BASE . '/templates/' . $jtpl . '/html/mod_junewsultra/' . $current_tpl[1];
+		$filename = JPATH_BASE . '/templates/' . $jtpl . '/html/mod_junewsultra/' . $current_tpl[ 1 ];
 	}
 }
 
-if (isset($_POST['newd']))
+if(isset($_POST[ 'newd' ]))
 {
 	$newdata = $_POST[ 'newd' ];
 }
 
-if (isset($newdata) != '')
+if(isset($newdata) != '')
 {
 	$fw = fopen($filename, 'wb') or die('Could not open file!');
 	$fb = fwrite($fw, stripslashes($newdata)) or die('Could not write to file');
@@ -116,56 +116,56 @@ chmod($filename, 0777);
 <!DOCTYPE html PUBLIC>
 <html lang="<?php echo $language; ?>">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<?php echo $csslink; ?>
-    <style type="text/css">
-        body {
-            background: transparent;
-            font-size: 102%;
-            margin: 0 20px 0 20px;
-        }
+	<style type="text/css">
+		body {
+			background: transparent;
+			font-size: 102%;
+			margin: 0 20px 0 20px;
+		}
 
-        .left {
-            float: left;
-        }
+		.left {
+			float: left;
+		}
 
-        .right {
-            float: right;
-        }
+		.right {
+			float: right;
+		}
 
-        .wells {
-            position: fixed;
-            z-index: 100;
-            top: 0;
-            left: 0;
-            overflow: hidden;
-            width: 100%;
-            padding: 9px;
-            background: #fff;
-            border-bottom: 1px solid #ccc;
-        }
-    </style>
+		.wells {
+			position: fixed;
+			z-index: 100;
+			top: 0;
+			left: 0;
+			overflow: hidden;
+			width: 100%;
+			padding: 9px;
+			background: #fff;
+			border-bottom: 1px solid #ccc;
+		}
+	</style>
 </head>
 <body>
 <form method="post">
-    <div class="wells">
-        <div class="btn-group left" style="margin-left: 10px;">
-			<?php if ($css == 1): ?>
-				<?php if (isset($_GET[ 'css' ])): ?>
-					<?php echo '<a href="' . JURI::base() . 'edittemplate.php?file=' . $_GET['file'] . '" class="btn btn-success">Edit template: ' . $_GET['file'] . '</a>'; ?>
+	<div class="wells">
+		<div class="btn-group left" style="margin-left: 10px;">
+			<?php if($css == 1): ?>
+				<?php if(isset($_GET[ 'css' ])): ?>
+					<?php echo '<a href="' . JURI::base() . 'edittemplate.php?file=' . $_GET[ 'file' ] . '" class="btn btn-success">Edit template: ' . $_GET[ 'file' ] . '</a>'; ?>
 					<?php echo '<span class="btn disabled">style.css</span>'; ?>
 				<?php else: ?>
-					<?php echo '<span class="btn disabled">' . $current_tpl[1] . '</span>'; ?>
-					<?php echo '<a href="' . JURI::base() . 'edittemplate.php?file=' . $_GET['file'] . '&css=1" class="btn btn-success">Edit CSS: style.css</a>'; ?>
+					<?php echo '<span class="btn disabled">' . $current_tpl[ 1 ] . '</span>'; ?>
+					<?php echo '<a href="' . JURI::base() . 'edittemplate.php?file=' . $_GET[ 'file' ] . '&css=1" class="btn btn-success">Edit CSS: style.css</a>'; ?>
 				<?php endif; ?>
 			<?php else : ?>
-				<?php echo '<span class="btn disabled">' . $current_tpl[1] . '</span>'; ?>
+				<?php echo '<span class="btn disabled">' . $current_tpl[ 1 ] . '</span>'; ?>
 			<?php endif; ?>
-        </div>
-        <button type="submit" class="btn right" style="margin-right: 20px;">Save template</button>
-    </div>
-    <div style="clear: both;"></div>
-    <textarea name="newd" style="width: 100%; height: 585px; clear: both;" id="newd"><?php echo $data; ?></textarea>
+		</div>
+		<button type="submit" class="btn right" style="margin-right: 20px;">Save template</button>
+	</div>
+	<div style="clear: both;"></div>
+	<textarea name="newd" style="width: 100%; height: 585px; clear: both;" id="newd"><?php echo $data; ?></textarea>
 </form>
 </body>
 </html>

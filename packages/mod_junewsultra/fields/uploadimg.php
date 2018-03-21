@@ -55,11 +55,11 @@ $csslink = '
 
 function alert($text, $error)
 {
-	if ($error == 'message')
+	if($error == 'message')
 	{
 		$error = 'alert-info';
 	}
-	if ($error == 'notice')
+	if($error == 'notice')
 	{
 		$error = 'alert-error';
 	}
@@ -68,17 +68,17 @@ function alert($text, $error)
 }
 
 ?>
-<?php if ($joomlaUser->get('id') < 1) : ?>
-    <!DOCTYPE html>
-    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $language; ?>" lang="<?php echo $language; ?>">
-    <head>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<?php if($joomlaUser->get('id') < 1) : ?>
+	<!DOCTYPE html>
+	<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $language; ?>" lang="<?php echo $language; ?>">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<?php echo $csslink; ?>
-    </head>
-    <body>
+	</head>
+	<body>
 	<?php echo alert(JText::_('MOD_JUNEWS_LOGIN'), 'notice'); ?>
-    </body>
-    </html>
+	</body>
+	</html>
 	<?php
 	return;
 endif;
@@ -98,43 +98,43 @@ $valid_types      = array(
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $language; ?>" lang="<?php echo $language; ?>">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<?php echo $csslink; ?>
 </head>
 <body>
 <fieldset class="adminform">
-    <legend><?php echo JText::_('MOD_JUNEWS_UPLOAD_MODULE'); ?></legend>
-    <form enctype="multipart/form-data" method="post">
+	<legend><?php echo JText::_('MOD_JUNEWS_UPLOAD_MODULE'); ?></legend>
+	<form enctype="multipart/form-data" method="post">
             <span class="input-append">
                <input id="juCover" class="input-mini disabled" style="width:110px!important;" value="" type="text">
                <input id="lefile" name="userfile" type="file" autocomplete="off">
                <button type="submit" class="btn btn-primary"><?php echo JText::_('MOD_JUNEWS_UPLOAD'); ?></button>
             </span>
-        <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $max_image_size; ?>">
-    </form>
+		<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $max_image_size; ?>">
+	</form>
 </fieldset>
 <?php
-if (isset($_FILES[ 'userfile' ]))
+if(isset($_FILES[ 'userfile' ]))
 {
-	if (is_uploaded_file($_FILES['userfile']['tmp_name']))
+	if(is_uploaded_file($_FILES[ 'userfile' ][ 'tmp_name' ]))
 	{
-		$filename = $_FILES['userfile']['tmp_name'];
-		$ext      = substr($_FILES['userfile']['name'], 1 + strrpos($_FILES['userfile']['name'], '.'));
+		$filename = $_FILES[ 'userfile' ][ 'tmp_name' ];
+		$ext      = substr($_FILES[ 'userfile' ][ 'name' ], 1 + strrpos($_FILES[ 'userfile' ][ 'name' ], '.'));
 
-		if (filesize($filename) > $max_image_size)
+		if(filesize($filename) > $max_image_size)
 		{
 			echo alert(JText::_('MOD_JUNEWS_ERROR1') . $max_image_size . ' KB', 'notice');
 		}
-        elseif (!in_array($ext, $valid_types))
+		elseif(!in_array($ext, $valid_types))
 		{
 			echo alert(JText::_('MOD_JUNEWS_ERROR2'), 'notice');
 		}
 		else
 		{
 			$size = getimagesize($filename);
-			if ($size && ($size[ 0] < $max_image_width) && ($size[ 1] < $max_image_height))
+			if($size && ($size[ 0 ] < $max_image_width) && ($size[ 1 ] < $max_image_height))
 			{
-				if (@move_uploaded_file($filename, $path . '/jn_' . $_FILES['userfile']['name']))
+				if(@move_uploaded_file($filename, $path . '/jn_' . $_FILES[ 'userfile' ][ 'name' ]))
 				{
 					echo alert(JText::_('MOD_JUNEWS_NOTICE8'), 'message');
 				}

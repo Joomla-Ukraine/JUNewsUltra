@@ -20,19 +20,19 @@ class JFormFieldCommentsRadio extends JFormField
 	 *
 	 * @return string
 	 *
-	 * @since version
+	 * @since 6.0
 	 */
 	protected function getInput()
 	{
 		$html = array();
 
-		$class = $this->element['class'] ? ' class="radio ' . (string) $this->element['class'] . '"' : ' class="radio"';
+		$class = $this->element[ 'class' ] ? ' class="radio ' . (string) $this->element[ 'class' ] . '"' : ' class="radio"';
 
 		$html[] = '<fieldset id="' . $this->id . '"' . $class . '>';
 
 		$options = $this->getOptions();
 
-		foreach ($options as $i => $option)
+		foreach($options as $i => $option)
 		{
 			$checked = ((string) $option->value == (string) $this->value) ? ' checked="checked"' : '';
 			$class   = !empty($option->class) ? ' class="' . $option->class . '"' : '';
@@ -40,7 +40,7 @@ class JFormFieldCommentsRadio extends JFormField
 			$commets_system = htmlspecialchars($option->value, ENT_COMPAT, 'UTF-8');
 			$comments       = JPATH_SITE . '/components/com_' . $commets_system . '/' . $commets_system . '.php';
 
-			if (!file_exists($comments))
+			if(!file_exists($comments))
 			{
 				$disabled = ' disabled="disabled"';
 				$color    = 'color: #999;';
@@ -75,26 +75,26 @@ class JFormFieldCommentsRadio extends JFormField
 	 *
 	 * @return array
 	 *
-	 * @since version
+	 * @since 6.0
 	 */
 	protected function getOptions()
 	{
 		$options = array();
 
-		foreach ($this->element->children() as $option)
+		foreach($this->element->children() as $option)
 		{
-			if ($option->getName() != 'option')
+			if($option->getName() != 'option')
 			{
 				continue;
 			}
 
 			$tmp = JHtml::_(
-				'select.option', (string) $option['value'], trim((string) $option), 'value', 'text',
-				(string) $option['disabled'] == 'true'
+				'select.option', (string) $option[ 'value' ], trim((string) $option), 'value', 'text',
+				(string) $option[ 'disabled' ] == 'true'
 			);
 
-			$tmp->class   = (string) $option['class'];
-			$tmp->onclick = (string) $option['onclick'];
+			$tmp->class   = (string) $option[ 'class' ];
+			$tmp->onclick = (string) $option[ 'onclick' ];
 
 			$options[] = $tmp;
 		}

@@ -26,10 +26,10 @@ class JFormFieldIntegration extends JFormField
 	{
 		$html = array();
 
-		$class = ($this->element['class'] ? ' class="radio ' . (string) $this->element['class'] . '"' : ' class="radio"');
-		$path  = ($this->element['path'] ? JPATH_SITE . $this->element['path'] : '');
+		$class = ($this->element[ 'class' ] ? ' class="radio ' . (string) $this->element[ 'class' ] . '"' : ' class="radio"');
+		$path  = ($this->element[ 'path' ] ? JPATH_SITE . $this->element[ 'path' ] : '');
 
-		if (!file_exists($path))
+		if(!file_exists($path))
 		{
 			$tips   = ' <sup class="label label-inverse">' . JText::_('MOD_JUNEWS_NOTINSTALL') . '</sup>';
 			$html[] = '<fieldset id="' . $this->id . '"' . $class . '>' . $tips . '</fieldset>';
@@ -40,7 +40,7 @@ class JFormFieldIntegration extends JFormField
 
 			$options = $this->getOptions();
 
-			foreach ($options as $i => $option)
+			foreach($options as $i => $option)
 			{
 				$checked = ((string) $option->value == (string) $this->value) ? ' checked="checked"' : '';
 				$class   = !empty($option->class) ? ' class="' . $option->class . '"' : '';
@@ -67,16 +67,16 @@ class JFormFieldIntegration extends JFormField
 	{
 		$options = array();
 
-		foreach ($this->element->children() as $option)
+		foreach($this->element->children() as $option)
 		{
-			if ($option->getName() != 'option')
+			if($option->getName() != 'option')
 			{
 				continue;
 			}
 
-			$tmp          = JHtml::_('select.option', (string) $option['value'], trim((string) $option), 'value', 'text', (string) $option[ 'disabled'] == 'true');
-			$tmp->class   = (string) $option['class'];
-			$tmp->onclick = (string) $option['onclick'];
+			$tmp          = JHtml::_('select.option', (string) $option[ 'value' ], trim((string) $option), 'value', 'text', (string) $option[ 'disabled' ] == 'true');
+			$tmp->class   = (string) $option[ 'class' ];
+			$tmp->onclick = (string) $option[ 'onclick' ];
 
 			$options[] = $tmp;
 		}

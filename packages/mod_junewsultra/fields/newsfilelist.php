@@ -20,46 +20,52 @@ class JFormFieldNewsFileList extends JFormFieldList
 {
 	public $type = 'NewsFileList';
 
+	/**
+	 *
+	 * @return array
+	 *
+	 * @since 6.0
+	 */
 	protected function getOptions()
 	{
 		$options     = array();
-		$filter      = (string) $this->element['filter'];
-		$exclude     = (string) $this->element['exclude'];
-		$stripExt    = (string) $this->element['stripext'];
-		$hideNone    = (string) $this->element['hide_none'];
-		$hideDefault = (string) $this->element['hide_default'];
+		$filter      = (string) $this->element[ 'filter' ];
+		$exclude     = (string) $this->element[ 'exclude' ];
+		$stripExt    = (string) $this->element[ 'stripext' ];
+		$hideNone    = (string) $this->element[ 'hide_none' ];
+		$hideDefault = (string) $this->element[ 'hide_default' ];
 
-		$path = (string) $this->element['directory'];
-		if (!is_dir($path))
+		$path = (string) $this->element[ 'directory' ];
+		if(!is_dir($path))
 		{
 			$path = JPATH_ROOT . '/' . $path;
 		}
 
-		if (!$hideNone)
+		if(!$hideNone)
 		{
 			$options[] = JHtml::_('select.option', '-1', JText::alt('JOPTION_DO_NOT_USE', preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)));
 		}
 
-		if (!$hideDefault)
+		if(!$hideDefault)
 		{
 			$options[] = JHtml::_('select.option', '', JText::alt('JOPTION_USE_DEFAULT', preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)));
 		}
 
 		$files = JFolder::files($path, $filter);
 
-		if (is_array($files))
+		if(is_array($files))
 		{
-			foreach ($files as $file)
+			foreach($files as $file)
 			{
-				if ($exclude)
+				if($exclude)
 				{
-					if (preg_match(chr(1) . $exclude . chr(1), $file))
+					if(preg_match(chr(1) . $exclude . chr(1), $file))
 					{
 						continue;
 					}
 				}
 
-				if ($stripExt)
+				if($stripExt)
 				{
 					$file = JFile::stripExt($file);
 				}

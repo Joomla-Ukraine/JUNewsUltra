@@ -122,24 +122,24 @@ if($params->get('cssstyle') == 1)
 {
 	$tpl = explode(':', $params->def('template'));
 
-	if($tpl[0] == '_')
+	if($tpl[ 0 ] == '_')
 	{
 		$jtpl = $app->getTemplate();
 	}
 	else
 	{
-		$jtpl = $tpl[0];
+		$jtpl = $tpl[ 0 ];
 	}
 
-	if(is_file(JPATH_SITE . '/modules/mod_junewsultra/tmpl/' . $tpl[1] . '/css/style.css'))
+	if(is_file(JPATH_SITE . '/modules/mod_junewsultra/tmpl/' . $tpl[ 1 ] . '/css/style.css'))
 	{
-		$css = 'modules/mod_junewsultra/tmpl/' . $tpl[1] . '/css/style.css';
+		$css = 'modules/mod_junewsultra/tmpl/' . $tpl[ 1 ] . '/css/style.css';
 		$document->addStylesheet(JURI::base() . $css);
 	}
 
-	if(is_file(JPATH_SITE . '/templates/' . $jtpl . '/html/mod_junewsultra/' . $tpl[1] . '/css/style.css'))
+	if(is_file(JPATH_SITE . '/templates/' . $jtpl . '/html/mod_junewsultra/' . $tpl[ 1 ] . '/css/style.css'))
 	{
-		$css = 'templates/' . $jtpl . '/html/mod_junewsultra/' . $tpl[1] . '/css/style.css';
+		$css = 'templates/' . $jtpl . '/html/mod_junewsultra/' . $tpl[ 1 ] . '/css/style.css';
 		$document->addStylesheet(JURI::base() . $css);
 	}
 }
@@ -212,10 +212,10 @@ if(file_exists($layoutpath))
 
 		$item_heading2 = trim($params->get('item_heading2'));
 		$titletag2     = explode('_', $item_heading2);
-		if($titletag2[1])
+		if($titletag2[ 1 ])
 		{
-			$_tag_open2  = '<' . $titletag2[1] . '>';
-			$_tag_close2 = '</' . $titletag2[1] . '>';
+			$_tag_open2  = '<' . $titletag2[ 1 ] . '>';
+			$_tag_close2 = '</' . $titletag2[ 1 ] . '>';
 		}
 		else
 		{
@@ -236,7 +236,7 @@ if(file_exists($layoutpath))
 
 		$class_all_in2 = trim($params->get('class_all_in2'));
 
-		$read_all2 = '<' . $titletag2[0] . ($class_all_in2 ? ' class="' . $class_all_in2 . '"' : '') . '>' . $heading_link2 . '</' . $titletag2[0] . '>';
+		$read_all2 = '<' . $titletag2[ 0 ] . ($class_all_in2 ? ' class="' . $class_all_in2 . '"' : '') . '>' . $heading_link2 . '</' . $titletag2[ 0 ] . '>';
 	}
 
 	if($params->def('all_in') == 1 && $params->def('all_in_position') == 0)
