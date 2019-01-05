@@ -31,6 +31,7 @@ class JFormFieldNN_Toggler extends JFormField
 	 *
 	 * @return string
 	 *
+	 * @throws \Exception
 	 * @since 6.0
 	 */
 	protected function getInput()

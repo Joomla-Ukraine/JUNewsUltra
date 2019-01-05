@@ -29,6 +29,7 @@ class Pkg_JUNewsUltraInstallerScript
 	 *
 	 * @return bool
 	 *
+	 * @throws \Exception
 	 * @since 6.0
 	 */
 	public function preflight($type, $parent)
@@ -82,6 +83,7 @@ class Pkg_JUNewsUltraInstallerScript
 	 *
 	 * @return bool
 	 *
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function postflight($type, $parent, $results)
