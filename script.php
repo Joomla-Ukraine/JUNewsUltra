@@ -4,7 +4,7 @@
  *
  * @package    JUNewsUltra Pro
  *
- * @copyright  Copyright (C) 2007-2018 Denys Nosov. All rights reserved.
+ * @copyright  Copyright (C) 2007-2019 Denys Nosov. All rights reserved.
  * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  *
  */
