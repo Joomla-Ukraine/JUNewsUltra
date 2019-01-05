@@ -34,9 +34,9 @@ class Pkg_JUNewsUltraInstallerScript
 	 */
 	public function preflight($type, $parent)
 	{
-		if(version_compare(JVERSION, '3.1.0', 'lt'))
+		if(version_compare(JVERSION, '3.8.0', 'lt'))
 		{
-			JFactory::getApplication()->enqueueMessage('Update for Joomla! 3.4+', 'error');
+			JFactory::getApplication()->enqueueMessage('Update for Joomla! 3.8+', 'error');
 
 			return false;
 		}
@@ -88,7 +88,7 @@ class Pkg_JUNewsUltraInstallerScript
 	 */
 	public function postflight($type, $parent, $results)
 	{
-		$enabled = array();
+		$enabled = [];
 
 		$db    = JFactory::getDbo();
 		$query = $db->getQuery(true);
@@ -209,7 +209,7 @@ class Pkg_JUNewsUltraInstallerScript
 		$html .= '</tbody></table>';
 
 		$path  = JPATH_SITE . '/modules/mod_junewsultra/';
-		$files = array(
+		$files = [
 			$path . 'assets/donate2.gif',
 			$path . 'assets/gear.png',
 			$path . 'assets/toggler.js',
@@ -250,13 +250,13 @@ class Pkg_JUNewsUltraInstallerScript
 			$path . 'img/imgsetting.php',
 			$path . 'img/phpThumb.config.php',
 			$path . 'img.php'
-		);
+		];
 
-		$folders = array(
+		$folders = [
 			$path . 'img',
 			$path . 'lib/phpthumb',
 			$path . 'assets/js/minicolors'
-		);
+		];
 
 		$i = 0;
 		foreach ($files AS $file)
@@ -307,14 +307,7 @@ class Pkg_JUNewsUltraInstallerScript
 
 		$html .= '</div></div>';
 
-		if($joomla < '3.4')
-		{
-			echo $html;
-		}
-		else
-		{
-			$app->enqueueMessage($html, 'message');
-		}
+		$app->enqueueMessage($html, 'message');
 
 		return true;
 	}
