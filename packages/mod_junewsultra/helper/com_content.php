@@ -12,6 +12,9 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Router\Route;
+
 $com_path = JPATH_SITE . '/components/com_content/';
 require_once $com_path . 'router.php';
 require_once $com_path . 'helpers/route.php';
@@ -31,6 +34,7 @@ class com_content extends modJUNewsUltraHelper
 	 *
 	 * @return mixed
 	 *
+	 * @throws \Exception
 	 * @since 6.0
 	 */
 	public static function getList($params, $junews)
@@ -40,10 +44,10 @@ class com_content extends modJUNewsUltraHelper
 		$JUImg  = new JUImg();
 
 		// Load JFactory
-		$lang = JFactory::getLanguage();
-		$user = JFactory::getUser();
-		$date = JFactory::getDate();
-		$db   = JFactory::getDbo();
+		$lang = Factory::getLanguage();
+		$user = Factory::getUser();
+		$date = Factory::getDate();
+		$db   = Factory::getDbo();
 
 		// DB connect
 		$query = $db->getQuery(true);
@@ -189,8 +193,7 @@ class com_content extends modJUNewsUltraHelper
 		if(JLanguageMultilang::isEnabled())
 		{
 			$query->select('a.language');
-			$query->where('a.language IN (' . $db->quote(JFactory::getLanguage()
-			                                                     ->getTag()) . ',' . $db->quote('*') . ')');
+			$query->where('a.language IN (' . $db->quote(Factory::getLanguage()->getTag()) . ',' . $db->quote('*') . ')');
 		}
 
 		if($junews[ 'image_source' ] > '0' && $junews[ 'show_image' ] == '1')
@@ -487,7 +490,7 @@ class com_content extends modJUNewsUltraHelper
 			}
 			else
 			{
-				JFactory::getApplication()->enqueueMessage(JText::_('MOD_JUNEWS_COMMENTS_NOT_INSTALLED'), 'error');
+				Factory::getApplication()->enqueueMessage(JText::_('MOD_JUNEWS_COMMENTS_NOT_INSTALLED'), 'error');
 			}
 		}
 
@@ -499,12 +502,12 @@ class com_content extends modJUNewsUltraHelper
 				$language   = (JLanguageMultilang::isEnabled() ? $item->language : '');
 				$catid      = (!empty($item->cmc_cat) && $junews[ 'multicat' ] == 1 ? $item->cmc_cat : $item->catid);
 
-				$item->link    = JRoute::_(ContentHelperRoute::getArticleRoute($item->slug, $catid, $language));
-				$item->catlink = JRoute::_(ContentHelperRoute::getCategoryRoute($catid));
+				$item->link    = Route::_(ContentHelperRoute::getArticleRoute($item->slug, $catid, $language));
+				$item->catlink = Route::_(ContentHelperRoute::getCategoryRoute($catid));
 			}
 			else
 			{
-				$item->link    = JRoute::_('index.php?option=com_users&view=login');
+				$item->link    = Route::_('index.php?option=com_users&view=login');
 				$item->catlink = $item->link;
 			}
 
