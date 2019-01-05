@@ -50,6 +50,7 @@ class nnFieldToggler
 	 *
 	 * @return string
 	 *
+	 * @throws \Exception
 	 * @since 6.0
 	 */
 	public function getInput($params)

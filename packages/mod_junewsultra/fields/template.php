@@ -24,6 +24,7 @@ class JFormFieldTemplate extends JFormField
 	 *
 	 * @return string|void
 	 *
+	 * @throws \Exception
 	 * @since 6.0
 	 */
 	protected function getInput()
