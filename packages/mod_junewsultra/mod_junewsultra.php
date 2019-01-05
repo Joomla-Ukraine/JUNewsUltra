@@ -111,7 +111,7 @@ if( $params->def('bootstrap_js') == 1 )
 if( $params->def('bootstrap_css') == 1 )
 {
 	$lang      = Factory::getLanguage();
-	$direction = ($lang->isRTL() ? 'rtl' : 'ltr');
+	$direction = ($lang->isRtl() ? 'rtl' : 'ltr');
 	JHtmlBootstrap::loadCss($includeMaincss = true, $direction);
 }
 

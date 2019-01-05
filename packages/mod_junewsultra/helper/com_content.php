@@ -301,8 +301,8 @@ class com_content extends modJUNewsUltraHelper
 
 		// Where
 		$query->where('a.state = 1');
-		$query->where('( a.publish_up = ' . $db->Quote($nullDate) . ' OR a.publish_up < ' . $db->Quote($now) . ' )');
-		$query->where('( a.publish_down = ' . $db->Quote($nullDate) . ' OR a.publish_down > ' . $db->Quote($now) . ' )');
+		$query->where('( a.publish_up = ' . $db->quote($nullDate) . ' OR a.publish_up < ' . $db->quote($now) . ' )');
+		$query->where('( a.publish_down = ' . $db->quote($nullDate) . ' OR a.publish_down > ' . $db->quote($now) . ' )');
 
 		// Select article or categories
 		if($display_article == '1')
@@ -321,23 +321,23 @@ class com_content extends modJUNewsUltraHelper
 						$query->where('(' . $date_field . ' > ' . $startDateRange . ' AND ' . $date_field . ' < ' . $endDateRange . ')');
 						break;
 					case '2':
-						$query->where($date_field . ' > DATE_SUB(' . $db->Quote($now) . ', INTERVAL 7 DAY)');
+						$query->where($date_field . ' > DATE_SUB(' . $db->quote($now) . ', INTERVAL 7 DAY)');
 						break;
 					case '3':
-						$query->where($date_field . ' > DATE_SUB(' . $db->Quote($now) . ', INTERVAL 14 DAY)');
+						$query->where($date_field . ' > DATE_SUB(' . $db->quote($now) . ', INTERVAL 14 DAY)');
 						break;
 					case '4':
-						$query->where($date_field . ' > DATE_SUB(' . $db->Quote($now) . ', INTERVAL ' . cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y')) . ' DAY)');
+						$query->where($date_field . ' > DATE_SUB(' . $db->quote($now) . ', INTERVAL ' . cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y')) . ' DAY)');
 						break;
 					case '5':
-						$query->where($date_field . ' > DATE_SUB(' . $db->Quote($now) . ', INTERVAL 365 DAY)');
+						$query->where($date_field . ' > DATE_SUB(' . $db->quote($now) . ', INTERVAL 365 DAY)');
 						break;
 					case '6':
-						$query->where($date_field . ' > DATE_SUB(' . $db->Quote($now) . ', INTERVAL ' . $params->get('custom_days', '30') . ' DAY)');
+						$query->where($date_field . ' > DATE_SUB(' . $db->quote($now) . ', INTERVAL ' . $params->get('custom_days', '30') . ' DAY)');
 						break;
 					case '0':
 					default:
-						$query->where($date_field . ' > DATE_SUB(' . $db->Quote($now) . ', INTERVAL 1 DAY)');
+						$query->where($date_field . ' > DATE_SUB(' . $db->quote($now) . ', INTERVAL 1 DAY)');
 						break;
 				}
 			}
@@ -377,7 +377,7 @@ class com_content extends modJUNewsUltraHelper
 				case '0':
 					if($uid > '0')
 					{
-						$query->where('a.created_by = ' . $db->Quote((int) $uid));
+						$query->where('a.created_by = ' . $db->quote((int) $uid));
 					}
 					break;
 				case 'by_me':
