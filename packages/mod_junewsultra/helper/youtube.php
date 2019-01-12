@@ -12,6 +12,8 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 /**
  * Helper for mod_junewsultra
  *
@@ -40,9 +42,11 @@ class youtube extends modJUNewsUltraHelper
 			case '2':
 				$ytxml = 'https://www.youtube.com/feeds/videos.xml?user=' . $params->get('ytaccount');
 				break;
+
 			case '1':
 				$ytxml = 'https://www.youtube.com/feeds/videos.xml?playlist_id=' . $params->get('ytplaylist');
 				break;
+
 			case '3':
 				$ytxml = 'https://www.youtube.com/feeds/videos.xml?channel_id==' . $params->get('ytchannel');
 				break;
@@ -117,10 +121,10 @@ class youtube extends modJUNewsUltraHelper
 				$item->sqldate = date('Y-m-d H:i:s', strtotime($item->published));
 				$_date_type    = strtotime($item->published);
 
-				$item->date = JHtml::date($_date_type, $junews[ 'data_format' ]);
-				$item->df_d = JHtml::date($_date_type, $junews[ 'date_day' ]);
-				$item->df_m = JHtml::date($_date_type, $junews[ 'date_month' ]);
-				$item->df_y = JHtml::date($_date_type, $junews[ 'date_year' ]);
+				$item->date = HTMLHelper::date($_date_type, $junews[ 'data_format' ]);
+				$item->df_d = HTMLHelper::date($_date_type, $junews[ 'date_day' ]);
+				$item->df_m = HTMLHelper::date($_date_type, $junews[ 'date_month' ]);
+				$item->df_y = HTMLHelper::date($_date_type, $junews[ 'date_year' ]);
 			}
 
 			// hits
@@ -154,12 +158,9 @@ class youtube extends modJUNewsUltraHelper
 				{
 					case '0':
 
-						if($junews[ 'defaultimg' ] == 1)
+						if( ($junews[ 'defaultimg' ] == 1) && !$junuimgsource )
 						{
-							if(!$junuimgsource)
-							{
-								$junuimgsource = 'media/mod_junewsultra/' . $junews[ 'noimage' ];
-							}
+							$junuimgsource = 'media/mod_junewsultra/' . $junews[ 'noimage' ];
 						}
 
 						$contentimage      = $imlink . '<img src="' . $junuimgsource . '" alt="' . $title_alt . '" />' . $imlink2;
@@ -186,27 +187,27 @@ class youtube extends modJUNewsUltraHelper
 
 						if($aspect >= '1' && $junews[ 'auto_zoomcrop' ] == '1')
 						{
-							$newimgparams = array(
+							$newimgparams = [
 								'far' => '1',
 								'bg'  => $junews[ 'zoomcropbg' ]
-							);
+							];
 						}
 						else
 						{
-							$newimgparams = array(
+							$newimgparams = [
 								'zc' => $junews[ 'zoomcrop' ] == 1 ? $junews[ 'zoomcrop_params' ] : ''
-							);
+							];
 						}
 
 						if($junews[ 'farcrop' ] == '1')
 						{
-							$newimgparams = array(
+							$newimgparams = [
 								'far' => $junews[ 'farcrop_params' ],
 								'bg'  => $junews[ 'farcropbg' ]
-							);
+							];
 						}
 
-						$imgparams = array(
+						$imgparams = [
 							'w'     => $junews[ 'w' ],
 							'h'     => $junews[ 'h' ],
 							'sx'    => $junews[ 'sx' ] ? : '',
@@ -216,7 +217,7 @@ class youtube extends modJUNewsUltraHelper
 							'f'     => $junews[ 'f' ],
 							'q'     => $junews[ 'q' ],
 							'cache' => 'img'
-						);
+						];
 
 						$imgparams_merge = array_merge(
 							$imgparams,
