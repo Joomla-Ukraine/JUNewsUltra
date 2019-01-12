@@ -10,7 +10,6 @@
  * @license          GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
@@ -112,6 +111,7 @@ if( $params->def('bootstrap_css') == 1 )
 {
 	$lang      = Factory::getLanguage();
 	$direction = ($lang->isRtl() ? 'rtl' : 'ltr');
+
 	JHtmlBootstrap::loadCss($includeMaincss = true, $direction);
 }
 
@@ -128,13 +128,13 @@ if( $params->get('cssstyle') == 1 )
 	if( is_file(JPATH_SITE . '/modules/mod_junewsultra/tmpl/' . $tpl[ 1 ] . '/css/style.css') )
 	{
 		$css = 'modules/mod_junewsultra/tmpl/' . $tpl[ 1 ] . '/css/style.css';
-		$document->addStylesheet(JURI::base() . $css);
+		$document->addStyleSheet(JURI::base() . $css);
 	}
 
 	if( is_file(JPATH_SITE . '/templates/' . $jtpl . '/html/mod_junewsultra/' . $tpl[ 1 ] . '/css/style.css') )
 	{
 		$css = 'templates/' . $jtpl . '/html/mod_junewsultra/' . $tpl[ 1 ] . '/css/style.css';
-		$document->addStylesheet(JURI::base() . $css);
+		$document->addStyleSheet(JURI::base() . $css);
 	}
 }
 
