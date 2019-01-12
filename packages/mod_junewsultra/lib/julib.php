@@ -12,6 +12,11 @@
 
 defined('JPATH_PLATFORM') or die;
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
+use Joomla\String\StringHelper;
+
 /**
  * Static class to handle loading of libraries.
  *
@@ -34,23 +39,23 @@ class JULibs
 		$title = strip_tags($title);
 		$title = htmlspecialchars($title);
 
-		if($params->def('title_prepare') == 1)
+		if( $params->def('title_prepare') == 1 )
 		{
-			$title = JHtml::_('content.prepare', $title);
+			$title = HTMLHelper::_('content.prepare', $title);
 		}
 
-		if($params->get('title_limit', 0) == '1')
+		if( $params->get('title_limit', 0) == '1' )
 		{
-			if($params->get('title_limit_mode') == '1')
+			if( $params->get('title_limit_mode') == '1' )
 			{
 				$title = trim(implode(' ', array_slice(explode(' ', $title), 0, $params->get('title_limit_count'))));
 			}
 			else
 			{
-				$title = trim(JString::substr($title, 0, $params->get('title_limit_count')));
+				$title = trim(StringHelper::substr($title, 0, $params->get('title_limit_count')));
 			}
 
-			if(!preg_match('#(\.|\?|\!)$#ismu', $title))
+			if( !preg_match('#(\.|\?|\!)$#ismu', $title) )
 			{
 				$title = preg_replace('#^\s?(\,|\;|\:|\-)#ismu', '', $title);
 				$title = ($title ? $title . $params->get('end_limit_title', '...') : '');
@@ -76,9 +81,9 @@ class JULibs
 	 */
 	public static function _Description($params, $description, $cleartag, $allowed_tags, $li, $text_limit, $lmttext, $end_limit_text)
 	{
-		if($params->def('content_prepare') == 1)
+		if( $params->def('content_prepare') == 1 )
 		{
-			$description = JHtml::_('content.prepare', $description);
+			$description = HTMLHelper::_('content.prepare', $description);
 		}
 		else
 		{
@@ -91,17 +96,17 @@ class JULibs
 		$description = preg_replace('/::introtext::(.*?)::\/introtext::/i', '\\1', $description);
 		$description = preg_replace('/::fulltext::(.*?)::\/fulltext::/i', '\\2', $description);
 
-		if($cleartag == '1')
+		if( $cleartag == '1' )
 		{
 			$description = str_replace('&nbsp;', ' ', $description);
 			$description = preg_replace('/(<\/[^>]+?>)(<[^>\/][^>]*?>)/', '$1 $2', $description);
-			if($allowed_tags)
+			if( $allowed_tags )
 			{
-				$allowed_tags = str_replace(array(
+				$allowed_tags = str_replace([
 					' ',
 					'&nbsp;',
 					'    '
-				), '', $allowed_tags);
+				], '', $allowed_tags);
 				$tags         = '<' . str_replace(',', '><', $allowed_tags) . '>';
 				$description  = strip_tags($description, $tags);
 			}
@@ -111,38 +116,41 @@ class JULibs
 			}
 		}
 
-		if($li == '1')
+		if( $li == '1' )
 		{
 			$dots = 1;
 
-			switch($lmttext)
+			switch( $lmttext )
 			{
 				case '1':
 					$description = trim(implode(' ', array_slice(explode(' ', $description), 0, $text_limit)));
 					break;
+
 				case '2':
 					$description = preg_replace('#<p(.*)>"#is', '<p>', $description);
 
-					if(preg_match('#<p[^>]*>(.*)<\/p>#isU', $description, $matches))
+					if( preg_match('#<p[^>]*>(.*)<\/p>#isU', $description, $matches) )
 					{
 						$description = $matches[ 0 ];
 						$dots        = 0;
 					}
 					break;
+
 				case '3':
-					if(preg_match('#^.{100}.*?[.!?]#is', strip_tags($description), $matches))
+					if( preg_match('#^.{100}.*?[.!?]#is', strip_tags($description), $matches) )
 					{
 						$description = $matches[ 0 ];
 						$dots        = 0;
 					}
 					break;
+
 				default:
 				case '0':
-					$description = trim(JString::substr($description, 0, $text_limit));
+					$description = trim(StringHelper::substr($description, 0, $text_limit));
 					break;
 			}
 
-			if((!preg_match('#(\.|\?|\!)$#ismu', $description)) && ($dots == 1))
+			if( (!preg_match('#(\.|\?|\!)$#ismu', $description)) && ($dots == 1) )
 			{
 				$description = preg_replace('#^\s?(\,|\;|\:|\-)#ismu', '', $description);
 				$description = ($description ? $description . $end_limit_text : '');
@@ -181,25 +189,25 @@ class JULibs
 	{
 		$tpl = explode(':', $params->def('template'));
 
-		$starImageOn = JHtml::_('image', 'system/rating_star.png', $rating, null, true);
-		if(is_file(JPATH_SITE . '/modules/mod_junewsultra/tmpl/' . $tpl[ 1 ] . '/images/rating_star.png'))
+		$starImageOn = HTMLHelper::_('image', 'system/rating_star.png', $rating, null, true);
+		if( is_file(JPATH_SITE . '/modules/mod_junewsultra/tmpl/' . $tpl[ 1 ] . '/images/rating_star.png') )
 		{
-			$starImageOn = JHTML::_('image', JURI::base() . 'modules/mod_junewsultra/tmpl/' . $tpl[ 1 ] . '/images/rating_star.png', $rating, null, true);
+			$starImageOn = JHTML::_('image', Uri::base() . 'modules/mod_junewsultra/tmpl/' . $tpl[ 1 ] . '/images/rating_star.png', $rating, null, true);
 		}
 
-		$starImageOff = JHtml::_('image', 'system/rating_star_blank.png', $rating, null, true);
-		if(is_file(JPATH_SITE . '/modules/mod_junewsultra/tmpl/' . $tpl[ 1 ] . '/images/rating_star_blank.png'))
+		$starImageOff = HTMLHelper::_('image', 'system/rating_star_blank.png', $rating, null, true);
+		if( is_file(JPATH_SITE . '/modules/mod_junewsultra/tmpl/' . $tpl[ 1 ] . '/images/rating_star_blank.png') )
 		{
-			$starImageOff = JHTML::_('image', JURI::base() . 'modules/mod_junewsultra/tmpl/' . $tpl[ 1 ] . '/images/rating_star_blank.png', $rating, null, true);
+			$starImageOff = JHTML::_('image', Uri::base() . 'modules/mod_junewsultra/tmpl/' . $tpl[ 1 ] . '/images/rating_star_blank.png', $rating, null, true);
 		}
 
 		$img = '';
-		for($i = 0; $i < $rating; $i++)
+		for( $i = 0; $i < $rating; $i++ )
 		{
 			$img .= $starImageOn;
 		}
 
-		for($i = $rating; $i < 5; $i++)
+		for( $i = $rating; $i < 5; $i++ )
 		{
 			$img .= $starImageOff;
 		}
@@ -223,16 +231,16 @@ class JULibs
 	{
 		$timedif = @(time() - filemtime($cache_file));
 
-		if(file_exists($cache_file) && $timedif < $time)
+		if( file_exists($cache_file) && $timedif < $time )
 		{
-			$string = @file_get_contents(JURI::root() . $cache_file);
+			$string = @file_get_contents(Uri::root() . $cache_file);
 			$error  = 0;
 		}
 		else
 		{
 			try
 			{
-				if(strpos($http_response_header[ 0 ], '200'))
+				if( strpos($http_response_header[ 0 ], '200') )
 				{
 					$string = @file_get_contents($feed_url);
 				}
@@ -247,7 +255,7 @@ class JULibs
 				$string = preg_replace('/<(\/)?([a-z0-9]+):([a-z0-9]+)/i', '<$1$2_$3', $string);
 				$string = preg_replace('/<feed.*?>/i', '<feed>', $string);
 
-				if($f = @fopen($cache_file, 'wb'))
+				if( $f = @fopen($cache_file, 'wb') )
 				{
 					fwrite($f, $string, strlen($string));
 					fclose($f);
@@ -255,15 +263,15 @@ class JULibs
 
 				$error = 0;
 			}
-			catch(Exception $e)
+			catch( Exception $e )
 			{
 				$error = 1;
 			}
 		}
 
-		if($error == 1 && is_file(JPATH_SITE . '/' . $cache_file))
+		if( $error == 1 && is_file(JPATH_SITE . '/' . $cache_file) )
 		{
-			$string = file_get_contents(JURI::root() . $cache_file);
+			$string = file_get_contents(Uri::root() . $cache_file);
 		}
 
 		libxml_use_internal_errors(true);
@@ -272,7 +280,7 @@ class JULibs
 		{
 			$xml = new SimpleXmlElement($string);
 
-			switch($ordering_xml)
+			switch( $ordering_xml )
 			{
 				case 'rand':
 					$items = $xml->xpath(sprintf($path . '[position()]'));
@@ -288,9 +296,9 @@ class JULibs
 					break;
 			}
 		}
-		catch(Exception $e)
+		catch( Exception $e )
 		{
-			echo '<div class="alert alert-warning">' . JText::_('MOD_JUNEWS_RSSXML_ERROR') . '</div>';
+			echo '<div class="alert alert-warning">' . Text::_('MOD_JUNEWS_RSSXML_ERROR') . '</div>';
 		}
 
 		return $items;
@@ -309,19 +317,19 @@ class JULibs
 		$yid  = '';
 		$vid  = '';
 
-		if($urls[ 'host' ] === 'vimeo.com')
+		if( $urls[ 'host' ] === 'vimeo.com' )
 		{
 			$vid = ltrim($urls[ 'path' ], '/');
 		}
-		elseif($urls[ 'host' ] === 'youtu.be')
+		elseif( $urls[ 'host' ] === 'youtu.be' )
 		{
 			$yid = ltrim($urls[ 'path' ], '/');
 		}
-		elseif(strpos($urls[ 'path' ], 'embed') == 1)
+		elseif( strpos($urls[ 'path' ], 'embed') == 1 )
 		{
 			$yid = end(explode('/', $urls[ 'path' ]));
 		}
-		elseif(strpos($url, '/') === false)
+		elseif( strpos($url, '/') === false )
 		{
 			$yid = $url;
 		}
@@ -331,7 +339,7 @@ class JULibs
 
 			parse_str($urls[ 'query' ], $output);
 			$yid = $output[ 'v' ];
-			if(!empty($feature))
+			if( !empty($feature) )
 			{
 				$yid = end(explode('v=', $urls[ 'query' ]));
 				$arr = explode('&', $yid);
@@ -339,23 +347,23 @@ class JULibs
 			}
 		}
 
-		if($yid)
+		if( $yid )
 		{
 			$ytpath = 'https://img.youtube.com/vi/' . $yid;
 
-			if(self::_http($ytpath . '/maxresdefault.jpg') == '200')
+			if( self::_http($ytpath . '/maxresdefault.jpg') == '200' )
 			{
 				$img = $ytpath . '/maxresdefault.jpg';
 			}
-			elseif(self::_http($ytpath . '/hqdefault.jpg') == '200')
+			elseif( self::_http($ytpath . '/hqdefault.jpg') == '200' )
 			{
 				$img = $ytpath . '/hqdefault.jpg';
 			}
-			elseif(self::_http($ytpath . '/mqdefault.jpg') == '200')
+			elseif( self::_http($ytpath . '/mqdefault.jpg') == '200' )
 			{
 				$img = $ytpath . '/mqdefault.jpg';
 			}
-			elseif(self::_http($ytpath . '/sddefault.jpg') == '200')
+			elseif( self::_http($ytpath . '/sddefault.jpg') == '200' )
 			{
 				$img = $ytpath . '/sddefault.jpg';
 			}
@@ -367,13 +375,11 @@ class JULibs
 			return $img;
 		}
 
-		if($vid)
+		if( $vid )
 		{
-			$vimeoObject = json_decode(
-				file_get_contents('http://vimeo.com/api/v2/video/' . $vid . '.json')
-			);
+			$vimeoObject = json_decode(file_get_contents('http://vimeo.com/api/v2/video/' . $vid . '.json'));
 
-			if(!empty($vimeoObject))
+			if( !empty($vimeoObject) )
 			{
 				return $vimeoObject[ 0 ]->thumbnail_large;
 			}
@@ -391,7 +397,7 @@ class JULibs
 	 */
 	public static function _http($url)
 	{
-		if(function_exists('curl_version'))
+		if( function_exists('curl_version') )
 		{
 			$ch = curl_init();
 
@@ -424,7 +430,7 @@ class JULibs
 	 */
 	public static function absoluteURL($html)
 	{
-		$root_url = JURI::base();
+		$root_url = Uri::base();
 
 		$html = preg_replace('@href="(?!http://)(?!https://)(?!mailto:)([^"]+)"@i', "href=\"{$root_url}\${1}\"", $html);
 		$html = preg_replace('@src="(?!http://)(?!https://)([^"]+)"@i', "src=\"{$root_url}\${1}\"", $html);
