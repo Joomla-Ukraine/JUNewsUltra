@@ -53,14 +53,7 @@ class youtube extends modJUNewsUltraHelper
 		}
 
 		// Selects data
-		$items = $JULibs->ParceXML(
-			$ytxml,
-			$params->get('ytcount'),
-			'cache/' . md5($ytxml) . '.xml',
-			$params->get('cache_time'),
-			'/feed/entry',
-			$params->get('ordering_xml')
-		);
+		$items = $JULibs->ParceXML($ytxml, $params->get('ytcount'), 'cache/' . md5($ytxml) . '.xml', $params->get('cache_time'), '/feed/entry', $params->get('ordering_xml'));
 
 		foreach($items as &$item)
 		{
@@ -94,16 +87,7 @@ class youtube extends modJUNewsUltraHelper
 			// introtext
 			if($junews[ 'show_intro' ] == '1')
 			{
-				$item->introtext = $JULibs->_Description(
-					$params,
-					$item->media_group->media_description,
-					$junews[ 'cleartag' ],
-					$junews[ 'allowed_intro_tags' ],
-					$junews[ 'li' ],
-					$junews[ 'introtext_limit' ],
-					$junews[ 'lmttext' ],
-					$junews[ 'end_limit_introtext' ]
-				);
+				$item->introtext = $JULibs->_Description($params, $item->media_group->media_description, $junews[ 'cleartag' ], $junews[ 'allowed_intro_tags' ], $junews[ 'li' ], $junews[ 'introtext_limit' ], $junews[ 'lmttext' ], $junews[ 'end_limit_introtext' ]);
 			}
 
 			// fulltext
@@ -158,7 +142,7 @@ class youtube extends modJUNewsUltraHelper
 				{
 					case '0':
 
-						if( ($junews[ 'defaultimg' ] == 1) && !$junuimgsource )
+						if(($junews[ 'defaultimg' ] == 1) && !$junuimgsource)
 						{
 							$junuimgsource = 'media/mod_junewsultra/' . $junews[ 'noimage' ];
 						}
@@ -219,10 +203,7 @@ class youtube extends modJUNewsUltraHelper
 							'cache' => 'img'
 						];
 
-						$imgparams_merge = array_merge(
-							$imgparams,
-							$newimgparams
-						);
+						$imgparams_merge = array_merge($imgparams, $newimgparams);
 
 						$thumb_img    = $JUImg->Render($junuimgsource, $imgparams_merge);
 						$contentimage = $imlink . '<img src="' . $thumb_img . '" alt="' . $title_alt . '" />' . $imlink2;

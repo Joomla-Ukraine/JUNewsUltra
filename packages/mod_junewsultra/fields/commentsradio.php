@@ -83,14 +83,14 @@ class JFormFieldCommentsRadio extends JFormField
 
 		foreach($this->element->children() as $option)
 		{
-			if($option->getName() != 'option')
+			if($option->getName() !== 'option')
 			{
 				continue;
 			}
 
 			$tmp = JHtml::_(
 				'select.option', (string) $option[ 'value' ], trim((string) $option), 'value', 'text',
-				(string) $option[ 'disabled' ] == 'true'
+				(string) $option[ 'disabled' ] === 'true'
 			);
 
 			$tmp->class   = (string) $option[ 'class' ];

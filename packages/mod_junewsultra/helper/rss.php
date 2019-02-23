@@ -12,6 +12,7 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\HTML\HTMLHelper;
 
 class rss extends modJUNewsUltraHelper
 {
@@ -30,14 +31,7 @@ class rss extends modJUNewsUltraHelper
 		$JUImg  = new JUImg();
 
 		// Selects data
-		$items = $JULibs->ParceXML(
-			$params->get('rssurl'),
-			$params->get('rsscount'),
-			'cache/' . md5($params->get('rssurl')) . '.xml',
-			$params->get('cache_time'),
-			'/rss/channel/item',
-			$params->get('ordering_xml')
-		);
+		$items = $JULibs->ParceXML($params->get('rssurl'), $params->get('rsscount'), 'cache/' . md5($params->get('rssurl')) . '.xml', $params->get('cache_time'), '/rss/channel/item', $params->get('ordering_xml'));
 
 		foreach($items as &$item)
 		{
@@ -65,31 +59,13 @@ class rss extends modJUNewsUltraHelper
 			// introtext
 			if($junews[ 'show_intro' ] == '1')
 			{
-				$item->introtext = $JULibs->_Description(
-					$params,
-					$item->description,
-					$junews[ 'cleartag' ],
-					$junews[ 'allowed_intro_tags' ],
-					$junews[ 'li' ],
-					$junews[ 'introtext_limit' ],
-					$junews[ 'lmttext' ],
-					$junews[ 'end_limit_introtext' ]
-				);
+				$item->introtext = $JULibs->_Description($params, $item->description, $junews[ 'cleartag' ], $junews[ 'allowed_intro_tags' ], $junews[ 'li' ], $junews[ 'introtext_limit' ], $junews[ 'lmttext' ], $junews[ 'end_limit_introtext' ]);
 			}
 
 			// fulltext
 			if($junews[ 'show_full' ] == '1' && isset($item->content_encoded))
 			{
-				$item->fulltext = $JULibs->_Description(
-					$params,
-					$item->content_encoded,
-					$junews[ 'clear_tag_full' ],
-					$junews[ 'allowed_full_tags' ],
-					$junews[ 'li_full' ],
-					$junews[ 'fulltext_limit' ],
-					$junews[ 'lmttext_full' ],
-					$junews[ 'end_limit_fulltext' ]
-				);
+				$item->fulltext = $JULibs->_Description($params, $item->content_encoded, $junews[ 'clear_tag_full' ], $junews[ 'allowed_full_tags' ], $junews[ 'li_full' ], $junews[ 'fulltext_limit' ], $junews[ 'lmttext_full' ], $junews[ 'end_limit_fulltext' ]);
 			}
 
 			// author
@@ -105,10 +81,10 @@ class rss extends modJUNewsUltraHelper
 				$item->sqldate = date('Y-m-d H:i:s', strtotime($item->pubDate));
 				$_date_type    = strtotime($item->pubDate);
 
-				$item->date = JHtml::date($_date_type, $junews[ 'data_format' ]);
-				$item->df_d = JHtml::date($_date_type, $junews[ 'date_day' ]);
-				$item->df_m = JHtml::date($_date_type, $junews[ 'date_month' ]);
-				$item->df_y = JHtml::date($_date_type, $junews[ 'date_year' ]);
+				$item->date = HTMLHelper::date($_date_type, $junews[ 'data_format' ]);
+				$item->df_d = HTMLHelper::date($_date_type, $junews[ 'date_day' ]);
+				$item->df_m = HTMLHelper::date($_date_type, $junews[ 'date_month' ]);
+				$item->df_y = HTMLHelper::date($_date_type, $junews[ 'date_year' ]);
 			}
 
 			// hits
@@ -224,20 +200,20 @@ class rss extends modJUNewsUltraHelper
 						}
 						else
 						{
-							$newimgparams = array(
+							$newimgparams = [
 								'zc' => $junews[ 'zoomcrop' ] == 1 ? $junews[ 'zoomcrop_params' ] : ''
-							);
+							];
 						}
 
 						if($junews[ 'farcrop' ] == '1')
 						{
-							$newimgparams = array(
+							$newimgparams = [
 								'far' => $junews[ 'farcrop_params' ],
 								'bg'  => $junews[ 'farcropbg' ]
-							);
+							];
 						}
 
-						$imgparams = array(
+						$imgparams = [
 							'w'     => $junews[ 'w' ],
 							'h'     => $junews[ 'h' ],
 							'sx'    => $junews[ 'sx' ] ? : '',
@@ -247,12 +223,9 @@ class rss extends modJUNewsUltraHelper
 							'f'     => $junews[ 'f' ],
 							'q'     => $junews[ 'q' ],
 							'cache' => 'img'
-						);
+						];
 
-						$imgparams_merge = array_merge(
-							$imgparams,
-							$newimgparams
-						);
+						$imgparams_merge = array_merge($imgparams, $newimgparams);
 
 						$thumb_img    = $JUImg->Render($junuimgsource, $imgparams_merge);
 						$contentimage = $imlink . '<img src="' . $thumb_img . '" alt="' . $title_alt . '" />' . $imlink2;

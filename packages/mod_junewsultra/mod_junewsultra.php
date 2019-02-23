@@ -16,9 +16,11 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Uri\Uri;
 
 $app      = Factory::getApplication('site');
-$document = Factory::getDocument();
+$menu     = $app->getMenu();
+$doc = Factory::getDocument();
 
 require_once JPATH_SITE . '/modules/mod_junewsultra/lib/julib.php';
 require_once JPATH_SITE . '/libraries/julib/image.php';
@@ -90,24 +92,24 @@ $list   = $object->getList($params, [
 	'multicat'            => $params->def('contentmulticategories', 0)
 ]);
 
-if( $params->get('empty_mod', 0) == 0 && count($list) == 0 )
+if($params->get('empty_mod', 0) == 0 && count($list) == 0)
 {
 	return;
 }
 
 $layoutpath = ModuleHelper::getLayoutPath('mod_junewsultra', $params->def('template'));
 
-if( $params->def('jquery') == 1 )
+if($params->def('jquery') == 1)
 {
 	HTMLHelper::_('jquery.framework');
 }
 
-if( $params->def('bootstrap_js') == 1 )
+if($params->def('bootstrap_js') == 1)
 {
 	HTMLHelper::_('bootstrap.framework');
 }
 
-if( $params->def('bootstrap_css') == 1 )
+if($params->def('bootstrap_css') == 1)
 {
 	$lang      = Factory::getLanguage();
 	$direction = ($lang->isRtl() ? 'rtl' : 'ltr');
@@ -115,42 +117,39 @@ if( $params->def('bootstrap_css') == 1 )
 	JHtmlBootstrap::loadCss($includeMaincss = true, $direction);
 }
 
-if( $params->get('cssstyle') == 1 )
+if($params->get('cssstyle') == 1)
 {
 	$tpl  = explode(':', $params->def('template'));
 	$jtpl = $tpl[ 0 ];
 
-	if( $tpl[ 0 ] === '_' )
+	if($tpl[ 0 ] === '_')
 	{
 		$jtpl = $app->getTemplate();
 	}
 
-	if( is_file(JPATH_SITE . '/modules/mod_junewsultra/tmpl/' . $tpl[ 1 ] . '/css/style.css') )
-	{
-		$css = 'modules/mod_junewsultra/tmpl/' . $tpl[ 1 ] . '/css/style.css';
-		$document->addStyleSheet(JURI::base() . $css);
-	}
-
-	if( is_file(JPATH_SITE . '/templates/' . $jtpl . '/html/mod_junewsultra/' . $tpl[ 1 ] . '/css/style.css') )
+	if(is_file(JPATH_SITE . '/templates/' . $jtpl . '/html/mod_junewsultra/' . $tpl[ 1 ] . '/css/style.css'))
 	{
 		$css = 'templates/' . $jtpl . '/html/mod_junewsultra/' . $tpl[ 1 ] . '/css/style.css';
-		$document->addStyleSheet(JURI::base() . $css);
+		$doc->addStyleSheet(URI::base() . $css);
+	}
+	elseif(is_file(JPATH_SITE . '/modules/mod_junewsultra/tmpl/' . $tpl[ 1 ] . '/css/style.css'))
+	{
+		$css = 'modules/mod_junewsultra/tmpl/' . $tpl[ 1 ] . '/css/style.css';
+		$doc->addStyleSheet(URI::base() . $css);
 	}
 }
 
-if( file_exists($layoutpath) )
+if(file_exists($layoutpath))
 {
-	if( $params->def('all_in') == 1 )
+	if($params->def('all_in') == 1)
 	{
-		if( $params->def('custom_heading') == 1 )
+		if($params->def('custom_heading') == 1)
 		{
 			$heading      = trim($params->get('text_all_in'));
 			$heading_link = trim($params->get('link_all_in'));
 		}
 		else
 		{
-			$menu = $app->getMenu();
-
 			$text_all_in12 = trim($params->get('text_all_in12'));
 			$heading       = ($text_all_in12 ? : Route::_($menu->getItem($params->get('link_menuitem'))->title));
 			$heading_link  = Route::_($menu->getItem($params->get('link_menuitem'))->link . '&amp;Itemid=' . $params->get('link_menuitem'));
@@ -159,9 +158,9 @@ if( file_exists($layoutpath) )
 		$heading      = str_replace([ '[', ']' ], [ '<', '>' ], $heading);
 		$heading_link = $heading;
 
-		if( $heading_link )
+		if($heading_link)
 		{
-			$heading_link = '<a ' . ($params->get('class_all_inhref') ? 'class="' . $params->get('class_all_inhref') . '" ' : '') . 'href="' . $heading_link . '">' . $heading . '</a>';
+			$heading_link = '<a ' . ($params->get('class_all_inhref') ? ' class="' . $params->get('class_all_inhref') . '" ' : '') . 'href="' . $heading_link . '">' . $heading . '</a>';
 		}
 
 		$item_heading = trim($params->get('item_heading'));
@@ -169,17 +168,15 @@ if( file_exists($layoutpath) )
 		$read_all     = '<' . $item_heading . ($class_all_in ? ' class="' . $class_all_in . '"' : '') . '>' . $heading_link . '</' . $item_heading . '>';
 	}
 
-	if( $params->def('all_in2') == 1 )
+	if($params->def('all_in2') == 1)
 	{
-		if( $params->def('custom_heading2') == 1 )
+		if($params->def('custom_heading2') == 1)
 		{
 			$heading2      = trim($params->get('text_all_in2'));
 			$heading_link2 = trim($params->get('link_all_in2'));
 		}
 		else
 		{
-			$menu = $app->getMenu();
-
 			$text_all_in22 = trim($params->get('text_all_in22'));
 			$heading2      = ($text_all_in22 ? : Route::_($menu->getItem($params->get('link_menuitem2'))->title));
 			$heading_link2 = Route::_($menu->getItem($params->get('link_menuitem2'))->link . '&amp;Itemid=' . $params->get('link_menuitem2'));
@@ -191,7 +188,7 @@ if( file_exists($layoutpath) )
 		$_tag_open2    = '';
 		$_tag_close2   = '';
 
-		if( $titletag2[ 1 ] )
+		if($titletag2[ 1 ])
 		{
 			$_tag_open2  = '<' . $titletag2[ 1 ] . '>';
 			$_tag_close2 = '</' . $titletag2[ 1 ] . '>';
@@ -200,7 +197,7 @@ if( file_exists($layoutpath) )
 		$class_all_inhref2 = trim($params->get('class_all_inhref2'));
 		$heading_link2     = $heading2;
 
-		if( $heading_link2 )
+		if($heading_link2)
 		{
 			$heading_link2 = '<a ' . ($params->get('class_all_inhref2') ? 'class="' . $params->get('class_all_inhref2') . '" ' : '') . 'href="' . $heading_link2 . '">' . $_tag_open2 . $heading2 . $_tag_close2 . '</a>';
 		}
@@ -209,24 +206,24 @@ if( file_exists($layoutpath) )
 		$read_all2     = '<' . $titletag2[ 0 ] . ($class_all_in2 ? ' class="' . $class_all_in2 . '"' : '') . '>' . $heading_link2 . '</' . $titletag2[ 0 ] . '>';
 	}
 
-	if( $params->def('all_in') == 1 && $params->def('all_in_position') == 0 )
+	if($params->def('all_in') == 1 && $params->def('all_in_position') == 0)
 	{
 		echo $read_all;
 	}
 
-	if( $params->def('all_in2') == 1 && $params->def('all_in_position2') == 0 )
+	if($params->def('all_in2') == 1 && $params->def('all_in_position2') == 0)
 	{
 		echo $read_all2;
 	}
 
 	require $layoutpath;
 
-	if( $params->def('all_in') == 1 && $params->def('all_in_position') == 1 )
+	if($params->def('all_in') == 1 && $params->def('all_in_position') == 1)
 	{
 		echo $read_all;
 	}
 
-	if( $params->def('all_in2') == 1 && $params->def('all_in_position2') == 1 )
+	if($params->def('all_in2') == 1 && $params->def('all_in_position2') == 1)
 	{
 		echo $read_all2;
 	}
