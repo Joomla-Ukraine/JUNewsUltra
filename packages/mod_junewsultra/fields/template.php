@@ -37,11 +37,7 @@ class JFormFieldTemplate extends JFormField
 		JHtml::_('behavior.modal', 'a.modal');
 
 		$db = JFactory::getDBO();
-		$db->setQuery(
-			'SELECT params' .
-			' FROM #__modules' .
-			' WHERE id = ' . (int) $_GET[ 'id' ]
-		);
+		$db->setQuery('SELECT params' . ' FROM #__modules' . ' WHERE id = ' . (int) $_GET[ 'id' ]);
 		$rows = $db->loadResult();
 
 		if(preg_match('#"template":"_:(.*?)"#is', $rows, $ok))
@@ -60,13 +56,8 @@ class JFormFieldTemplate extends JFormField
 			$tmpl = 'default';
 		}
 
-		$html = array();
+		$html = [];
 		$link = str_replace('/administrator', '', JURI::base()) . 'modules/mod_junewsultra/fields/edittemplate.php?file=' . $tmpl . '.php';
-
-		if($error = $db->getErrorMsg())
-		{
-			JFactory::getApplication()->enqueueMessage($error, 'error');
-		}
 
 		if($_GET[ 'id' ])
 		{

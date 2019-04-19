@@ -148,7 +148,8 @@ class com_content extends modJUNewsUltraHelper
 		// Access filter
 		if($useaccess == 1)
 		{
-			$access     = !ComponentHelper::getParams('com_content')->get('show_noauth');
+			$access     = !ComponentHelper::getParams('com_content')
+			                              ->get('show_noauth');
 			$authorised = Access::getAuthorisedViewLevels($user->get('id'));
 		}
 		else
@@ -171,9 +172,9 @@ class com_content extends modJUNewsUltraHelper
 		else
 		{
 			$cat_arr = [];
-			if((int) $catid)
+			if($catid)
 			{
-				$cat_arr[] = (int) $catid;
+				$cat_arr[] = $catid;
 			}
 		}
 
@@ -506,7 +507,8 @@ class com_content extends modJUNewsUltraHelper
 			}
 			else
 			{
-				Factory::getApplication()->enqueueMessage(Text::_('MOD_JUNEWS_COMMENTS_NOT_INSTALLED'), 'error');
+				Factory::getApplication()
+				       ->enqueueMessage(Text::_('MOD_JUNEWS_COMMENTS_NOT_INSTALLED'), 'error');
 			}
 		}
 

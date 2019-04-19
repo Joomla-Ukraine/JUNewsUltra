@@ -29,12 +29,12 @@ $csslink = '<link href="../../../../../administrator/templates/isis/css/template
 
 function alert($text, $error)
 {
-	if($error == 'message')
+	if($error === 'message')
 	{
 		$error = 'alert-info';
 	}
 
-	if($error == 'notice')
+	if($error === 'notice')
 	{
 		$error = 'alert-error';
 	}
@@ -46,7 +46,7 @@ if($joomlaUser->get('id') < 1)
 {
 	?>
 	<!DOCTYPE html>
-	<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $language; ?>" lang="<?php echo $language; ?>">
+	<html lang="<?php echo $language; ?>">
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<?php echo $csslink; ?>
@@ -58,7 +58,7 @@ if($joomlaUser->get('id') < 1)
 	return;
 }
 
-$app = JFactory::getApplication('site');
+$app         = JFactory::getApplication('site');
 $current_tpl = explode(':', $_GET[ 'file' ]);
 $jtpl        = $current_tpl[ 0 ];
 $css         = '0';
@@ -97,7 +97,7 @@ if(isset($_POST[ 'newd' ]))
 	$newdata = $_POST[ 'newd' ];
 }
 
-if(isset($newdata) != '')
+if(isset($newdata) !== '')
 {
 	$fw = fopen($filename, 'wb') or die('Could not open file!');
 	$fb = fwrite($fw, stripslashes($newdata)) or die('Could not write to file');
@@ -122,12 +122,15 @@ chmod($filename, 0777);
 			font-size: 102%;
 			margin: 0 20px 0 20px;
 		}
+
 		.left {
 			float: left;
 		}
+
 		.right {
 			float: right;
 		}
+
 		.wells {
 			position: fixed;
 			z-index: 100;

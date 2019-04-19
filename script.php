@@ -12,7 +12,6 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Version;
 use Joomla\CMS\Language\Text;
 
 /**
@@ -42,7 +41,8 @@ class Pkg_JUNewsUltraInstallerScript
 	{
 		if(version_compare(JVERSION, '3.8.0', 'lt'))
 		{
-			Factory::getApplication()->enqueueMessage('Update for Joomla! 3.8+', 'error');
+			Factory::getApplication()
+			       ->enqueueMessage('Update for Joomla! 3.8+', 'error');
 
 			return false;
 		}
@@ -51,7 +51,8 @@ class Pkg_JUNewsUltraInstallerScript
 
 		if(!is_dir(JPATH_SITE . '/img/'))
 		{
-			Factory::getApplication()->enqueueMessage('Error creating folder \'img\'. Please manually create the folder \'img\' in the root of the site where you installed Joomla!', 'message');
+			Factory::getApplication()
+			       ->enqueueMessage('Error creating folder \'img\'. Please manually create the folder \'img\' in the root of the site where you installed Joomla!', 'message');
 		}
 
 		$cache = Factory::getCache('mod_junewsultra');
@@ -68,7 +69,7 @@ class Pkg_JUNewsUltraInstallerScript
 	 */
 	public function uninstall($parent)
 	{
-
+		return true;
 	}
 
 	/**
@@ -79,7 +80,7 @@ class Pkg_JUNewsUltraInstallerScript
 	 */
 	public function update($parent)
 	{
-
+		return true;
 	}
 
 	/**
@@ -100,21 +101,21 @@ class Pkg_JUNewsUltraInstallerScript
 		$query = $db->getQuery(true);
 		$app   = Factory::getApplication();
 
-		$version = new Version;
-		$joomla  = substr($version->getShortVersion(), 0, 3);
-
 		$lang = Factory::getLanguage();
 		$lang->load('mod_junewsultra', JPATH_SITE);
 
-		foreach ($results as $result)
+		foreach($results as $result)
 		{
-			$extension = (string) $result['name'];
+			$extension = (string) $result[ 'name' ];
+
 			$query->clear();
+
 			$query->select($db->quoteName('enabled'));
 			$query->from($db->quoteName('#__extensions'));
 			$query->where($db->quoteName('name') . ' = ' . $db->quote($extension));
 			$db->setQuery($query);
-			$enabled[$extension] = $db->loadResult();
+
+			$enabled[ $extension ] = $db->loadResult();
 		}
 
 		$html = '';
@@ -172,9 +173,9 @@ class Pkg_JUNewsUltraInstallerScript
         			</thead>
         			<tbody>';
 
-		foreach ($results as $result)
+		foreach($results as $result)
 		{
-			$extension = (string) $result['name'];
+			$extension = (string) $result[ 'name' ];
 
 			$html .= '<tr><td>';
 
@@ -189,7 +190,7 @@ class Pkg_JUNewsUltraInstallerScript
 
 			$html .= '</td><td><strong>';
 
-			if($result['result'] === true)
+			if($result[ 'result' ] === true)
 			{
 				$html .= '<span class="label label-success">' . Text::_('MOD_JUNEWS_INSTALLED') . '</span>';
 			}
@@ -200,7 +201,7 @@ class Pkg_JUNewsUltraInstallerScript
 
 			$html .= '</strong></td><td>';
 
-			if($enabled[$extension] == 1)
+			if($enabled[ $extension ] == 1)
 			{
 				$html .= '<span class="label label-success">' . Text::_('JYES') . '</span>';
 			}
@@ -265,7 +266,7 @@ class Pkg_JUNewsUltraInstallerScript
 		];
 
 		$i = 0;
-		foreach ($files AS $file)
+		foreach($files AS $file)
 		{
 			if(file_exists($file))
 			{
@@ -274,7 +275,7 @@ class Pkg_JUNewsUltraInstallerScript
 		}
 
 		$j = 0;
-		foreach ($folders AS $folder)
+		foreach($folders AS $folder)
 		{
 			if(is_dir($folder))
 			{
@@ -286,7 +287,7 @@ class Pkg_JUNewsUltraInstallerScript
 		{
 			$html .= '<h2>' . Text::_('MOD_JUNEWS_REMOVE_OLD_FILES') . '</h2><table class="table table-striped"><tbody>';
 
-			foreach ($files AS $file)
+			foreach($files AS $file)
 			{
 				if(file_exists($file))
 				{
@@ -297,7 +298,7 @@ class Pkg_JUNewsUltraInstallerScript
 				}
 			}
 
-			foreach ($folders AS $folder)
+			foreach($folders AS $folder)
 			{
 				if(is_dir($folder))
 				{
@@ -363,7 +364,7 @@ class Pkg_JUNewsUltraInstallerScript
 			return;
 		}
 
-		while (false !== ($obj = readdir($dh)))
+		while(false !== ($obj = readdir($dh)))
 		{
 			if($obj === '.' || $obj === '..')
 			{

@@ -55,11 +55,11 @@ $csslink = '
 
 function alert($text, $error)
 {
-	if($error == 'message')
+	if($error === 'message')
 	{
 		$error = 'alert-info';
 	}
-	if($error == 'notice')
+	if($error === 'notice')
 	{
 		$error = 'alert-error';
 	}
@@ -70,7 +70,7 @@ function alert($text, $error)
 ?>
 <?php if($joomlaUser->get('id') < 1) : ?>
 	<!DOCTYPE html>
-	<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $language; ?>" lang="<?php echo $language; ?>">
+	<html lang="<?php echo $language; ?>">
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<?php echo $csslink; ?>
@@ -87,16 +87,16 @@ $path             = str_replace('modules' . DS . 'mod_junewsultra' . DS . 'field
 $max_image_width  = 800;
 $max_image_height = 800;
 $max_image_size   = 1024 * 1024;
-$valid_types      = array(
+$valid_types      = [
 	'gif',
 	'jpg',
 	'png',
 	'jpeg'
-);
+];
 
 ?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $language; ?>" lang="<?php echo $language; ?>">
+<html lang="<?php echo $language; ?>">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<?php echo $csslink; ?>

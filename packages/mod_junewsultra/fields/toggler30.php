@@ -75,15 +75,15 @@ class nnFieldToggler
 		$param = preg_replace('#^\s*(.*?)\s*$#', '\1', $param);
 		$param = preg_replace('#\s*\|\s*#', '|', $param);
 
-		$html = array();
-		if($param != '')
+		$html = [];
+		if($param !== '')
 		{
 			$param      = preg_replace('#[^a-z0-9-\.\|\@]#', '_', $param);
 			$param      = str_replace('@', '_', $param);
 			$set_groups = explode('|', $param);
 			$set_values = explode('|', $value);
 
-			$ids = array();
+			$ids = [];
 			foreach($set_groups as $i => $group)
 			{
 				$count = $i;
@@ -110,7 +110,7 @@ class nnFieldToggler
 				$html[] = ' nntoggler_nofx';
 			}
 
-			if($method == 'and')
+			if($method === 'and')
 			{
 				$html[] = ' nntoggler_and';
 			}
@@ -131,8 +131,8 @@ class nnFieldToggler
 	}
 
 	/**
-	 * @param        string $val
-	 * @param string        $default
+	 * @param string $val
+	 * @param string $default
 	 *
 	 * @return string
 	 *
@@ -140,6 +140,6 @@ class nnFieldToggler
 	 */
 	private function def($val, $default = '')
 	{
-		return (isset($this->params[ $val ]) && (string) $this->params[ $val ] != '') ? (string) $this->params[ $val ] : $default;
+		return (isset($this->params[ $val ]) && (string) $this->params[ $val ] !== '') ? (string) $this->params[ $val ] : $default;
 	}
 }

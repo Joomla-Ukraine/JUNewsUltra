@@ -24,9 +24,9 @@ class JFormFieldIntegration extends JFormField
 	 */
 	protected function getInput()
 	{
-		$html = array();
+		$html = [];
 
-		$class = ($this->element[ 'class' ] ? ' class="radio ' . (string) $this->element[ 'class' ] . '"' : ' class="radio"');
+		$class = ($this->element[ 'class' ] ? ' class="radio ' . $this->element[ 'class' ] . '"' : ' class="radio"');
 		$path  = ($this->element[ 'path' ] ? JPATH_SITE . $this->element[ 'path' ] : '');
 
 		if(!file_exists($path))
@@ -47,7 +47,7 @@ class JFormFieldIntegration extends JFormField
 
 				$onclick = !empty($option->onclick) ? ' onclick="' . $option->onclick . '"' : '';
 
-				$html[] = '<input type="radio" id="' . $this->id . $i . '" name="' . $this->name . '" value="' . htmlspecialchars($option->value, ENT_COMPAT, 'UTF-8') . '"' . $checked . $class . $onclick . '/>';
+				$html[] = '<input type="radio" id="' . $this->id . $i . '" name="' . $this->name . '" value="' . htmlspecialchars($option->value, ENT_COMPAT) . '"' . $checked . $class . $onclick . '/>';
 				$html[] = '<label for="' . $this->id . $i . '" id="' . $this->id . $i . '">' . JText::alt($option->text, preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)) . '</label>';
 			}
 
@@ -65,16 +65,16 @@ class JFormFieldIntegration extends JFormField
 	 */
 	protected function getOptions()
 	{
-		$options = array();
+		$options = [];
 
 		foreach($this->element->children() as $option)
 		{
-			if($option->getName() != 'option')
+			if($option->getName() !== 'option')
 			{
 				continue;
 			}
 
-			$tmp          = JHtml::_('select.option', (string) $option[ 'value' ], trim((string) $option), 'value', 'text', (string) $option[ 'disabled' ] == 'true');
+			$tmp          = JHtml::_('select.option', (string) $option[ 'value' ], trim((string) $option), 'value', 'text', (string) $option[ 'disabled' ] === 'true');
 			$tmp->class   = (string) $option[ 'class' ];
 			$tmp->onclick = (string) $option[ 'onclick' ];
 

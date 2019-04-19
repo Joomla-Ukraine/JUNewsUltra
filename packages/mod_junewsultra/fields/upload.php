@@ -35,7 +35,7 @@ class JFormFieldUpload extends JFormField
 
 		JHtml::_('behavior.modal', 'a.modal');
 
-		$html = array();
+		$html = [];
 		$link = str_replace('/administrator', '', JURI::base()) . 'modules/mod_junewsultra/fields/uploadimg.php';
 
 		$html[] = '<a class="modal btn"  href="' . $link . '" rel="{handler: \'iframe\', size: {x: 330, y: 180}}"><i class="icon-upload"></i> ' . JText::_('MOD_JUNEWS_IMAGE_UPLOAD') . '</a>';

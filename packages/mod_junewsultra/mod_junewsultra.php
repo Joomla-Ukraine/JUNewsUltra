@@ -18,9 +18,9 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 
-$app      = Factory::getApplication('site');
-$menu     = $app->getMenu();
-$doc = Factory::getDocument();
+$app  = Factory::getApplication('site');
+$menu = $app->getMenu();
+$doc  = Factory::getDocument();
 
 require_once JPATH_SITE . '/modules/mod_junewsultra/lib/julib.php';
 require_once JPATH_SITE . '/libraries/julib/image.php';

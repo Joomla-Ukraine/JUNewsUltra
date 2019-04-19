@@ -28,7 +28,7 @@ class JFormFieldNewsFileList extends JFormFieldList
 	 */
 	protected function getOptions()
 	{
-		$options     = array();
+		$options     = [];
 		$filter      = (string) $this->element[ 'filter' ];
 		$exclude     = (string) $this->element[ 'exclude' ];
 		$stripExt    = (string) $this->element[ 'stripext' ];
@@ -57,12 +57,9 @@ class JFormFieldNewsFileList extends JFormFieldList
 		{
 			foreach($files as $file)
 			{
-				if($exclude)
+				if($exclude && preg_match(chr(1) . $exclude . chr(1), $file))
 				{
-					if(preg_match(chr(1) . $exclude . chr(1), $file))
-					{
-						continue;
-					}
+					continue;
 				}
 
 				if($stripExt)

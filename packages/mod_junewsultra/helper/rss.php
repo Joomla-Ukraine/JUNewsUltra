@@ -143,7 +143,7 @@ class rss extends modJUNewsUltraHelper
 							$contentimage = $imlink . '<img src="' . $junuimgsource . '" alt="' . $title_alt . '" />' . $imlink2;
 						}
 
-						if($junews[ 'youtube_img_show' ] == 1 && ($junuimgsource != ''))
+						if($junews[ 'youtube_img_show' ] == 1 && ($junuimgsource !== ''))
 						{
 							$regex1 = '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^>"&?/ ]{11})%i';
 							$regex2 = '#(player.vimeo.com)/video/([0-9]+)#i';
@@ -193,10 +193,10 @@ class rss extends modJUNewsUltraHelper
 
 						if($aspect >= '1' && $junews[ 'auto_zoomcrop' ] == '1')
 						{
-							$newimgparams = array(
+							$newimgparams = [
 								'far' => '1',
 								'bg'  => $junews[ 'zoomcropbg' ]
-							);
+							];
 						}
 						else
 						{
@@ -230,7 +230,7 @@ class rss extends modJUNewsUltraHelper
 						$thumb_img    = $JUImg->Render($junuimgsource, $imgparams_merge);
 						$contentimage = $imlink . '<img src="' . $thumb_img . '" alt="' . $title_alt . '" />' . $imlink2;
 
-						if(($junews[ 'youtube_img_show' ] == 1) && ($junews[ 'link_enabled' ] == 1) && ($junuimgsource != ''))
+						if(($junews[ 'youtube_img_show' ] == 1) && ($junews[ 'link_enabled' ] == 1) && ($junuimgsource !== ''))
 						{
 							$regex1 = '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^>"&?/ ]{11})%i';
 							$regex2 = '#(player.vimeo.com)/video/([0-9]+)#i';

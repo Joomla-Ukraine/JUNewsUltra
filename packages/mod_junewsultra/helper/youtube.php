@@ -79,13 +79,13 @@ class youtube extends modJUNewsUltraHelper
 			}
 
 			// rawtext
-			if($junews[ 'sourcetext' ] == '1')
+			if($junews[ 'sourcetext' ] == 1)
 			{
 				$item->sourcetext = (isset($item->media_group->media_description) ? $item->media_group->media_description : '');
 			}
 
 			// introtext
-			if($junews[ 'show_intro' ] == '1')
+			if($junews[ 'show_intro' ] == 1)
 			{
 				$item->introtext = $JULibs->_Description($params, $item->media_group->media_description, $junews[ 'cleartag' ], $junews[ 'allowed_intro_tags' ], $junews[ 'li' ], $junews[ 'introtext_limit' ], $junews[ 'lmttext' ], $junews[ 'end_limit_introtext' ]);
 			}
@@ -155,21 +155,18 @@ class youtube extends modJUNewsUltraHelper
 					case '1':
 					default:
 
-						if($junews[ 'defaultimg' ] == 1)
+						if(($junews[ 'defaultimg' ] == 1) && !$junuimgsource)
 						{
-							if(!$junuimgsource)
-							{
-								$junuimgsource = 'media/mod_junewsultra/' . $junews[ 'noimage' ];
-							}
+							$junuimgsource = 'media/mod_junewsultra/' . $junews[ 'noimage' ];
 						}
 
 						$aspect = 0;
-						if($junews[ 'auto_zoomcrop' ] == '1')
+						if($junews[ 'auto_zoomcrop' ] == 1)
 						{
 							$aspect = $JULibs->aspect($junuimgsource);
 						}
 
-						if($aspect >= '1' && $junews[ 'auto_zoomcrop' ] == '1')
+						if($aspect >= '1' && $junews[ 'auto_zoomcrop' ] == 1)
 						{
 							$newimgparams = [
 								'far' => '1',
@@ -183,7 +180,7 @@ class youtube extends modJUNewsUltraHelper
 							];
 						}
 
-						if($junews[ 'farcrop' ] == '1')
+						if($junews[ 'farcrop' ] == 1)
 						{
 							$newimgparams = [
 								'far' => $junews[ 'farcrop_params' ],

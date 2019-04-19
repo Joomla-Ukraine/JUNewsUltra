@@ -12,12 +12,5 @@
 
 defined('_JEXEC') or die();
 
-$version = new JVersion;
-$joomla  = $version->getShortVersion();
-
 include 'head.php';
-
-if(substr($joomla, 0, 3) >= '3.0')
-{
-	include 'toggler30.php';
-}
+include 'toggler30.php';
