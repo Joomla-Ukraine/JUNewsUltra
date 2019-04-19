@@ -23,7 +23,7 @@
     <files folder="packages">
         <file type="module" id="mod_junewsultra" client="site">mod_junewsultra.zip</file>
         <file type="file" id="tmpl_mod_junewsultra_default" client="site">tmpl_mod_junewsultra_default.zip</file>
-        <file type="library" id="juimage">lib_juimage_v@juimage@.zip</file>
+        <file type="library" id="julib">lib_julib_v@julib@.zip</file>
     </files>
 
     <languages folder="language">
