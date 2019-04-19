@@ -147,7 +147,7 @@ class youtube extends modJUNewsUltraHelper
 							$junuimgsource = 'media/mod_junewsultra/' . $junews[ 'noimage' ];
 						}
 
-						$contentimage      = $imlink . '<img src="' . $junuimgsource . '" alt="' . $title_alt . '" />' . $imlink2;
+						$contentimage      = $imlink . '<img src="' . $junuimgsource . '" alt="' . $title_alt . '">' . $imlink2;
 						$item->image       = $contentimage;
 						$item->imagesource = $junuimgsource;
 
@@ -203,7 +203,7 @@ class youtube extends modJUNewsUltraHelper
 						$imgparams_merge = array_merge($imgparams, $newimgparams);
 
 						$thumb_img    = $JUImg->Render($junuimgsource, $imgparams_merge);
-						$contentimage = $imlink . '<img src="' . $thumb_img . '" alt="' . $title_alt . '" />' . $imlink2;
+						$contentimage = $imlink . '<img src="' . $thumb_img . '" alt="' . $title_alt . '">' . $imlink2;
 
 						$item->image       = $contentimage;
 						$item->imagesource = $junuimgsource;

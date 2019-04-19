@@ -378,11 +378,11 @@ class com_content extends modJUNewsUltraHelper
 			switch($junews[ 'featured' ])
 			{
 				case '1':
-					$query->where('a.featured = 1');
+					$query->where('a.featured = '. $db->quote('1'));
 					break;
 
 				case '0':
-					$query->where('a.featured = 0');
+					$query->where('a.featured = '. $db->quote('0'));
 					break;
 			}
 
@@ -695,7 +695,7 @@ class com_content extends modJUNewsUltraHelper
 
 						if($junuimgsource)
 						{
-							$item->image       = $imlink . '<img src="' . $junuimgsource . '" alt="' . $title_alt . '" />' . $imlink2;
+							$item->image       = $imlink . '<img src="' . $junuimgsource . '" alt="' . $title_alt . '">' . $imlink2;
 							$item->imagelink   = $junuimgsource;
 							$item->imagesource = $junuimgsource;
 						}
@@ -870,7 +870,7 @@ class com_content extends modJUNewsUltraHelper
 							}
 
 							$thumb_img         = URI::base() . $JUImg->Render($junuimgsource, $imgparams_merge);
-							$item->image       = $imlink . '<img src="' . $thumb_img . '"' . $srcset . 'alt="' . $title_alt . '" />' . $imlink2;
+							$item->image       = $imlink . '<img src="' . $thumb_img . '"' . $srcset . 'alt="' . $title_alt . '">' . $imlink2;
 							$item->imagelink   = $thumb_img;
 							$item->imagesource = $junuimgsource;
 						}

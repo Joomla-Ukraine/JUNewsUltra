@@ -228,7 +228,7 @@ class rss extends modJUNewsUltraHelper
 						$imgparams_merge = array_merge($imgparams, $newimgparams);
 
 						$thumb_img    = $JUImg->Render($junuimgsource, $imgparams_merge);
-						$contentimage = $imlink . '<img src="' . $thumb_img . '" alt="' . $title_alt . '" />' . $imlink2;
+						$contentimage = $imlink . '<img src="' . $thumb_img . '" alt="' . $title_alt . '">' . $imlink2;
 
 						if(($junews[ 'youtube_img_show' ] == 1) && ($junews[ 'link_enabled' ] == 1) && ($junuimgsource !== ''))
 						{
@@ -246,7 +246,7 @@ class rss extends modJUNewsUltraHelper
 							}
 
 							$thumb_img         = $JUImg->Render($yimg, $imgparams);
-							$item->image       = $imlink . '<img src="' . $thumb_img . '" alt="' . $title_alt . '" />' . $imlink2;
+							$item->image       = $imlink . '<img src="' . $thumb_img . '" alt="' . $title_alt . '">' . $imlink2;
 							$item->imagesource = $yimg;
 						}
 
