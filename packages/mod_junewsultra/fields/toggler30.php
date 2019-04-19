@@ -12,7 +12,10 @@
 
 defined('_JEXEC') or die;
 
-class JFormFieldNN_Toggler extends JFormField
+use Joomla\CMS\Factory;
+use Joomla\CMS\Form\FormField;
+
+class JFormFieldNN_Toggler extends FormField
 {
 	public $type = 'Toggler';
 
@@ -58,7 +61,7 @@ class nnFieldToggler
 	{
 		$this->params = $params;
 
-		$option = JFactory::getApplication()->input->get('option');
+		$option = Factory::getApplication()->input->get('option');
 
 		$param  = $this->def('param');
 		$value  = $this->def('value');
@@ -67,9 +70,9 @@ class nnFieldToggler
 		$div    = $this->def('div', 0);
 
 		JHtml::_('jquery.framework');
-		JFactory::getDocument()
+		Factory::getDocument()
 		        ->addScript(JURI::root(true) . '/modules/mod_junewsultra/assets/js/script30.js?v=' . $this->_version);
-		JFactory::getDocument()
+		Factory::getDocument()
 		        ->addScript(JURI::root(true) . '/modules/mod_junewsultra/assets/js/toggler30.js?v=' . $this->_version);
 
 		$param = preg_replace('#^\s*(.*?)\s*$#', '\1', $param);

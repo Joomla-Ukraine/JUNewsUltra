@@ -15,11 +15,12 @@ defined('JPATH_BASE') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 $doc = Factory::getDocument();
 $db  = Factory::getDBO();
 
-$adm_url = str_replace('/administrator', '', JURI::base());
+$adm_url = str_replace('/administrator', '', Uri::base());
 $tmpl    = $adm_url . 'modules/mod_junewsultra/fields/edittemplate.php?file=';
 
 $doc->addStyleSheet($adm_url . 'modules/mod_junewsultra/assets/css/junewsultra.css?v=6');

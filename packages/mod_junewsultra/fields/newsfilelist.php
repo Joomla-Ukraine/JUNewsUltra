@@ -14,6 +14,7 @@ defined('JPATH_PLATFORM') or die;
 
 jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.file');
+
 JFormHelper::loadFieldClass('list');
 
 class JFormFieldNewsFileList extends JFormFieldList

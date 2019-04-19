@@ -17,9 +17,12 @@ define('MAX_SIZE', '500');
 require_once JPATH_BASE . '/includes/defines.php';
 require_once JPATH_BASE . '/includes/framework.php';
 
-$mainframe  = JFactory::getApplication('administrator');
-$joomlaUser = JFactory::getUser();
-$lang       = JFactory::getLanguage();
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+
+$mainframe  = Factory::getApplication('administrator');
+$joomlaUser = Factory::getUser();
+$lang       = Factory::getLanguage();
 
 $lang->load('mod_junewsultra', JPATH_SITE);
 
@@ -51,14 +54,14 @@ if($joomlaUser->get('id') < 1)
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<?php echo $csslink; ?>
 	</head>
-	<body><?php echo alert(JText::_('MOD_JUNEWS_LOGIN'), 'notice'); ?></body>
+	<body><?php echo alert(Text::_('MOD_JUNEWS_LOGIN'), 'notice'); ?></body>
 	</html>
 	<?php
 
 	return;
 }
 
-$app         = JFactory::getApplication('site');
+$app         = Factory::getApplication('site');
 $current_tpl = explode(':', $_GET[ 'file' ]);
 $jtpl        = $current_tpl[ 0 ];
 $css         = '0';
@@ -114,7 +117,7 @@ chmod($filename, 0777);
 <!DOCTYPE html PUBLIC>
 <html lang="<?php echo $language; ?>">
 <head>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta charset="utf-8" />
 	<?php echo $csslink; ?>
 	<style type="text/css">
 		body {

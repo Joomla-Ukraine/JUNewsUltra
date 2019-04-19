@@ -12,7 +12,11 @@
 
 defined('_JEXEC') or die;
 
-class JFormFieldCommentsRadio extends JFormField
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Form\FormField;
+
+class JFormFieldCommentsRadio extends FormField
 {
 	protected $type = 'CommentsRadio';
 
@@ -40,26 +44,27 @@ class JFormFieldCommentsRadio extends JFormField
 			$commets_system = htmlspecialchars($option->value, ENT_COMPAT);
 			$comments       = JPATH_SITE . '/components/com_' . $commets_system . '/' . $commets_system . '.php';
 
+			$check    = '';
+			$disabled = '';
+			$color    = '';
+			$tips     = '';
 			if(!file_exists($comments))
 			{
 				$disabled = ' disabled="disabled"';
 				$color    = 'color: #999;';
-				$tips     = ' <sup class="label label-inverse">' . JText::_('MOD_JUNEWS_NOTINSTALL') . '</sup>';
-				$check    = '';
+				$tips     = ' <sup class="label label-inverse">' . Text::_('MOD_JUNEWS_NOTINSTALL') . '</sup>';
+
 			}
 			else
 			{
-				$disabled = '';
-				$color    = '';
-				$tips     = '';
-				$check    = $checked;
+				$check = $checked;
 			}
 
 			$onclick = !empty($option->onclick) ? ' onclick="' . $option->onclick . '"' : '';
 
 			$html[] = '<input type="radio" id="' . $this->id . $i . '" name="' . $this->name . '"' . ' value="' . htmlspecialchars($option->value, ENT_COMPAT) . '"' . $check . $class . $onclick . $disabled . '/>';
 
-			$html[] = '<label for="' . $this->id . $i . '" id="' . $this->id . $i . '" style="' . $color . '">' . JText::alt($option->text, preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)) . $tips . '</label>';
+			$html[] = '<label for="' . $this->id . $i . '" id="' . $this->id . $i . '" style="' . $color . '">' . Text::alt($option->text, preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)) . $tips . '</label>';
 
 			$html[] = '<div style="clear: both;"></div>';
 		}
@@ -86,7 +91,7 @@ class JFormFieldCommentsRadio extends JFormField
 				continue;
 			}
 
-			$tmp = JHtml::_('select.option', (string) $option[ 'value' ], trim((string) $option), 'value', 'text', (string) $option[ 'disabled' ] === 'true');
+			$tmp = HTMLHelper::_('select.option', (string) $option[ 'value' ], trim((string) $option), 'value', 'text', (string) $option[ 'disabled' ] === 'true');
 
 			$tmp->class   = (string) $option[ 'class' ];
 			$tmp->onclick = (string) $option[ 'onclick' ];

@@ -12,7 +12,10 @@
 
 defined('JPATH_PLATFORM') or die;
 
-class JFormFieldIntegration extends JFormField
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Form\FormField;
+
+class JFormFieldIntegration extends FormField
 {
 	protected $type = 'Integration';
 
@@ -31,7 +34,7 @@ class JFormFieldIntegration extends JFormField
 
 		if(!file_exists($path))
 		{
-			$tips   = ' <sup class="label label-inverse">' . JText::_('MOD_JUNEWS_NOTINSTALL') . '</sup>';
+			$tips   = ' <sup class="label label-inverse">' . Text::_('MOD_JUNEWS_NOTINSTALL') . '</sup>';
 			$html[] = '<fieldset id="' . $this->id . '"' . $class . '>' . $tips . '</fieldset>';
 		}
 		else
@@ -48,7 +51,7 @@ class JFormFieldIntegration extends JFormField
 				$onclick = !empty($option->onclick) ? ' onclick="' . $option->onclick . '"' : '';
 
 				$html[] = '<input type="radio" id="' . $this->id . $i . '" name="' . $this->name . '" value="' . htmlspecialchars($option->value, ENT_COMPAT) . '"' . $checked . $class . $onclick . '/>';
-				$html[] = '<label for="' . $this->id . $i . '" id="' . $this->id . $i . '">' . JText::alt($option->text, preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)) . '</label>';
+				$html[] = '<label for="' . $this->id . $i . '" id="' . $this->id . $i . '">' . Text::alt($option->text, preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)) . '</label>';
 			}
 
 			$html[] = '</fieldset>';

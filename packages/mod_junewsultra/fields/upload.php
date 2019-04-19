@@ -12,10 +12,11 @@
 
 defined('JPATH_BASE') or die;
 
-jimport('joomla.html.html');
-jimport('joomla.form.formfield');
+use Joomla\CMS\Form\FormField;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\HTML\HTMLHelper;
 
-class JFormFieldUpload extends JFormField
+class JFormFieldUpload extends FormField
 {
 
 	protected $type = 'Upload';
@@ -30,15 +31,15 @@ class JFormFieldUpload extends JFormField
 	{
 		if(!isset($_GET[ 'id' ]))
 		{
-			return JText::_('MOD_JUNEWS_NOT_EDIT_TEMPLATE');
+			return Text::_('MOD_JUNEWS_NOT_EDIT_TEMPLATE');
 		}
 
-		JHtml::_('behavior.modal', 'a.modal');
+		HTMLHelper::_('behavior.modal', 'a.modal');
 
 		$html = [];
 		$link = str_replace('/administrator', '', JURI::base()) . 'modules/mod_junewsultra/fields/uploadimg.php';
 
-		$html[] = '<a class="modal btn"  href="' . $link . '" rel="{handler: \'iframe\', size: {x: 330, y: 180}}"><i class="icon-upload"></i> ' . JText::_('MOD_JUNEWS_IMAGE_UPLOAD') . '</a>';
+		$html[] = '<a class="modal btn"  href="' . $link . '" rel="{handler: \'iframe\', size: {x: 330, y: 180}}"><i class="icon-upload"></i> ' . Text::_('MOD_JUNEWS_IMAGE_UPLOAD') . '</a>';
 
 		return implode("\n", $html);
 	}
