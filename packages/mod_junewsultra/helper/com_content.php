@@ -64,7 +64,7 @@ class com_content extends modJUNewsUltraHelper
 
 		// com_content params
 		$ordering     = $params->get('ordering', 'id_desc');
-		$catid        = (int) $params->get('catid', null);
+		$catid        = $params->get('catid', null);
 		$show_attribs = (int) $params->get('show_attribs');
 
 		$wheresql = (int) $params->get('wheresql');
