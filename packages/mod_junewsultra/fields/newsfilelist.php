@@ -35,12 +35,7 @@ class JFormFieldNewsFileList extends JFormFieldList
 		$stripExt    = (string) $this->element[ 'stripext' ];
 		$hideNone    = (string) $this->element[ 'hide_none' ];
 		$hideDefault = (string) $this->element[ 'hide_default' ];
-
-		$path = (string) $this->element[ 'directory' ];
-		if(!is_dir($path))
-		{
-			$path = JPATH_ROOT . '/' . $path;
-		}
+		$path        = JPATH_ROOT . '/' . $this->element[ 'directory' ];
 
 		if(!$hideNone)
 		{
