@@ -155,12 +155,15 @@ if(file_exists($layoutpath))
 			$heading_link  = Route::_($menu->getItem($params->get('link_menuitem'))->link . '&amp;Itemid=' . $params->get('link_menuitem'));
 		}
 
-		$heading      = str_replace([ '[', ']' ], [ '<', '>' ], $heading);
-		$heading_link = $heading;
+		$heading = str_replace([ '[', ']' ], [ '<', '>' ], $heading);
 
 		if($heading_link)
 		{
 			$heading_link = '<a ' . ($params->get('class_all_inhref') ? ' class="' . $params->get('class_all_inhref') . '" ' : '') . 'href="' . $heading_link . '">' . $heading . '</a>';
+		}
+		else
+		{
+			$heading_link = $heading;
 		}
 
 		$item_heading = trim($params->get('item_heading'));
@@ -195,11 +198,14 @@ if(file_exists($layoutpath))
 		}
 
 		$class_all_inhref2 = trim($params->get('class_all_inhref2'));
-		$heading_link2     = $heading2;
 
 		if($heading_link2)
 		{
 			$heading_link2 = '<a ' . ($params->get('class_all_inhref2') ? 'class="' . $params->get('class_all_inhref2') . '" ' : '') . 'href="' . $heading_link2 . '">' . $_tag_open2 . $heading2 . $_tag_close2 . '</a>';
+		}
+		else
+		{
+			$heading_link2 = $heading2;
 		}
 
 		$class_all_in2 = trim($params->get('class_all_in2'));

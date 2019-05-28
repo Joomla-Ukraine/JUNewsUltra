@@ -125,7 +125,7 @@ class com_content extends modJUNewsUltraHelper
 				$orderBy = 'a.modified DESC, a.created';
 				break;
 			case 'modified_touch_dsc':
-				$orderBy = 'CASE WHEN (a.modified = ' . $db->quote($nullDate) . ') THEN a.created ELSE a.modified END';
+				$orderBy = 'CASE WHEN (' . $db->quoteName('a.modified') . ' = ' . $db->quote($nullDate) . ') THEN a.created ELSE a.modified END';
 				break;
 			case 'ordering_asc':
 				$orderBy = 'a.ordering';
@@ -146,16 +146,21 @@ class com_content extends modJUNewsUltraHelper
 		}
 
 		// Access filter
+		$access     = '1';
+		$authorised = [];
 		if($useaccess == 1)
 		{
-			$access     = !ComponentHelper::getParams('com_content')
-			                              ->get('show_noauth');
+			$access = !ComponentHelper::getParams('com_content')
+			                          ->get('show_noauth');
+
 			$authorised = Access::getAuthorisedViewLevels($user->get('id'));
 		}
-		else
+
+		// Category
+		$cat_arr = [];
+		if($catid)
 		{
-			$access     = '1';
-			$authorised = [];
+			$cat_arr[] = $catid;
 		}
 
 		if(is_array($catid))
@@ -169,98 +174,96 @@ class com_content extends modJUNewsUltraHelper
 				}
 			}
 		}
-		else
-		{
-			$cat_arr = [];
-			if($catid)
-			{
-				$cat_arr[] = $catid;
-			}
-		}
 
 		// Selects data
-		$query->select('a.id, a.state, a.alias, a.publish_up, a.publish_down');
+		$query->select([
+			'a.id',
+			'a.state',
+			'a.alias',
+			'a.publish_up',
+			'a.publish_down'
+		]);
 
 		if($junews[ 'show_title' ] == 1 || $junews[ 'show_image' ] == 1)
 		{
-			$query->select('a.title');
+			$query->select([ 'a.title' ]);
 		}
 
 		if($junews[ 'sourcetext' ] == 1 || $junews[ 'show_intro' ] == 1 || ($junews[ 'show_image' ] == 1 && $junews[ 'image_source' ] == 0 && ($junews[ 'introfulltext' ] == 0 || $junews[ 'introfulltext' ] == 2)))
 		{
-			$query->select('a.introtext');
+			$query->select([ 'a.introtext' ]);
 		}
 
 		if($junews[ 'sourcetext' ] == 1 || $junews[ 'show_full' ] == 1 || ($junews[ 'show_image' ] == 1 && $junews[ 'image_source' ] == 0 && ($junews[ 'introfulltext' ] == 1 || $junews[ 'introfulltext' ] == 2)))
 		{
-			$query->select('a.fulltext');
+			$query->select([ 'a.fulltext' ]);
 		}
 
 		if(Multilanguage::isEnabled())
 		{
-			$query->select('a.language');
+			$query->select([ 'a.language' ]);
 			$query->where('a.language IN (' . $db->quote(Factory::getLanguage()
 			                                                    ->getTag()) . ',' . $db->quote('*') . ')');
 		}
 
 		if($junews[ 'image_source' ] > 0 && $junews[ 'show_image' ] == 1)
 		{
-			$query->select('a.images');
+			$query->select([ 'a.images' ]);
 		}
 
 		if(($junews[ 'show_date' ] == 1 || $ordering === 'created_asc' || $ordering === 'created_desc') && ($ordering === 'created_asc' || $ordering === 'created_desc' || $ordering === 'modified_created_dsc' || $ordering === 'modified_touch_dsc' || $date_type === 'created' || $date_field === 'a.created' || $date_filtering == 1 || $dateuser_filtering == 1))
 		{
-			$query->select('a.created');
+			$query->select([ 'a.created' ]);
 		}
 
 		if(($junews[ 'show_date' ] == 1 || $ordering === 'modified_asc' || $ordering === 'modified_desc' || $ordering === 'modified_created_dsc' || $ordering === 'modified_touch_dsc') && ($ordering === 'modified_asc' || $ordering === 'modified_desc' || $ordering === 'modified_created_dsc' || $ordering === 'modified_touch_dsc' || $date_type === 'modified' || $date_field === 'a.modified' || $date_filtering == 1))
 		{
-			$query->select('a.modified');
+			$query->select([ 'a.modified' ]);
 		}
 
 		if($user_id)
 		{
-			$query->select('a.modified_by');
+			$query->select([ 'a.modified_by' ]);
 		}
 
 		if($useaccess == 1)
 		{
-			$query->select('a.access');
+			$query->select([ 'a.access' ]);
 		}
 
 		if($junews[ 'featured' ] != 0)
 		{
-			$query->select('a.featured');
+			$query->select([ 'a.featured' ]);
 		}
 
 		if($junews[ 'show_author' ] == 1 || $dateuser_filtering == 1 || $user_id || $user->get('id') > 0)
 		{
-			$query->select('a.created_by');
+			$query->select([ 'a.created_by' ]);
 		}
 
 		if($junews[ 'show_author' ] == 1)
 		{
-			$query->select('a.created_by_alias');
+			$query->select([ 'a.created_by_alias' ]);
 		}
 
 		if($show_attribs == 1)
 		{
-			$query->select('a.attribs');
+			$query->select([ 'a.attribs' ]);
 		}
 
 		if($ordering === 'ordering_asc' || $ordering === 'ordering_desc')
 		{
-			$query->select('a.ordering');
+			$query->select([ 'a.ordering' ]);
 		}
 
 		if($junews[ 'show_hits' ] == 1 || $ordering === 'hits_asc' || $ordering === 'hits_desc')
 		{
-			$query->select('a.hits');
+			$query->select([ 'a.hits' ]);
 		}
 
 		if(is_array($catid) || $access)
 		{
-			$query->select('a.catid');
+			$query->select([ 'a.catid' ]);
 		}
 
 		// From
@@ -269,28 +272,28 @@ class com_content extends modJUNewsUltraHelper
 		// Categories
 		if($junews[ 'show_cat' ] == 1)
 		{
-			$query->select('cc.title AS category_title');
+			$query->select([ 'cc.title AS category_title' ]);
 			$query->join('LEFT', '#__categories AS cc ON cc.id = a.catid');
 		}
 
 		// Multicategories plugin integration
 		if($junews[ 'multicat' ] == 1)
 		{
-			$query->select('cmc.category_id AS cmc_cat');
+			$query->select([ 'cmc.category_id AS cmc_cat' ]);
 			$query->join('LEFT', '#__contentmulticategories_categories AS cmc ON cmc.article_id = a.id');
 		}
 
 		// User
 		if($junews[ 'show_author' ] == 1)
 		{
-			$query->select('u.name AS author');
+			$query->select([ 'u.name AS author' ]);
 			$query->join('LEFT', '#__users AS u on u.id = a.created_by');
 		}
 
 		// Rating
 		if($junews[ 'show_rating' ] == 1)
 		{
-			$query->select('ROUND(v.rating_sum / v.rating_count, 0) AS rating');
+			$query->select([ 'ROUND(v.rating_sum / v.rating_count, 0) AS rating' ]);
 			$query->join('LEFT', '#__content_rating AS v ON a.id = v.content_id');
 		}
 
@@ -378,11 +381,11 @@ class com_content extends modJUNewsUltraHelper
 			switch($junews[ 'featured' ])
 			{
 				case '1':
-					$query->where('a.featured = '. $db->quote('1'));
+					$query->where('a.featured = ' . $db->quote('1'));
 					break;
 
 				case '0':
-					$query->where('a.featured = '. $db->quote('0'));
+					$query->where('a.featured = ' . $db->quote('0'));
 					break;
 			}
 
@@ -514,6 +517,9 @@ class com_content extends modJUNewsUltraHelper
 
 		foreach($items as &$item)
 		{
+			$item->link    = Route::_('index.php?option=com_users&view=login');
+			$item->catlink = $item->link;
+
 			if($access || in_array($item->access, $authorised))
 			{
 				$item->slug = $item->id . ($item->alias ? ':' . $item->alias : '');
@@ -522,11 +528,6 @@ class com_content extends modJUNewsUltraHelper
 
 				$item->link    = Route::_(ContentHelperRoute::getArticleRoute($item->slug, $catid, $language));
 				$item->catlink = Route::_(ContentHelperRoute::getCategoryRoute($catid));
-			}
-			else
-			{
-				$item->link    = Route::_('index.php?option=com_users&view=login');
-				$item->catlink = $item->link;
 			}
 
 			// article title
@@ -541,15 +542,12 @@ class com_content extends modJUNewsUltraHelper
 			// category title
 			if($junews[ 'show_cat' ] == 1)
 			{
-				$cattitle = strip_tags($item->category_title);
+				$cattitle       = strip_tags($item->category_title);
+				$item->cattitle = $cattitle;
 
 				if($params->get('showcatlink') == 1)
 				{
 					$item->cattitle = '<a href="' . $item->catlink . '">' . $cattitle . '</a>';
-				}
-				else
-				{
-					$item->cattitle = $cattitle;
 				}
 			}
 
