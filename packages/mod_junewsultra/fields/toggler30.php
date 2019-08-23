@@ -71,9 +71,9 @@ class nnFieldToggler
 
 		JHtml::_('jquery.framework');
 		Factory::getDocument()
-		        ->addScript(JURI::root(true) . '/modules/mod_junewsultra/assets/js/script30.js?v=' . $this->_version);
+		        ->addScript(JUri::root(true) . '/modules/mod_junewsultra/assets/js/script30.js?v=' . $this->_version);
 		Factory::getDocument()
-		        ->addScript(JURI::root(true) . '/modules/mod_junewsultra/assets/js/toggler30.js?v=' . $this->_version);
+		        ->addScript(JUri::root(true) . '/modules/mod_junewsultra/assets/js/toggler30.js?v=' . $this->_version);
 
 		$param = preg_replace('#^\s*(.*?)\s*$#', '\1', $param);
 		$param = preg_replace('#\s*\|\s*#', '|', $param);

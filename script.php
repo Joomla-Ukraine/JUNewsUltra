@@ -65,6 +65,7 @@ class Pkg_JUNewsUltraInstallerScript
 	 * @param $parent
 	 *
 	 *
+	 * @return bool
 	 * @since 6.0
 	 */
 	public function uninstall($parent)
@@ -76,6 +77,7 @@ class Pkg_JUNewsUltraInstallerScript
 	 * @param $parent
 	 *
 	 *
+	 * @return bool
 	 * @since 6.0
 	 */
 	public function update($parent)
@@ -163,7 +165,7 @@ class Pkg_JUNewsUltraInstallerScript
         	<div class="juinstall-content">
                 <h2 style="padding: 0 0 8px 0; margin: 0;">' . Text::_('MOD_JUNEWS_TITLE') . '</h2>
 				<h2 style="padding: 0 0 8px 0; margin: 0;"><small>' . Text::_('MOD_JUNEWS_DESCRIPTION') . '</small></h2>
-        		<table class="table table-striped" width="100%">
+        		<table class="table table-striped">
         			<thead>
         				<tr>
         					<th>' . Text::_('MOD_JUNEWS_EXTENSION') . '</th>

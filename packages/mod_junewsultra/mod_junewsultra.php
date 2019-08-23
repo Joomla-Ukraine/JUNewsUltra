@@ -10,25 +10,23 @@
  * @license          GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('_JEXEC') or die;
-
 use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\ModuleHelper;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\Uri\Uri;
 
-$app  = Factory::getApplication('site');
-$menu = $app->getMenu();
-$doc  = Factory::getDocument();
+defined('_JEXEC') or die;
 
-require_once JPATH_SITE . '/modules/mod_junewsultra/lib/julib.php';
-require_once JPATH_SITE . '/libraries/julib/image.php';
+JLoader::register('JUImage', JPATH_LIBRARIES . '/juimage/JUImage.php');
 
+$app       = Factory::getApplication('site');
+$menu      = $app->getMenu();
+$doc       = Factory::getDocument();
 $component = trim($params->def('component', 'com_content'));
 
-require_once __DIR__ . '/helper.php';
+require_once __DIR__ . '/Helper.php';
 require_once __DIR__ . '/helper/' . $component . '.php';
+
+$helper = new Helper();
 
 $object = new $component;
 $list   = $object->getList($params, [
@@ -97,49 +95,11 @@ if($params->get('empty_mod', 0) == 0 && count($list) == 0)
 	return;
 }
 
-$layoutpath = ModuleHelper::getLayoutPath('mod_junewsultra', $params->def('template'));
+$helper->loadJQ($params);
+$helper->loadBS($params);
+$helper->loadCSS($params);
 
-if($params->def('jquery') == 1)
-{
-	HTMLHelper::_('jquery.framework');
-}
-
-if($params->def('bootstrap_js') == 1)
-{
-	HTMLHelper::_('bootstrap.framework');
-}
-
-if($params->def('bootstrap_css') == 1)
-{
-	$lang      = Factory::getLanguage();
-	$direction = ($lang->isRtl() ? 'rtl' : 'ltr');
-
-	JHtmlBootstrap::loadCss($includeMaincss = true, $direction);
-}
-
-if($params->get('cssstyle') == 1)
-{
-	$tpl  = explode(':', $params->def('template'));
-	$jtpl = $tpl[ 0 ];
-
-	if($tpl[ 0 ] === '_')
-	{
-		$jtpl = $app->getTemplate();
-	}
-
-	if(is_file(JPATH_SITE . '/templates/' . $jtpl . '/html/mod_junewsultra/' . $tpl[ 1 ] . '/css/style.css'))
-	{
-		$css = 'templates/' . $jtpl . '/html/mod_junewsultra/' . $tpl[ 1 ] . '/css/style.css';
-		$doc->addStyleSheet(URI::base() . $css);
-	}
-	elseif(is_file(JPATH_SITE . '/modules/mod_junewsultra/tmpl/' . $tpl[ 1 ] . '/css/style.css'))
-	{
-		$css = 'modules/mod_junewsultra/tmpl/' . $tpl[ 1 ] . '/css/style.css';
-		$doc->addStyleSheet(URI::base() . $css);
-	}
-}
-
-if(file_exists($layoutpath))
+if(file_exists($layoutpath = ModuleHelper::getLayoutPath('mod_junewsultra', $params->def('template'))))
 {
 	if($params->def('all_in') == 1)
 	{
@@ -196,8 +156,6 @@ if(file_exists($layoutpath))
 			$_tag_open2  = '<' . $titletag2[ 1 ] . '>';
 			$_tag_close2 = '</' . $titletag2[ 1 ] . '>';
 		}
-
-		$class_all_inhref2 = trim($params->get('class_all_inhref2'));
 
 		if($heading_link2)
 		{

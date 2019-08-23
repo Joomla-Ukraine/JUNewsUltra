@@ -6,7 +6,7 @@
         <format property="DATE" pattern="%d.%m.%Y" />
     </tstamp>
 
-    <property name="julib" value="2.7.8"/>
+    <property name="juimage" value="3.6.4"/>
 
     <property name="build" value="build"/>
 
@@ -45,7 +45,7 @@
                 <replacetokens>
                     <token key="version" value="${VERSION}" />
                     <token key="date" value="${DATE}" />
-                    <token key="julib" value="${julib}" />
+                    <token key="juimage" value="${juimage}" />
                 </replacetokens>
             </filterchain>
         </copy>
@@ -89,7 +89,7 @@
             <fileset dir="${temp}/tmpl_mod_junewsultra_default"/>
         </zip>
 
-        <copy file="../JULib/dist/lib_julib_v${julib}.zip" todir="${build}/packages"/>
+        <copy file="../JUImage/dist/lib_juimage_v${juimage}.zip" todir="${build}/packages"/>
 
         <copy todir="${build}/language">
             <fileset dir="${temp}/language">

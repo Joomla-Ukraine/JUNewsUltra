@@ -85,15 +85,11 @@ defined('_JEXEC') or die('Restricted access');
 						<?php endif; ?>
 						<?php if($params->get('showRating') || $params->get('showRatingCount') || $params->get('showHits')): ?>
 							<div class="jn-hit-n-rating">
-								<?php if($params->get('showRating')): ?>
-									<span class="jn-small jn-rating"><?php echo $item->rating; ?></span>
-								<?php endif; ?>
-								<?php if($params->get('showRatingCount') && $item->rating_count > 0): ?>
+								<span class="jn-small jn-rating"><?php echo $item->rating; ?></span>
+								<?php if($item->rating_count > 0): ?>
 									<sup class="jn-small jn-rating-count"><?php echo $item->rating_count; ?></sup>
 								<?php endif; ?>
-								<?php if($params->get('showHits')): ?>
-									<span class="jn-small jn-hits"><?php echo JText::_('JGLOBAL_HITS'); ?>: <?php echo $item->hits; ?></span>
-								<?php endif; ?>
+								<span class="jn-small jn-hits"><?php echo JText::_('JGLOBAL_HITS'); ?>: <?php echo $item->hits; ?></span>
 							</div>
 						<?php endif; ?>
 					</div>

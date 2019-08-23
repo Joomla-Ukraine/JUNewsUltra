@@ -13,6 +13,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Uri\Uri;
 
 /**
  * Helper for mod_junewsultra
@@ -21,8 +22,34 @@ use Joomla\CMS\HTML\HTMLHelper;
  * @subpackage  mod_junewsultra
  * @since       6.0
  */
-class youtube extends modJUNewsUltraHelper
+class youtube extends Helper
 {
+	/**
+	 * @param $params
+	 * @param $junews
+	 *
+	 * @return array|bool|\SimpleXMLElement[]
+	 *
+	 * @since 6.0
+	 */
+	public function query($params, $junews)
+	{
+		switch($params->get('yttype'))
+		{
+			case '2':
+				$ytxml = 'https://www.youtube.com/feeds/videos.xml?user=' . $params->get('ytaccount');
+				break;
+			case '1':
+				$ytxml = 'https://www.youtube.com/feeds/videos.xml?playlist_id=' . $params->get('ytplaylist');
+				break;
+			case '3':
+				$ytxml = 'https://www.youtube.com/feeds/videos.xml?channel_id==' . $params->get('ytchannel');
+				break;
+		}
+
+		return $this->xml($ytxml, $params->get('ytcount'), 'cache/' . md5($ytxml) . '.xml', $params->get('cache_time'), '/feed/entry', $params->get('ordering_xml'));
+	}
+
 	/**
 	 * @param $params
 	 * @param $junews
@@ -31,29 +58,9 @@ class youtube extends modJUNewsUltraHelper
 	 *
 	 * @since 6.0
 	 */
-	public static function getList($params, $junews)
+	public function getList($params, $junews)
 	{
-		// Load libs
-		$JULibs = new JULibs();
-		$JUImg  = new JUImg();
-
-		switch($params->get('yttype'))
-		{
-			case '2':
-				$ytxml = 'https://www.youtube.com/feeds/videos.xml?user=' . $params->get('ytaccount');
-				break;
-
-			case '1':
-				$ytxml = 'https://www.youtube.com/feeds/videos.xml?playlist_id=' . $params->get('ytplaylist');
-				break;
-
-			case '3':
-				$ytxml = 'https://www.youtube.com/feeds/videos.xml?channel_id==' . $params->get('ytchannel');
-				break;
-		}
-
-		// Selects data
-		$items = $JULibs->ParceXML($ytxml, $params->get('ytcount'), 'cache/' . md5($ytxml) . '.xml', $params->get('cache_time'), '/feed/entry', $params->get('ordering_xml'));
+		$items = $this->query($params, $junews);
 
 		foreach($items as &$item)
 		{
@@ -141,20 +148,21 @@ class youtube extends modJUNewsUltraHelper
 				switch($junews[ 'thumb_width' ])
 				{
 					case '0':
-
 						if(($junews[ 'defaultimg' ] == 1) && !$junuimgsource)
 						{
 							$junuimgsource = 'media/mod_junewsultra/' . $junews[ 'noimage' ];
 						}
 
-						$contentimage      = $imlink . '<img src="' . $junuimgsource . '" alt="' . $title_alt . '">' . $imlink2;
+						$thumb_img         = $this->image($params, [
+							'src' => $junuimgsource,
+							'alt' => $title_alt
+						]);
+						$contentimage      = $imlink . $thumb_img . $imlink2;
 						$item->image       = $contentimage;
 						$item->imagesource = $junuimgsource;
-
 						break;
 					case '1':
 					default:
-
 						if(($junews[ 'defaultimg' ] == 1) && !$junuimgsource)
 						{
 							$junuimgsource = 'media/mod_junewsultra/' . $junews[ 'noimage' ];
@@ -202,12 +210,14 @@ class youtube extends modJUNewsUltraHelper
 
 						$imgparams_merge = array_merge($imgparams, $newimgparams);
 
-						$thumb_img    = $JUImg->Render($junuimgsource, $imgparams_merge);
-						$contentimage = $imlink . '<img src="' . $thumb_img . '" alt="' . $title_alt . '">' . $imlink2;
+						$thumb_img    = $this->image($params, [
+							'src' => Uri::base() . $this->juimg->render($junuimgsource, $imgparams_merge),
+							'alt' => $title_alt
+						]);
+						$contentimage = $imlink . $thumb_img . $imlink2;
 
 						$item->image       = $contentimage;
 						$item->imagesource = $junuimgsource;
-
 						break;
 				}
 			}

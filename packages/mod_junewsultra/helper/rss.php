@@ -14,8 +14,21 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 
-class rss extends modJUNewsUltraHelper
+class rss extends Helper
 {
+	/**
+	 * @param $params
+	 * @param $junews
+	 *
+	 * @return array|bool|\SimpleXMLElement[]
+	 *
+	 * @since 6.0
+	 */
+	public function query($params, $junews)
+	{
+		return $this->xml($params->get('rssurl'), $params->get('rsscount'), 'cache/' . md5($params->get('rssurl')) . '.xml', $params->get('cache_time'), '/rss/channel/item', $params->get('ordering_xml'));
+	}
+
 	/**
 	 * @param $params
 	 * @param $junews
@@ -24,25 +37,20 @@ class rss extends modJUNewsUltraHelper
 	 *
 	 * @since 6.0
 	 */
-	public static function getList($params, $junews)
+	public function getList($params, $junews)
 	{
-		// Load libs
-		$JULibs = new JULibs();
-		$JUImg  = new JUImg();
-
-		// Selects data
-		$items = $JULibs->ParceXML($params->get('rssurl'), $params->get('rsscount'), 'cache/' . md5($params->get('rssurl')) . '.xml', $params->get('cache_time'), '/rss/channel/item', $params->get('ordering_xml'));
+		$items = $this->query($params, $junews);
 
 		foreach($items as &$item)
 		{
 			// article title
 			if($junews[ 'show_title' ] == 1)
 			{
-				$item->title = $JULibs->_Title($params, $item->title);
+				$item->title = $this->title($params, $item->title);
 			}
 
 			// title for attr title and alt
-			$item->title_alt = htmlspecialchars(strip_tags($JULibs->_Title($params, $item->title)));
+			$item->title_alt = htmlspecialchars(strip_tags($this->title($params, $item->title)));
 
 			// category title
 			if($junews[ 'show_cat' ] == 1)
@@ -59,13 +67,29 @@ class rss extends modJUNewsUltraHelper
 			// introtext
 			if($junews[ 'show_intro' ] == '1')
 			{
-				$item->introtext = $JULibs->_Description($params, $item->description, $junews[ 'cleartag' ], $junews[ 'allowed_intro_tags' ], $junews[ 'li' ], $junews[ 'introtext_limit' ], $junews[ 'lmttext' ], $junews[ 'end_limit_introtext' ]);
+				$item->introtext = $this->desc($params, [
+					'description'    => $item->description,
+					'cleartag'       => $junews[ 'cleartag' ],
+					'allowed_tags'   => $junews[ 'allowed_intro_tags' ],
+					'li'             => $junews[ 'li' ],
+					'text_limit'     => $junews[ 'introtext_limit' ],
+					'lmttext'        => $junews[ 'lmttext' ],
+					'end_limit_text' => $junews[ 'end_limit_introtext' ]
+				]);
 			}
 
 			// fulltext
 			if($junews[ 'show_full' ] == '1' && isset($item->content_encoded))
 			{
-				$item->fulltext = $JULibs->_Description($params, $item->content_encoded, $junews[ 'clear_tag_full' ], $junews[ 'allowed_full_tags' ], $junews[ 'li_full' ], $junews[ 'fulltext_limit' ], $junews[ 'lmttext_full' ], $junews[ 'end_limit_fulltext' ]);
+				$item->fulltext = $this->desc($params, [
+					'description'    => $item->content_encoded,
+					'cleartag'       => $junews[ 'clear_tag_full' ],
+					'allowed_tags'   => $junews[ 'allowed_full_tags' ],
+					'li'             => $junews[ 'li_full' ],
+					'text_limit'     => $junews[ 'fulltext_limit' ],
+					'lmttext'        => $junews[ 'lmttext_full' ],
+					'end_limit_text' => $junews[ 'end_limit_fulltext' ]
+				]);
 			}
 
 			// author
@@ -96,7 +120,7 @@ class rss extends modJUNewsUltraHelper
 			// rating
 			if($junews[ 'show_rating' ] == 1)
 			{
-				$item->rating = $JULibs->_RatingStar($params, $item->rating);
+				$item->rating = $this->rating($params, $item->rating);
 			}
 
 			if($junews[ 'show_image' ] == 1)
@@ -122,7 +146,7 @@ class rss extends modJUNewsUltraHelper
 				}
 				else
 				{
-					$imgmatch = $JULibs->absoluteURL($_text);
+					$imgmatch = $this->url($_text);
 
 					if(preg_match('/<img(.*?)src="(.*?)"(.*?)>\s*(<\/img>)?/', $imgmatch, $imgsource))
 					{
@@ -143,33 +167,6 @@ class rss extends modJUNewsUltraHelper
 							$contentimage = $imlink . '<img src="' . $junuimgsource . '" alt="' . $title_alt . '" />' . $imlink2;
 						}
 
-						if($junews[ 'youtube_img_show' ] == 1 && ($junuimgsource !== ''))
-						{
-							$regex1 = '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^>"&?/ ]{11})%i';
-							$regex2 = '#(player.vimeo.com)/video/([0-9]+)#i';
-
-							if(preg_match($regex1, $_text, $match))
-							{
-								$yimg              = $JULibs->video('http://youtu.be/' . $match[ 1 ]);
-								$item->image       = $imlink . '<img src="' . $yimg . '" width="' . $junews[ 'w' ] . '" alt="' . $title_alt . '" />' . $imlink2;
-								$item->imagesource = $yimg;
-							}
-							elseif(preg_match($regex2, $_text, $match))
-							{
-								$yimg              = $JULibs->video('http://vimeo.com/' . $match[ 2 ]);
-								$item->image       = $imlink . '<img src="' . $yimg . '" width="' . $junews[ 'w' ] . '" alt="' . $title_alt . '" />' . $imlink2;
-								$item->imagesource = $yimg;
-							}
-							elseif($junuimgsource)
-							{
-								$item->image = $contentimage;
-							}
-							elseif($junews[ 'defaultimg' ] == 1)
-							{
-								$item->image = '';
-							}
-						}
-
 						if($junuimgsource)
 						{
 							$item->image       = $contentimage;
@@ -177,7 +174,6 @@ class rss extends modJUNewsUltraHelper
 						}
 
 						break;
-
 					case '1':
 					default:
 						if($junews[ 'defaultimg' ] == 1 && (!$junuimgsource))
@@ -227,26 +223,35 @@ class rss extends modJUNewsUltraHelper
 
 						$imgparams_merge = array_merge($imgparams, $newimgparams);
 
-						$thumb_img    = $JUImg->Render($junuimgsource, $imgparams_merge);
+						$thumb_img    = $this->juimg->render($junuimgsource, $imgparams_merge);
 						$contentimage = $imlink . '<img src="' . $thumb_img . '" alt="' . $title_alt . '">' . $imlink2;
 
 						if(($junews[ 'youtube_img_show' ] == 1) && ($junews[ 'link_enabled' ] == 1) && ($junuimgsource !== ''))
 						{
-							$regex1 = '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^>"&?/ ]{11})%i';
-							$regex2 = '#(player.vimeo.com)/video/([0-9]+)#i';
+							//Youtube
+							$_text = str_replace([
+								'//www.youtube.com',
+								'//youtube.com',
+								'https://www.youtube.com',
+								'https://youtube.com',
+								'https://www.youtu.be',
+								'https://youtu.be'
+							], 'http://www.youtube.com', $_text);
 
-							$yimg = '';
-							if(preg_match($regex1, $_text, $match))
+							if(preg_match_all('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^>"&?/ ]{11})%i', $_text, $match))
 							{
-								$yimg = $JULibs->video('http://youtu.be/' . $match[ 1 ]);
+								$junuimgsource = 'https://www.youtube.com/watch?v=' . $match[ 1 ][ 0 ];
 							}
-							elseif(preg_match($regex2, $_text, $match))
+							elseif(preg_match_all('#(player.vimeo.com)/video/(\d+)#i', $_text, $match))
 							{
-								$yimg = $JULibs->video('http://vimeo.com/' . $match[ 2 ]);
+								$junuimgsource = 'http://vimeo.com/' . $match[ 2 ];
 							}
 
-							$thumb_img         = $JUImg->Render($yimg, $imgparams);
-							$item->image       = $imlink . '<img src="' . $thumb_img . '" alt="' . $title_alt . '">' . $imlink2;
+							$thumb_img         = $this->image($params, [
+								'src' => $junuimgsource,
+								'alt' => $title_alt
+							]);
+							$item->image       = $imlink . $thumb_img . $imlink2;
 							$item->imagesource = $yimg;
 						}
 

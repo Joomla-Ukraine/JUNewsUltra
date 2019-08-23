@@ -57,7 +57,7 @@ class JFormFieldTemplate extends JFormField
 		}
 
 		$html = [];
-		$link = str_replace('/administrator', '', JURI::base()) . 'modules/mod_junewsultra/fields/edittemplate.php?file=' . $tmpl . '.php';
+		$link = str_replace('/administrator', '', JUri::base()) . 'modules/mod_junewsultra/fields/edittemplate.php?file=' . $tmpl . '.php';
 
 		if($_GET[ 'id' ])
 		{

@@ -153,11 +153,11 @@ chmod($filename, 0777);
 		<div class="btn-group left" style="margin-left: 10px;">
 			<?php if($css == 1): ?>
 				<?php if(isset($_GET[ 'css' ])): ?>
-					<?php echo '<a href="' . JURI::base() . 'edittemplate.php?file=' . $_GET[ 'file' ] . '" class="btn btn-success">Edit template: ' . $_GET[ 'file' ] . '</a>'; ?>
+					<?php echo '<a href="' . JUri::base() . 'edittemplate.php?file=' . $_GET[ 'file' ] . '" class="btn btn-success">Edit template: ' . $_GET[ 'file' ] . '</a>'; ?>
 					<?php echo '<span class="btn disabled">style.css</span>'; ?>
 				<?php else: ?>
 					<?php echo '<span class="btn disabled">' . $current_tpl[ 1 ] . '</span>'; ?>
-					<?php echo '<a href="' . JURI::base() . 'edittemplate.php?file=' . $_GET[ 'file' ] . '&css=1" class="btn btn-success">Edit CSS: style.css</a>'; ?>
+					<?php echo '<a href="' . JUri::base() . 'edittemplate.php?file=' . $_GET[ 'file' ] . '&css=1" class="btn btn-success">Edit CSS: style.css</a>'; ?>
 				<?php endif; ?>
 			<?php else : ?>
 				<?php echo '<span class="btn disabled">' . $current_tpl[ 1 ] . '</span>'; ?>
