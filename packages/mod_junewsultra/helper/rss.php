@@ -139,16 +139,14 @@ class rss extends Helper
 					$imlink2 = '';
 				}
 
-				if(isset($item->enclosure->attributes()->url))
+				if(isset($item->enclosure) && isset($item->enclosure->attributes()->url))
 				{
 					$junuimgsource      = $item->enclosure->attributes()->url;
 					$item->source_image = $junuimgsource;
 				}
 				else
 				{
-					$imgmatch = $this->url($_text);
-
-					if(preg_match('/<img(.*?)src="(.*?)"(.*?)>\s*(<\/img>)?/', $imgmatch, $imgsource))
+					if(preg_match('/<img(.*?)src="(.*?)"(.*?)>\s*(<\/img>)?/', $this->url($_text), $imgsource))
 					{
 						$item->source_image = $imgsource[ 2 ];
 					}
@@ -176,7 +174,7 @@ class rss extends Helper
 						break;
 					case '1':
 					default:
-						if($junews[ 'defaultimg' ] == 1 && (!$junuimgsource))
+						if($junews[ 'defaultimg' ] == 1 && (!isset($junuimgsource)))
 						{
 							$junuimgsource = 'media/mod_junewsultra/' . $junews[ 'noimage' ];
 						}
@@ -187,17 +185,14 @@ class rss extends Helper
 							$aspect = $JULibs->aspect($junuimgsource);
 						}
 
+						$newimgparams = [
+							'zc' => $junews[ 'zoomcrop' ] == 1 ? $junews[ 'zoomcrop_params' ] : ''
+						];
 						if($aspect >= '1' && $junews[ 'auto_zoomcrop' ] == '1')
 						{
 							$newimgparams = [
 								'far' => '1',
 								'bg'  => $junews[ 'zoomcropbg' ]
-							];
-						}
-						else
-						{
-							$newimgparams = [
-								'zc' => $junews[ 'zoomcrop' ] == 1 ? $junews[ 'zoomcrop_params' ] : ''
 							];
 						}
 
@@ -222,9 +217,8 @@ class rss extends Helper
 						];
 
 						$imgparams_merge = array_merge($imgparams, $newimgparams);
-
-						$thumb_img    = $this->juimg->render($junuimgsource, $imgparams_merge);
-						$contentimage = $imlink . '<img src="' . $thumb_img . '" alt="' . $title_alt . '">' . $imlink2;
+						$thumb_img       = $this->juimg->render($junuimgsource, $imgparams_merge);
+						$contentimage    = $imlink . '<img src="' . $thumb_img . '" alt="' . $title_alt . '">' . $imlink2;
 
 						if(($junews[ 'youtube_img_show' ] == 1) && ($junews[ 'link_enabled' ] == 1) && ($junuimgsource !== ''))
 						{

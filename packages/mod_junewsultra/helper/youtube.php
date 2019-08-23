@@ -163,7 +163,7 @@ class youtube extends Helper
 						break;
 					case '1':
 					default:
-						if(($junews[ 'defaultimg' ] == 1) && !$junuimgsource)
+						if(($junews[ 'defaultimg' ] == 1) && !(isset($junuimgsource)))
 						{
 							$junuimgsource = 'media/mod_junewsultra/' . $junews[ 'noimage' ];
 						}
@@ -174,17 +174,14 @@ class youtube extends Helper
 							$aspect = $JULibs->aspect($junuimgsource);
 						}
 
+						$newimgparams = [
+							'zc' => $junews[ 'zoomcrop' ] == 1 ? $junews[ 'zoomcrop_params' ] : ''
+						];
 						if($aspect >= '1' && $junews[ 'auto_zoomcrop' ] == 1)
 						{
 							$newimgparams = [
 								'far' => '1',
 								'bg'  => $junews[ 'zoomcropbg' ]
-							];
-						}
-						else
-						{
-							$newimgparams = [
-								'zc' => $junews[ 'zoomcrop' ] == 1 ? $junews[ 'zoomcrop_params' ] : ''
 							];
 						}
 
@@ -209,12 +206,11 @@ class youtube extends Helper
 						];
 
 						$imgparams_merge = array_merge($imgparams, $newimgparams);
-
-						$thumb_img    = $this->image($params, [
+						$thumb_img       = $this->image($params, [
 							'src' => Uri::base() . $this->juimg->render($junuimgsource, $imgparams_merge),
 							'alt' => $title_alt
 						]);
-						$contentimage = $imlink . $thumb_img . $imlink2;
+						$contentimage    = $imlink . $thumb_img . $imlink2;
 
 						$item->image       = $contentimage;
 						$item->imagesource = $junuimgsource;
