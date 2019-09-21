@@ -13,6 +13,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Uri\Uri;
 
 class rss extends Helper
 {
@@ -217,8 +218,14 @@ class rss extends Helper
 						];
 
 						$imgparams_merge = array_merge($imgparams, $newimgparams);
-						$thumb_img       = $this->juimg->render($junuimgsource, $imgparams_merge);
-						$contentimage    = $imlink . '<img src="' . $thumb_img . '" alt="' . $title_alt . '">' . $imlink2;
+						//$thumb_img       = $this->juimg->render($junuimgsource, $imgparams_merge);
+
+						$thumb_img = $this->image($params, [
+							'src' => Uri::base() . $this->juimg->render($junuimgsource, $imgparams_merge),
+							'alt' => $title_alt
+						]);
+
+						$contentimage = $imlink . $thumb_img . $imlink2;
 
 						if(($junews[ 'youtube_img_show' ] == 1) && ($junews[ 'link_enabled' ] == 1) && ($junuimgsource !== ''))
 						{

@@ -27,9 +27,9 @@ require_once __DIR__ . '/Helper.php';
 require_once __DIR__ . '/helper/' . $component . '.php';
 
 $helper = new Helper();
-
 $object = new $component;
-$list   = $object->getList($params, [
+
+$list = $object->getList($params, [
 	'count'               => (int) $params->get('count', '5'),
 	'count_skip'          => (int) $params->get('count_skip', '0'),
 	'featured'            => $params->get('show_featured'),
