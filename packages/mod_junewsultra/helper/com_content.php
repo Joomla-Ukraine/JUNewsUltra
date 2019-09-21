@@ -55,63 +55,6 @@ class com_content extends Helper
 			$groups = implode(',', $this->user->getAuthorisedViewLevels());
 		}
 
-		// Ordering
-		switch($ordering)
-		{
-			case 'title_asc':
-				$orderBy = 'a.title';
-				break;
-			case 'title_desc':
-				$orderBy = 'a.title DESC';
-				break;
-			case 'id_asc':
-				$orderBy = 'a.id';
-				break;
-			case 'id_desc':
-				$orderBy = 'a.id DESC';
-				break;
-			case 'hits_asc':
-				$orderBy = 'a.hits';
-				break;
-			case 'hits_desc':
-				$orderBy = 'a.hits DESC';
-				break;
-			case 'rating_asc':
-				$orderBy = 'rating';
-				break;
-			case 'rating_desc':
-				$orderBy = 'rating DESC';
-				break;
-			case 'created_asc':
-				$orderBy = 'a.created';
-				break;
-			case 'modified_desc':
-				$orderBy = 'a.modified DESC';
-				break;
-			case 'modified_created_dsc':
-				$orderBy = 'a.modified DESC, a.created';
-				break;
-			case 'modified_touch_dsc':
-				$orderBy = 'CASE WHEN (' . $this->db->qn('a.modified') . ' = ' . $this->db->q($this->nulldate) . ') THEN a.created ELSE a.modified END';
-				break;
-			case 'ordering_asc':
-				$orderBy = 'a.ordering';
-				break;
-			case 'ordering_desc':
-				$orderBy = 'a.ordering DESC';
-				break;
-			case 'rand':
-				$orderBy = 'rand()';
-				break;
-			case 'publish_dsc':
-				$orderBy = 'a.publish_up DESC';
-				break;
-			case 'created_desc':
-			default:
-				$orderBy = 'a.created DESC';
-				break;
-		}
-
 		// Access filter
 		$access = '1';
 		if($useaccess == 1)
@@ -390,10 +333,71 @@ class com_content extends Helper
 			}
 		}
 
-		$this->query->order($orderBy);
+		$this->query->order($this->order($ordering));
 		$this->db->setQuery($this->query, $junews[ 'count_skip' ], $junews[ 'count' ]);
 
 		return $this->db->loadObjectList();
+	}
+
+	public function order($order)
+	{
+		switch($order)
+		{
+			case 'title_asc':
+				$orderBy = 'a.title';
+				break;
+			case 'title_desc':
+				$orderBy = 'a.title DESC';
+				break;
+			case 'id_asc':
+				$orderBy = 'a.id';
+				break;
+			case 'id_desc':
+				$orderBy = 'a.id DESC';
+				break;
+			case 'hits_asc':
+				$orderBy = 'a.hits';
+				break;
+			case 'hits_desc':
+				$orderBy = 'a.hits DESC';
+				break;
+			case 'rating_asc':
+				$orderBy = 'rating';
+				break;
+			case 'rating_desc':
+				$orderBy = 'rating DESC';
+				break;
+			case 'created_asc':
+				$orderBy = 'a.created';
+				break;
+			case 'modified_desc':
+				$orderBy = 'a.modified DESC';
+				break;
+			case 'modified_created_dsc':
+				$orderBy = 'a.modified DESC, a.created';
+				break;
+			case 'modified_touch_dsc':
+				$orderBy = 'CASE WHEN (' . $this->db->qn('a.modified') . ' = ' . $this->db->q($this->nulldate) . ') THEN a.created ELSE a.modified END';
+				break;
+			case 'ordering_asc':
+				$orderBy = 'a.ordering';
+				break;
+			case 'ordering_desc':
+				$orderBy = 'a.ordering DESC';
+				break;
+			case 'rand':
+				$orderBy = 'rand()';
+				break;
+			case 'publish_dsc':
+				$orderBy = 'a.publish_up DESC';
+				break;
+			case 'created_desc':
+			default:
+				$orderBy = 'a.created DESC';
+				break;
+		}
+
+		return $orderBy;
 	}
 
 	/**

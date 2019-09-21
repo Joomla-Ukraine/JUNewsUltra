@@ -52,7 +52,19 @@ class Helper
 	 */
 	public function query($params, $junews)
 	{
+		return true;
+	}
 
+	/**
+	 * @param $order
+	 *
+	 * @return bool
+	 *
+	 * @since 6.0
+	 */
+	public function order($order)
+	{
+		return true;
 	}
 
 	/**
@@ -65,10 +77,11 @@ class Helper
 	 */
 	public function getList($params, $junews)
 	{
-
+		return true;
 	}
 
 	/**
+	 * @param       $params
 	 * @param array $data
 	 *
 	 * @return string
@@ -195,7 +208,6 @@ class Helper
 
 		if(isset($data[ 'cleartag' ]))
 		{
-			echo $data[ 'cleartag' ];
 			$description = str_replace('&nbsp;', ' ', $description);
 			$description = preg_replace('/(<\/[^>]+?>)(<[^>\/][^>]*?>)/', '$1 $2', $description);
 
@@ -223,6 +235,7 @@ class Helper
 				case '1':
 					$description = trim(implode(' ', array_slice(explode(' ', $description), 0, $data[ 'text_limit' ])));
 					break;
+
 				case '2':
 					$description = preg_replace('#<p(.*)>"#is', '<p>', $description);
 
@@ -232,6 +245,7 @@ class Helper
 						$dots        = 0;
 					}
 					break;
+
 				case '3':
 					if(preg_match('#^.{100}.*?[.!?]#is', strip_tags($description), $matches))
 					{
@@ -239,6 +253,7 @@ class Helper
 						$dots        = 0;
 					}
 					break;
+
 				default:
 				case '0':
 					$description = trim(StringHelper::substr($description, 0, $data[ 'text_limit' ]));
@@ -371,9 +386,11 @@ class Helper
 					shuffle($items);
 					$items = array_slice($items, 0, $xmlcount);
 					break;
+
 				case 'created_asc':
 					$items = $xml->xpath(sprintf($path . '[position() >= last()-%d]', $xmlcount));
 					break;
+
 				default:
 				case 'created_desc':
 					$items = $xml->xpath(sprintf($path . '[position() <= %d]', $xmlcount));
