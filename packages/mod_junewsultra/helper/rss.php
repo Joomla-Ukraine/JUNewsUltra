@@ -147,9 +147,11 @@ class rss extends Helper
 				}
 				else
 				{
-					if(preg_match('/<img(.*?)src="(.*?)"(.*?)>\s*(<\/img>)?/', $this->url($_text), $imgsource))
+					if(preg_match('/<img[^>]+>/i', $this->url($_text), $imgsource))
 					{
-						$item->source_image = $imgsource[ 2 ];
+						preg_match('/src="(.*?)"/i', $imgsource[ 0 ], $img);
+						$junuimgsource      = $img[ 1 ];
+						$item->source_image = $junuimgsource;
 					}
 				}
 
