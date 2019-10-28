@@ -45,6 +45,11 @@ class JFormFieldNN_Toggler extends FormField
 	}
 }
 
+/**
+ * @property  params
+ * @property  params
+ * @property  params
+ */
 class nnFieldToggler
 {
 	public $_version = 'ju_201211';
@@ -60,20 +65,15 @@ class nnFieldToggler
 	public function getInput($params)
 	{
 		$this->params = $params;
-
-		$option = Factory::getApplication()->input->get('option');
-
-		$param  = $this->def('param');
-		$value  = $this->def('value');
-		$nofx   = $this->def('nofx');
-		$method = $this->def('method');
-		$div    = $this->def('div', 0);
+		$param        = $this->def('param');
+		$value        = $this->def('value');
+		$nofx         = $this->def('nofx');
+		$method       = $this->def('method');
+		$div          = $this->def('div', 0);
 
 		JHtml::_('jquery.framework');
-		Factory::getDocument()
-		        ->addScript(JUri::root(true) . '/modules/mod_junewsultra/assets/js/script30.js?v=' . $this->_version);
-		Factory::getDocument()
-		        ->addScript(JUri::root(true) . '/modules/mod_junewsultra/assets/js/toggler30.js?v=' . $this->_version);
+		Factory::getDocument()->addScript(JUri::root(true) . '/modules/mod_junewsultra/assets/js/script30.js?v=' . $this->_version);
+		Factory::getDocument()->addScript(JUri::root(true) . '/modules/mod_junewsultra/assets/js/toggler30.js?v=' . $this->_version);
 
 		$param = preg_replace('#^\s*(.*?)\s*$#', '\1', $param);
 		$param = preg_replace('#\s*\|\s*#', '|', $param);

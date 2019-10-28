@@ -19,7 +19,6 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\Uri\Uri;
 
 require_once JPATH_SITE . '/components/com_content/router.php';
 require_once JPATH_SITE . '/components/com_content/helpers/route.php';
@@ -33,6 +32,14 @@ require_once JPATH_SITE . '/components/com_content/helpers/route.php';
  */
 class com_content extends Helper
 {
+	/**
+	 * @param $params
+	 * @param $junews
+	 *
+	 * @return bool|mixed
+	 *
+	 * @since 6.0
+	 */
 	public function query($params, $junews)
 	{
 		$ordering           = $params->get('ordering', 'id_desc');
@@ -50,17 +57,12 @@ class com_content extends Helper
 		$date_type          = $params->get('date_type', 'created');
 		$date_field         = $params->get('date_field', 'a.created');
 
-		if($useaccess == 1)
-		{
-			$groups = implode(',', $this->user->getAuthorisedViewLevels());
-		}
-
-		// Access filter
+		// Access
 		$access = '1';
 		if($useaccess == 1)
 		{
-			$access = !ComponentHelper::getParams('com_content')
-			                          ->get('show_noauth');
+			$groups = implode(',', $this->user->getAuthorisedViewLevels());
+			$access = !ComponentHelper::getParams('com_content')->get('show_noauth');
 		}
 
 		// Category
@@ -339,6 +341,13 @@ class com_content extends Helper
 		return $this->db->loadObjectList();
 	}
 
+	/**
+	 * @param $order
+	 *
+	 * @return bool|string
+	 *
+	 * @since 6.0
+	 */
 	public function order($order)
 	{
 		switch($order)
@@ -346,51 +355,66 @@ class com_content extends Helper
 			case 'title_asc':
 				$orderBy = 'a.title';
 				break;
+
 			case 'title_desc':
 				$orderBy = 'a.title DESC';
 				break;
+
 			case 'id_asc':
 				$orderBy = 'a.id';
 				break;
+
 			case 'id_desc':
 				$orderBy = 'a.id DESC';
 				break;
+
 			case 'hits_asc':
 				$orderBy = 'a.hits';
 				break;
+
 			case 'hits_desc':
 				$orderBy = 'a.hits DESC';
 				break;
+
 			case 'rating_asc':
 				$orderBy = 'rating';
 				break;
+
 			case 'rating_desc':
 				$orderBy = 'rating DESC';
 				break;
+
 			case 'created_asc':
 				$orderBy = 'a.created';
 				break;
+
 			case 'modified_desc':
 				$orderBy = 'a.modified DESC';
 				break;
+
 			case 'modified_created_dsc':
 				$orderBy = 'a.modified DESC, a.created';
 				break;
 			case 'modified_touch_dsc':
 				$orderBy = 'CASE WHEN (' . $this->db->qn('a.modified') . ' = ' . $this->db->q($this->nulldate) . ') THEN a.created ELSE a.modified END';
 				break;
+
 			case 'ordering_asc':
 				$orderBy = 'a.ordering';
 				break;
+
 			case 'ordering_desc':
 				$orderBy = 'a.ordering DESC';
 				break;
+
 			case 'rand':
 				$orderBy = 'rand()';
 				break;
+
 			case 'publish_dsc':
 				$orderBy = 'a.publish_up DESC';
 				break;
+
 			case 'created_desc':
 			default:
 				$orderBy = 'a.created DESC';
@@ -419,9 +443,7 @@ class com_content extends Helper
 		$authorised = [];
 		if($useaccess == 1)
 		{
-			$access = !ComponentHelper::getParams('com_content')
-			                          ->get('show_noauth');
-
+			$access     = !ComponentHelper::getParams('com_content')->get('show_noauth');
 			$authorised = Access::getAuthorisedViewLevels($this->user->get('id'));
 		}
 
@@ -451,7 +473,7 @@ class com_content extends Helper
 				switch($comments_system)
 				{
 					case 'komento':
-						$this->query->select('cid, count(cid) AS cnt');
+						$this->query->select([ 'cid', 'count(cid) AS cnt' ]);
 						$this->query->from('#__komento_comments');
 						$this->query->where('component = "com_content" AND cid IN (' . implode(',', $ids) . ') AND published = "1"');
 						$this->query->group('cid');
@@ -467,7 +489,10 @@ class com_content extends Helper
 
 					default:
 					case 'jcomments':
-						$this->query->select('object_id, count(object_id) AS cnt');
+						$this->query->select([
+							'object_id',
+							'count(object_id) AS cnt'
+						]);
 						$this->query->from('#__jcomments');
 						$this->query->where('object_group = "com_content" AND object_id IN (' . implode(',', $ids) . ') AND published = "1"');
 						$this->query->group('object_id');
@@ -499,8 +524,7 @@ class com_content extends Helper
 			}
 			else
 			{
-				Factory::getApplication()
-				       ->enqueueMessage(Text::_('MOD_JUNEWS_COMMENTS_NOT_INSTALLED'), 'error');
+				Factory::getApplication()->enqueueMessage(Text::_('MOD_JUNEWS_COMMENTS_NOT_INSTALLED'), 'error');
 			}
 		}
 
@@ -511,10 +535,9 @@ class com_content extends Helper
 
 			if($access || in_array($item->access, $authorised, true))
 			{
-				$item->slug = $item->id . ($item->alias ? ':' . $item->alias : '');
-				$language   = (Multilanguage::isEnabled() ? $item->language : '');
-				$catid      = (!empty($item->cmc_cat) && $junews[ 'multicat' ] == 1 ? $item->cmc_cat : $item->catid);
-
+				$item->slug    = $item->id . ($item->alias ? ':' . $item->alias : '');
+				$language      = (Multilanguage::isEnabled() ? $item->language : '');
+				$catid         = (!empty($item->cmc_cat) && $junews[ 'multicat' ] == 1 ? $item->cmc_cat : $item->catid);
 				$item->link    = Route::_(ContentHelperRoute::getArticleRoute($item->slug, $catid, $language));
 				$item->catlink = Route::_(ContentHelperRoute::getCategoryRoute($catid));
 			}
@@ -547,9 +570,11 @@ class com_content extends Helper
 					case '1':
 						$_text = $item->fulltext;
 						break;
+
 					case '2':
 						$_text = $item->introtext . $item->fulltext;
 						break;
+
 					default:
 					case '0':
 						$_text = $item->introtext;
@@ -557,17 +582,8 @@ class com_content extends Helper
 				}
 
 				$title_alt = $item->title_alt;
-				$imlink    = '';
-				$imlink2   = '';
-
-				if($junews[ 'imglink' ] == 1)
-				{
-					$imlink  = '<a href="' . $item->link . '"' . ($params->get('tips') == 1 ? ' title="' . $title_alt . '"' : '') . '>';
-					$imlink2 = '</a>';
-				}
 
 				$junuimgsource = '';
-
 				if($junews[ 'image_source' ] == 0)
 				{
 					if(preg_match('/<img(.*?)src="(.*?)"(.*?)>\s*(<\/img>)?/', $_text, $junuimgsource))
@@ -607,24 +623,7 @@ class com_content extends Helper
 					}
 					elseif($junews[ 'youtube_img_show' ] == 1)
 					{
-						//Youtube
-						$_text = str_replace([
-							'//www.youtube.com',
-							'//youtube.com',
-							'https://www.youtube.com',
-							'https://youtube.com',
-							'https://www.youtu.be',
-							'https://youtu.be'
-						], 'http://www.youtube.com', $_text);
-
-						if(preg_match_all('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^>"&?/ ]{11})%i', $_text, $match))
-						{
-							$junuimgsource = 'https://www.youtube.com/watch?v=' . $match[ 1 ][ 0 ];
-						}
-						elseif(preg_match_all('#(player.vimeo.com)/video/(\d+)#i', $_text, $match))
-						{
-							$junuimgsource = 'http://vimeo.com/' . $match[ 2 ];
-						}
+						$junuimgsource = $this->detect_video($_text);
 					}
 				}
 
@@ -669,201 +668,47 @@ class com_content extends Helper
 					}
 				}
 
+				$blank = 1;
+				if(!$junuimgsource || !file_exists($junuimgsource))
+				{
+					$blank = 0;
+					if($junews[ 'defaultimg' ] == 1)
+					{
+						$junuimgsource = 'media/mod_junewsultra/' . $junews[ 'noimage' ];
+						$blank         = 1;
+					}
+				}
+
+				$item->image       = '';
+				$item->imagelink   = '';
+				$item->imagesource = '';
+
 				switch($junews[ 'thumb_width' ])
 				{
 					case '0':
-						if($junews[ 'defaultimg' ] == 1 && (!$junuimgsource))
+						if($blank == 1)
 						{
-							$junuimgsource = 'media/mod_junewsultra/' . $junews[ 'noimage' ];
-						}
-
-						if($junuimgsource)
-						{
-							$thumb_img = $this->image($params, [
-								'src' => $junuimgsource,
-								'alt' => $title_alt
+							$item->image       = $this->image($params, $junews, [
+								'src'  => $junuimgsource,
+								'link' => $junews[ 'imglink' ] == 1 ? $item->link : '',
+								'alt'  => $title_alt
 							]);
-
-							$item->image       = $imlink . $thumb_img . $imlink2;
 							$item->imagelink   = $junuimgsource;
 							$item->imagesource = $junuimgsource;
-						}
-						elseif($junews[ 'defaultimg' ] == 1)
-						{
-							$item->image       = '';
-							$item->imagelink   = '';
-							$item->imagesource = '';
 						}
 						break;
 
 					case '1':
 					default:
-						$blank = 1;
-						if(!$junuimgsource)
-						{
-							$blank = 0;
-							if($junews[ 'defaultimg' ] == 1)
-							{
-								$junuimgsource = 'media/mod_junewsultra/' . $junews[ 'noimage' ];
-								$blank         = 1;
-							}
-						}
-
-						$item->image       = '';
-						$item->imagelink   = '';
-						$item->imagesource = '';
-
 						if($blank == 1)
 						{
-							$aspect = 0;
-							if($junews[ 'auto_zoomcrop' ] == 1)
-							{
-								$aspect = $this->aspect($junuimgsource, $junews[ 'cropaspect' ]);
-							}
-
-							if($aspect >= 1 && $junews[ 'auto_zoomcrop' ] == 1)
-							{
-								$newimgparams = [
-									'far' => '1',
-									'bg'  => $junews[ 'zoomcropbg' ]
-								];
-							}
-							else
-							{
-								$newimgparams = [
-									'zc' => $junews[ 'zoomcrop' ] == 1 ? $junews[ 'zoomcrop_params' ] : ''
-								];
-							}
-
-							if($junews[ 'farcrop' ] == 1)
-							{
-								$newimgparams = [
-									'far' => $junews[ 'farcrop_params' ],
-									'bg'  => $junews[ 'farcropbg' ]
-								];
-							}
-
-							$imgparams = [
-								'w'     => $junews[ 'w' ],
-								'h'     => $junews[ 'h' ],
-								'sx'    => $junews[ 'sx' ] ? : '',
-								'sy'    => $junews[ 'sy' ] ? : '',
-								'sw'    => $junews[ 'sw' ] ? : '',
-								'sh'    => $junews[ 'sh' ] ? : '',
-								'f'     => $junews[ 'f' ],
-								'q'     => $junews[ 'q' ],
-								'cache' => 'img'
-							];
-
-							$imgparams_merge = array_merge($imgparams, $newimgparams);
-
-							switch($junews[ 'usesrcset' ])
-							{
-								case '1':
-									$imgset      = $junews[ 'srcsetviewport' ];
-									$attr_imgset = [];
-
-									for($i = 0; $i <= 4; $i++)
-									{
-										if($imgset[ $i ])
-										{
-											switch($imgset[ $i ])
-											{
-												case '480':
-													$zoom = 1.5;
-													break;
-												case '768':
-													$zoom = 2;
-													break;
-												case '992':
-													$zoom = 2.5;
-													break;
-												case '1200':
-													$zoom = 3;
-													break;
-												case '360':
-												default:
-													$zoom = 1;
-													break;
-											}
-
-											$imgsetparams = [
-												'w'     => round($junews[ 'w' ] * $zoom),
-												'h'     => round($junews[ 'h' ] * $zoom),
-												'sx'    => $junews[ 'sx' ] ? : '',
-												'sy'    => $junews[ 'sy' ] ? : '',
-												'sw'    => $junews[ 'sw' ] ? : '',
-												'sh'    => $junews[ 'sh' ] ? : '',
-												'f'     => $junews[ 'f' ],
-												'q'     => $junews[ 'q' ],
-												'cache' => 'img'
-											];
-
-											$imgsetparams_merge = array_merge($imgsetparams, $newimgparams);
-											$thumb_imgset       = Uri::base() . $this->juimg->render($junuimgsource, $imgsetparams_merge);
-											$attr_imgset[]      = $thumb_imgset . ' ' . $imgset[ $i ] . 'w';
-										}
-									}
-
-									$srcset = ' srcset="' . implode(', ', $attr_imgset) . '" ';
-									break;
-
-								case '2':
-									$imgset      = $junews[ 'srcsetpixeldensity' ];
-									$attr_imgset = [];
-									for($i = 0; $i <= 2; $i++)
-									{
-										if($imgset[ $i ])
-										{
-											switch($imgset[ $i ])
-											{
-												case '2':
-													$zoom = 2;
-													break;
-												case '3':
-													$zoom = 3;
-													break;
-												default:
-												case '1':
-													$zoom = 1;
-													break;
-											}
-
-											$imgsetparams = [
-												'w'     => round($junews[ 'w' ] * $zoom),
-												'h'     => round($junews[ 'h' ] * $zoom),
-												'sx'    => $junews[ 'sx' ] ? : '',
-												'sy'    => $junews[ 'sy' ] ? : '',
-												'sw'    => $junews[ 'sw' ] ? : '',
-												'sh'    => $junews[ 'sh' ] ? : '',
-												'f'     => $junews[ 'f' ],
-												'q'     => $junews[ 'q' ],
-												'cache' => 'img'
-											];
-
-											$imgsetparams_merge = array_merge($imgsetparams, $newimgparams);
-											$thumb_imgset       = Uri::base() . $this->juimg->render($junuimgsource, $imgsetparams_merge);
-											$attr_imgset[]      = $thumb_imgset . ' ' . $imgset[ $i ] . 'x';
-										}
-									}
-
-									$srcset = ' srcset="' . implode(', ', $attr_imgset) . '" ';
-									break;
-
-								default:
-								case '0':
-									$srcset = ' ';
-									break;
-							}
-
-							$thumb_img = $this->image($params, [
-								'src'    => Uri::base() . $this->juimg->render($junuimgsource, $imgparams_merge),
+							$item->image       = $this->image($params, $junews, [
+								'src'    => $junuimgsource,
+								'link'   => $junews[ 'imglink' ] == 1 ? $item->link : '',
 								'alt'    => $title_alt,
-								'srcset' => $srcset
+								'srcset' => $junews[ 'usesrcset' ]
 							]);
-
-							$item->image       = $imlink . $thumb_img . $imlink2;
-							$item->imagelink   = $thumb_img;
+							$item->imagelink   = $this->thumb($junuimgsource, $junews);
 							$item->imagesource = $junuimgsource;
 						}
 						break;
@@ -918,9 +763,11 @@ class com_content extends Helper
 					case 'modified':
 						$_date_type = $item->modified;
 						break;
+
 					case 'publish_up':
 						$_date_type = $item->publish_up;
 						break;
+
 					default:
 					case 'created':
 						$_date_type = $item->created;

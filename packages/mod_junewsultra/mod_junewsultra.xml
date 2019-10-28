@@ -1366,13 +1366,6 @@
                 <field name="@toggler_showsuccessmessage97158_b"
                        type="nn_toggler" />
 
-                <field name="@toggler_showsuccessmessage9158_b"
-                       type="nn_toggler" />
-
-	            <field name="@toggler_choose_settings919_a"
-	                   type="nn_toggler"
-	                   param="defaultimg"
-	                   value="1" />
 
 	            <field name="image_css_class"
 	                   type="text"
@@ -1395,13 +1388,6 @@
                     <option value="1">JYES</option>
                 </field>
 
-                <field name="@toggler_showsuccessmessage919_b"
-                       type="nn_toggler" />
-
-                <field name="@toggler_choose_settings9_a"
-                       type="nn_toggler"
-                       param="pik"
-                       value="1" />
 
                 <field name="img_ext"
                        type="radio"
@@ -1432,6 +1418,15 @@
                     <option value="1">JYES</option>
                 </field>
 
+	            <field name="thumb_width"
+	                   type="list"
+	                   default="1"
+	                   label="MOD_JUNEWS_IMAGE_THUMB"
+	                   description="MOD_JUNEWS_IMAGE_THUMB_DESC">
+                    <option value="1">MOD_JUNEWS_IMAGE_THUMB_O1</option>
+                    <option value="0">MOD_JUNEWS_IMAGE_THUMB_O2</option>
+                </field>
+
                 <field name="imageWidth"
                        type="text"
                        default="82"
@@ -1442,22 +1437,81 @@
                        default="70"
                        label="MOD_JUNEWS_IMAGE_HEIGHT" />
 
-                <field name="@toggler_showsuccessmessage9_b"
-                       type="nn_toggler" />
+	            <field name="usesrcset"
+	                   type="radio"
+	                   class="btn-group"
+	                   default="0"
+	                   label="MOD_JUNEWS_USE_SRCSET"
+	                   description="MOD_JUNEWS_USE_SRCSET_DESC">
+                    <option value="0">JNO</option>
+                    <option value="1">MOD_JUNEWS_SRCSET_VIEWPORT</option>
+                </field>
 
-                <field name="@toggler_choose_settings911_a"
+                <field name="@toggler_choose_settings821_a"
                        type="nn_toggler"
-                       param="pik"
+                       param="usesrcset"
                        value="1" />
 
-                <field name="thumb_width"
-                       type="list"
-                       default="1"
-                       label="MOD_JUNEWS_IMAGE_THUMB"
-                       description="MOD_JUNEWS_IMAGE_THUMB_DESC">
-                    <option value="1">MOD_JUNEWS_IMAGE_THUMB_O1</option>
-                    <option value="0">MOD_JUNEWS_IMAGE_THUMB_O2</option>
-                </field>
+	            <field
+			            name="src_picture"
+			            type="subform"
+			            label=""
+			            multiple="true"
+			            min="1"
+			            max="3"
+			            buttons="add,remove"
+			            layout="joomla.form.field.subform.repeatable-table"
+	            >
+					<form>
+						<field
+								name="picture"
+								type="text"
+								default="640"
+								label="MOD_JUNEWS_PICTURE_SIZE"
+						/>
+						<field
+								name="picture_w"
+								type="text"
+								label="MOD_JUNEWS_IMAGE_WIDTH"
+						/>
+						<field
+								name="picture_h"
+								type="text"
+								label="MOD_JUNEWS_IMAGE_HEIGHT"
+						/>
+					</form>
+				</field>
+
+<!--                <field name="srcsetviewport"-->
+<!--                       type="checkboxes"-->
+<!--                       default="360"-->
+<!--                       label="MOD_JUNEWS_SRCSETVIEWPORT">-->
+<!--                    <option value="360">360w</option>-->
+<!--                    <option value="480">480w</option>-->
+<!--                    <option value="768">768w</option>-->
+<!--                    <option value="992">992w</option>-->
+<!--                    <option value="1200">>1200w</option>-->
+<!--                </field>-->
+
+                <field name="@toggler_showsuccessmessage821_b"
+                       type="nn_toggler" />
+
+<!--                <field name="@toggler_choose_settings822_a"-->
+<!--                       type="nn_toggler"-->
+<!--                       param="usesrcset"-->
+<!--                       value="2" />-->
+
+<!--                <field name="srcsetpixeldensity"-->
+<!--                       type="checkboxes"-->
+<!--                       default="1"-->
+<!--                       label="MOD_JUNEWS_SRCSETPIXELDENSITY">-->
+<!--                    <option value="1">1x</option>-->
+<!--                    <option value="2">2x</option>-->
+<!--                    <option value="3">3x</option>-->
+<!--                </field>-->
+
+<!--                <field name="@toggler_showsuccessmessage822_b"-->
+<!--                       type="nn_toggler" />-->
 
                 <field name="@toggler_choose_settings10_a"
                        type="nn_toggler"
@@ -1607,98 +1661,9 @@
                 <field name="@toggler_showsuccessmessage012031_b"
                        type="nn_toggler" />
 
-                <field name="@toggler_showsuccessmessage10_b"
-                       type="nn_toggler" />
 
-                <field name="@toggler_showsuccessmessage911_b"
-                       type="nn_toggler" />
-
-	            <field name="@toggler_choose_settings918_a"
-	                   type="nn_toggler"
-	                   param="defaultimg"
-	                   value="1" />
-
-                <field name="usesrcset"
-                       type="radio"
-                       class="btn-group"
-                       default="0"
-                       label="MOD_JUNEWS_USE_SRCSET"
-                       description="MOD_JUNEWS_USE_SRCSET_DESC">
-                    <option value="0">JNO</option>
-                    <option value="1">MOD_JUNEWS_SRCSET_VIEWPORT</option>
-                    <option value="2">MOD_JUNEWS_SRCSET_PIXELDENSITY</option>
-                </field>
-
-	            <field
-			            name="src_picture"
-			            type="subform"
-			            label=""
-			            multiple="true"
-			            min="1"
-			            max="3"
-			            buttons="add,remove"
-			            layout="joomla.form.field.subform.repeatable-table"
-	            >
-					<form>
-						<field
-								name="picture"
-								type="text"
-								default="640"
-								label="MOD_JUNEWS_PICTURE_SIZE"
-						/>
-						<field
-								name="picture_w"
-								type="text"
-								label="MOD_JUNEWS_IMAGE_WIDTH"
-						/>
-						<field
-								name="picture_h"
-								type="text"
-								label="MOD_JUNEWS_IMAGE_HEIGHT"
-						/>
-					</form>
-				</field>
-
-                <field name="@toggler_choose_settings821_a"
-                       type="nn_toggler"
-                       param="usesrcset"
-                       value="1" />
-
-                <field name="srcsetviewport"
-                       type="checkboxes"
-                       default="360"
-                       label="MOD_JUNEWS_SRCSETVIEWPORT">
-                    <option value="360">360w</option>
-                    <option value="480">480w</option>
-                    <option value="768">768w</option>
-                    <option value="992">992w</option>
-                    <option value="1200">>1200w</option>
-                </field>
-
-                <field name="@toggler_showsuccessmessage821_b"
-                       type="nn_toggler" />
-
-                <field name="@toggler_choose_settings822_a"
-                       type="nn_toggler"
-                       param="usesrcset"
-                       value="2" />
-
-                <field name="srcsetpixeldensity"
-                       type="checkboxes"
-                       default="1"
-                       label="MOD_JUNEWS_SRCSETPIXELDENSITY">
-                    <option value="1">1x</option>
-                    <option value="2">2x</option>
-                    <option value="3">3x</option>
-                </field>
-
-                <field name="@toggler_showsuccessmessage822_b"
-                       type="nn_toggler" />
-
-                <field name="@toggler_choose_settings912_a"
-                       type="nn_toggler"
-                       param="pik"
-                       value="1" />
+	            <field name="@toggler_showsuccessmessage10_b"
+	                   type="nn_toggler" />
 
                 <field name="defaultimg"
                        type="radio"
@@ -1709,8 +1674,6 @@
                     <option value="1">JYES</option>
                 </field>
 
-	            <field name="@toggler_showsuccessmessage918_b"
-	                   type="nn_toggler" />
 
                 <field name="@toggler_choose_settings21_a"
                        type="nn_toggler"
@@ -1732,8 +1695,8 @@
                 <field name="@toggler_showsuccessmessage21_b"
                        type="nn_toggler" />
 
-                <field name="@toggler_showsuccessmessage912_b"
-                       type="nn_toggler" />
+	            <field name="@toggler_showsuccessmessage9158_b"
+	                   type="nn_toggler" />
 
             </fieldset>
 

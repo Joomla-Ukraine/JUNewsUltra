@@ -13,7 +13,6 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Uri\Uri;
 
 /**
  * Helper for mod_junewsultra
@@ -43,7 +42,7 @@ class youtube extends Helper
 				$ytxml = 'https://www.youtube.com/feeds/videos.xml?playlist_id=' . $params->get('ytplaylist');
 				break;
 			case '3':
-				$ytxml = 'https://www.youtube.com/feeds/videos.xml?channel_id==' . $params->get('ytchannel');
+				$ytxml = 'https://www.youtube.com/feeds/videos.xml?channel_id=' . $params->get('ytchannel');
 				break;
 		}
 
@@ -73,11 +72,11 @@ class youtube extends Helper
 			// article title
 			if($junews[ 'show_title' ] == 1)
 			{
-				$item->title = $JULibs->_Title($params, $item->title);
+				$item->title = $this->title($params, $item->title);
 			}
 
 			// title for attr title and alt
-			$item->title_alt = htmlspecialchars(strip_tags($JULibs->_Title($params, $item->title)));
+			$item->title_alt = htmlspecialchars(strip_tags($this->title($params, $item->title)));
 
 			// category title
 			if($junews[ 'show_cat' ] == 1)
@@ -94,7 +93,15 @@ class youtube extends Helper
 			// introtext
 			if($junews[ 'show_intro' ] == 1)
 			{
-				$item->introtext = $JULibs->_Description($params, $item->media_group->media_description, $junews[ 'cleartag' ], $junews[ 'allowed_intro_tags' ], $junews[ 'li' ], $junews[ 'introtext_limit' ], $junews[ 'lmttext' ], $junews[ 'end_limit_introtext' ]);
+				$item->introtext = $this->desc($params, [
+					'description'    => $item->introtext,
+					'cleartag'       => $junews[ 'cleartag' ],
+					'allowed_tags'   => $junews[ 'allowed_intro_tags' ],
+					'li'             => $junews[ 'li' ],
+					'text_limit'     => $junews[ 'introtext_limit' ],
+					'lmttext'        => $junews[ 'lmttext' ],
+					'end_limit_text' => $junews[ 'end_limit_introtext' ]
+				]);
 			}
 
 			// fulltext
@@ -127,93 +134,58 @@ class youtube extends Helper
 			// rating
 			if($junews[ 'show_rating' ] == 1)
 			{
-				$item->rating = $JULibs->_RatingStar($params, $item->media_group->media_community->media_starRating->attributes()->count);
+				$item->rating = $this->rating($params, $item->media_group->media_community->media_starRating->attributes()->count);
 			}
 
 			if($junews[ 'show_image' ] == 1)
 			{
-				$title_alt = $item->title_alt;
-				$imlink    = '';
-				$imlink2   = '';
-
-				if($junews[ 'imglink' ] == 1)
-				{
-					$imlink  = '<a href="' . $item->link . '"' . ($params->get('tips') == 1 ? ' title="' . $title_alt . '"' : '') . '>';
-					$imlink2 = '</a>';
-				}
-
+				$title_alt          = $item->title_alt;
 				$junuimgsource      = $item->media_group->media_thumbnail->attributes()->url;
 				$item->source_image = $junuimgsource;
+
+				$blank = 1;
+				if(!$junuimgsource || !file_exists($junuimgsource))
+				{
+					$blank = 0;
+					if($junews[ 'defaultimg' ] == 1)
+					{
+						$junuimgsource = 'media/mod_junewsultra/' . $junews[ 'noimage' ];
+						$blank         = 1;
+					}
+				}
+
+				$item->image       = '';
+				$item->imagelink   = '';
+				$item->imagesource = '';
 
 				switch($junews[ 'thumb_width' ])
 				{
 					case '0':
-						if(($junews[ 'defaultimg' ] == 1) && !$junuimgsource)
+						if($blank == 1)
 						{
-							$junuimgsource = 'media/mod_junewsultra/' . $junews[ 'noimage' ];
+							$item->image       = $this->image($params, $junews, [
+								'src'  => $junuimgsource,
+								'link' => $junews[ 'imglink' ] == 1 ? $item->link : '',
+								'alt'  => $title_alt
+							]);
+							$item->imagelink   = $junuimgsource;
+							$item->imagesource = $junuimgsource;
 						}
-
-						$thumb_img         = $this->image($params, [
-							'src' => $junuimgsource,
-							'alt' => $title_alt
-						]);
-						$contentimage      = $imlink . $thumb_img . $imlink2;
-						$item->image       = $contentimage;
-						$item->imagesource = $junuimgsource;
 						break;
+
 					case '1':
 					default:
-						if(($junews[ 'defaultimg' ] == 1) && !(isset($junuimgsource)))
+						if($blank == 1)
 						{
-							$junuimgsource = 'media/mod_junewsultra/' . $junews[ 'noimage' ];
+							$item->image       = $this->image($params, $junews, [
+								'src'    => $junuimgsource,
+								'link'   => $junews[ 'imglink' ] == 1 ? $item->link : '',
+								'alt'    => $title_alt,
+								'srcset' => $junews[ 'usesrcset' ]
+							]);
+							$item->imagelink   = $this->thumb($junuimgsource, $junews);
+							$item->imagesource = $junuimgsource;
 						}
-
-						$aspect = 0;
-						if($junews[ 'auto_zoomcrop' ] == 1)
-						{
-							$aspect = $JULibs->aspect($junuimgsource);
-						}
-
-						$newimgparams = [
-							'zc' => $junews[ 'zoomcrop' ] == 1 ? $junews[ 'zoomcrop_params' ] : ''
-						];
-						if($aspect >= '1' && $junews[ 'auto_zoomcrop' ] == 1)
-						{
-							$newimgparams = [
-								'far' => '1',
-								'bg'  => $junews[ 'zoomcropbg' ]
-							];
-						}
-
-						if($junews[ 'farcrop' ] == 1)
-						{
-							$newimgparams = [
-								'far' => $junews[ 'farcrop_params' ],
-								'bg'  => $junews[ 'farcropbg' ]
-							];
-						}
-
-						$imgparams = [
-							'w'     => $junews[ 'w' ],
-							'h'     => $junews[ 'h' ],
-							'sx'    => $junews[ 'sx' ] ? : '',
-							'sy'    => $junews[ 'sy' ] ? : '',
-							'sw'    => $junews[ 'sw' ] ? : '',
-							'sh'    => $junews[ 'sh' ] ? : '',
-							'f'     => $junews[ 'f' ],
-							'q'     => $junews[ 'q' ],
-							'cache' => 'img'
-						];
-
-						$imgparams_merge = array_merge($imgparams, $newimgparams);
-						$thumb_img       = $this->image($params, [
-							'src' => Uri::base() . $this->juimg->render($junuimgsource, $imgparams_merge),
-							'alt' => $title_alt
-						]);
-						$contentimage    = $imlink . $thumb_img . $imlink2;
-
-						$item->image       = $contentimage;
-						$item->imagesource = $junuimgsource;
 						break;
 				}
 			}

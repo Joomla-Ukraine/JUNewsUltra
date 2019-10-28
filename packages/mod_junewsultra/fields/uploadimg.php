@@ -18,9 +18,11 @@ define('MAX_SIZE', '500');
 require_once JPATH_BASE . DS . 'includes' . DS . 'defines.php';
 require_once JPATH_BASE . DS . 'includes' . DS . 'framework.php';
 
-$mainframe  = JFactory::getApplication('administrator');
-$joomlaUser = JFactory::getUser();
-$lang       = JFactory::getLanguage();
+use Joomla\CMS\Factory;
+
+$mainframe  = Factory::getApplication('administrator');
+$joomlaUser = Factory::getUser();
+$lang       = Factory::getLanguage();
 
 $lang->load('mod_junewsultra', JPATH_SITE);
 
@@ -59,6 +61,7 @@ function alert($text, $error)
 	{
 		$error = 'alert-info';
 	}
+
 	if($error === 'notice')
 	{
 		$error = 'alert-error';

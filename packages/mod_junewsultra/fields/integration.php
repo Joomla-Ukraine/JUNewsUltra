@@ -12,8 +12,8 @@
 
 defined('JPATH_PLATFORM') or die;
 
-use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormField;
+use Joomla\CMS\Language\Text;
 
 class JFormFieldIntegration extends FormField
 {
@@ -45,9 +45,8 @@ class JFormFieldIntegration extends FormField
 
 			foreach($options as $i => $option)
 			{
-				$checked = ((string) $option->value == (string) $this->value) ? ' checked="checked"' : '';
+				$checked = ((string) $option->value === (string) $this->value) ? ' checked="checked"' : '';
 				$class   = !empty($option->class) ? ' class="' . $option->class . '"' : '';
-
 				$onclick = !empty($option->onclick) ? ' onclick="' . $option->onclick . '"' : '';
 
 				$html[] = '<input type="radio" id="' . $this->id . $i . '" name="' . $this->name . '" value="' . htmlspecialchars($option->value, ENT_COMPAT) . '"' . $checked . $class . $onclick . '/>';

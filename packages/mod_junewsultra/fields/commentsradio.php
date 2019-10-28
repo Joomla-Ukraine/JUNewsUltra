@@ -28,17 +28,14 @@ class JFormFieldCommentsRadio extends FormField
 	 */
 	protected function getInput()
 	{
-		$html = [];
-
-		$class = $this->element[ 'class' ] ? ' class="radio ' . $this->element[ 'class' ] . '"' : ' class="radio"';
-
-		$html[] = '<fieldset id="' . $this->id . '"' . $class . '>';
-
+		$html    = [];
+		$class   = $this->element[ 'class' ] ? ' class="radio ' . $this->element[ 'class' ] . '"' : ' class="radio"';
+		$html[]  = '<fieldset id="' . $this->id . '"' . $class . '>';
 		$options = $this->getOptions();
 
 		foreach($options as $i => $option)
 		{
-			$checked = ((string) $option->value == (string) $this->value) ? ' checked="checked"' : '';
+			$checked = ((string) $option->value === (string) $this->value) ? ' checked="checked"' : '';
 			$class   = !empty($option->class) ? ' class="' . $option->class . '"' : '';
 
 			$commets_system = htmlspecialchars($option->value, ENT_COMPAT);

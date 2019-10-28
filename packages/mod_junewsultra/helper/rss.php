@@ -13,7 +13,6 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Uri\Uri;
 
 class rss extends Helper
 {
@@ -105,11 +104,10 @@ class rss extends Helper
 			{
 				$item->sqldate = date('Y-m-d H:i:s', strtotime($item->pubDate));
 				$_date_type    = strtotime($item->pubDate);
-
-				$item->date = HTMLHelper::date($_date_type, $junews[ 'data_format' ]);
-				$item->df_d = HTMLHelper::date($_date_type, $junews[ 'date_day' ]);
-				$item->df_m = HTMLHelper::date($_date_type, $junews[ 'date_month' ]);
-				$item->df_y = HTMLHelper::date($_date_type, $junews[ 'date_year' ]);
+				$item->date    = HTMLHelper::date($_date_type, $junews[ 'data_format' ]);
+				$item->df_d    = HTMLHelper::date($_date_type, $junews[ 'date_day' ]);
+				$item->df_m    = HTMLHelper::date($_date_type, $junews[ 'date_month' ]);
+				$item->df_y    = HTMLHelper::date($_date_type, $junews[ 'date_year' ]);
 			}
 
 			// hits
@@ -126,141 +124,62 @@ class rss extends Helper
 
 			if($junews[ 'show_image' ] == 1)
 			{
-				$_text = (isset($item->content_encoded) ? $item->content_encoded : $item->description);
-
+				$_text     = (isset($item->content_encoded) ? $item->content_encoded : $item->description);
 				$title_alt = $item->title_alt;
-				if($junews[ 'imglink' ] == 1)
-				{
-					$imlink  = '<a href="' . $item->link . '"' . ($params->get('tips') == 1 ? ' title="' . $title_alt . '"' : '') . '>';
-					$imlink2 = '</a>';
-				}
-				else
-				{
-					$imlink  = '';
-					$imlink2 = '';
-				}
 
-				if(isset($item->enclosure) && isset($item->enclosure->attributes()->url))
+				if(isset($item->enclosure, $item->enclosure->attributes()->url))
 				{
 					$junuimgsource      = $item->enclosure->attributes()->url;
 					$item->source_image = $junuimgsource;
 				}
-				else
+				elseif(preg_match('/<img[^>]+>/i', $this->url($_text), $imgsource))
 				{
-					if(preg_match('/<img[^>]+>/i', $this->url($_text), $imgsource))
+					preg_match('/src="(.*?)"/i', $imgsource[ 0 ], $img);
+					$junuimgsource      = $img[ 1 ];
+					$item->source_image = $junuimgsource;
+				}
+
+				$blank = 1;
+				if(!$junuimgsource)
+				{
+					$blank = 0;
+					if($junews[ 'defaultimg' ] == 1)
 					{
-						preg_match('/src="(.*?)"/i', $imgsource[ 0 ], $img);
-						$junuimgsource      = $img[ 1 ];
-						$item->source_image = $junuimgsource;
+						$junuimgsource = 'media/mod_junewsultra/' . $junews[ 'noimage' ];
+						$blank         = 1;
 					}
 				}
+
+				$item->image       = '';
+				$item->imagelink   = '';
+				$item->imagesource = '';
 
 				switch($junews[ 'thumb_width' ])
 				{
 					case '0':
-						if($junews[ 'defaultimg' ] == 1 && (!$junuimgsource))
+						if($blank == 1)
 						{
-							$junuimgsource = 'media/mod_junewsultra/' . $junews[ 'noimage' ];
-						}
-
-						if($junuimgsource)
-						{
-							$contentimage = $imlink . '<img src="' . $junuimgsource . '" alt="' . $title_alt . '" />' . $imlink2;
-						}
-
-						if($junuimgsource)
-						{
-							$item->image       = $contentimage;
+							$item->image       = $this->image($params, $junews, [
+								'src'  => $junuimgsource,
+								'link' => $junews[ 'imglink' ] == 1 ? $item->link : '',
+								'alt'  => $title_alt
+							]);
+							$item->imagelink   = $junuimgsource;
 							$item->imagesource = $junuimgsource;
 						}
-
 						break;
+
 					case '1':
 					default:
-						if($junews[ 'defaultimg' ] == 1 && (!isset($junuimgsource)))
+						if($blank == 1)
 						{
-							$junuimgsource = 'media/mod_junewsultra/' . $junews[ 'noimage' ];
-						}
-
-						$aspect = 0;
-						if($junews[ 'auto_zoomcrop' ] == '1')
-						{
-							$aspect = $JULibs->aspect($junuimgsource);
-						}
-
-						$newimgparams = [
-							'zc' => $junews[ 'zoomcrop' ] == 1 ? $junews[ 'zoomcrop_params' ] : ''
-						];
-						if($aspect >= '1' && $junews[ 'auto_zoomcrop' ] == '1')
-						{
-							$newimgparams = [
-								'far' => '1',
-								'bg'  => $junews[ 'zoomcropbg' ]
-							];
-						}
-
-						if($junews[ 'farcrop' ] == '1')
-						{
-							$newimgparams = [
-								'far' => $junews[ 'farcrop_params' ],
-								'bg'  => $junews[ 'farcropbg' ]
-							];
-						}
-
-						$imgparams = [
-							'w'     => $junews[ 'w' ],
-							'h'     => $junews[ 'h' ],
-							'sx'    => $junews[ 'sx' ] ? : '',
-							'sy'    => $junews[ 'sy' ] ? : '',
-							'sw'    => $junews[ 'sw' ] ? : '',
-							'sh'    => $junews[ 'sh' ] ? : '',
-							'f'     => $junews[ 'f' ],
-							'q'     => $junews[ 'q' ],
-							'cache' => 'img'
-						];
-
-						$imgparams_merge = array_merge($imgparams, $newimgparams);
-						//$thumb_img       = $this->juimg->render($junuimgsource, $imgparams_merge);
-
-						$thumb_img = $this->image($params, [
-							'src' => Uri::base() . $this->juimg->render($junuimgsource, $imgparams_merge),
-							'alt' => $title_alt
-						]);
-
-						$contentimage = $imlink . $thumb_img . $imlink2;
-
-						if(($junews[ 'youtube_img_show' ] == 1) && ($junews[ 'link_enabled' ] == 1) && ($junuimgsource !== ''))
-						{
-							//Youtube
-							$_text = str_replace([
-								'//www.youtube.com',
-								'//youtube.com',
-								'https://www.youtube.com',
-								'https://youtube.com',
-								'https://www.youtu.be',
-								'https://youtu.be'
-							], 'http://www.youtube.com', $_text);
-
-							if(preg_match_all('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^>"&?/ ]{11})%i', $_text, $match))
-							{
-								$junuimgsource = 'https://www.youtube.com/watch?v=' . $match[ 1 ][ 0 ];
-							}
-							elseif(preg_match_all('#(player.vimeo.com)/video/(\d+)#i', $_text, $match))
-							{
-								$junuimgsource = 'http://vimeo.com/' . $match[ 2 ];
-							}
-
-							$thumb_img         = $this->image($params, [
-								'src' => $junuimgsource,
-								'alt' => $title_alt
+							$item->image       = $this->image($params, $junews, [
+								'src'    => $junuimgsource,
+								'link'   => $junews[ 'imglink' ] == 1 ? $item->link : '',
+								'alt'    => $title_alt,
+								'srcset' => $junews[ 'usesrcset' ]
 							]);
-							$item->image       = $imlink . $thumb_img . $imlink2;
-							$item->imagesource = $yimg;
-						}
-
-						if($junuimgsource)
-						{
-							$item->image       = $contentimage;
+							$item->imagelink   = $this->thumb($junuimgsource, $junews);
 							$item->imagesource = $junuimgsource;
 						}
 						break;
