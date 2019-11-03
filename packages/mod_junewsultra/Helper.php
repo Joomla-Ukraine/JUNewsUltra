@@ -287,7 +287,7 @@ class Helper
 
 		$imgparams_merge = array_merge($imgparams, $newimgparams);
 
-		return Uri::base() . $this->juimg->render($image, $imgparams_merge);
+		return $this->juimg->render($image, $imgparams_merge);
 	}
 
 	/**
