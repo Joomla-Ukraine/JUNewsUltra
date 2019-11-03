@@ -304,11 +304,11 @@ class com_content extends Helper
 						$this->query->where($this->db->qn('a.created_by') . ' = ' . $this->db->q($uid));
 					}
 					break;
-					
+
 				case 'by_me':
 					$this->query->where('(' . $this->db->qn('a.created_by') . ' = ' . $this->db->q((int) $this->user->get('id')) . ' OR ' . $this->db->qn('a.modified_by') . ' = ' . $this->db->q((int) $this->user->get('id')) . ')');
 					break;
-					
+
 				case 'not_me':
 					$this->query->where('(' . $this->db->qn('a.created_by') . ' <> ' . $this->db->q((int) $this->user->get('id')) . ' AND ' . $this->db->qn('a.modified_by') . ' <> ' . $this->db->q((int) $this->user->get('id')) . ')');
 					break;
@@ -631,40 +631,34 @@ class com_content extends Helper
 
 				if($junews[ 'image_source' ] == 1 || $junews[ 'image_source' ] == 2 || $junews[ 'image_source' ] == 3)
 				{
-					// images from article parameters
 					$images = json_decode($item->images);
 
-					if((isset($images->image_intro) && !empty($images->image_intro)) || (isset($images->image_fulltext) && !empty($images->image_fulltext)))
+					if(is_object($images))
 					{
-						if($junews[ 'image_source' ] === 1)
-						{
-							if(isset($images->image_intro) && !empty($images->image_intro))
-							{
-								$junuimgsource = htmlspecialchars($images->image_intro);
+						$_image_intro    = file_exists($images->image_intro);
+						$_image_fulltext = file_exists($images->image_fulltext);
 
-								// raw image source
+						if($junews[ 'image_source' ] === '1')
+						{
+							if($_image_intro)
+							{
+								$junuimgsource     = htmlspecialchars($images->image_intro);
 								$item->imagesource = htmlspecialchars($images->image_intro);
 							}
-							elseif(isset($images->image_fulltext) && !empty($images->image_fulltext))
+							elseif($_image_fulltext)
 							{
-								$junuimgsource = htmlspecialchars($images->image_fulltext);
-
-								// raw image source
+								$junuimgsource     = htmlspecialchars($images->image_fulltext);
 								$item->imagesource = htmlspecialchars($images->image_fulltext);
 							}
 						}
-						elseif($junews[ 'image_source' ] === 2 && isset($images->image_intro) && !empty($images->image_intro))
+						elseif($junews[ 'image_source' ] === '2' && $_image_intro)
 						{
-							$junuimgsource = htmlspecialchars($images->image_intro);
-
-							// raw image source
+							$junuimgsource     = htmlspecialchars($images->image_intro);
 							$item->imagesource = htmlspecialchars($images->image_intro);
 						}
-						elseif($junews[ 'image_source' ] === 3 && isset($images->image_fulltext) && !empty($images->image_fulltext))
+						elseif($junews[ 'image_source' ] === '3' && $_image_fulltext)
 						{
-							$junuimgsource = htmlspecialchars($images->image_fulltext);
-
-							// raw image source
+							$junuimgsource     = htmlspecialchars($images->image_fulltext);
 							$item->imagesource = htmlspecialchars($images->image_fulltext);
 						}
 					}
