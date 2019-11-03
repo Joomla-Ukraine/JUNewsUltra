@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="module"
-           version="3.3"
-           client="site"
-           method="upgrade">
+<extension type="module" version="3.8" client="site" method="upgrade">
     <name>MOD_JUNEWSULTRA</name>
     <creationDate>@date@</creationDate>
     <author>Denys Nosov</author>
     <authorEmail>denys@joomla-ua.org</authorEmail>
     <authorUrl>https://www.joomla-ua.org</authorUrl>
-    <copyright>This module is licensed under a Creative Commons Attribution-Noncommercial-No Derivative Works 3.0
-        License.
-    </copyright>
+    <copyright>This module is licensed under a Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
     <version>@version@</version>
     <description>MOD_JUNEWS_XML_DESCRIPTION</description>
@@ -1437,6 +1432,16 @@
                        default="70"
                        label="MOD_JUNEWS_IMAGE_HEIGHT" />
 
+	            <field name="usewebp"
+	                   type="radio"
+	                   class="btn-group"
+	                   default="0"
+	                   label="MOD_JUNEWS_USE_WEBP"
+	                   description="MOD_JUNEWS_USE_WEBP_DESC">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
 	            <field name="usesrcset"
 	                   type="radio"
 	                   class="btn-group"
@@ -1482,41 +1487,41 @@
 					</form>
 				</field>
 
-<!--                <field name="srcsetviewport"-->
-<!--                       type="checkboxes"-->
-<!--                       default="360"-->
-<!--                       label="MOD_JUNEWS_SRCSETVIEWPORT">-->
-<!--                    <option value="360">360w</option>-->
-<!--                    <option value="480">480w</option>-->
-<!--                    <option value="768">768w</option>-->
-<!--                    <option value="992">992w</option>-->
-<!--                    <option value="1200">>1200w</option>-->
-<!--                </field>-->
+	            <!--                <field name="srcsetviewport"-->
+	            <!--                       type="checkboxes"-->
+	            <!--                       default="360"-->
+	            <!--                       label="MOD_JUNEWS_SRCSETVIEWPORT">-->
+	            <!--                    <option value="360">360w</option>-->
+	            <!--                    <option value="480">480w</option>-->
+	            <!--                    <option value="768">768w</option>-->
+	            <!--                    <option value="992">992w</option>-->
+	            <!--                    <option value="1200">>1200w</option>-->
+	            <!--                </field>-->
 
-                <field name="@toggler_showsuccessmessage821_b"
-                       type="nn_toggler" />
+	            <field name="@toggler_showsuccessmessage821_b"
+	                   type="nn_toggler" />
 
-<!--                <field name="@toggler_choose_settings822_a"-->
-<!--                       type="nn_toggler"-->
-<!--                       param="usesrcset"-->
-<!--                       value="2" />-->
+	            <!--                <field name="@toggler_choose_settings822_a"-->
+	            <!--                       type="nn_toggler"-->
+	            <!--                       param="usesrcset"-->
+	            <!--                       value="2" />-->
 
-<!--                <field name="srcsetpixeldensity"-->
-<!--                       type="checkboxes"-->
-<!--                       default="1"-->
-<!--                       label="MOD_JUNEWS_SRCSETPIXELDENSITY">-->
-<!--                    <option value="1">1x</option>-->
-<!--                    <option value="2">2x</option>-->
-<!--                    <option value="3">3x</option>-->
-<!--                </field>-->
+	            <!--                <field name="srcsetpixeldensity"-->
+	            <!--                       type="checkboxes"-->
+	            <!--                       default="1"-->
+	            <!--                       label="MOD_JUNEWS_SRCSETPIXELDENSITY">-->
+	            <!--                    <option value="1">1x</option>-->
+	            <!--                    <option value="2">2x</option>-->
+	            <!--                    <option value="3">3x</option>-->
+	            <!--                </field>-->
 
-<!--                <field name="@toggler_showsuccessmessage822_b"-->
-<!--                       type="nn_toggler" />-->
+	            <!--                <field name="@toggler_showsuccessmessage822_b"-->
+	            <!--                       type="nn_toggler" />-->
 
-                <field name="@toggler_choose_settings10_a"
-                       type="nn_toggler"
-                       param="thumb_width"
-                       value="1" />
+	            <field name="@toggler_choose_settings10_a"
+	                   type="nn_toggler"
+	                   param="thumb_width"
+	                   value="1" />
 
                 <field name="q"
                        type="integer"

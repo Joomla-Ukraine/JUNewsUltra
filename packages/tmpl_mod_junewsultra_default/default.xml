@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <extension type="file" version="3.3" method="upgrade">
 	<name>JUNewsUltra - Default template</name>
-	<creationDate>@date@</creationDate>
+	<creationDate>28.05.2019</creationDate>
 	<author>Joomla! Ukraine</author>
 	<authorEmail>denys@joomla-ua.org</authorEmail>
 	<authorUrl>https://joomla-ua.org</authorUrl>
 	<copyright>Copyright (C) 2008-2015 Joomla! Ukraine. All rights reserved</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-	<version>@version@</version>
+	<version>6.5.12</version>
 	<description>Default template for module JUNewsUltra</description>
 
 	<fileset>

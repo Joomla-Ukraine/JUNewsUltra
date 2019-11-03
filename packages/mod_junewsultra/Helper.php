@@ -21,14 +21,6 @@ defined('_JEXEC') or die;
 /**
  * Helper for mod_junewsultra
  *
- * @property \Joomla\CMS\Language\Language lang
- * @property \JUImage                      juimg
- * @property string                        nowdate
- * @property string                        nulldate
- * @property \JDatabaseQuery               query
- * @property \JDatabaseDriver              db
- * @property \Joomla\CMS\Date\Date         date
- * @property \Joomla\CMS\User\User         user
  * @package     Joomla.Site
  * @subpackage  mod_junewsultra
  * @since       6.0
@@ -99,14 +91,15 @@ class Helper
 	 */
 	public function detect_video($html)
 	{
-		$html = str_replace([
+		$youtube = [
 			'//www.youtube.com',
 			'//youtube.com',
 			'https://www.youtube.com',
 			'https://youtube.com',
 			'https://www.youtu.be',
 			'https://youtu.be'
-		], 'http://www.youtube.com', $html);
+		];
+		$html    = str_replace($youtube, 'https://www.youtube.com', $html);
 
 		if(preg_match_all('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^>"&?/ ]{11})%i', $html, $match))
 		{
@@ -133,6 +126,11 @@ class Helper
 	public function image($params, $junews, array $data = [])
 	{
 		$attr = [];
+
+		if($params->get('image_loading', 1) == 1)
+		{
+			$attr[] = 'loading="lazy"';
+		}
 
 		if(isset($data[ 'src' ]))
 		{
@@ -165,11 +163,6 @@ class Helper
 			$attr[] = $params->get('image_attr');
 		}
 
-		if($params->get('image_loading', 1) == 1)
-		{
-			$attr[] = 'loading="lazy"';
-		}
-
 		$img = '<img ' . implode(' ', $attr) . '>';
 
 		if($data[ 'link' ])
@@ -177,11 +170,29 @@ class Helper
 			$img = '<a href="' . $data[ 'link' ] . '"' . ($params->get('tips') == 1 && isset($data[ 'alt' ]) ? ' title="' . $data[ 'alt' ] . '"' : '') . '><img ' . implode(' ', $attr) . '></a>';
 		}
 
+		if($junews[ 'usewebp' ] == 1)
+		{
+			$webp_img          = str_replace(Uri::base(), '', $img);
+			$thumb_webp_imgset = $this->juimg->render($webp_img, [
+				'w'         => $junews[ 'w' ],
+				'h'         => $junews[ 'h' ],
+				'webp'      => true,
+				'webp_q'    => '80',
+				'webp_maxq' => '85',
+				'cache'     => 'img'
+			]);
+
+			$source = '<source srcset="' . $thumb_webp_imgset->webp . '" type="image/webp">';
+
+		}
+
 		if($junews[ 'usesrcset' ] == 1)
 		{
 			$source_set = [];
 			$array      = (array) $junews[ 'src_picture' ];
+
 			arsort($array);
+
 			foreach($array as $picture)
 			{
 				if($picture->picture && $picture->picture_w && $picture->picture_h)
@@ -193,12 +204,32 @@ class Helper
 
 					$imgsetparams_merge = array_replace($junews, $imgsetparams);
 					$thumb_imgset       = $this->thumb($data[ 'src' ], $imgsetparams_merge);
-					$source_set[]       = '<source media="(min-width: ' . $picture->picture . 'px)" srcset="' . $thumb_imgset . '">';
+
+					if($junews[ 'usewebp' ] == 1)
+					{
+						$webp_img_imgset   = str_replace(Uri::base(), '', $thumb_imgset);
+						$thumb_webp_imgset = $this->juimg->render($webp_img_imgset, [
+							'w'         => $picture->picture_w,
+							'h'         => $picture->picture_h,
+							'webp'      => true,
+							'webp_q'    => '80',
+							'webp_maxq' => '85',
+							'cache'     => 'img'
+						]);
+
+						$source_set[] = '<source media="(min-width: ' . $picture->picture . 'px)" srcset="' . $thumb_webp_imgset->webp . '" type="image/webp">';
+					}
+
+					$source_set[] = '<source media="(min-width: ' . $picture->picture . 'px)" srcset="' . $thumb_imgset . '">';
 				}
 			}
 
 			$source = implode($source_set);
-			$img    = '<picture>' . $source . $img . '</picture>';
+		}
+
+		if($junews[ 'usesrcset' ] == 1 || $junews[ 'usewebp' ] == 1)
+		{
+			$img = '<picture>' . $source . $img . '</picture>';
 		}
 
 		return $img;
@@ -212,7 +243,7 @@ class Helper
 	 *
 	 * @since 6.0
 	 */
-	public function thumb($image, array $junews = [])
+	public function thumb($image, array $junews = [], $webp = 0)
 	{
 		$aspect = 0;
 		if($junews[ 'auto_zoomcrop' ] == 1)
@@ -289,7 +320,7 @@ class Helper
 		$title = strip_tags($title);
 		$title = htmlspecialchars($title);
 
-		if($params->def('title_prepare') == 1)
+		if($params->get('title_prepare') == 1)
 		{
 			$title = HTMLHelper::_('content.prepare', $title);
 		}
@@ -327,7 +358,7 @@ class Helper
 	{
 		$description = $data[ 'description' ];
 
-		if($params->def('content_prepare') == 1)
+		if($params->get('content_prepare') == 1)
 		{
 			$description = HTMLHelper::_('content.prepare', $description);
 		}
@@ -416,7 +447,7 @@ class Helper
 	 */
 	public function rating($params, $rating)
 	{
-		$tpl        = explode(':', $params->def('template'));
+		$tpl        = explode(':', $params->get('template'));
 		$rating_tpl = 'modules/mod_junewsultra/tmpl/' . $tpl[ 1 ] . '/images';
 
 		$starImageOn = HTMLHelper::_('image', 'system/rating_star.png', $rating, null, true);
@@ -550,7 +581,7 @@ class Helper
 	 */
 	public function loadJQ($params)
 	{
-		if($params->def('jquery') == 1)
+		if($params->get('jquery') == 1)
 		{
 			HTMLHelper::_('jquery.framework');
 		}
@@ -567,12 +598,12 @@ class Helper
 	 */
 	public function loadBS($params)
 	{
-		if($params->def('bootstrap_js') == 1)
+		if($params->get('bootstrap_js') == 1)
 		{
 			HTMLHelper::_('bootstrap.framework');
 		}
 
-		if($params->def('bootstrap_css') == 1)
+		if($params->get('bootstrap_css') == 1)
 		{
 			$direction = ($this->lang->isRtl() ? 'rtl' : 'ltr');
 
@@ -593,7 +624,7 @@ class Helper
 	{
 		if($params->get('cssstyle') == 1)
 		{
-			$tpl  = explode(':', $params->def('template'));
+			$tpl  = explode(':', $params->get('template'));
 			$jtpl = $tpl[ 0 ];
 
 			if($tpl[ 0 ] === '_')

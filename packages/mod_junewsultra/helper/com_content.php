@@ -47,7 +47,7 @@ class com_content extends Helper
 		$show_attribs       = (int) $params->get('show_attribs');
 		$wheresql           = (int) $params->get('wheresql');
 		$where              = $params->get('where');
-		$display_article    = $params->def('display_article');
+		$display_article    = $params->get('display_article');
 		$useaccess          = (int) $params->get('useaccess', 0);
 		$user_id            = (int) $params->get('user_id');
 		$uid                = (int) $params->get('uid');
@@ -225,7 +225,7 @@ class com_content extends Helper
 		// Select article or categories
 		if($display_article == 1)
 		{
-			$this->query->where($this->db->qn('a.id') . ' = ' . $this->db->q((int) $params->def('articleid')));
+			$this->query->where($this->db->qn('a.id') . ' = ' . $this->db->q((int) $params->get('articleid')));
 		}
 		else
 		{
@@ -304,9 +304,11 @@ class com_content extends Helper
 						$this->query->where($this->db->qn('a.created_by') . ' = ' . $this->db->q($uid));
 					}
 					break;
+					
 				case 'by_me':
 					$this->query->where('(' . $this->db->qn('a.created_by') . ' = ' . $this->db->q((int) $this->user->get('id')) . ' OR ' . $this->db->qn('a.modified_by') . ' = ' . $this->db->q((int) $this->user->get('id')) . ')');
 					break;
+					
 				case 'not_me':
 					$this->query->where('(' . $this->db->qn('a.created_by') . ' <> ' . $this->db->q((int) $this->user->get('id')) . ' AND ' . $this->db->qn('a.modified_by') . ' <> ' . $this->db->q((int) $this->user->get('id')) . ')');
 					break;
@@ -353,75 +355,75 @@ class com_content extends Helper
 		switch($order)
 		{
 			case 'title_asc':
-				$orderBy = 'a.title';
+				$ordering = 'a.title';
 				break;
 
 			case 'title_desc':
-				$orderBy = 'a.title DESC';
+				$ordering = 'a.title DESC';
 				break;
 
 			case 'id_asc':
-				$orderBy = 'a.id';
+				$ordering = 'a.id';
 				break;
 
 			case 'id_desc':
-				$orderBy = 'a.id DESC';
+				$ordering = 'a.id DESC';
 				break;
 
 			case 'hits_asc':
-				$orderBy = 'a.hits';
+				$ordering = 'a.hits';
 				break;
 
 			case 'hits_desc':
-				$orderBy = 'a.hits DESC';
+				$ordering = 'a.hits DESC';
 				break;
 
 			case 'rating_asc':
-				$orderBy = 'rating';
+				$ordering = 'rating';
 				break;
 
 			case 'rating_desc':
-				$orderBy = 'rating DESC';
+				$ordering = 'rating DESC';
 				break;
 
 			case 'created_asc':
-				$orderBy = 'a.created';
+				$ordering = 'a.created';
 				break;
 
 			case 'modified_desc':
-				$orderBy = 'a.modified DESC';
+				$ordering = 'a.modified DESC';
 				break;
 
 			case 'modified_created_dsc':
-				$orderBy = 'a.modified DESC, a.created';
+				$ordering = 'a.modified DESC, a.created';
 				break;
 			case 'modified_touch_dsc':
-				$orderBy = 'CASE WHEN (' . $this->db->qn('a.modified') . ' = ' . $this->db->q($this->nulldate) . ') THEN a.created ELSE a.modified END';
+				$ordering = 'CASE WHEN (' . $this->db->qn('a.modified') . ' = ' . $this->db->q($this->nulldate) . ') THEN a.created ELSE a.modified END';
 				break;
 
 			case 'ordering_asc':
-				$orderBy = 'a.ordering';
+				$ordering = 'a.ordering';
 				break;
 
 			case 'ordering_desc':
-				$orderBy = 'a.ordering DESC';
+				$ordering = 'a.ordering DESC';
 				break;
 
 			case 'rand':
-				$orderBy = 'rand()';
+				$ordering = 'rand()';
 				break;
 
 			case 'publish_dsc':
-				$orderBy = 'a.publish_up DESC';
+				$ordering = 'a.publish_up DESC';
 				break;
 
 			case 'created_desc':
 			default:
-				$orderBy = 'a.created DESC';
+				$ordering = 'a.created DESC';
 				break;
 		}
 
-		return $orderBy;
+		return $ordering;
 	}
 
 	/**
@@ -450,9 +452,9 @@ class com_content extends Helper
 		$items = $this->query($params, $junews);
 
 		// Comments integration
-		if($params->def('use_comments') == 1 && count($items))
+		if($params->get('use_comments') == 1 && count($items))
 		{
-			$comments_system = $params->def('select_comments');
+			$comments_system = $params->get('select_comments');
 			$comments        = JPATH_SITE . '/components/com_' . $comments_system . '/' . $comments_system . '.php';
 
 			if(file_exists($comments))

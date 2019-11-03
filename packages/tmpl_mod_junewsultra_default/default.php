@@ -80,16 +80,20 @@ defined('_JEXEC') or die('Restricted access');
 						<?php if($params->get('showcat')): ?>
 							| <span class="jn-small"><?php echo $item->cattitle; ?></span>
 						<?php endif; ?>
-						<?php if($params->def('juauthor')): ?>
+						<?php if($params->get('juauthor')): ?>
 							| <span class="jn-small"><?php echo $item->author; ?></span>
 						<?php endif; ?>
 						<?php if($params->get('showRating') || $params->get('showRatingCount') || $params->get('showHits')): ?>
 							<div class="jn-hit-n-rating">
-								<span class="jn-small jn-rating"><?php echo $item->rating; ?></span>
-								<?php if($item->rating_count > 0): ?>
+								<?php if($params->get('showRating')): ?>
+									<span class="jn-small jn-rating"><?php echo $item->rating; ?></span>
+								<?php endif; ?>
+								<?php if($params->get('showRatingCount') && $item->rating_count > 0): ?>
 									<sup class="jn-small jn-rating-count"><?php echo $item->rating_count; ?></sup>
 								<?php endif; ?>
-								<span class="jn-small jn-hits"><?php echo JText::_('JGLOBAL_HITS'); ?>: <?php echo $item->hits; ?></span>
+								<?php if($params->get('showHits')): ?>
+									<span class="jn-small jn-hits"><?php echo JText::_('JGLOBAL_HITS'); ?>: <?php echo $item->hits; ?></span>
+								<?php endif; ?>
 							</div>
 						<?php endif; ?>
 					</div>
@@ -108,7 +112,7 @@ defined('_JEXEC') or die('Restricted access');
 			<?php if($params->get('read_more') || $params->get('use_comments')): ?>
 				<div class="jn-more">
 					<?php if($params->get('read_more')): ?>
-						<a href="<?php echo $item->link; ?>" class="readmore" title="<?php echo $item->text_alt; ?>"><?php echo $params->def('rmtext'); ?></a>
+						<a href="<?php echo $item->link; ?>" class="readmore" title="<?php echo $item->text_alt; ?>"><?php echo $params->get('rmtext'); ?></a>
 					<?php endif; ?>
 					<?php if($params->get('use_comments')): ?>
 						<a class="jn-comment-link" href="<?php echo $item->link; ?><?php echo $item->commentslink; ?>"><?php echo $item->commentstext; ?></a>

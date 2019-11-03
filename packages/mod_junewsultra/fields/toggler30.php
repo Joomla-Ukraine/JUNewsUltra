@@ -10,10 +10,11 @@
  * @license          GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('_JEXEC') or die;
-
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\FormField;
+use Joomla\CMS\HTML\HTMLHelper;
+
+defined('JPATH_PLATFORM') or die;
 
 class JFormFieldNN_Toggler extends FormField
 {
@@ -52,7 +53,13 @@ class JFormFieldNN_Toggler extends FormField
  */
 class nnFieldToggler
 {
-	public $_version = 'ju_201211';
+	/**
+	 * nnFieldToggler constructor.
+	 */
+	public function __construct()
+	{
+		$this->_version = date('dmy');
+	}
 
 	/**
 	 * @param $params
@@ -71,7 +78,7 @@ class nnFieldToggler
 		$method       = $this->def('method');
 		$div          = $this->def('div', 0);
 
-		JHtml::_('jquery.framework');
+		HTMLHelper::_('jquery.framework');
 		Factory::getDocument()->addScript(JUri::root(true) . '/modules/mod_junewsultra/assets/js/script30.js?v=' . $this->_version);
 		Factory::getDocument()->addScript(JUri::root(true) . '/modules/mod_junewsultra/assets/js/toggler30.js?v=' . $this->_version);
 

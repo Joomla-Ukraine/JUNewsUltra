@@ -1,17 +1,15 @@
 <project name="junewsultra" default="dist" basedir=".">
 
-    <property name="VERSION" value="6.5.12"/>
+    <property name="VERSION" value="6.6.0"/>
 
     <tstamp>
         <format property="DATE" pattern="%d.%m.%Y" />
     </tstamp>
 
-    <property name="juimage" value="3.6.4"/>
+    <property name="juimage" value="3.6.7"/>
 
     <property name="build" value="build"/>
-
     <property name="temp" value="temp"/>
-
     <property name="dist" value="dist"/>
 
     <property name="filename" value="pkg_junewsultra_pro_v${VERSION}.zip"/>

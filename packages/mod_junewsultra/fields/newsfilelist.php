@@ -13,10 +13,11 @@
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Form\FormHelper;
 
 defined('JPATH_PLATFORM') or die;
 
-JFormHelper::loadFieldClass('list');
+FormHelper::loadFieldClass('list');
 
 class JFormFieldNewsFileList extends JFormFieldList
 {
@@ -49,7 +50,6 @@ class JFormFieldNewsFileList extends JFormFieldList
 		}
 
 		$files = Folder::files($path, $filter);
-
 		if(is_array($files))
 		{
 			foreach($files as $file)

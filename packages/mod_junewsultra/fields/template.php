@@ -10,12 +10,13 @@
  * @license          GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('JPATH_BASE') or die;
+use Joomla\CMS\Form\FormField;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
-jimport('joomla.html.html');
-jimport('joomla.form.formfield');
+defined('JPATH_PLATFORM') or die;
 
-class JFormFieldTemplate extends JFormField
+class JFormFieldTemplate extends FormField
 {
 
 	protected $type = 'Template';
@@ -31,15 +32,16 @@ class JFormFieldTemplate extends JFormField
 	{
 		if(!isset($_GET[ 'id' ]))
 		{
-			return JText::_('MOD_JUNEWS_NOT_EDIT_TEMPLATE');
+			return Text::_('MOD_JUNEWS_NOT_EDIT_TEMPLATE');
 		}
 
-		JHtml::_('behavior.modal', 'a.modal');
+		HTMLHelper::_('behavior.modal', 'a.modal');
 
 		$db = JFactory::getDBO();
 		$db->setQuery('SELECT params' . ' FROM #__modules' . ' WHERE id = ' . (int) $_GET[ 'id' ]);
 		$rows = $db->loadResult();
 
+		$tmpl = 'default';
 		if(preg_match('#"template":"_:(.*?)"#is', $rows, $ok))
 		{
 			if($ok[ 1 ] == 1)
@@ -51,30 +53,20 @@ class JFormFieldTemplate extends JFormField
 				$tmpl = $ok[ 1 ];
 			}
 		}
-		else
-		{
-			$tmpl = 'default';
-		}
 
 		$html = [];
 		$link = str_replace('/administrator', '', JUri::base()) . 'modules/mod_junewsultra/fields/edittemplate.php?file=' . $tmpl . '.php';
 
+		$html[] = Text::_('MOD_JUNEWS_NOT_EDIT_TEMPLATE');
 		if($_GET[ 'id' ])
 		{
-			$html[] = '<a class="modal btn"  href="' . $link . '" rel="{handler: \'iframe\', size: {x: 1000, y: 650}}"><i class="icon-cog"></i> ' . JText::_('MOD_JUNEWS_TEMPLATE_BUTTON') . '</a>';
-		}
-		else
-		{
-			$html[] = JText::_('MOD_JUNEWS_NOT_EDIT_TEMPLATE');
+			$html[] = '<a class="modal btn"  href="' . $link . '" rel="{handler: \'iframe\', size: {x: 1000, y: 650}}"><i class="icon-cog"></i> ' . Text::_('MOD_JUNEWS_TEMPLATE_BUTTON') . '</a>';
 		}
 
+		$value = (int) $this->value;
 		if(0 == (int) $this->value)
 		{
 			$value = '';
-		}
-		else
-		{
-			$value = (int) $this->value;
 		}
 
 		$class = '';

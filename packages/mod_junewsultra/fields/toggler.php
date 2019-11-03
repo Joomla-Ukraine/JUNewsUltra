@@ -12,5 +12,5 @@
 
 defined('_JEXEC') or die();
 
-include 'head.php';
-include 'toggler30.php';
+include __DIR__ . '/head.php';
+include __DIR__ . '/toggler30.php';

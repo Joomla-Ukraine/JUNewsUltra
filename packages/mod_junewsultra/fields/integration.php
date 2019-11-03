@@ -10,10 +10,10 @@
  * @license          GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('JPATH_PLATFORM') or die;
-
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Language\Text;
+
+defined('JPATH_PLATFORM') or die;
 
 class JFormFieldIntegration extends FormField
 {

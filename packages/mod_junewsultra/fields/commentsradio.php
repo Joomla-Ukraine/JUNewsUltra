@@ -35,9 +35,8 @@ class JFormFieldCommentsRadio extends FormField
 
 		foreach($options as $i => $option)
 		{
-			$checked = ((string) $option->value === (string) $this->value) ? ' checked="checked"' : '';
-			$class   = !empty($option->class) ? ' class="' . $option->class . '"' : '';
-
+			$checked        = ((string) $option->value === (string) $this->value) ? ' checked="checked"' : '';
+			$class          = !empty($option->class) ? ' class="' . $option->class . '"' : '';
 			$commets_system = htmlspecialchars($option->value, ENT_COMPAT);
 			$comments       = JPATH_SITE . '/components/com_' . $commets_system . '/' . $commets_system . '.php';
 
@@ -60,9 +59,7 @@ class JFormFieldCommentsRadio extends FormField
 			$onclick = !empty($option->onclick) ? ' onclick="' . $option->onclick . '"' : '';
 
 			$html[] = '<input type="radio" id="' . $this->id . $i . '" name="' . $this->name . '"' . ' value="' . htmlspecialchars($option->value, ENT_COMPAT) . '"' . $check . $class . $onclick . $disabled . '/>';
-
 			$html[] = '<label for="' . $this->id . $i . '" id="' . $this->id . $i . '" style="' . $color . '">' . Text::alt($option->text, preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)) . $tips . '</label>';
-
 			$html[] = '<div style="clear: both;"></div>';
 		}
 
@@ -88,8 +85,7 @@ class JFormFieldCommentsRadio extends FormField
 				continue;
 			}
 
-			$tmp = HTMLHelper::_('select.option', (string) $option[ 'value' ], trim((string) $option), 'value', 'text', (string) $option[ 'disabled' ] === 'true');
-
+			$tmp          = HTMLHelper::_('select.option', (string) $option[ 'value' ], trim((string) $option), 'value', 'text', (string) $option[ 'disabled' ] === 'true');
 			$tmp->class   = (string) $option[ 'class' ];
 			$tmp->onclick = (string) $option[ 'onclick' ];
 

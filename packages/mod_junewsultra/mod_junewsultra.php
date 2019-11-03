@@ -21,7 +21,7 @@ JLoader::register('JUImage', JPATH_LIBRARIES . '/juimage/JUImage.php');
 $app       = Factory::getApplication('site');
 $menu      = $app->getMenu();
 $doc       = Factory::getDocument();
-$component = trim($params->def('component', 'com_content'));
+$component = trim($params->get('component', 'com_content'));
 
 require_once __DIR__ . '/Helper.php';
 require_once __DIR__ . '/helper/' . $component . '.php';
@@ -35,7 +35,7 @@ $list = $object->getList($params, [
 	'featured'            => $params->get('show_featured'),
 	'sourcetext'          => $params->get('sourcetext', 0),
 	'show_title'          => $params->get('show_title', 1),
-	'show_author'         => $params->def('juauthor'),
+	'show_author'         => $params->get('juauthor'),
 	'show_hits'           => $params->get('showHits'),
 	'show_date'           => $params->get('show_date'),
 	'show_intro'          => $params->get('show_intro'),
@@ -58,15 +58,15 @@ $list = $object->getList($params, [
 	'fulltext_limit'      => (int) $params->get('fulltext_limit'),
 	'end_limit_fulltext'  => $params->get('end_limit_fulltext', '...'),
 	'allowed_full_tags'   => trim($params->get('allowed_full_tags')),
-	'show_image'          => $params->def('pik'),
-	'introfulltext'       => $params->def('introfulltext', 0),
-	'defaultimg'          => $params->def('defaultimg', 1),
-	'image_source'        => $params->def('image_source', 0),
+	'show_image'          => $params->get('pik'),
+	'introfulltext'       => $params->get('introfulltext', 0),
+	'defaultimg'          => $params->get('defaultimg', 1),
+	'image_source'        => $params->get('image_source', 0),
 	'w'                   => (int) $params->get('imageWidth'),
 	'h'                   => (int) $params->get('imageHeight'),
 	'thumb_width'         => (int) $params->get('thumb_width'),
-	'noimage'             => $params->def('noimage'),
-	'imglink'             => $params->def('imglink'),
+	'noimage'             => $params->get('noimage'),
+	'imglink'             => $params->get('imglink'),
 	'link_enabled'        => $params->get('link_enabled', 1),
 	'sx'                  => (int) $params->get('sx'),
 	'sy'                  => (int) $params->get('sy'),
@@ -76,17 +76,18 @@ $list = $object->getList($params, [
 	'zoomcrop_params'     => $params->get('zoomcrop_params', 1),
 	'auto_zoomcrop'       => (int) $params->get('auto_zoomcrop'),
 	'cropaspect'          => str_replace(',', '.', (int) $params->get('cropaspect')),
-	'zoomcropbg'          => str_replace('#', '', $params->def('zoomcropbg')),
+	'zoomcropbg'          => str_replace('#', '', $params->get('zoomcropbg')),
 	'farcrop_params'      => $params->get('farcrop_params', 1),
 	'farcrop'             => (int) $params->get('farcrop', 0),
-	'farcropbg'           => str_replace('#', '', $params->def('farcropbg')),
+	'farcropbg'           => str_replace('#', '', $params->get('farcropbg')),
 	'q'                   => $params->get('q', '75'),
-	'f'                   => $params->def('img_ext', 'jpg'),
-	'usesrcset'           => $params->def('usesrcset', '0'),
-	'src_picture'         => $params->def('src_picture'),
-	'youtube_img_show'    => $params->def('youtube_img_show', 1),
-	'gallery'             => $params->def('gallery', 1),
-	'multicat'            => $params->def('contentmulticategories', 0)
+	'f'                   => $params->get('img_ext', 'jpg'),
+	'usewebp'             => $params->get('usewebp', '0'),
+	'usesrcset'           => $params->get('usesrcset', '0'),
+	'src_picture'         => $params->get('src_picture'),
+	'youtube_img_show'    => $params->get('youtube_img_show', 1),
+	'gallery'             => $params->get('gallery', 1),
+	'multicat'            => $params->get('contentmulticategories', 0)
 ]);
 
 if($params->get('empty_mod', 0) == 0 && count($list) == 0)
@@ -98,11 +99,11 @@ $helper->loadJQ($params);
 $helper->loadBS($params);
 $helper->loadCSS($params);
 
-if(file_exists($layoutpath = ModuleHelper::getLayoutPath('mod_junewsultra', $params->def('template'))))
+if(file_exists($layoutpath = ModuleHelper::getLayoutPath('mod_junewsultra', $params->get('template'))))
 {
-	if($params->def('all_in') == 1)
+	if($params->get('all_in') == 1)
 	{
-		if($params->def('custom_heading') == 1)
+		if($params->get('custom_heading') == 1)
 		{
 			$heading      = trim($params->get('text_all_in'));
 			$heading_link = trim($params->get('link_all_in'));
@@ -130,9 +131,9 @@ if(file_exists($layoutpath = ModuleHelper::getLayoutPath('mod_junewsultra', $par
 		$read_all     = '<' . $item_heading . ($class_all_in ? ' class="' . $class_all_in . '"' : '') . '>' . $heading_link . '</' . $item_heading . '>';
 	}
 
-	if($params->def('all_in2') == 1)
+	if($params->get('all_in2') == 1)
 	{
-		if($params->def('custom_heading2') == 1)
+		if($params->get('custom_heading2') == 1)
 		{
 			$heading2      = trim($params->get('text_all_in2'));
 			$heading_link2 = trim($params->get('link_all_in2'));
@@ -169,31 +170,31 @@ if(file_exists($layoutpath = ModuleHelper::getLayoutPath('mod_junewsultra', $par
 		$read_all2     = '<' . $titletag2[ 0 ] . ($class_all_in2 ? ' class="' . $class_all_in2 . '"' : '') . '>' . $heading_link2 . '</' . $titletag2[ 0 ] . '>';
 	}
 
-	if($params->def('all_in') == 1 && $params->def('all_in_position') == 0)
+	if($params->get('all_in') == 1 && $params->get('all_in_position') == 0)
 	{
 		echo $read_all;
 	}
 
-	if($params->def('all_in2') == 1 && $params->def('all_in_position2') == 0)
+	if($params->get('all_in2') == 1 && $params->get('all_in_position2') == 0)
 	{
 		echo $read_all2;
 	}
 
 	require $layoutpath;
 
-	if($params->def('all_in') == 1 && $params->def('all_in_position') == 1)
+	if($params->get('all_in') == 1 && $params->get('all_in_position') == 1)
 	{
 		echo $read_all;
 	}
 
-	if($params->def('all_in2') == 1 && $params->def('all_in_position2') == 1)
+	if($params->get('all_in2') == 1 && $params->get('all_in_position2') == 1)
 	{
 		echo $read_all2;
 	}
 }
 else
 {
-	$tpl = explode(':', $params->def('template'));
+	$tpl = explode(':', $params->get('template'));
 
 	echo "<strong>Template <span style=\"color: green;\">$tpl</span> do is not found!</strong><br />Please, upload new template to <em>modules/mod_junewsultra/tmpl</em> or <em>templates/$tpl[0]/html/mod_junewsultra/</em> folder or select other template from back-end!";
 }

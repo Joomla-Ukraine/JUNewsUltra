@@ -23,9 +23,7 @@ use Joomla\CMS\Language\Text;
 class Pkg_JUNewsUltraInstallerScript
 {
 	protected $message;
-
 	protected $status;
-
 	protected $sourcePath;
 
 	/**
@@ -333,14 +331,6 @@ class Pkg_JUNewsUltraInstallerScript
 	{
 		if(mkdir($dir, $mode) || is_dir($dir))
 		{
-			$indexfile = $dir . '/index.html';
-			if(!file_exists($indexfile))
-			{
-				$file = fopen($indexfile, 'wb');
-				fwrite($file, '<!DOCTYPE html><title></title>');
-				fclose($file);
-			}
-
 			return true;
 		}
 

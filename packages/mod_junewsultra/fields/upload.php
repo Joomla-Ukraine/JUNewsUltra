@@ -15,6 +15,7 @@ defined('JPATH_BASE') or die;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Uri\Uri;
 
 class JFormFieldUpload extends FormField
 {
@@ -37,7 +38,7 @@ class JFormFieldUpload extends FormField
 		HTMLHelper::_('behavior.modal', 'a.modal');
 
 		$html = [];
-		$link = str_replace('/administrator', '', JUri::base()) . 'modules/mod_junewsultra/fields/uploadimg.php';
+		$link = str_replace('/administrator', '', Uri::base()) . 'modules/mod_junewsultra/fields/uploadimg.php';
 
 		$html[] = '<a class="modal btn"  href="' . $link . '" rel="{handler: \'iframe\', size: {x: 330, y: 180}}"><i class="icon-upload"></i> ' . Text::_('MOD_JUNEWS_IMAGE_UPLOAD') . '</a>';
 
