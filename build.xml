@@ -1,6 +1,6 @@
 <project name="junewsultra" default="dist" basedir=".">
 
-    <property name="VERSION" value="6.6.0"/>
+    <property name="VERSION" value="6.6.2"/>
 
     <tstamp>
         <format property="DATE" pattern="%d.%m.%Y" />

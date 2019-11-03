@@ -373,12 +373,12 @@ class Helper
 		$description = preg_replace('/::introtext::(.*?)::\/introtext::/i', '\\1', $description);
 		$description = preg_replace('/::fulltext::(.*?)::\/fulltext::/i', '\\2', $description);
 
-		if(isset($data[ 'cleartag' ]))
+		if($data[ 'cleartag' ] == 1)
 		{
 			$description = str_replace('&nbsp;', ' ', $description);
 			$description = preg_replace('/(<\/[^>]+?>)(<[^>\/][^>]*?>)/', '$1 $2', $description);
 
-			if(isset($data[ 'allowed_tags' ]))
+			if($data[ 'allowed_tags' ] !== '')
 			{
 				$allowed_tags = str_replace([
 					' ',
@@ -394,10 +394,10 @@ class Helper
 			}
 		}
 
-		if(isset($data[ 'li' ]))
+		if($data[ 'li' ] == 1)
 		{
 			$dots = 1;
-			switch(isset($data[ 'lmttext' ]))
+			switch($data[ 'lmttext' ])
 			{
 				case '1':
 					$description = trim(implode(' ', array_slice(explode(' ', $description), 0, $data[ 'text_limit' ])));

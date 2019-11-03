@@ -13,7 +13,6 @@
     <files>
         <filename module="mod_junewsultra">mod_junewsultra.php</filename>
         <filename>Helper.php</filename>
-        <filename>index.html</filename>
         <folder>assets</folder>
         <folder>fields</folder>
         <folder>helper</folder>
@@ -78,7 +77,6 @@
                 <field
 		                name="component"
 		                type="newsfilelist"
-		                default=""
 		                label="MOD_JUNEWS_USE_INTEGRATION"
 		                directory="/modules/mod_junewsultra/helper"
 		                filter="\.php$"
@@ -95,7 +93,6 @@
                 <field
 		                name="rssurl"
 		                type="text"
-		                default=""
 		                label="RSS URL"
                 />
 
@@ -135,7 +132,6 @@
                 <field
 		                name="ytaccount"
 		                type="text"
-		                default=""
 		                label="MOD_JUNEWS_FIELD_YTTYPE_ACCOUNT_LABEL"
                 />
 
@@ -150,7 +146,6 @@
                 <field
 		                name="ytplaylist"
 		                type="text"
-		                default=""
 		                label="MOD_JUNEWS_FIELD_YTTYPE_PLAYLIST_LABEL"
                 />
 
@@ -165,7 +160,6 @@
                 <field
 		                name="ytchannel"
 		                type="text"
-		                default=""
 		                label="MOD_JUNEWS_FIELD_YTTYPE_CHANNEL_LABEL"
                 />
 
@@ -248,7 +242,6 @@
                 <field
 		                name="articleid"
 		                type="modal_article"
-		                default=""
 		                label="MOD_JUNEWS_SELECTARTICLE"
 		                addfieldpath="/administrator/components/com_content/models/fields/modal"
                 />
@@ -284,7 +277,6 @@
                 <field
 		                name="show_featured"
 		                type="list"
-		                default=""
 		                label="MOD_JUNEWS_FIELD_FEATURED_LABEL"
 		                description="MOD_JUNEWS_FIELD_FEATURED_DESC"
                 >
@@ -299,7 +291,6 @@
 		                extension="com_content"
 		                multiple="true"
 		                size="20"
-		                default=""
 		                label="JCATEGORY"
 		                description="MOD_JUNEWS_FIELD_CATEGORY_DESC"
                 >
@@ -608,7 +599,6 @@
                 <field
 		                name="moduleclass_sfx"
 		                type="text"
-		                default=""
 		                label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
 		                description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC"
                 />
@@ -777,7 +767,6 @@
                 <field
 		                name="allowed_intro_tags"
 		                type="text"
-		                default=""
 		                label="MOD_JUNEWS_ALLOWED_INTRO_TAGS"
 		                description="MOD_JUNEWS_ALLOWED_TAGS_DESC"
                 />
@@ -878,7 +867,6 @@
                 <field
 		                name="allowed_full_tags"
 		                type="text"
-		                default=""
 		                label="MOD_JUNEWS_ALLOWED_FULL_TAGS"
 		                description="MOD_JUNEWS_ALLOWED_TAGS_DESC"
                 />
@@ -1135,13 +1123,11 @@
 
                 <field name="class_all_in2"
                        type="text"
-                       default=""
                        label="MOD_JUNEWS_ALL_IN_CATEGORY_CSS"
                        description="MOD_JUNEWS_ALL_IN_CATEGORY_CSS_DESC" />
 
                 <field name="class_all_inhref2"
                        type="text"
-                       default=""
                        label="MOD_JUNEWS_ALL_INHREF_CATEGORY_CSS" />
 
                 <field type="spacer"
@@ -1164,13 +1150,11 @@
 
                 <field name="text_all_in2"
                        type="text"
-                       default=""
                        label="MOD_JUNEWS_ALL_IN_CATEGORY_DESC2"
                        filter="raw" />
 
                 <field name="link_all_in2"
                        type="text"
-                       default=""
                        label="MOD_JUNEWS_ALL_IN_CATEGORY_LINK"
                        description="MOD_JUNEWS_ALL_IN_CATEGORY_LINK_DESC" />
 
@@ -1184,12 +1168,10 @@
 
                 <field name="text_all_in22"
                        type="text"
-                       default=""
                        label="MOD_JUNEWS_ALL_IN_CATEGORY_DESC2" />
 
                 <field name="link_menuitem2"
                        type="menuitem"
-                       default=""
                        label="MOD_JUNEWS_SELECT_A_MENU_ITEM">
                     <option value="">JDEFAULT</option>
                 </field>
@@ -1249,13 +1231,11 @@
 
                 <field name="class_all_in"
                        type="text"
-                       default=""
                        label="MOD_JUNEWS_ALL_IN_CATEGORY_CSS"
                        description="MOD_JUNEWS_ALL_IN_CATEGORY_CSS_DESC" />
 
                 <field name="class_all_inhref"
                        type="text"
-                       default=""
                        label="MOD_JUNEWS_ALL_INHREF_CATEGORY_CSS" />
 
                 <field type="spacer"
@@ -1278,12 +1258,10 @@
 
                 <field name="text_all_in"
                        type="text"
-                       default=""
                        label="MOD_JUNEWS_ALL_IN_CATEGORY_DESC2" />
 
                 <field name="link_all_in"
                        type="text"
-                       default=""
                        label="MOD_JUNEWS_ALL_IN_CATEGORY_LINK"
                        description="MOD_JUNEWS_ALL_IN_CATEGORY_LINK_DESC" />
 
@@ -1297,13 +1275,11 @@
 
                 <field name="text_all_in12"
                        type="text"
-                       default=""
                        label="MOD_JUNEWS_ALL_IN_CATEGORY_DESC2"
                        filter="raw" />
 
                 <field name="link_menuitem"
                        type="menuitem"
-                       default=""
                        label="MOD_JUNEWS_SELECT_A_MENU_ITEM">
                     <option value="">JDEFAULT</option>
                 </field>
@@ -1364,13 +1340,11 @@
 
 	            <field name="image_css_class"
 	                   type="text"
-	                   default=""
 	                   label="MOD_JUNEWS_IMAGE_CSS_CLASS"
 	                   filter="raw" />
 
 	            <field name="image_attr"
 	                   type="text"
-	                   default=""
 	                   label="MOD_JUNEWS_IMAGE_ATTR"
 	                   filter="raw" />
 
@@ -1551,19 +1525,20 @@
                        default="0"
                        label="MOD_JUNEWS_IMAGE_SX"
                        description="MOD_JUNEWS_IMAGE_SX_DESC" />
+
                 <field name="sy"
                        type="text"
                        default="0"
                        label="MOD_JUNEWS_IMAGE_SY"
                        description="MOD_JUNEWS_IMAGE_SY_DESC" />
-                <field name="sw"
+
+	            <field name="sw"
                        type="text"
-                       default=""
                        label="MOD_JUNEWS_IMAGE_SW"
                        description="MOD_JUNEWS_IMAGE_SW_DESC" />
+
                 <field name="sh"
                        type="text"
-                       default=""
                        label="MOD_JUNEWS_IMAGE_SH"
                        description="MOD_JUNEWS_IMAGE_SH_DESC" />
 
@@ -1687,7 +1662,6 @@
 
                 <field name="noimage"
                        type="imagelist"
-                       default=""
                        hide_default="1"
                        hide_none="1"
                        label="MOD_JUNEWS_IMAGE_DEFAULT"
