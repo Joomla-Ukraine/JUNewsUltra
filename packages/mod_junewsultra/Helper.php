@@ -6,7 +6,7 @@
  * @subpackage       mod_junewsultra
  *
  * @author           Denys Nosov, denys@joomla-ua.org
- * @copyright        2007-2019 (C) Joomla! Ukraine, http://joomla-ua.org. All rights reserved.
+ * @copyright        2007-2020 (C) Joomla! Ukraine, http://joomla-ua.org. All rights reserved.
  * @license          GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -179,7 +179,7 @@ class Helper
 				'webp'      => true,
 				'webp_q'    => '80',
 				'webp_maxq' => '85',
-				'cache'     => 'img'
+				'cache'     => $junews[ 'image_thumb' ]
 			]);
 
 			$source = '<source srcset="' . $thumb_webp_imgset->webp . '" type="image/webp">';
@@ -214,7 +214,7 @@ class Helper
 							'webp'      => true,
 							'webp_q'    => '80',
 							'webp_maxq' => '85',
-							'cache'     => 'img'
+							'cache'     => $junews[ 'image_thumb' ]
 						]);
 
 						$source_set[] = '<source media="(min-width: ' . $picture->picture . 'px)" srcset="' . $thumb_webp_imgset->webp . '" type="image/webp">';
@@ -282,7 +282,7 @@ class Helper
 			'sh'    => $junews[ 'sh' ] ? : '',
 			'f'     => $junews[ 'f' ],
 			'q'     => $junews[ 'q' ],
-			'cache' => 'img'
+			'cache' => $junews[ 'image_thumb' ]
 		];
 
 		$imgparams_merge = array_merge($imgparams, $newimgparams);

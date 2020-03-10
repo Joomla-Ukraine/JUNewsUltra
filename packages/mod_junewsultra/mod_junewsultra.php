@@ -6,7 +6,7 @@
  * @subpackage       mod_junewsultra
  *
  * @author           Denys Nosov, denys@joomla-ua.org
- * @copyright        2007-2019 (C) Joomla! Ukraine, http://joomla-ua.org. All rights reserved.
+ * @copyright        2007-2020 (C) Joomla! Ukraine, http://joomla-ua.org. All rights reserved.
  * @license          GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -59,6 +59,7 @@ $list = $object->getList($params, [
 	'end_limit_fulltext'  => $params->get('end_limit_fulltext', '...'),
 	'allowed_full_tags'   => trim($params->get('allowed_full_tags')),
 	'show_image'          => $params->get('pik'),
+	'image_thumb'         => ltrim($params->get('image_thumb', 'img'), '/'),
 	'introfulltext'       => $params->get('introfulltext', 0),
 	'defaultimg'          => $params->get('defaultimg', 1),
 	'image_source'        => $params->get('image_source', 0),
