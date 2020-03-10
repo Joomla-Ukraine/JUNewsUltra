@@ -1312,7 +1312,7 @@
 
 	            <field name="image_thumb"
 	                   type="text"
-	                   value="img"
+	                   default="img"
 	                   label="MOD_JUNEWS_IMAGE_CONF00"
 	                   description="MOD_JUNEWS_IMAGE_CONF00_TIPS"/>
 
