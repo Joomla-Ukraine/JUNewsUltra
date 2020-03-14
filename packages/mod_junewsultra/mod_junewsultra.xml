@@ -20,7 +20,6 @@
 
     <media destination="mod_junewsultra"
            folder="media">
-        <filename>index.html</filename>
         <filename writable="yes">notfoundimage.png</filename>
     </media>
 
@@ -703,7 +702,7 @@
 		                name="show_attribs"
 		                type="radio"
 		                class="btn-group"
-		                efault="0"
+		                default="0"
 		                label="MOD_JUNEWS_USE_ATTR"
                 >
                     <option value="0">JNO</option>
