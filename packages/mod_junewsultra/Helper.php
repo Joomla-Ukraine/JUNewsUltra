@@ -239,6 +239,8 @@ class Helper
 	 * @param       $image
 	 * @param array $junews
 	 *
+	 * @param int   $webp
+	 *
 	 * @return string
 	 *
 	 * @since 6.0
