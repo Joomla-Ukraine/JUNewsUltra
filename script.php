@@ -39,8 +39,7 @@ class Pkg_JUNewsUltraInstallerScript
 	{
 		if(version_compare(JVERSION, '3.8.0', 'lt'))
 		{
-			Factory::getApplication()
-			       ->enqueueMessage('Update for Joomla! 3.8+', 'error');
+			Factory::getApplication()->enqueueMessage('Update for Joomla! 3.8+', 'error');
 
 			return false;
 		}
@@ -49,8 +48,7 @@ class Pkg_JUNewsUltraInstallerScript
 
 		if(!is_dir(JPATH_SITE . '/img/'))
 		{
-			Factory::getApplication()
-			       ->enqueueMessage('Error creating folder \'img\'. Please manually create the folder \'img\' in the root of the site where you installed Joomla!', 'message');
+			Factory::getApplication()->enqueueMessage('Error creating folder \'img\'. Please manually create the folder \'img\' in the root of the site where you installed Joomla!', 'message');
 		}
 
 		$cache = Factory::getCache('mod_junewsultra');
@@ -110,7 +108,7 @@ class Pkg_JUNewsUltraInstallerScript
 
 			$query->clear();
 
-			$query->select($db->quoteName('enabled'));
+			$query->select($db->quoteName([ 'enabled' ]));
 			$query->from($db->quoteName('#__extensions'));
 			$query->where($db->quoteName('name') . ' = ' . $db->quote($extension));
 			$db->setQuery($query);
