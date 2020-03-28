@@ -111,7 +111,7 @@ class com_content extends Helper
 		if(Multilanguage::isEnabled())
 		{
 			$this->query->select([ 'a.language' ]);
-			$this->query->where($this->db->qn('a.language') . ' IN (' . $this->db->q($this->lang->getTag()) . ',' . $this->db->quote('*') . ')');
+			$this->query->where($this->db->quoteName('a.language') . ' IN (' . $this->db->Quote($this->lang->getTag()) . ',' . $this->db->quote('*') . ')');
 		}
 
 		if($junews[ 'image_source' ] > 0 && $junews[ 'show_image' ] == 1)
@@ -218,14 +218,14 @@ class com_content extends Helper
 		}
 
 		// Where
-		$this->query->where($this->db->qn('a.state') . ' = ' . $this->db->q('1'));
-		$this->query->where('( a.publish_up = ' . $this->db->q($this->nulldate) . ' OR a.publish_up < ' . $this->db->q($this->nowdate) . ' )');
-		$this->query->where('( a.publish_down = ' . $this->db->q($this->nulldate) . ' OR a.publish_down > ' . $this->db->q($this->nowdate) . ' )');
+		$this->query->where($this->db->quoteName('a.state') . ' = ' . $this->db->Quote('1'));
+		$this->query->where('(' . $this->db->quoteName('a.publish_up') . ' = ' . $this->db->Quote($this->nulldate) . ' OR ' . $this->db->quoteName('a.publish_up') . ' < ' . $this->db->Quote($this->nowdate) . ' )');
+		$this->query->where('(' . $this->db->quoteName('a.publish_down') . ' = ' . $this->db->Quote($this->nulldate) . ' OR ' . $this->db->quoteName('a.publish_down') . ' > ' . $this->db->Quote($this->nowdate) . ' )');
 
 		// Select article or categories
 		if($display_article == 1)
 		{
-			$this->query->where($this->db->qn('a.id') . ' = ' . $this->db->q((int) $params->get('articleid')));
+			$this->query->where($this->db->quoteName('a.id') . ' = ' . $this->db->Quote((int) $params->get('articleid')));
 		}
 		else
 		{
@@ -234,34 +234,34 @@ class com_content extends Helper
 				switch($relative_date)
 				{
 					case '1':
-						$startDateRange = $this->db->q($params->get('start_date_range', date('Y-m-d') . ' 00:00:00'));
-						$endDateRange   = $this->db->q($params->get('end_date_range', date('Y-m-d H:i:s')));
-						$this->query->where('(' . $this->db->qn($date_field) . ' > ' . $this->db->q($startDateRange) . ' AND ' . $this->db->qn($date_field) . ' < ' . $this->db->q($endDateRange) . ')');
+						$startDateRange = $this->db->Quote($params->get('start_date_range', date('Y-m-d') . ' 00:00:00'));
+						$endDateRange   = $this->db->Quote($params->get('end_date_range', date('Y-m-d H:i:s')));
+						$this->query->where('(' . $this->db->quoteName($date_field) . ' > ' . $this->db->Quote($startDateRange) . ' AND ' . $this->db->quoteName($date_field) . ' < ' . $this->db->Quote($endDateRange) . ')');
 						break;
 
 					case '2':
-						$this->query->where($this->db->qn($date_field) . ' > DATE_SUB(' . $this->db->q($this->nowdate) . ', INTERVAL 7 DAY)');
+						$this->query->where($this->db->quoteName($date_field) . ' > DATE_SUB(' . $this->db->Quote($this->nowdate) . ', INTERVAL 7 DAY)');
 						break;
 
 					case '3':
-						$this->query->where($this->db->qn($date_field) . ' > DATE_SUB(' . $this->db->q($this->nowdate) . ', INTERVAL 14 DAY)');
+						$this->query->where($this->db->quoteName($date_field) . ' > DATE_SUB(' . $this->db->Quote($this->nowdate) . ', INTERVAL 14 DAY)');
 						break;
 
 					case '4':
-						$this->query->where($this->db->qn($date_field) . ' > DATE_SUB(' . $this->db->q($this->nowdate) . ', INTERVAL ' . cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y')) . ' DAY)');
+						$this->query->where($this->db->quoteName($date_field) . ' > DATE_SUB(' . $this->db->Quote($this->nowdate) . ', INTERVAL ' . cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y')) . ' DAY)');
 						break;
 
 					case '5':
-						$this->query->where($this->db->qn($date_field) . ' > DATE_SUB(' . $this->db->q($this->nowdate) . ', INTERVAL 365 DAY)');
+						$this->query->where($this->db->quoteName($date_field) . ' > DATE_SUB(' . $this->db->Quote($this->nowdate) . ', INTERVAL 365 DAY)');
 						break;
 
 					case '6':
-						$this->query->where($this->db->qn($date_field) . ' > DATE_SUB(' . $this->db->q($this->nowdate) . ', INTERVAL ' . $params->get('custom_days', '30') . ' DAY)');
+						$this->query->where($this->db->quoteName($date_field) . ' > DATE_SUB(' . $this->db->Quote($this->nowdate) . ', INTERVAL ' . $params->get('custom_days', '30') . ' DAY)');
 						break;
 
 					case '0':
 					default:
-						$this->query->where($this->db->qn($date_field) . ' > DATE_SUB(' . $this->db->q($this->nowdate) . ', INTERVAL 1 DAY)');
+						$this->query->where($this->db->quoteName($date_field) . ' > DATE_SUB(' . $this->db->Quote($this->nowdate) . ', INTERVAL 1 DAY)');
 						break;
 				}
 			}
@@ -271,28 +271,28 @@ class com_content extends Helper
 			{
 				if($junews[ 'multicat' ] == 1)
 				{
-					$this->query->where('(' . $this->db->qn('a.catid') . ' IN (' . implode(',', $cat_arr) . ') OR cmc.category_id IN (' . implode(',', $cat_arr) . ') )');
+					$this->query->where('(' . $this->db->quoteName('a.catid') . ' IN (' . implode(',', $cat_arr) . ') OR cmc.category_id IN (' . implode(',', $cat_arr) . ') )');
 				}
 				else
 				{
-					$this->query->where($this->db->qn('a.catid') . ' IN (' . implode(',', $cat_arr) . ')');
+					$this->query->where($this->db->quoteName('a.catid') . ' IN (' . implode(',', $cat_arr) . ')');
 				}
 			}
 
 			if($excluded_articles = $params->get('excluded_articles', null))
 			{
 				$excluded_articles = explode("\r\n", $excluded_articles);
-				$this->query->where($this->db->qn('a.id') . ' NOT IN (' . implode(',', $excluded_articles) . ')');
+				$this->query->where($this->db->quoteName('a.id') . ' NOT IN (' . implode(',', $excluded_articles) . ')');
 			}
 
 			switch($junews[ 'featured' ])
 			{
 				case '1':
-					$this->query->where($this->db->qn('a.featured') . ' = ' . $this->db->q('1'));
+					$this->query->where($this->db->quoteName('a.featured') . ' = ' . $this->db->Quote('1'));
 					break;
 
 				case '0':
-					$this->query->where($this->db->qn('a.featured') . ' = ' . $this->db->q('0'));
+					$this->query->where($this->db->quoteName('a.featured') . ' = ' . $this->db->Quote('0'));
 					break;
 			}
 
@@ -301,23 +301,23 @@ class com_content extends Helper
 				case '0':
 					if($uid > 0)
 					{
-						$this->query->where($this->db->qn('a.created_by') . ' = ' . $this->db->q($uid));
+						$this->query->where($this->db->quoteName('a.created_by') . ' = ' . $this->db->Quote($uid));
 					}
 					break;
 
 				case 'by_me':
-					$this->query->where('(' . $this->db->qn('a.created_by') . ' = ' . $this->db->q((int) $this->user->get('id')) . ' OR ' . $this->db->qn('a.modified_by') . ' = ' . $this->db->q((int) $this->user->get('id')) . ')');
+					$this->query->where('(' . $this->db->quoteName('a.created_by') . ' = ' . $this->db->Quote((int) $this->user->get('id')) . ' OR ' . $this->db->quoteName('a.modified_by') . ' = ' . $this->db->Quote((int) $this->user->get('id')) . ')');
 					break;
 
 				case 'not_me':
-					$this->query->where('(' . $this->db->qn('a.created_by') . ' <> ' . $this->db->q((int) $this->user->get('id')) . ' AND ' . $this->db->qn('a.modified_by') . ' <> ' . $this->db->q((int) $this->user->get('id')) . ')');
+					$this->query->where('(' . $this->db->quoteName('a.created_by') . ' <> ' . $this->db->Quote((int) $this->user->get('id')) . ' AND ' . $this->db->quoteName('a.modified_by') . ' <> ' . $this->db->Quote((int) $this->user->get('id')) . ')');
 					break;
 			}
 		}
 
 		if($useaccess == 1)
 		{
-			$this->query->where($this->db->qn('a.access') . ' IN (' . $groups . ')');
+			$this->query->where($this->db->quoteName('a.access') . ' IN (' . $groups . ')');
 		}
 
 		// Custom WHERE SQL
@@ -398,7 +398,7 @@ class com_content extends Helper
 				$ordering = 'a.modified DESC, a.created';
 				break;
 			case 'modified_touch_dsc':
-				$ordering = 'CASE WHEN (' . $this->db->qn('a.modified') . ' = ' . $this->db->q($this->nulldate) . ') THEN a.created ELSE a.modified END';
+				$ordering = 'CASE WHEN (' . $this->db->quoteName('a.modified') . ' = ' . $this->db->Quote($this->nulldate) . ') THEN a.created ELSE a.modified END';
 				break;
 
 			case 'ordering_asc':
@@ -477,7 +477,9 @@ class com_content extends Helper
 					case 'komento':
 						$this->query->select([ 'cid', 'count(cid) AS cnt' ]);
 						$this->query->from('#__komento_comments');
-						$this->query->where('component = "com_content" AND cid IN (' . implode(',', $ids) . ') AND published = "1"');
+						$this->query->where($this->db->quoteName('published') . ' = ' . $this->db->Quote('1'));
+						$this->query->where($this->db->quoteName('component') . ' = ' . $this->db->Quote('com_content'));
+						$this->query->where($this->db->quoteName('cid') . ' = IN (' . implode(',', $ids) . ')');
 						$this->query->group('cid');
 						$this->db->setQuery($this->query);
 
@@ -496,7 +498,9 @@ class com_content extends Helper
 							'count(object_id) AS cnt'
 						]);
 						$this->query->from('#__jcomments');
-						$this->query->where('object_group = "com_content" AND object_id IN (' . implode(',', $ids) . ') AND published = "1"');
+						$this->query->where($this->db->quoteName('published') . ' = ' . $this->db->Quote('1'));
+						$this->query->where($this->db->quoteName('object_group') . ' = ' . $this->db->Quote('com_content'));
+						$this->query->where($this->db->quoteName('object_id') . ' = IN (' . implode(',', $ids) . ')');
 						$this->query->group('object_id');
 						$this->db->setQuery($this->query);
 
