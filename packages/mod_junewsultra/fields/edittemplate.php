@@ -19,7 +19,6 @@ require_once JPATH_BASE . '/includes/framework.php';
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Uri\Uri;
 
 $app_admin = Factory::getApplication('administrator');
 $app_admin->initialise();

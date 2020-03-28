@@ -106,7 +106,7 @@ $valid_types = [
 	<legend><?php echo JText::_('MOD_JUNEWS_UPLOAD_MODULE'); ?></legend>
 	<form enctype="multipart/form-data" method="post">
             <span class="input-append">
-               <input id="juCover" class="input-mini disabled" style="width:110px!important;" value="" type="text">
+               <label for="juCover"></label><input id="juCover" class="input-mini disabled" style="width:110px!important;" value="" type="text">
                <input id="lefile" name="userfile" type="file" autocomplete="off">
                <button type="submit" class="btn btn-primary"><?php echo JText::_('MOD_JUNEWS_UPLOAD'); ?></button>
             </span>

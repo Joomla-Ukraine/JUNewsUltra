@@ -50,11 +50,15 @@ class JFormFieldNN_Toggler extends FormField
  * @property  params
  * @property  params
  * @property  params
+ *
+ * @since 6.0
  */
 class nnFieldToggler
 {
 	/**
 	 * nnFieldToggler constructor.
+	 *
+	 * @since 6.0
 	 */
 	public function __construct()
 	{
