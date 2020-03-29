@@ -660,7 +660,7 @@
                 <field
 		                name="end_limit_title"
 		                type="text"
-		                default="..."
+		                default="…"
 		                label="MOD_JUNEWS_END_LIMIT_TITLE"
                 />
 
@@ -818,7 +818,7 @@
                 <field
 		                name="end_limit_introtext"
 		                type="text"
-		                default="..."
+		                default="…"
 		                label="MOD_JUNEWS_END_LIMIT_INTROTEXT"
                 />
 
@@ -911,7 +911,7 @@
                 <field
 		                name="end_limit_fulltext"
 		                type="text"
-		                default="..."
+		                default="…"
 		                label="MOD_JUNEWS_END_LIMIT_FULLTEXT"
                 />
 
@@ -955,7 +955,7 @@
                 <field
 		                name="rmtext"
 		                type="text"
-		                default="Read more..."
+		                default="Read more…"
 		                label="MOD_JUNEWS_READ_MORE_TEXT"
                 />
 

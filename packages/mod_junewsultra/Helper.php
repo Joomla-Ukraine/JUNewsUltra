@@ -317,7 +317,7 @@ class Helper
 		$title             = strip_tags($title);
 		$title             = htmlspecialchars($title);
 		$title             = trim($title);
-		$end_limit_title   = $params->get('end_limit_title', '...');
+		$end_limit_title   = $params->get('end_limit_title', '…');
 		$title_limit_count = $params->get('title_limit_count');
 
 		if($params->get('title_prepare') == 1)
