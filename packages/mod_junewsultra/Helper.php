@@ -297,11 +297,11 @@ class Helper
 	 */
 	public function aspect($html, $_cropaspect)
 	{
-		$size   = getimagesize(rawurldecode(JPATH_SITE . '/' . $html));
-		$width  = $size[ 0 ];
-		$height = $size[ 1 ] * ($_cropaspect != '' ? $_cropaspect : '0');
+		$size   = $this->juimg->size(rawurldecode(JPATH_SITE . '/' . $html));
+		$width  = $size->width;
+		$height = ($size->height * ($_cropaspect != '' ? $_cropaspect : '0'));
 
-		return $height / $width;
+		return ($height / $width);
 	}
 
 	/**
