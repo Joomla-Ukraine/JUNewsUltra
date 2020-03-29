@@ -150,11 +150,6 @@ class Helper
 			$attr[] = 'alt="' . $data[ 'alt' ] . '"';
 		}
 
-		if(isset($data[ 'srcset' ]))
-		{
-			$attr[] = $data[ 'srcset' ];
-		}
-
 		if($params->get('image_css_class') !== '')
 		{
 			$attr[] = 'class="' . $params->get('image_css_class') . '"';
@@ -166,10 +161,9 @@ class Helper
 		}
 
 		$img = '<img ' . implode(' ', $attr) . '>';
-
 		if($data[ 'link' ])
 		{
-			$img = '<a href="' . $data[ 'link' ] . '"' . ($params->get('tips') == 1 && isset($data[ 'alt' ]) ? ' title="' . $data[ 'alt' ] . '"' : '') . '><img ' . implode(' ', $attr) . '></a>';
+			$img = '<a href="' . $data[ 'link' ] . '"' . ($params->get('tips') == 1 && isset($data[ 'alt' ]) ? ' title="' . $data[ 'alt' ] . '"' : '') . '>' . $img . '</a>';
 		}
 
 		if($junews[ 'usewebp' ] == 1)
@@ -194,7 +188,6 @@ class Helper
 			$array      = (array) $junews[ 'src_picture' ];
 
 			arsort($array);
-
 			foreach($array as $picture)
 			{
 				if($picture->picture && $picture->picture_w && $picture->picture_h)

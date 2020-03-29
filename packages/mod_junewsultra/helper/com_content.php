@@ -705,8 +705,7 @@ class com_content extends Helper
 							$item->image       = $this->image($params, $junews, [
 								'src'    => $junuimgsource,
 								'link'   => $junews[ 'imglink' ] == 1 ? $item->link : '',
-								'alt'    => $title_alt,
-								'srcset' => $junews[ 'usesrcset' ]
+								'alt'    => $title_alt
 							]);
 							$item->imagelink   = $this->thumb($junuimgsource, $junews);
 							$item->imagesource = $junuimgsource;
