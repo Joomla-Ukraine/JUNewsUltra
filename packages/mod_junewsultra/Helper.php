@@ -329,17 +329,17 @@ class Helper
 		{
 			if($params->get('title_limit_mode') == 1)
 			{
-				$title = trim(implode(' ', array_slice(explode(' ', $title), 0, $title_limit_count)));
+				$title_length = count(explode(' ', $title));
+				$title        = trim(implode(' ', array_slice(explode(' ', $title), 0, $title_limit_count)));
 			}
 			else
 			{
-				$title = trim(StringHelper::substr($title, 0, $title_limit_count));
+				$title_length = StringHelper::strlen($title);
+				$title        = trim(StringHelper::substr($title, 0, $title_limit_count));
 			}
 
 			if(!preg_match('#(\.|\?|!)$#ismu', $title))
 			{
-				$title_length = StringHelper::strlen($title);
-
 				$sufix = '';
 				if($title_length > $title_limit_count)
 				{
@@ -408,11 +408,13 @@ class Helper
 			switch($data[ 'lmttext' ])
 			{
 				case '1':
-					$description = trim(implode(' ', array_slice(explode(' ', $description), 0, $data[ 'text_limit' ])));
+					$description_length = count(explode(' ', $description));
+					$description        = trim(implode(' ', array_slice(explode(' ', $description), 0, $data[ 'text_limit' ])));
 					break;
 
 				case '2':
-					$description = preg_replace('#<p(.*)>"#is', '<p>', $description);
+					$description_length = StringHelper::strlen($description);
+					$description        = preg_replace('#<p(.*)>"#is', '<p>', $description);
 
 					if(preg_match('#<p[^>]*>(.*)</p>#isU', $description, $matches))
 					{
@@ -422,6 +424,7 @@ class Helper
 					break;
 
 				case '3':
+					$description_length = StringHelper::strlen($description);
 					if(preg_match('#^.{100}.*?[.!?]#is', strip_tags($description), $matches))
 					{
 						$description = $matches[ 0 ];
@@ -431,14 +434,21 @@ class Helper
 
 				default:
 				case '0':
-					$description = trim(StringHelper::substr($description, 0, $data[ 'text_limit' ]));
+					$description_length = StringHelper::strlen($description);
+					$description        = trim(StringHelper::substr($description, 0, $data[ 'text_limit' ]));
 					break;
 			}
 
 			if((!preg_match('#(\.|\?|!)$#ismu', $description)) && $dots == 1)
 			{
+				$sufix = '';
+				if($description_length > $data[ 'text_limit' ])
+				{
+					$sufix = $data[ 'end_limit_text' ];
+				}
+
 				$description = preg_replace('#^\s?(,|;|:|-)#ismu', '', $description);
-				$description = ($description ? $description . $data[ 'end_limit_text' ] : '');
+				$description = ($description ? $description . $sufix : '');
 			}
 		}
 
