@@ -314,8 +314,11 @@ class Helper
 	 */
 	public function title($params, $title)
 	{
-		$title = strip_tags($title);
-		$title = htmlspecialchars($title);
+		$title             = strip_tags($title);
+		$title             = htmlspecialchars($title);
+		$title             = trim($title);
+		$end_limit_title   = $params->get('end_limit_title', '...');
+		$title_limit_count = $params->get('title_limit_count');
 
 		if($params->get('title_prepare') == 1)
 		{
@@ -326,17 +329,25 @@ class Helper
 		{
 			if($params->get('title_limit_mode') == 1)
 			{
-				$title = trim(implode(' ', array_slice(explode(' ', $title), 0, $params->get('title_limit_count'))));
+				$title = trim(implode(' ', array_slice(explode(' ', $title), 0, $title_limit_count)));
 			}
 			else
 			{
-				$title = trim(StringHelper::substr($title, 0, $params->get('title_limit_count')));
+				$title = trim(StringHelper::substr($title, 0, $title_limit_count));
 			}
 
 			if(!preg_match('#(\.|\?|!)$#ismu', $title))
 			{
+				$title_length = StringHelper::strlen($title);
+
+				$sufix = '';
+				if($title_length > $title_limit_count)
+				{
+					$sufix = $end_limit_title;
+				}
+
 				$title = preg_replace('#^\s?(,|;|:|-)#ismu', '', $title);
-				$title = ($title ? $title . $params->get('end_limit_title', '...') : '');
+				$title = ($title ? $title . $sufix : '');
 			}
 		}
 
