@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="module" version="3.8" client="site" method="upgrade">
+<extension type="module"
+           version="3.8"
+           client="site"
+           method="upgrade">
     <name>MOD_JUNEWSULTRA</name>
     <creationDate>@date@</creationDate>
     <author>Denys Nosov</author>
@@ -223,14 +226,14 @@
 
                 <field
 		                name="display_article"
-		                type="radio"
-		                class="btn-group"
+		                type="list"
 		                default="0"
 		                label="MOD_JUNEWS_MODE_SELECT"
 		                description="MOD_JUNEWS_DISPLAY_SELECTED_ARTICLE"
                 >
                     <option value="0">MOD_JUNEWS_CATEGORIES_SELECT</option>
                     <option value="1">MOD_JUNEWS_ARTICLE_SELECT</option>
+                    <option value="2">MOD_JUNEWS_ARTICLES_SELECT</option>
                 </field>
 
                 <field name="@toggler_choose_settings2_a"
@@ -247,6 +250,22 @@
 
                 <field name="@toggler_showsuccessmessage2_b"
                        type="nn_toggler" />
+
+
+	            <field name="@toggler_choose_settings22_a"
+	                   type="nn_toggler"
+	                   param="display_article"
+	                   value="2" />
+
+                <field
+		                name="articleids"
+		                type="text"
+		                label="MOD_JUNEWS_SELECTARTICLES"
+                />
+
+                <field name="@toggler_showsuccessmessage22_b"
+                       type="nn_toggler" />
+
 
                 <field name="@toggler_choose_settings3_a"
                        type="nn_toggler"
@@ -1313,7 +1332,7 @@
 	                   type="text"
 	                   default="img"
 	                   label="MOD_JUNEWS_IMAGE_CONF00"
-	                   description="MOD_JUNEWS_IMAGE_CONF00_TIPS"/>
+	                   description="MOD_JUNEWS_IMAGE_CONF00_TIPS" />
 
                 <field name="image_source"
                        type="list"
@@ -1536,9 +1555,9 @@
                        description="MOD_JUNEWS_IMAGE_SY_DESC" />
 
 	            <field name="sw"
-                       type="text"
-                       label="MOD_JUNEWS_IMAGE_SW"
-                       description="MOD_JUNEWS_IMAGE_SW_DESC" />
+	                   type="text"
+	                   label="MOD_JUNEWS_IMAGE_SW"
+	                   description="MOD_JUNEWS_IMAGE_SW_DESC" />
 
                 <field name="sh"
                        type="text"

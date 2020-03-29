@@ -227,6 +227,13 @@ class com_content extends Helper
 		{
 			$this->query->where($this->db->quoteName('a.id') . ' = ' . $this->db->Quote((int) $params->get('articleid')));
 		}
+		elseif($display_article == 2)
+		{
+			$ids = str_replace(' ', '', $params->get('articleids'));
+			$ids = trim($ids);
+
+			$this->query->where($this->db->quoteName('a.id') . ' IN (' . $ids . ')');
+		}
 		else
 		{
 			if($date_filtering == 1)
@@ -703,9 +710,9 @@ class com_content extends Helper
 						if($blank == 1)
 						{
 							$item->image       = $this->image($params, $junews, [
-								'src'    => $junuimgsource,
-								'link'   => $junews[ 'imglink' ] == 1 ? $item->link : '',
-								'alt'    => $title_alt
+								'src'  => $junuimgsource,
+								'link' => $junews[ 'imglink' ] == 1 ? $item->link : '',
+								'alt'  => $title_alt
 							]);
 							$item->imagelink   = $this->thumb($junuimgsource, $junews);
 							$item->imagesource = $junuimgsource;
