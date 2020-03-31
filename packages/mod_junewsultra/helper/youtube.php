@@ -144,7 +144,7 @@ class youtube extends Helper
 				$item->source_image = $junuimgsource;
 
 				$blank = 1;
-				if(!$junuimgsource || !file_exists($junuimgsource))
+				if(!$junuimgsource)
 				{
 					$blank = 0;
 					if($junews[ 'defaultimg' ] == 1)
@@ -188,6 +188,7 @@ class youtube extends Helper
 						}
 						break;
 				}
+
 			}
 		}
 
