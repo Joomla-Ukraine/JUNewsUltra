@@ -486,7 +486,7 @@ class com_content extends Helper
 						$this->query->from('#__komento_comments');
 						$this->query->where($this->db->quoteName('published') . ' = ' . $this->db->Quote('1'));
 						$this->query->where($this->db->quoteName('component') . ' = ' . $this->db->Quote('com_content'));
-						$this->query->where($this->db->quoteName('cid') . ' = IN (' . implode(',', $ids) . ')');
+						$this->query->where($this->db->quoteName('cid') . ' IN (' . implode(',', $ids) . ')');
 						$this->query->group('cid');
 						$this->db->setQuery($this->query);
 
@@ -507,7 +507,7 @@ class com_content extends Helper
 						$this->query->from('#__jcomments');
 						$this->query->where($this->db->quoteName('published') . ' = ' . $this->db->Quote('1'));
 						$this->query->where($this->db->quoteName('object_group') . ' = ' . $this->db->Quote('com_content'));
-						$this->query->where($this->db->quoteName('object_id') . ' = IN (' . implode(',', $ids) . ')');
+						$this->query->where($this->db->quoteName('object_id') . ' IN (' . implode(',', $ids) . ')');
 						$this->query->group('object_id');
 						$this->db->setQuery($this->query);
 
