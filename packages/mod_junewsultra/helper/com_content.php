@@ -541,7 +541,7 @@ class com_content extends Helper
 			}
 		}
 
-		foreach($items as &$item)
+		foreach($items as $item)
 		{
 			$item->link    = Route::_('index.php?option=com_users&view=login');
 			$item->catlink = $item->link;
@@ -676,7 +676,7 @@ class com_content extends Helper
 				}
 
 				$blank = 1;
-				if(!$junuimgsource || !file_exists($junuimgsource))
+				if(!$junuimgsource)
 				{
 					$blank = 0;
 					if($junews[ 'defaultimg' ] == 1)

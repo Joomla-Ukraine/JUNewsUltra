@@ -41,7 +41,7 @@ class rss extends Helper
 	{
 		$items = $this->query($params, $junews);
 
-		foreach($items as &$item)
+		foreach($items as $item)
 		{
 			// article title
 			if($junews[ 'show_title' ] == 1)

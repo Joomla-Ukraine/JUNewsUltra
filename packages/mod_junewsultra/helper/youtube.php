@@ -61,7 +61,7 @@ class youtube extends Helper
 	{
 		$items = $this->query($params, $junews);
 
-		foreach($items as &$item)
+		foreach($items as $item)
 		{
 			$item->link = $item->link->attributes()->href;
 			if($params->get('ytlink') == 1)
