@@ -6,7 +6,7 @@
  * @subpackage       mod_junewsultra
  *
  * @author           Denys Nosov, denys@joomla-ua.org
- * @copyright        2007-2020 (C) Joomla! Ukraine, http://joomla-ua.org. All rights reserved.
+ * @copyright        2007-2021 (C) Joomla! Ukraine, http://joomla-ua.org. All rights reserved.
  * @license          GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -21,7 +21,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 
 $app_admin = Factory::getApplication('administrator');
-$app_admin->initialise();
+$app_admin->loadDispatcher();
 
 $app_site = Factory::getApplication('site');
 $app      = Factory::getApplication();
