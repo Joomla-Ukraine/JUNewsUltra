@@ -4,7 +4,7 @@
  *
  * @package    JUNewsUltra Pro
  *
- * @copyright  Copyright (C) 2007-2020 Denys Nosov. All rights reserved.
+ * @copyright  Copyright (C) 2007-2021 Denys Nosov. All rights reserved.
  * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  *
  */
@@ -22,8 +22,21 @@ use Joomla\CMS\Language\Text;
  */
 class Pkg_JUNewsUltraInstallerScript
 {
+	/**
+	 * @since 6.0
+	 * @var
+	 */
 	protected $message;
+
+	/**
+	 * @since 6.0
+	 * @var
+	 */
 	protected $status;
+	/**
+	 * @since 6.0
+	 * @var
+	 */
 	protected $sourcePath;
 
 	/**
@@ -48,7 +61,7 @@ class Pkg_JUNewsUltraInstallerScript
 
 		if(!is_dir(JPATH_SITE . '/img/'))
 		{
-			Factory::getApplication()->enqueueMessage('Error creating folder \'img\'. Please manually create the folder \'img\' in the root of the site where you installed Joomla!', 'message');
+			Factory::getApplication()->enqueueMessage('Error creating folder \'img\'. Please manually create the folder \'img\' in the root of the site where you installed Joomla!');
 		}
 
 		$cache = Factory::getCache('mod_junewsultra');
@@ -312,7 +325,7 @@ class Pkg_JUNewsUltraInstallerScript
 
 		$html .= '</div></div>';
 
-		$app->enqueueMessage($html, 'message');
+		$app->enqueueMessage($html);
 
 		return true;
 	}
