@@ -545,6 +545,8 @@ class com_content extends Helper
 		{
 			$item->link    = Route::_('index.php?option=com_users&view=login');
 			$item->catlink = $item->link;
+			$introtext = (isset($item->introtext) ? $item->introtext : '');
+			$fulltext = (isset($item->fulltext) ? $item->fulltext : '');
 
 			if($access || in_array($item->access, $authorised, true))
 			{
@@ -585,12 +587,12 @@ class com_content extends Helper
 						break;
 
 					case '2':
-						$_text = $item->introtext . $item->fulltext;
+						$_text = $introtext . $fulltext;
 						break;
 
 					default:
 					case '0':
-						$_text = $item->introtext;
+						$_text = $introtext;
 						break;
 				}
 
@@ -724,14 +726,14 @@ class com_content extends Helper
 			// rawtext
 			if($junews[ 'sourcetext' ] == 1)
 			{
-				$item->sourcetext = $item->introtext . $item->fulltext;
+				$item->sourcetext = $introtext . $fulltext;
 			}
 
 			// introtext
 			if($junews[ 'show_intro' ] == 1)
 			{
 				$item->introtext = $this->desc($params, [
-					'description'    => $item->introtext,
+					'description'    => $introtext,
 					'cleartag'       => $junews[ 'cleartag' ],
 					'allowed_tags'   => $junews[ 'allowed_intro_tags' ],
 					'li'             => $junews[ 'li' ],
@@ -745,7 +747,7 @@ class com_content extends Helper
 			if($junews[ 'show_full' ] == 1)
 			{
 				$item->fulltext = $this->desc($params, [
-					'description'    => $item->fulltext,
+					'description'    => $fulltext,
 					'cleartag'       => $junews[ 'clear_tag_full' ],
 					'allowed_tags'   => $junews[ 'allowed_full_tags' ],
 					'li'             => $junews[ 'li_full' ],
