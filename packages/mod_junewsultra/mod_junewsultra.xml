@@ -1381,9 +1381,8 @@
                     <option value="1">JYES</option>
                 </field>
 
-
                 <field name="img_ext"
-                       type="radio"
+                       type="list"
                        class="btn-group"
                        default="jpg"
                        label="MOD_JUNEWS_IMAGE_CONF04"
@@ -1391,6 +1390,7 @@
                     <option value="jpg">.JPG</option>
                     <option value="png">.PNG</option>
                     <option value="gif">.GIF</option>
+                    <option value="webp">.WEBP</option>
                 </field>
 
                 <field name="imglink"
