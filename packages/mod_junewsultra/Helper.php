@@ -136,13 +136,13 @@ class Helper
 
 		if(isset($data[ 'src' ]))
 		{
-			$image = $data[ 'src' ];
+			$src = $data[ 'src' ];
 			if($junews[ 'thumb_width' ] == 1)
 			{
-				$image = $this->thumb($data[ 'src' ], $junews);
+				$src = $this->thumb($data[ 'src' ], $junews);
 			}
 
-			$attr[] = 'src="' . $image . '"';
+			$attr[] = 'src="' . $src . '"';
 		}
 
 		if(isset($data[ 'alt' ]))
@@ -160,15 +160,9 @@ class Helper
 			$attr[] = $params->get('image_attr');
 		}
 
-		$img = '<img ' . implode(' ', $attr) . '>';
-		if($data[ 'link' ])
-		{
-			$img = '<a href="' . $data[ 'link' ] . '"' . ($params->get('tips') == 1 && isset($data[ 'alt' ]) ? ' title="' . $data[ 'alt' ] . '"' : '') . '>' . $img . '</a>';
-		}
-
 		if($junews[ 'usewebp' ] == 1)
 		{
-			$webp_img          = str_replace(Uri::base(), '', $img);
+			$webp_img          = str_replace(Uri::base(), '', $src);
 			$thumb_webp_imgset = $this->juimg->render($webp_img, [
 				'w'         => $junews[ 'w' ],
 				'h'         => $junews[ 'h' ],
@@ -179,7 +173,6 @@ class Helper
 			]);
 
 			$source = '<source srcset="' . $thumb_webp_imgset->webp . '" type="image/webp">';
-
 		}
 
 		if($junews[ 'usesrcset' ] == 1)
@@ -222,9 +215,16 @@ class Helper
 			$source = implode($source_set);
 		}
 
+		$img = '<img ' . implode(' ', $attr) . '>';
+
 		if($junews[ 'usesrcset' ] == 1 || $junews[ 'usewebp' ] == 1)
 		{
 			$img = '<picture>' . $source . $img . '</picture>';
+		}
+
+		if($data[ 'link' ])
+		{
+			$img = '<a href="' . $data[ 'link' ] . '"' . ($params->get('tips') == 1 && isset($data[ 'alt' ]) ? ' title="' . $data[ 'alt' ] . '"' : '') . '>' . $img . '</a>';
 		}
 
 		return $img;
