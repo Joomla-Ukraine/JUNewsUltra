@@ -28,33 +28,6 @@ $lang->load('mod_junewsultra', JPATH_SITE);
 
 $language = mb_strtolower($lang->getTag());
 
-$csslink = '
-<link href="../../../../../administrator/templates/isis/css/template.css" rel="stylesheet" type="text/css" />
-<link href="../../../../../media/jui/css/bootstrap.css" rel="stylesheet" type="text/css" />
-
-<script src="../../../../../media/jui/js/jquery.min.js" type="text/javascript"></script>
-<script src="../../../../../modules/mod_junewsultra/assets/js/jquery.custom-input-file.js" type="text/javascript"></script>
-<script type="text/javascript">
-    jQuery.noConflict();
-    (function($) {
-        $(function() {
-        $("#lefile").customInputFile({
-            filename: "#juCover",
-            replacementClass       : "customInputFile",
-            replacementClassHover  : "customInputFileHover",
-            replacementClassActive : "customInputFileActive",
-            filenameClass          : "customInputFileName",
-            wrapperClass           : "customInputFileWrapper",
-            replacement : $(\'<button />\', {
-                "text" : "Select",
-                "class": "btn"
-            })
-        });
-        });
-    })(jQuery);
-</script>
-';
-
 function alert($text, $error)
 {
 	if($error === 'message')
@@ -76,7 +49,6 @@ function alert($text, $error)
 	<html lang="<?php echo $language; ?>">
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<?php echo $csslink; ?>
 	</head>
 	<body>
 	<?php echo alert(JText::_('MOD_JUNEWS_LOGIN'), 'notice'); ?>
@@ -86,7 +58,7 @@ function alert($text, $error)
 	return;
 endif;
 
-$path        = str_replace('modules' . DS . 'mod_junewsultra' . DS . 'fields' . DS . '..' . DS . '..' . DS . '..', 'media/mod_junewsultra', JPATH_BASE);
+$path        = str_replace('modules/mod_junewsultra/fields/../../..', 'media/mod_junewsultra', JPATH_BASE);
 $valid_types = [
 	'gif',
 	'jpg',
@@ -99,48 +71,42 @@ $valid_types = [
 <html lang="<?php echo $language; ?>">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<?php echo $csslink; ?>
 </head>
 <body>
-<fieldset class="adminform">
-	<legend><?php echo JText::_('MOD_JUNEWS_UPLOAD_MODULE'); ?></legend>
-	<form enctype="multipart/form-data" method="post">
-            <span class="input-append">
-               <label for="juCover"></label><input id="juCover" class="input-mini disabled" style="width:110px!important;" value="" type="text">
-               <input id="lefile" name="userfile" type="file" autocomplete="off">
-               <button type="submit" class="btn btn-primary"><?php echo JText::_('MOD_JUNEWS_UPLOAD'); ?></button>
-            </span>
-	</form>
-</fieldset>
+<form enctype="multipart/form-data" method="post">
+	<fieldset class="adminform">
+		<legend><?php echo JText::_('MOD_JUNEWS_UPLOAD_MODULE'); ?></legend>
+		<label for="juCover">
+			<input id="lefile" name="userfile" type="file" autocomplete="off">
+		</label>
+	</fieldset>
+	<button type="submit" class="btn btn-primary"><?php echo JText::_('MOD_JUNEWS_UPLOAD'); ?></button>
+</form>
 <?php
 if(isset($_FILES[ 'userfile' ]))
 {
+	$alert = alert(JText::_('MOD_JUNEWS_ERROR3'), 'notice');
 	if(is_uploaded_file($_FILES[ 'userfile' ][ 'tmp_name' ]))
 	{
 		$filename = $_FILES[ 'userfile' ][ 'tmp_name' ];
-		$ext      = substr($_FILES[ 'userfile' ][ 'name' ], 1 + strrpos($_FILES[ 'userfile' ][ 'name' ], '.'));
+		$ext      = pathinfo($_FILES[ 'userfile' ][ 'name' ])[ 'extension' ];
 
 		if(!in_array($ext, $valid_types))
 		{
-			echo alert(JText::_('MOD_JUNEWS_ERROR2'), 'notice');
+			$alert = alert(JText::_('MOD_JUNEWS_ERROR2'), 'notice');
 		}
 		else
 		{
-			$size = getimagesize($filename);
+			$size  = getimagesize($filename);
+			$alert = alert(JText::_('MOD_JUNEWS_ERROR3'), 'notice');
 			if(@move_uploaded_file($filename, $path . '/jn_' . $_FILES[ 'userfile' ][ 'name' ]))
 			{
-				echo alert(JText::_('MOD_JUNEWS_NOTICE8'), 'message');
-			}
-			else
-			{
-				echo alert(JText::_('MOD_JUNEWS_ERROR3'), 'notice');
+				$alert = alert(JText::_('MOD_JUNEWS_NOTICE8'), 'message');
 			}
 		}
 	}
-	else
-	{
-		echo alert(JText::_('MOD_JUNEWS_ERROR3'), 'notice');
-	}
+
+	echo $alert;
 }
 ?>
 </body>
