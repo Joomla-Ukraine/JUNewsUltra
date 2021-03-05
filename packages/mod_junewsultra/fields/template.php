@@ -35,48 +35,51 @@ class JFormFieldTemplate extends FormField
 			return Text::_('MOD_JUNEWS_NOT_EDIT_TEMPLATE');
 		}
 
-		HTMLHelper::_('behavior.modal', 'a.modal');
-
-		$db = JFactory::getDBO();
-		$db->setQuery('SELECT params' . ' FROM #__modules' . ' WHERE id = ' . (int) $_GET[ 'id' ]);
-		$rows = $db->loadResult();
-
-		$tmpl = 'default';
-		if(preg_match('#"template":"_:(.*?)"#is', $rows, $ok))
+		if(version_compare(JVERSION, '3.10') <= 0)
 		{
-			if($ok[ 1 ] == 1)
+			HTMLHelper::_('behavior.modal', 'a.modal');
+
+			$db = JFactory::getDBO();
+			$db->setQuery('SELECT params' . ' FROM #__modules' . ' WHERE id = ' . (int) $_GET[ 'id' ]);
+			$rows = $db->loadResult();
+
+			$tmpl = 'default';
+			if(preg_match('#"template":"_:(.*?)"#is', $rows, $ok))
 			{
-				$tmpl = 'default';
+				if($ok[ 1 ] == 1)
+				{
+					$tmpl = 'default';
+				}
+				else
+				{
+					$tmpl = $ok[ 1 ];
+				}
 			}
-			else
+
+			$html = [];
+			$link = str_replace('/administrator', '', JUri::base()) . 'modules/mod_junewsultra/fields/edittemplate.php?file=' . $tmpl . '.php';
+
+			$html[] = Text::_('MOD_JUNEWS_NOT_EDIT_TEMPLATE');
+			if($_GET[ 'id' ])
 			{
-				$tmpl = $ok[ 1 ];
+				$html[] = '<a class="modal btn"  href="' . $link . '" rel="{handler: \'iframe\', size: {x: 1000, y: 650}}"><i class="icon-cog"></i> ' . Text::_('MOD_JUNEWS_TEMPLATE_BUTTON') . '</a>';
 			}
+
+			$value = (int) $this->value;
+			if(0 == (int) $this->value)
+			{
+				$value = '';
+			}
+
+			$class = '';
+			if($this->required)
+			{
+				$class = ' class="required modal-value"';
+			}
+
+			$html[] = '<input type="hidden" id="' . $this->id . '_id"' . $class . ' name="' . $this->name . '" value="' . $value . '" />';
+
+			return implode("\n", $html);
 		}
-
-		$html = [];
-		$link = str_replace('/administrator', '', JUri::base()) . 'modules/mod_junewsultra/fields/edittemplate.php?file=' . $tmpl . '.php';
-
-		$html[] = Text::_('MOD_JUNEWS_NOT_EDIT_TEMPLATE');
-		if($_GET[ 'id' ])
-		{
-			$html[] = '<a class="modal btn"  href="' . $link . '" rel="{handler: \'iframe\', size: {x: 1000, y: 650}}"><i class="icon-cog"></i> ' . Text::_('MOD_JUNEWS_TEMPLATE_BUTTON') . '</a>';
-		}
-
-		$value = (int) $this->value;
-		if(0 == (int) $this->value)
-		{
-			$value = '';
-		}
-
-		$class = '';
-		if($this->required)
-		{
-			$class = ' class="required modal-value"';
-		}
-
-		$html[] = '<input type="hidden" id="' . $this->id . '_id"' . $class . ' name="' . $this->name . '" value="' . $value . '" />';
-
-		return implode("\n", $html);
 	}
 }

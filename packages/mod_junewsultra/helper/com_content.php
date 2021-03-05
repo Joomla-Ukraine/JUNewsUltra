@@ -20,8 +20,11 @@ use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 
-require_once JPATH_SITE . '/components/com_content/router.php';
-require_once JPATH_SITE . '/components/com_content/helpers/route.php';
+if(version_compare(JVERSION, '3.10') <= 0)
+{
+	require_once JPATH_SITE . '/components/com_content/router.php';
+	require_once JPATH_SITE . '/components/com_content/helpers/route.php';
+}
 
 /**
  * Helper for mod_junewsultra

@@ -72,7 +72,9 @@ if(isset($curent_tmp[ 'template' ]))
 	$doc->addScriptDeclaration($snipets);
 }
 
-HTMLHelper::_('jquery.framework');
+if(version_compare(JVERSION, '3.10') <= 0)
+{
+	HTMLHelper::_('jquery.framework');
+}
 
 $doc->addHeadLink($adm_url . 'modules/mod_junewsultra/assets/css/junewsultra.css?v=6', 'preload', 'rel', [ 'as' => 'style' ]);
-

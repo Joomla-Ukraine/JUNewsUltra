@@ -35,13 +35,19 @@ class JFormFieldUpload extends FormField
 			return Text::_('MOD_JUNEWS_NOT_EDIT_TEMPLATE');
 		}
 
-		HTMLHelper::_('behavior.modal', 'a.modal');
+		if(version_compare(JVERSION, '3.10') <= 0)
+		{
+			HTMLHelper::_('behavior.modal', 'a.modal');
 
-		$html = [];
-		$link = str_replace('/administrator', '', Uri::base()) . 'modules/mod_junewsultra/fields/uploadimg.php';
+			$html = [];
+			$link = str_replace('/administrator', '', Uri::base()) . 'modules/mod_junewsultra/fields/uploadimg.php';
 
-		$html[] = '<a class="modal btn"  href="' . $link . '" rel="{handler: \'iframe\', size: {x: 330, y: 180}}"><i class="icon-upload"></i> ' . Text::_('MOD_JUNEWS_IMAGE_UPLOAD') . '</a>';
+			$html[] = '<a class="modal btn"  href="' . $link . '" rel="{handler: \'iframe\', size: {x: 330, y: 180}}"><i class="icon-upload"></i> ' . Text::_('MOD_JUNEWS_IMAGE_UPLOAD') . '</a>';
 
-		return implode("\n", $html);
+			return implode("\n", $html);
+		}
+		else {
+			return 'Upload image to <code>media/mod_junewsultra</code> folder';
+		}
 	}
 }

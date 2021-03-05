@@ -17,8 +17,8 @@ use Joomla\CMS\Language\Text;
 /**
  * Installation class to perform additional changes during install/uninstall/update
  *
- * @package  JUNewsUltra Pro
  * @since    6.0
+ * @package  JUNewsUltra Pro
  */
 class Pkg_JUNewsUltraInstallerScript
 {
@@ -115,12 +115,13 @@ class Pkg_JUNewsUltraInstallerScript
 		$lang = Factory::getLanguage();
 		$lang->load('mod_junewsultra', JPATH_SITE);
 
-		/*if (version_compare(PHP_VERSION, '4.0.0') >= 0)
+		if(version_compare(JVERSION, '3.10') >= 0)
 		{
-			unlink(JPATH_SITE . '/modules/mod_junewsultra/mod_junewsultra.xml');
-			rename(JPATH_SITE . '/modules/mod_junewsultra/mod_junewsultra_j4.xml', JPATH_SITE . '/modules/mod_junewsultra/mod_junewsultra.xml');
+			$xml = file_get_contents(JPATH_SITE . '/modules/mod_junewsultra/mod_junewsultra.xml');
+			$xml = str_replace('class="btn-group"', 'layout="joomla.form.field.radio.switcher"', $xml);
+			$xml = str_replace('addfieldpath="/administrator/components/com_content/models/fields/modal"', 'addfieldprefix="Joomla\Component\Content\Administrator\Field"', $xml);
+			file_put_contents(JPATH_SITE . '/modules/mod_junewsultra/mod_junewsultra.xml', $xml);
 		}
-		*/
 
 		foreach($results as $result)
 		{
@@ -282,7 +283,7 @@ class Pkg_JUNewsUltraInstallerScript
 		];
 
 		$i = 0;
-		foreach($files AS $file)
+		foreach($files as $file)
 		{
 			if(file_exists($file))
 			{
@@ -291,7 +292,7 @@ class Pkg_JUNewsUltraInstallerScript
 		}
 
 		$j = 0;
-		foreach($folders AS $folder)
+		foreach($folders as $folder)
 		{
 			if(is_dir($folder))
 			{
@@ -303,7 +304,7 @@ class Pkg_JUNewsUltraInstallerScript
 		{
 			$html .= '<h2>' . Text::_('MOD_JUNEWS_REMOVE_OLD_FILES') . '</h2><table class="table table-striped"><tbody>';
 
-			foreach($files AS $file)
+			foreach($files as $file)
 			{
 				if(file_exists($file))
 				{
@@ -314,7 +315,7 @@ class Pkg_JUNewsUltraInstallerScript
 				}
 			}
 
-			foreach($folders AS $folder)
+			foreach($folders as $folder)
 			{
 				if(is_dir($folder))
 				{
