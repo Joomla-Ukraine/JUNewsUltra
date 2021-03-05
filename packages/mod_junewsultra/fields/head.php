@@ -17,21 +17,26 @@ use Joomla\CMS\Uri\Uri;
 
 defined('JPATH_BASE') or die;
 
-$doc = Factory::getDocument();
-$db  = Factory::getDBO();
+$doc   = Factory::getDocument();
+$db    = Factory::getDBO();
+$query = $db->getQuery(true);
 
 $adm_url = str_replace('/administrator', '', Uri::base());
 $tmpl    = $adm_url . 'modules/mod_junewsultra/fields/edittemplate.php?file=';
 
-$doc->addStyleSheet($adm_url . 'modules/mod_junewsultra/assets/css/junewsultra.css?v=6');
-
-$db->setQuery('SELECT params FROM #__modules WHERE id = ' . (int) $_GET[ 'id' ]);
+$query->select($db->quoteName([ 'params' ]));
+$query->from($db->quoteName('#__modules'));
+$query->where($db->quoteName('id') . ' = ' . $db->quote((int) $_GET[ 'id' ]));
+$db->setQuery($query);
 $rows = $db->loadResult();
 
 $curent_tmp = json_decode($rows, true);
-$tmpl_link  = $tmpl . $curent_tmp[ 'template' ] . '.php';
 
-$snipets = '
+if(isset($curent_tmp[ 'template' ]))
+{
+	$tmpl_link = $tmpl . $curent_tmp[ 'template' ] . '.php';
+
+	$snipets = '
     jQuery.noConflict();
     (function($)
 	{
@@ -64,6 +69,10 @@ $snipets = '
     })(jQuery);
 ';
 
+	$doc->addScriptDeclaration($snipets);
+}
+
 HTMLHelper::_('jquery.framework');
 
-$doc->addScriptDeclaration($snipets);
+$doc->addHeadLink($adm_url . 'modules/mod_junewsultra/assets/css/junewsultra.css?v=6', 'preload', 'rel', [ 'as' => 'style' ]);
+
