@@ -701,6 +701,8 @@ class com_content extends Helper
 						{
 							$item->image       = $this->image($params, $junews, [
 								'src'  => $junuimgsource,
+								'w'    => $junews[ 'w' ],
+								'h'    => $junews[ 'h' ],
 								'link' => $junews[ 'imglink' ] == 1 ? $item->link : '',
 								'alt'  => $title_alt
 							]);
@@ -715,6 +717,8 @@ class com_content extends Helper
 						{
 							$item->image       = $this->image($params, $junews, [
 								'src'  => $junuimgsource,
+								'w'    => $junews[ 'w' ],
+								'h'    => $junews[ 'h' ],
 								'link' => $junews[ 'imglink' ] == 1 ? $item->link : '',
 								'alt'  => $title_alt
 							]);

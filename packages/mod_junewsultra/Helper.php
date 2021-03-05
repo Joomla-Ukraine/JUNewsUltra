@@ -158,13 +158,13 @@ class Helper
 			$attr[] = 'src="' . $src . '"';
 		}
 
-		if($junews[ 'usesrcset' ] == 1 || $junews[ 'usewebp' ] == 1 || $junews[ 'thumb_width' ] == 0)
+		if($junews[ 'thumb_width' ] == 0)
 		{
 			$attr[] = 'width="' . $data[ 'w' ] . '"';
 			$attr[] = 'height="' . $data[ 'h' ] . '"';
 		}
 
-		if($junews[ 'usesrcset' ] == 1 || $junews[ 'usewebp' ] == 1 || $junews[ 'thumb_width' ] == 1)
+		if($junews[ 'usesrcset' ] == 0 && $junews[ 'thumb_width' ] == 1)
 		{
 			if($junews[ 'zoomcrop' ] == 1)
 			{
@@ -194,7 +194,7 @@ class Helper
 			$attr[] = $params->get('image_attr');
 		}
 
-		if($junews[ 'usesrcset' ] == 1)
+		if($junews[ 'usesrcset' ] == 1 && $junews[ 'thumb_width' ] == 1)
 		{
 			$source_set = [];
 			$array      = (array) $junews[ 'src_picture' ];
@@ -227,7 +227,7 @@ class Helper
 		}
 
 		$img = '<img ' . implode(' ', $attr) . '>';
-		if($junews[ 'usesrcset' ] == 1 || $junews[ 'usewebp' ] == 1)
+		if(($junews[ 'usesrcset' ] == 1 || $junews[ 'usewebp' ] == 1) && $junews[ 'thumb_width' ] == 1)
 		{
 			$img = '<picture>' . $source . $img . '</picture>';
 		}

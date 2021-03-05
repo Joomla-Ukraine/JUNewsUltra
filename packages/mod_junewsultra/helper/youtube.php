@@ -17,9 +17,9 @@ use Joomla\CMS\HTML\HTMLHelper;
 /**
  * Helper for mod_junewsultra
  *
- * @package     Joomla.Site
- * @subpackage  mod_junewsultra
  * @since       6.0
+ * @subpackage  mod_junewsultra
+ * @package     Joomla.Site
  */
 class youtube extends Helper
 {
@@ -165,6 +165,8 @@ class youtube extends Helper
 						{
 							$item->image       = $this->image($params, $junews, [
 								'src'  => $junuimgsource,
+								'w'    => $junews[ 'w' ],
+								'h'    => $junews[ 'h' ],
 								'link' => $junews[ 'imglink' ] == 1 ? $item->link : '',
 								'alt'  => $title_alt
 							]);
@@ -179,6 +181,8 @@ class youtube extends Helper
 						{
 							$item->image       = $this->image($params, $junews, [
 								'src'    => $junuimgsource,
+								'w'      => $junews[ 'w' ],
+								'h'      => $junews[ 'h' ],
 								'link'   => $junews[ 'imglink' ] == 1 ? $item->link : '',
 								'alt'    => $title_alt,
 								'srcset' => $junews[ 'usesrcset' ]
