@@ -136,6 +136,11 @@ class Helper
 			$attr[] = 'loading="lazy"';
 		}
 
+		if($params->get('image_decoding', 1) == 1)
+		{
+			$attr[] = 'decoding="async"';
+		}
+
 		if(isset($data[ 'src' ]))
 		{
 			$src = $data[ 'src' ];
