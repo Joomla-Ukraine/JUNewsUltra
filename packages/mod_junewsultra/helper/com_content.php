@@ -26,9 +26,9 @@ require_once JPATH_SITE . '/components/com_content/helpers/route.php';
 /**
  * Helper for mod_junewsultra
  *
- * @package     Joomla.Site
- * @subpackage  mod_junewsultra
  * @since       6.0
+ * @subpackage  mod_junewsultra
+ * @package     Joomla.Site
  */
 class com_content extends Helper
 {
@@ -545,8 +545,8 @@ class com_content extends Helper
 		{
 			$item->link    = Route::_('index.php?option=com_users&view=login');
 			$item->catlink = $item->link;
-			$introtext = (isset($item->introtext) ? $item->introtext : '');
-			$fulltext = (isset($item->fulltext) ? $item->fulltext : '');
+			$introtext     = (isset($item->introtext) ? $item->introtext : '');
+			$fulltext      = (isset($item->fulltext) ? $item->fulltext : '');
 
 			if($access || in_array($item->access, $authorised, true))
 			{
