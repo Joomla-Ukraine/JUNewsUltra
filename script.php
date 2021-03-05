@@ -115,6 +115,13 @@ class Pkg_JUNewsUltraInstallerScript
 		$lang = Factory::getLanguage();
 		$lang->load('mod_junewsultra', JPATH_SITE);
 
+		/*if (version_compare(PHP_VERSION, '4.0.0') >= 0)
+		{
+			unlink(JPATH_SITE . '/modules/mod_junewsultra/mod_junewsultra.xml');
+			rename(JPATH_SITE . '/modules/mod_junewsultra/mod_junewsultra_j4.xml', JPATH_SITE . '/modules/mod_junewsultra/mod_junewsultra.xml');
+		}
+		*/
+
 		foreach($results as $result)
 		{
 			$extension = (string) $result[ 'name' ];
@@ -132,22 +139,15 @@ class Pkg_JUNewsUltraInstallerScript
 		$html = '';
 		$html .= '<style type="text/css">
 		.juinstall {
-			clear: both;
 			color: #333!important;
 			font-weight: normal;
 		    margin: 0!important;
 		    padding: 0;
 		    overflow: hidden;
 		    background: #fff!important;
-			position: absolute!important;
-			top: 0!important;
-			left: 0!important;
-			width: 100%;
-			height: 100%;
-			z-index: 100!important;
 		}
 			.juinstall-content {
-			    margin: 8% auto!important;
+			    margin: 5% auto!important;
 			    padding: 35px 0 18px 0;
 				width: 50%;
 			}
@@ -244,6 +244,9 @@ class Pkg_JUNewsUltraInstallerScript
 			$path . 'assets/js/php.js',
 			$path . 'assets/js/runmode.js',
 			$path . 'assets/js/xml.js',
+			$path . 'assets/js/toggler30.js',
+			$path . 'assets/js/script30.js',
+			$path . 'assets/js/jquery.custom-input-file.js',
 			$path . 'assets/css/codemirror.css',
 			$path . 'assets/css/csscolors.css',
 			$path . 'assets/css/default.css',
@@ -255,6 +258,8 @@ class Pkg_JUNewsUltraInstallerScript
 			$path . 'fields/imagesetting.php',
 			$path . 'fields/juradio30.php',
 			$path . 'fields/toggler25.php',
+			$path . 'fields/toggler.php',
+			$path . 'fields/toggler30.php',
 			$path . 'fields/donate.php',
 			$path . 'fields/article.php',
 
@@ -325,7 +330,8 @@ class Pkg_JUNewsUltraInstallerScript
 
 		$html .= '</div></div>';
 
-		$app->enqueueMessage($html);
+		//$app->enqueueMessage($html);
+		echo $html;
 
 		return true;
 	}
@@ -338,19 +344,19 @@ class Pkg_JUNewsUltraInstallerScript
 	 *
 	 * @since version
 	 */
-	public function MakeDirectory($dir, $mode = 0777)
+	private function MakeDirectory($dir, $mode = 0777)
 	{
-		if(mkdir($dir, $mode) || is_dir($dir))
+		if(@mkdir($dir, $mode, true) || is_dir($dir))
 		{
 			return true;
 		}
 
-		if(!$this->MakeDirectory(dirname($dir), $mode))
+		if(!$this->MakeDirectory(dirname($dir)))
 		{
 			return false;
 		}
 
-		return @mkdir($dir, $mode);
+		return mkdir($dir, $mode, true);
 	}
 
 	/**
@@ -360,7 +366,7 @@ class Pkg_JUNewsUltraInstallerScript
 	 *
 	 * @since version
 	 */
-	public function unlinkRecursive($dir, $deleteRootToo)
+	private function unlinkRecursive($dir, $deleteRootToo)
 	{
 		if(!$dh = @opendir($dir))
 		{
