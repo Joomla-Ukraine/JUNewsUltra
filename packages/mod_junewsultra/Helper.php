@@ -18,12 +18,14 @@ use Joomla\String\StringHelper;
 
 defined('_JEXEC') or die;
 
+JLoader::register('JUImage', JPATH_LIBRARIES . '/juimage/JUImage.php');
+
 /**
  * Helper for mod_junewsultra
  *
+ * @since       6.0
  * @package     Joomla.Site
  * @subpackage  mod_junewsultra
- * @since       6.0
  */
 class Helper
 {
@@ -140,6 +142,12 @@ class Helper
 			if($junews[ 'thumb_width' ] == 1)
 			{
 				$src = $this->thumb($data[ 'src' ], $junews);
+
+				if($junews[ 'usewebp' ] == 1)
+				{
+					$source = '<source srcset="' . $src->webp . '" type="image/webp">';
+					$src    = $src->img;
+				}
 			}
 
 			$attr[] = 'src="' . $src . '"';
@@ -160,21 +168,6 @@ class Helper
 			$attr[] = $params->get('image_attr');
 		}
 
-		if($junews[ 'usewebp' ] == 1)
-		{
-			$webp_img          = str_replace(Uri::base(), '', $src);
-			$thumb_webp_imgset = $this->juimg->render($webp_img, [
-				'w'         => $junews[ 'w' ],
-				'h'         => $junews[ 'h' ],
-				'webp'      => true,
-				'webp_q'    => '80',
-				'webp_maxq' => '85',
-				'cache'     => $junews[ 'image_thumb' ]
-			]);
-
-			$source = '<source srcset="' . $thumb_webp_imgset->webp . '" type="image/webp">';
-		}
-
 		if($junews[ 'usesrcset' ] == 1)
 		{
 			$source_set = [];
@@ -185,30 +178,21 @@ class Helper
 			{
 				if($picture->picture && $picture->picture_w && $picture->picture_h)
 				{
-					$imgsetparams = [
+					$imgsetparams_merge = array_replace($junews, [
 						'w' => $picture->picture_w,
 						'h' => $picture->picture_h,
-					];
-
-					$imgsetparams_merge = array_replace($junews, $imgsetparams);
+					]);
 					$thumb_imgset       = $this->thumb($data[ 'src' ], $imgsetparams_merge);
 
 					if($junews[ 'usewebp' ] == 1)
 					{
-						$webp_img_imgset   = str_replace(Uri::base(), '', $thumb_imgset);
-						$thumb_webp_imgset = $this->juimg->render($webp_img_imgset, [
-							'w'         => $picture->picture_w,
-							'h'         => $picture->picture_h,
-							'webp'      => true,
-							'webp_q'    => '80',
-							'webp_maxq' => '85',
-							'cache'     => $junews[ 'image_thumb' ]
-						]);
-
-						$source_set[] = '<source media="(min-width: ' . $picture->picture . 'px)" srcset="' . $thumb_webp_imgset->webp . '" type="image/webp">';
+						$source_set[] = '<source media="(min-width: ' . $picture->picture . 'px)" srcset="' . $thumb_imgset->webp . '" type="image/webp">';
+						$source_set[] = '<source media="(min-width: ' . $picture->picture . 'px)" srcset="' . $thumb_imgset->img . '">';
+					}
+					else {
+						$source_set[] = '<source media="(min-width: ' . $picture->picture . 'px)" srcset="' . $thumb_imgset . '">';
 					}
 
-					$source_set[] = '<source media="(min-width: ' . $picture->picture . 'px)" srcset="' . $thumb_imgset . '">';
 				}
 			}
 
@@ -216,7 +200,6 @@ class Helper
 		}
 
 		$img = '<img ' . implode(' ', $attr) . '>';
-
 		if($junews[ 'usesrcset' ] == 1 || $junews[ 'usewebp' ] == 1)
 		{
 			$img = '<picture>' . $source . $img . '</picture>';
@@ -236,11 +219,11 @@ class Helper
 	 *
 	 * @param int   $webp
 	 *
-	 * @return string
+	 * @return string|array
 	 *
 	 * @since 6.0
 	 */
-	public function thumb($image, array $junews = [], $webp = 0)
+	public function thumb($image, array $junews = [])
 	{
 		$aspect = 0;
 		if($junews[ 'auto_zoomcrop' ] == 1)
@@ -248,17 +231,14 @@ class Helper
 			$aspect = $this->aspect($image, $junews[ 'cropaspect' ]);
 		}
 
+		$newimgparams = [
+			'zc' => $junews[ 'zoomcrop' ] == 1 ? $junews[ 'zoomcrop_params' ] : ''
+		];
 		if($aspect >= 1 && $junews[ 'auto_zoomcrop' ] == 1)
 		{
 			$newimgparams = [
 				'far' => '1',
 				'bg'  => $junews[ 'zoomcropbg' ]
-			];
-		}
-		else
-		{
-			$newimgparams = [
-				'zc' => $junews[ 'zoomcrop' ] == 1 ? $junews[ 'zoomcrop_params' ] : ''
 			];
 		}
 
@@ -282,7 +262,13 @@ class Helper
 			'cache' => $junews[ 'image_thumb' ]
 		];
 
-		$imgparams_merge = array_merge($imgparams, $newimgparams);
+		$webp = [];
+		if($junews[ 'usewebp' ] == 1)
+		{
+			$webp = [ 'webp' => true ];
+		}
+
+		$imgparams_merge = array_merge($imgparams, $newimgparams, $webp);
 
 		return $this->juimg->render($image, $imgparams_merge);
 	}

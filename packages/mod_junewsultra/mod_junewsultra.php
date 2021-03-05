@@ -16,8 +16,6 @@ use Joomla\CMS\Router\Route;
 
 defined('_JEXEC') or die;
 
-JLoader::register('JUImage', JPATH_LIBRARIES . '/juimage/JUImage.php');
-
 $app       = Factory::getApplication('site');
 $menu      = $app->getMenu();
 $doc       = Factory::getDocument();
