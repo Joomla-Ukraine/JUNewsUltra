@@ -44,7 +44,6 @@
 		                type="list"
 		                default="1"
 		                label="COM_MODULES_FIELD_CACHING_LABEL"
-		                description="COM_MODULES_FIELD_CACHING_DESC"
                 >
                     <option value="1">JGLOBAL_USE_GLOBAL</option>
                     <option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
@@ -55,7 +54,6 @@
 		                type="text"
 		                default="900"
 		                label="COM_MODULES_FIELD_CACHE_TIME_LABEL"
-		                description="COM_MODULES_FIELD_CACHE_TIME_DESC"
 		                filter="integer"
 		                showon="cache:1"
                 />
@@ -193,7 +191,6 @@
 		                type="list"
 		                default="0"
 		                label="MOD_JUNEWS_MODE_SELECT"
-		                description="MOD_JUNEWS_DISPLAY_SELECTED_ARTICLE"
 		                filter="integer"
 		                showon="component:com_content"
                 >
@@ -205,6 +202,9 @@
                 <field
 		                name="articleid"
 		                type="modal_article"
+		                select="true"
+		                new="false"
+		                edit="false"
 		                label="MOD_JUNEWS_SELECTARTICLE"
 		                addfieldpath="/administrator/components/com_content/models/fields/modal"
 		                showon="component:com_content[AND]display_article:1"
@@ -238,12 +238,6 @@
 		                showon="component:com_content[AND]display_article:0"
                 />
 
-                <field type="spacer"
-                       name="cat1"
-                       hr="true"
-                       showon="component:com_content[AND]display_article:0"
-                />
-
                 <field
 		                name="show_featured"
 		                type="list"
@@ -262,9 +256,8 @@
 		                type="category"
 		                extension="com_content"
 		                multiple="true"
-		                size="20"
+		                size="10"
 		                label="JCATEGORY"
-		                description="MOD_JUNEWS_FIELD_CATEGORY_DESC"
 		                showon="component:com_content[AND]display_article:0"
                 >
                     <option value="">JOPTION_ALL_CATEGORIES</option>
@@ -278,12 +271,6 @@
 		                label="MOD_JUNEWS_CATEGORY_FIELD_EXCLUDEDARTICLES_LABEL"
 		                description="MOD_JUNEWS_CATEGORY_FIELD_EXCLUDEDARTICLES_DESC"
 		                showon="component:com_content[AND]display_article:0"
-                />
-
-                <field type="spacer"
-                       name="cat5"
-                       hr="true"
-                       showon="component:com_content[AND]display_article:0"
                 />
 
                 <field
@@ -312,12 +299,6 @@
                     <option value="rating_desc">MOD_JUNEWS_BY_RATING2</option>
                     <option value="rating_asc">MOD_JUNEWS_BY_RATING1</option>
                 </field>
-
-                <field type="spacer"
-                       name="cat2"
-                       hr="true"
-                       showon="component:com_content[AND]display_article:0"
-                />
 
                 <field
 		                name="date_filtering"
@@ -372,12 +353,6 @@
 		                showon="component:com_content[AND]display_article:0[AND]date_filtering:1[AND]relative_date:6"
                 />
 
-                <field type="spacer"
-                       name="cat22"
-                       hr="true"
-                       showon="component:com_content[AND]display_article:0[AND]date_filtering:1"
-                />
-
                 <field
 		                name="dateuser_filtering"
 		                type="radio"
@@ -391,12 +366,6 @@
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
-
-                <field type="spacer"
-                       name="cat23"
-                       hr="true"
-                       showon="component:com_content[AND]display_article:0"
-                />
 
                 <field
 		                name="user_id"
@@ -417,7 +386,6 @@
 		                name="uid"
 		                type="user"
 		                label="MOD_JUNEWS_FIELD_USERID_LABEL"
-		                description="MOD_JUNEWS_FIELD_USERID_DESC"
 		                filter="integer"
 		                showon="component:com_content[AND]display_article:0[AND]user_id:0"
                 />
@@ -432,12 +400,6 @@
 		                label="MOD_JUNEWS_FIELD_USERSID_LABEL"
 		                description="MOD_JUNEWS_FIELD_USERSID_DESC"
 		                showon="component:com_content[AND]display_article:0[AND]user_id:1"
-                />
-
-                <field type="spacer"
-                       name="cat24"
-                       hr="true"
-                       showon="component:com_content[AND]display_article:0"
                 />
 
                 <field
@@ -482,12 +444,36 @@
 		                name="template"
 		                type="modulelayout"
 		                label="MOD_JUNEWS_TEMPLATE"
-		                description="MOD_JUNEWS_TEMPLATE_DESC"
+		                class="form-select"
                 />
 
-                <field type="spacer"
-                       name="a0892"
-                       hr="true" />
+                <field
+		                name="empty_mod"
+		                type="radio"
+		                class="btn-group"
+		                default="0"
+		                label="MOD_JUNEWS_DISPLAY_EMPTY_MODULE"
+                >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field
+		                name="cssstyle"
+		                type="radio"
+		                class="btn-group"
+		                default="1"
+		                label="MOD_JUNEWS_CSS"
+                >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field
+		                name="moduleclass_sfx"
+		                type="text"
+		                label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+                />
 
                 <field
 		                name="jquery"
@@ -521,47 +507,6 @@
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
-
-                <field type="spacer"
-                       name="a002"
-                       hr="true" />
-
-                <field
-		                name="empty_mod"
-		                type="radio"
-		                class="btn-group"
-		                default="0"
-		                label="MOD_JUNEWS_DISPLAY_EMPTY_MODULE"
-                >
-                    <option value="0">JNO</option>
-                    <option value="1">JYES</option>
-                </field>
-
-                <field type="spacer"
-                       name="a000"
-                       hr="true" />
-
-                <field
-		                name="cssstyle"
-		                type="radio"
-		                class="btn-group"
-		                default="1"
-		                label="MOD_JUNEWS_CSS"
-                >
-                    <option value="0">JNO</option>
-                    <option value="1">JYES</option>
-                </field>
-
-                <field
-		                name="moduleclass_sfx"
-		                type="text"
-		                label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
-		                description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC"
-                />
-
-                <field type="spacer"
-                       name="a001"
-                       hr="true" />
 
                 <field
 		                name="show_title"
@@ -656,10 +601,6 @@
                     <option value="1">JYES</option>
                 </field>
 
-                <field type="spacer"
-                       name="a5654112"
-                       hr="true" />
-
                 <field
 		                name="content_prepare"
 		                type="radio"
@@ -670,10 +611,6 @@
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
-
-                <field type="spacer"
-                       name="a5698701"
-                       hr="true" />
 
                 <field
 		                name="show_intro"
@@ -841,10 +778,6 @@
                     <option value="1">JYES</option>
                 </field>
 
-                <field type="spacer"
-                       name="a3"
-                       hr="true" />
-
                 <field
 		                name="read_more"
 		                type="radio"
@@ -863,10 +796,6 @@
 		                label="MOD_JUNEWS_READ_MORE_TEXT"
 		                showon="read_more:1"
                 />
-
-                <field type="spacer"
-                       name="a4"
-                       hr="true" />
 
                 <field
 		                name="show_date"
@@ -923,10 +852,6 @@
 		                showon="show_date:1"
                 />
 
-                <field type="spacer"
-                       name="a5"
-                       hr="true" />
-
                 <field name="showcat"
                        type="radio"
                        class="btn-group"
@@ -964,10 +889,6 @@
                     <option value="0">JHIDE</option>
                     <option value="1">JSHOW</option>
                 </field>
-
-                <field type="spacer"
-                       name="46"
-                       hr="true" />
 
                 <field name="all_in2"
                        type="radio"
@@ -1023,12 +944,6 @@
                 <field name="class_all_inhref2"
                        type="text"
                        label="MOD_JUNEWS_ALL_INHREF_CATEGORY_CSS"
-                       showon="all_in2:1"
-                />
-
-                <field type="spacer"
-                       name="a82"
-                       hr="true"
                        showon="all_in2:1"
                 />
 
@@ -1125,12 +1040,6 @@
                 <field name="class_all_inhref"
                        type="text"
                        label="MOD_JUNEWS_ALL_INHREF_CATEGORY_CSS"
-                       showon="all_in:1"
-                />
-
-                <field type="spacer"
-                       name="a8"
-                       hr="true"
                        showon="all_in:1"
                 />
 
@@ -1340,6 +1249,7 @@
 
 	            <field
 			            name="src_picture"
+			            label=""
 			            type="subform"
 			            multiple="true"
 			            min="1"
@@ -1557,10 +1467,6 @@
                     <option value="komento">Komento</option>
                 </field>
 
-                <field type="spacer"
-                       name="im14589451"
-                       hr="true" />
-
                 <field
 		                name="youtube_img_show"
 		                type="radio"
@@ -1571,10 +1477,6 @@
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
-
-                <field type="spacer"
-                       name="im145891"
-                       hr="true" />
 
                 <field
 		                name="gallery"
@@ -1587,10 +1489,6 @@
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
-
-                <field type="spacer"
-                       name="im145892"
-                       hr="true" />
 
                 <field
 		                name="contentmulticategories"
