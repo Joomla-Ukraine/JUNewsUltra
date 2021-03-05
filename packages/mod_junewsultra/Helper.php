@@ -184,7 +184,7 @@ class Helper
 			$attr[] = 'alt="' . $data[ 'alt' ] . '"';
 		}
 
-		if($params->get('image_css_class') !== '')
+		if($params->get('image_css_class') !== '' && $params->get('image_css_class'))
 		{
 			$attr[] = 'class="' . $params->get('image_css_class') . '"';
 		}
