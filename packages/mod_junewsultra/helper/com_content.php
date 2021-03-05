@@ -85,7 +85,7 @@ class com_content extends Helper
 		}
 
 		// Selects data
-		$this->query->select([
+		$this->q->select([
 			'a.id',
 			'a.state',
 			'a.alias',
@@ -95,114 +95,114 @@ class com_content extends Helper
 
 		if($junews[ 'show_title' ] == 1 || $junews[ 'show_image' ] == 1)
 		{
-			$this->query->select([ 'a.title' ]);
+			$this->q->select([ 'a.title' ]);
 		}
 
 		if($junews[ 'sourcetext' ] == 1 || $junews[ 'show_intro' ] == 1 || ($junews[ 'show_image' ] == 1 && $junews[ 'image_source' ] == 0 && ($junews[ 'introfulltext' ] == 0 || $junews[ 'introfulltext' ] == 2)))
 		{
-			$this->query->select([ 'a.introtext' ]);
+			$this->q->select([ 'a.introtext' ]);
 		}
 
 		if($junews[ 'sourcetext' ] == 1 || $junews[ 'show_full' ] == 1 || ($junews[ 'show_image' ] == 1 && $junews[ 'image_source' ] == 0 && ($junews[ 'introfulltext' ] == 1 || $junews[ 'introfulltext' ] == 2)))
 		{
-			$this->query->select([ 'a.fulltext' ]);
+			$this->q->select([ 'a.fulltext' ]);
 		}
 
 		if(Multilanguage::isEnabled())
 		{
-			$this->query->select([ 'a.language' ]);
-			$this->query->where($this->db->quoteName('a.language') . ' IN (' . $this->db->Quote($this->lang->getTag()) . ',' . $this->db->quote('*') . ')');
+			$this->q->select([ 'a.language' ]);
+			$this->q->where($this->db->quoteName('a.language') . ' IN (' . $this->db->Quote($this->lang->getTag()) . ',' . $this->db->quote('*') . ')');
 		}
 
 		if($junews[ 'image_source' ] > 0 && $junews[ 'show_image' ] == 1)
 		{
-			$this->query->select([ 'a.images' ]);
+			$this->q->select([ 'a.images' ]);
 		}
 
 		if(($junews[ 'show_date' ] == 1 || $ordering === 'created_asc' || $ordering === 'created_desc') && ($ordering === 'created_asc' || $ordering === 'created_desc' || $ordering === 'modified_created_dsc' || $ordering === 'modified_touch_dsc' || $date_type === 'created' || $date_field === 'a.created' || $date_filtering == 1 || $dateuser_filtering == 1))
 		{
-			$this->query->select([ 'a.created' ]);
+			$this->q->select([ 'a.created' ]);
 		}
 
 		if(($junews[ 'show_date' ] == 1 || $ordering === 'modified_asc' || $ordering === 'modified_desc' || $ordering === 'modified_created_dsc' || $ordering === 'modified_touch_dsc') && ($ordering === 'modified_asc' || $ordering === 'modified_desc' || $ordering === 'modified_created_dsc' || $ordering === 'modified_touch_dsc' || $date_type === 'modified' || $date_field === 'a.modified' || $date_filtering == 1))
 		{
-			$this->query->select([ 'a.modified' ]);
+			$this->q->select([ 'a.modified' ]);
 		}
 
 		if($user_id)
 		{
-			$this->query->select([ 'a.modified_by' ]);
+			$this->q->select([ 'a.modified_by' ]);
 		}
 
 		if($useaccess == 1)
 		{
-			$this->query->select([ 'a.access' ]);
+			$this->q->select([ 'a.access' ]);
 		}
 
 		if($junews[ 'featured' ] != 0)
 		{
-			$this->query->select([ 'a.featured' ]);
+			$this->q->select([ 'a.featured' ]);
 		}
 
 		if($junews[ 'show_author' ] == 1 || $dateuser_filtering == 1 || $user_id || $this->user->get('id') > 0)
 		{
-			$this->query->select([ 'a.created_by' ]);
+			$this->q->select([ 'a.created_by' ]);
 		}
 
 		if($junews[ 'show_author' ] == 1)
 		{
-			$this->query->select([ 'a.created_by_alias' ]);
+			$this->q->select([ 'a.created_by_alias' ]);
 		}
 
 		if($show_attribs == 1)
 		{
-			$this->query->select([ 'a.attribs' ]);
+			$this->q->select([ 'a.attribs' ]);
 		}
 
 		if($ordering === 'ordering_asc' || $ordering === 'ordering_desc')
 		{
-			$this->query->select([ 'a.ordering' ]);
+			$this->q->select([ 'a.ordering' ]);
 		}
 
 		if($junews[ 'show_hits' ] == 1 || $ordering === 'hits_asc' || $ordering === 'hits_desc')
 		{
-			$this->query->select([ 'a.hits' ]);
+			$this->q->select([ 'a.hits' ]);
 		}
 
 		if(is_array($catid) || $access)
 		{
-			$this->query->select([ 'a.catid' ]);
+			$this->q->select([ 'a.catid' ]);
 		}
 
 		// From
-		$this->query->from('#__content AS a');
+		$this->q->from('#__content AS a');
 
 		// Categories
 		if($junews[ 'show_cat' ] == 1)
 		{
-			$this->query->select([ 'cc.title AS category_title' ]);
-			$this->query->join('LEFT', '#__categories AS cc ON cc.id = a.catid');
+			$this->q->select([ 'cc.title AS category_title' ]);
+			$this->q->join('LEFT', '#__categories AS cc ON cc.id = a.catid');
 		}
 
 		// Multicategories plugin integration
 		if($junews[ 'multicat' ] == 1)
 		{
-			$this->query->select([ 'cmc.category_id AS cmc_cat' ]);
-			$this->query->join('LEFT', '#__contentmulticategories_categories AS cmc ON cmc.article_id = a.id');
+			$this->q->select([ 'cmc.category_id AS cmc_cat' ]);
+			$this->q->join('LEFT', '#__contentmulticategories_categories AS cmc ON cmc.article_id = a.id');
 		}
 
 		// User
 		if($junews[ 'show_author' ] == 1)
 		{
-			$this->query->select([ 'u.name AS author' ]);
-			$this->query->join('LEFT', '#__users AS u on u.id = a.created_by');
+			$this->q->select([ 'u.name AS author' ]);
+			$this->q->join('LEFT', '#__users AS u on u.id = a.created_by');
 		}
 
 		// Rating
 		if($junews[ 'show_rating' ] == 1)
 		{
-			$this->query->select([ 'ROUND(v.rating_sum / v.rating_count, 0) AS rating' ]);
-			$this->query->join('LEFT', '#__content_rating AS v ON a.id = v.content_id');
+			$this->q->select([ 'ROUND(v.rating_sum / v.rating_count, 0) AS rating' ]);
+			$this->q->join('LEFT', '#__content_rating AS v ON a.id = v.content_id');
 		}
 
 		// Uniq author post
@@ -214,25 +214,25 @@ class com_content extends Helper
 				$ji_catids = 'WHERE `catid` IN (' . implode(',', $cat_arr) . ')';
 			}
 
-			$this->query->join('INNER', '(SELECT max(`created`) MaxPostDate, `created_by` FROM `#__content` ' . $ji_catids . ' GROUP BY `created_by`) a2 ON a.created = a2.MaxPostDate');
+			$this->q->join('INNER', '(SELECT max(`created`) MaxPostDate, `created_by` FROM `#__content` ' . $ji_catids . ' GROUP BY `created_by`) a2 ON a.created = a2.MaxPostDate');
 		}
 
 		// Where
-		$this->query->where($this->db->quoteName('a.state') . ' = ' . $this->db->Quote('1'));
-		$this->query->where('(' . $this->db->quoteName('a.publish_up') . ' = ' . $this->db->Quote($this->nulldate) . ' OR ' . $this->db->quoteName('a.publish_up') . ' < ' . $this->db->Quote($this->nowdate) . ' )');
-		$this->query->where('(' . $this->db->quoteName('a.publish_down') . ' = ' . $this->db->Quote($this->nulldate) . ' OR ' . $this->db->quoteName('a.publish_down') . ' > ' . $this->db->Quote($this->nowdate) . ' )');
+		$this->q->where($this->db->quoteName('a.state') . ' = ' . $this->db->Quote('1'));
+		$this->q->where('(' . $this->db->quoteName('a.publish_up') . ' IS NULL OR ' . $this->db->quoteName('a.publish_up') . ' < ' . $this->db->Quote($this->nowdate) . ' )');
+		$this->q->where('(' . $this->db->quoteName('a.publish_down') . ' IS NULL OR ' . $this->db->quoteName('a.publish_down') . ' > ' . $this->db->Quote($this->nowdate) . ' )');
 
 		// Select article or categories
 		if($display_article == 1)
 		{
-			$this->query->where($this->db->quoteName('a.id') . ' = ' . $this->db->Quote((int) $params->get('articleid')));
+			$this->q->where($this->db->quoteName('a.id') . ' = ' . $this->db->Quote((int) $params->get('articleid')));
 		}
 		elseif($display_article == 2)
 		{
 			$ids = str_replace(' ', '', $params->get('articleids'));
 			$ids = trim($ids);
 
-			$this->query->where($this->db->quoteName('a.id') . ' IN (' . $ids . ')');
+			$this->q->where($this->db->quoteName('a.id') . ' IN (' . $ids . ')');
 		}
 		else
 		{
@@ -243,32 +243,32 @@ class com_content extends Helper
 					case '1':
 						$startDateRange = $this->db->Quote($params->get('start_date_range', date('Y-m-d') . ' 00:00:00'));
 						$endDateRange   = $this->db->Quote($params->get('end_date_range', date('Y-m-d H:i:s')));
-						$this->query->where('(' . $this->db->quoteName($date_field) . ' > ' . $this->db->Quote($startDateRange) . ' AND ' . $this->db->quoteName($date_field) . ' < ' . $this->db->Quote($endDateRange) . ')');
+						$this->q->where('(' . $this->db->quoteName($date_field) . ' > ' . $this->db->Quote($startDateRange) . ' AND ' . $this->db->quoteName($date_field) . ' < ' . $this->db->Quote($endDateRange) . ')');
 						break;
 
 					case '2':
-						$this->query->where($this->db->quoteName($date_field) . ' > DATE_SUB(' . $this->db->Quote($this->nowdate) . ', INTERVAL 7 DAY)');
+						$this->q->where($this->db->quoteName($date_field) . ' > DATE_SUB(' . $this->db->Quote($this->nowdate) . ', INTERVAL 7 DAY)');
 						break;
 
 					case '3':
-						$this->query->where($this->db->quoteName($date_field) . ' > DATE_SUB(' . $this->db->Quote($this->nowdate) . ', INTERVAL 14 DAY)');
+						$this->q->where($this->db->quoteName($date_field) . ' > DATE_SUB(' . $this->db->Quote($this->nowdate) . ', INTERVAL 14 DAY)');
 						break;
 
 					case '4':
-						$this->query->where($this->db->quoteName($date_field) . ' > DATE_SUB(' . $this->db->Quote($this->nowdate) . ', INTERVAL ' . cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y')) . ' DAY)');
+						$this->q->where($this->db->quoteName($date_field) . ' > DATE_SUB(' . $this->db->Quote($this->nowdate) . ', INTERVAL ' . cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y')) . ' DAY)');
 						break;
 
 					case '5':
-						$this->query->where($this->db->quoteName($date_field) . ' > DATE_SUB(' . $this->db->Quote($this->nowdate) . ', INTERVAL 365 DAY)');
+						$this->q->where($this->db->quoteName($date_field) . ' > DATE_SUB(' . $this->db->Quote($this->nowdate) . ', INTERVAL 365 DAY)');
 						break;
 
 					case '6':
-						$this->query->where($this->db->quoteName($date_field) . ' > DATE_SUB(' . $this->db->Quote($this->nowdate) . ', INTERVAL ' . $params->get('custom_days', '30') . ' DAY)');
+						$this->q->where($this->db->quoteName($date_field) . ' > DATE_SUB(' . $this->db->Quote($this->nowdate) . ', INTERVAL ' . $params->get('custom_days', '30') . ' DAY)');
 						break;
 
 					case '0':
 					default:
-						$this->query->where($this->db->quoteName($date_field) . ' > DATE_SUB(' . $this->db->Quote($this->nowdate) . ', INTERVAL 1 DAY)');
+						$this->q->where($this->db->quoteName($date_field) . ' > DATE_SUB(' . $this->db->Quote($this->nowdate) . ', INTERVAL 1 DAY)');
 						break;
 				}
 			}
@@ -278,28 +278,28 @@ class com_content extends Helper
 			{
 				if($junews[ 'multicat' ] == 1)
 				{
-					$this->query->where('(' . $this->db->quoteName('a.catid') . ' IN (' . implode(',', $cat_arr) . ') OR cmc.category_id IN (' . implode(',', $cat_arr) . ') )');
+					$this->q->where('(' . $this->db->quoteName('a.catid') . ' IN (' . implode(',', $cat_arr) . ') OR cmc.category_id IN (' . implode(',', $cat_arr) . ') )');
 				}
 				else
 				{
-					$this->query->where($this->db->quoteName('a.catid') . ' IN (' . implode(',', $cat_arr) . ')');
+					$this->q->where($this->db->quoteName('a.catid') . ' IN (' . implode(',', $cat_arr) . ')');
 				}
 			}
 
 			if($excluded_articles = $params->get('excluded_articles', null))
 			{
 				$excluded_articles = explode("\r\n", $excluded_articles);
-				$this->query->where($this->db->quoteName('a.id') . ' NOT IN (' . implode(',', $excluded_articles) . ')');
+				$this->q->where($this->db->quoteName('a.id') . ' NOT IN (' . implode(',', $excluded_articles) . ')');
 			}
 
 			switch($junews[ 'featured' ])
 			{
 				case '1':
-					$this->query->where($this->db->quoteName('a.featured') . ' = ' . $this->db->Quote('1'));
+					$this->q->where($this->db->quoteName('a.featured') . ' = ' . $this->db->Quote('1'));
 					break;
 
 				case '0':
-					$this->query->where($this->db->quoteName('a.featured') . ' = ' . $this->db->Quote('0'));
+					$this->q->where($this->db->quoteName('a.featured') . ' = ' . $this->db->Quote('0'));
 					break;
 			}
 
@@ -308,23 +308,23 @@ class com_content extends Helper
 				case '0':
 					if($uid > 0)
 					{
-						$this->query->where($this->db->quoteName('a.created_by') . ' = ' . $this->db->Quote($uid));
+						$this->q->where($this->db->quoteName('a.created_by') . ' = ' . $this->db->Quote($uid));
 					}
 					break;
 
 				case 'by_me':
-					$this->query->where('(' . $this->db->quoteName('a.created_by') . ' = ' . $this->db->Quote((int) $this->user->get('id')) . ' OR ' . $this->db->quoteName('a.modified_by') . ' = ' . $this->db->Quote((int) $this->user->get('id')) . ')');
+					$this->q->where('(' . $this->db->quoteName('a.created_by') . ' = ' . $this->db->Quote((int) $this->user->get('id')) . ' OR ' . $this->db->quoteName('a.modified_by') . ' = ' . $this->db->Quote((int) $this->user->get('id')) . ')');
 					break;
 
 				case 'not_me':
-					$this->query->where('(' . $this->db->quoteName('a.created_by') . ' <> ' . $this->db->Quote((int) $this->user->get('id')) . ' AND ' . $this->db->quoteName('a.modified_by') . ' <> ' . $this->db->Quote((int) $this->user->get('id')) . ')');
+					$this->q->where('(' . $this->db->quoteName('a.created_by') . ' <> ' . $this->db->Quote((int) $this->user->get('id')) . ' AND ' . $this->db->quoteName('a.modified_by') . ' <> ' . $this->db->Quote((int) $this->user->get('id')) . ')');
 					break;
 			}
 		}
 
 		if($useaccess == 1)
 		{
-			$this->query->where($this->db->quoteName('a.access') . ' IN (' . $groups . ')');
+			$this->q->where($this->db->quoteName('a.access') . ' IN (' . $groups . ')');
 		}
 
 		// Custom WHERE SQL
@@ -335,17 +335,17 @@ class com_content extends Helper
 			{
 				foreach($sqls as $sql)
 				{
-					$this->query->where($sql);
+					$this->q->where($sql);
 				}
 			}
 			else
 			{
-				$this->query->where('(' . implode(' OR ', $sqls) . ')');
+				$this->q->where('(' . implode(' OR ', $sqls) . ')');
 			}
 		}
 
-		$this->query->order($this->order($ordering));
-		$this->db->setQuery($this->query, $junews[ 'count_skip' ], $junews[ 'count' ]);
+		$this->q->order($this->order($ordering));
+		$this->db->setQuery($this->q, $junews[ 'count_skip' ], $junews[ 'count' ]);
 
 		return $this->db->loadObjectList();
 	}
@@ -477,18 +477,16 @@ class com_content extends Helper
 					$this->lang->load('com_' . $comments_system, JPATH_SITE);
 				}
 
-				$this->query = $this->db->getQuery(true);
-
 				switch($comments_system)
 				{
 					case 'komento':
-						$this->query->select([ 'cid', 'count(cid) AS cnt' ]);
-						$this->query->from('#__komento_comments');
-						$this->query->where($this->db->quoteName('published') . ' = ' . $this->db->Quote('1'));
-						$this->query->where($this->db->quoteName('component') . ' = ' . $this->db->Quote('com_content'));
-						$this->query->where($this->db->quoteName('cid') . ' IN (' . implode(',', $ids) . ')');
-						$this->query->group('cid');
-						$this->db->setQuery($this->query);
+						$this->q->select([ 'cid', 'count(cid) AS cnt' ]);
+						$this->q->from('#__komento_comments');
+						$this->q->where($this->db->quoteName('published') . ' = ' . $this->db->Quote('1'));
+						$this->q->where($this->db->quoteName('component') . ' = ' . $this->db->Quote('com_content'));
+						$this->q->where($this->db->quoteName('cid') . ' IN (' . implode(',', $ids) . ')');
+						$this->q->group('cid');
+						$this->db->setQuery($this->q);
 
 						$commentsCount  = $this->db->loadObjectList('cid');
 						$comment_link   = '#section-komento';
@@ -500,16 +498,16 @@ class com_content extends Helper
 
 					default:
 					case 'jcomments':
-						$this->query->select([
+						$this->q->select([
 							'object_id',
 							'count(object_id) AS cnt'
 						]);
-						$this->query->from('#__jcomments');
-						$this->query->where($this->db->quoteName('published') . ' = ' . $this->db->Quote('1'));
-						$this->query->where($this->db->quoteName('object_group') . ' = ' . $this->db->Quote('com_content'));
-						$this->query->where($this->db->quoteName('object_id') . ' IN (' . implode(',', $ids) . ')');
-						$this->query->group('object_id');
-						$this->db->setQuery($this->query);
+						$this->q->from('#__jcomments');
+						$this->q->where($this->db->quoteName('published') . ' = ' . $this->db->Quote('1'));
+						$this->q->where($this->db->quoteName('object_group') . ' = ' . $this->db->Quote('com_content'));
+						$this->q->where($this->db->quoteName('object_id') . ' IN (' . implode(',', $ids) . ')');
+						$this->q->group('object_id');
+						$this->db->setQuery($this->q);
 
 						$commentsCount  = $this->db->loadObjectList('object_id');
 						$comment_link   = '#comments';
@@ -550,9 +548,10 @@ class com_content extends Helper
 
 			if($access || in_array($item->access, $authorised, true))
 			{
-				$item->slug    = $item->id . ($item->alias ? ':' . $item->alias : '');
-				$language      = (Multilanguage::isEnabled() ? $item->language : '');
-				$catid         = (!empty($item->cmc_cat) && $junews[ 'multicat' ] == 1 ? $item->cmc_cat : $item->catid);
+				$item->slug = $item->id . ($item->alias ? ':' . $item->alias : '');
+				$language   = (Multilanguage::isEnabled() ? $item->language : '');
+				$catid      = (!empty($item->cmc_cat) && $junews[ 'multicat' ] == 1 ? $item->cmc_cat : $item->catid);
+
 				$item->link    = Route::_(ContentHelperRoute::getArticleRoute($item->slug, $catid, $language));
 				$item->catlink = Route::_(ContentHelperRoute::getCategoryRoute($catid));
 			}

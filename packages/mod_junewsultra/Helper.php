@@ -39,10 +39,10 @@ class Helper
 		$this->lang     = Factory::getLanguage();
 		$this->user     = Factory::getUser();
 		$this->date     = Factory::getDate();
-		$this->db       = Factory::getDbo();
 		$this->app      = Factory::getApplication();
 		$this->doc      = Factory::getDocument();
-		$this->query    = $this->db->getQuery(true);
+		$this->db       = Factory::getDbo();
+		$this->q        = $this->db->getQuery(true);
 		$this->nulldate = $this->db->getNullDate();
 		$this->nowdate  = $this->date->toSql();
 		$this->juimg    = new JUImage();
