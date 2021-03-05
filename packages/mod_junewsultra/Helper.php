@@ -158,6 +158,27 @@ class Helper
 			$attr[] = 'src="' . $src . '"';
 		}
 
+		if($junews[ 'usesrcset' ] == 1 || $junews[ 'usewebp' ] == 1 || $junews[ 'thumb_width' ] == 0)
+		{
+			$attr[] = 'width="' . $data[ 'w' ] . '"';
+			$attr[] = 'height="' . $data[ 'h' ] . '"';
+		}
+
+		if($junews[ 'usesrcset' ] == 1 || $junews[ 'usewebp' ] == 1 || $junews[ 'thumb_width' ] == 1)
+		{
+			if($junews[ 'zoomcrop' ] == 1)
+			{
+				$attr[] = 'width="' . $junews[ 'w' ] . '"';
+				$attr[] = 'height="' . $junews[ 'h' ] . '"';
+			}
+			else
+			{
+				$size   = $this->juimg->size(JPATH_SITE . '/' . $src);
+				$attr[] = 'width="' . $size->width . '"';
+				$attr[] = 'height="' . $size->height . '"';
+			}
+		}
+
 		if(isset($data[ 'alt' ]))
 		{
 			$attr[] = 'alt="' . $data[ 'alt' ] . '"';
@@ -194,7 +215,8 @@ class Helper
 						$source_set[] = '<source media="(min-width: ' . $picture->picture . 'px)" srcset="' . $thumb_imgset->webp . '" type="image/webp">';
 						$source_set[] = '<source media="(min-width: ' . $picture->picture . 'px)" srcset="' . $thumb_imgset->img . '">';
 					}
-					else {
+					else
+					{
 						$source_set[] = '<source media="(min-width: ' . $picture->picture . 'px)" srcset="' . $thumb_imgset . '">';
 					}
 
