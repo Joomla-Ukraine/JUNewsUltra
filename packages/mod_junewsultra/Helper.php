@@ -150,7 +150,10 @@ class Helper
 
 				if($junews[ 'usewebp' ] == 1)
 				{
-					$source = '<source srcset="' . $src->webp . '" type="image/webp">';
+					if(isset($src->webp) !== '')
+					{
+						$source = '<source srcset="' . $src->webp . '" type="image/webp">';
+					}
 					$src    = $src->img;
 				}
 			}
@@ -212,14 +215,17 @@ class Helper
 
 					if($junews[ 'usewebp' ] == 1)
 					{
-						$source_set[] = '<source media="(min-width: ' . $picture->picture . 'px)" srcset="' . $thumb_imgset->webp . '" type="image/webp">';
+						if(isset($src->webp) !== '')
+						{
+							$source_set[] = '<source media="(min-width: ' . $picture->picture . 'px)" srcset="' . $thumb_imgset->webp . '" type="image/webp">';
+						}
+
 						$source_set[] = '<source media="(min-width: ' . $picture->picture . 'px)" srcset="' . $thumb_imgset->img . '">';
 					}
 					else
 					{
 						$source_set[] = '<source media="(min-width: ' . $picture->picture . 'px)" srcset="' . $thumb_imgset . '">';
 					}
-
 				}
 			}
 
