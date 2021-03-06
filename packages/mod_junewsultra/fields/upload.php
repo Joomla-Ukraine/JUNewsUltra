@@ -46,8 +46,7 @@ class JFormFieldUpload extends FormField
 
 			return implode("\n", $html);
 		}
-		else {
-			return 'Upload image to <code>media/mod_junewsultra</code> folder';
-		}
+
+		return 'Upload image to <code>media/mod_junewsultra</code> folder';
 	}
 }
