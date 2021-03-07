@@ -20,7 +20,14 @@ defined('_JEXEC') or die;
 $app       = Factory::getApplication('site');
 $menu      = $app->getMenu();
 $doc       = Factory::getDocument();
+$view      = $app->input->getCmd('view');
+$option    = $app->input->getCmd('option');
 $component = trim($params->get('component', 'com_content'));
+
+if($params->get('only_article', 0) == 1 && !(($option === 'com_content' && $view === 'article') || ($option === 'com_k2' && $view === 'item')))
+{
+	return;
+}
 
 require_once __DIR__ . '/Helper.php';
 require_once __DIR__ . '/helper/' . $component . '.php';

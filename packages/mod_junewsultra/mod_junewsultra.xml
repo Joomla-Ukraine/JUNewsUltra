@@ -70,6 +70,18 @@
                     <option value="itemid">itemid</option>
                 </field>
 
+	            <field
+			            name="only_article"
+			            type="radio"
+			            class="btn-group"
+			            default="0"
+			            label="MOD_JUNEWS_ONLY_ARTICLE"
+			            filter="integer"
+	            >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
                 <field
 		                name="component"
 		                type="newsfilelist"
