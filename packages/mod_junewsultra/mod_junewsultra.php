@@ -12,7 +12,6 @@
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\ModuleHelper;
-use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Router\Route;
 
 defined('_JEXEC') or die;
@@ -90,6 +89,7 @@ $list = $object->getList($params, [
 	'q'                   => $params->get('q', '75'),
 	'f'                   => $params->get('img_ext', 'jpg'),
 	'usewebp'             => $params->get('usewebp', '0'),
+	'usegd2webp'          => $params->get('usegd2webp', '0'),
 	'usesrcset'           => $params->get('usesrcset', '0'),
 	'src_picture'         => $params->get('src_picture'),
 	'youtube_img_show'    => $params->get('youtube_img_show', 1),

@@ -1259,6 +1259,17 @@
                     <option value="1">JYES</option>
                 </field>
 
+	            <field name="usegd2webp"
+	                   type="radio"
+	                   class="btn-group"
+	                   default="0"
+	                   label="MOD_JUNEWS_USE_GD2"
+	                   showon="pik:1[AND]thumb_width:1[AND]usewebp:1"
+	            >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
 	            <field name="usesrcset"
 	                   type="radio"
 	                   class="btn-group"
