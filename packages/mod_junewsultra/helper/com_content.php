@@ -117,7 +117,7 @@ class com_content extends Helper
 			$this->q->where($this->db->quoteName('a.language') . ' IN (' . $this->db->Quote($this->lang->getTag()) . ',' . $this->db->quote('*') . ')');
 		}
 
-		if($junews[ 'image_source' ] > 0 && $junews[ 'show_image' ] == 1)
+		if(($junews[ 'image_source' ] == 0 || $junews[ 'image_source' ] == 1) && $junews[ 'show_image' ] == 1)
 		{
 			$this->q->select([ 'a.images' ]);
 		}
@@ -603,11 +603,7 @@ class com_content extends Helper
 				$junuimgsource = '';
 				if($junews[ 'image_source' ] == 0)
 				{
-					if(preg_match('/<img(.*?)src="(.*?)"(.*?)>\s*(<\/img>)?/', $_text, $junuimgsource))
-					{
-						$junuimgsource = $junuimgsource[ 2 ];
-					}
-					elseif(preg_match('/{gallery\s+(.*?)}/i', $_text, $junuimgsource) && $junews[ 'gallery' ] == 1)
+					if(preg_match('/{gallery\s+(.*?)}/i', $_text, $junuimgsource) && $junews[ 'gallery' ] == 1)
 					{
 						$folder_match = $junuimgsource[ 1 ];
 						$imglist      = explode('|', $folder_match);
@@ -642,9 +638,13 @@ class com_content extends Helper
 					{
 						$junuimgsource = $this->detect_video($_text);
 					}
+					elseif(preg_match('/<img(.*?)src="(.*?)"(.*?)>\s*(<\/img>)?/', $_text, $junuimgsource))
+					{
+						$junuimgsource = $junuimgsource[ 2 ];
+					}
 				}
 
-				if($junews[ 'image_source' ] == 1 || $junews[ 'image_source' ] == 2 || $junews[ 'image_source' ] == 3)
+				if($junews[ 'image_source' ] == 0 || $junews[ 'image_source' ] == 1 || $junews[ 'image_source' ] == 2 || $junews[ 'image_source' ] == 3)
 				{
 					$images = json_decode($item->images);
 
