@@ -154,7 +154,7 @@ class Helper
 					{
 						$source = '<source srcset="' . $src->webp . '" type="image/webp">';
 					}
-					$src    = $src->img;
+					$src = $src->img;
 				}
 			}
 
@@ -295,13 +295,19 @@ class Helper
 			'cache' => $junews[ 'image_thumb' ]
 		];
 
-		$webp = [];
+		$webp    = [];
+		$webp_im = [];
 		if($junews[ 'usewebp' ] == 1)
 		{
 			$webp = [ 'webp' => true ];
+
+			if($junews[ 'usegd2webp' ] == 1)
+			{
+				$webp_im = [ 'imagemagick' => false ];
+			}
 		}
 
-		$imgparams_merge = array_merge($imgparams, $newimgparams, $webp);
+		$imgparams_merge = array_merge($imgparams, $newimgparams, $webp, $webp_im);
 
 		return $this->juimg->render($image, $imgparams_merge);
 	}
