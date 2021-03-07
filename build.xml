@@ -6,7 +6,7 @@
         <format property="DATE" pattern="%d.%m.%Y" />
     </tstamp>
 
-    <property name="juimage" value="4.0"/>
+    <property name="juimage" value="4.1"/>
 
     <property name="build" value="build"/>
     <property name="temp" value="temp"/>
