@@ -186,6 +186,13 @@ class com_k2 extends Helper
 			$this->q->join('LEFT', '#__users AS u on u.id = a.created_by');
 		}
 
+		// Rating
+		if($junews[ 'show_rating' ] == 1)
+		{
+			$this->q->select([ 'ROUND(v.rating_sum / v.rating_count, 0) AS rating' ]);
+			$this->q->join('LEFT', '#__k2_rating AS v ON a.id = v.itemID');
+		}
+
 		// Where
 		$this->q->where($this->db->quoteName('a.published') . ' = ' . $this->db->Quote('1'));
 		$this->q->where($this->db->quoteName('a.trash') . ' = ' . $this->db->Quote('0'));
@@ -407,7 +414,6 @@ class com_k2 extends Helper
 						$comment_plural = 0;
 						break;
 
-					default:
 					case 'jcomments':
 						$this->q->select([
 							'object_id',
@@ -421,6 +427,25 @@ class com_k2 extends Helper
 						$this->db->setQuery($this->q);
 
 						$commentsCount  = $this->db->loadObjectList('object_id');
+						$comment_link   = '#comments';
+						$comment_add    = '#addcomments';
+						$comment_text1  = 'LINK_READ_COMMENTS';
+						$comment_text2  = 'LINK_ADD_COMMENT';
+						$comment_plural = 1;
+						break;
+
+					default:
+						$this->q->select([
+							'id',
+							'count(id) AS cnt'
+						]);
+						$this->q->from('#__k2_comments');
+						$this->q->where($this->db->quoteName('published') . ' = ' . $this->db->Quote('1'));
+						$this->q->where($this->db->quoteName('id') . ' IN (' . implode(',', $ids) . ')');
+						$this->q->group('id');
+						$this->db->setQuery($this->q);
+
+						$commentsCount  = $this->db->loadObjectList('id');
 						$comment_link   = '#comments';
 						$comment_add    = '#addcomments';
 						$comment_text1  = 'LINK_READ_COMMENTS';
@@ -452,11 +477,13 @@ class com_k2 extends Helper
 
 		foreach($items as $item)
 		{
-
 			$introtext = (isset($item->introtext) ? $item->introtext : '');
 			$fulltext  = (isset($item->fulltext) ? $item->fulltext : '');
 
-			$item->link = Route::_(K2HelperRoute::getItemRoute($item->id . ':' . urlencode($item->alias), $item->catid . ':' . urlencode($item->categoryalias)));
+			$slug          = $item->id . ($item->alias ? ':' . urlencode($item->alias) : '');
+			$catslug       = $item->catid . ':' . urlencode($item->categoryalias);
+			$item->link    = Route::_(K2HelperRoute::getItemRoute($slug, $catslug));
+			$item->catlink = Route::_(K2HelperRoute::getItemRoute($catslug));
 
 			// article title
 			if($junews[ 'show_title' ] == 1)
@@ -479,7 +506,7 @@ class com_k2 extends Helper
 				switch($junews[ 'introfulltext' ])
 				{
 					case '1':
-						$_text = $item->fulltext;
+						$_text = $fulltext;
 						break;
 
 					case '2':
@@ -507,11 +534,12 @@ class com_k2 extends Helper
 					}
 				}
 
-				if($junews[ 'image_source' ] == 1 || $junews[ 'image_source' ] == 2 || $junews[ 'image_source' ] == 3)
+				if($junews[ 'image_source' ] == 0 || $junews[ 'image_source' ] == 1 || $junews[ 'image_source' ] == 2 || $junews[ 'image_source' ] == 3)
 				{
 					$k2image     = '.jpg';
 					$k2imagepath = 'src';
 					$k2img       = 'media/k2/items/' . $k2imagepath . '/' . md5('Image' . $item->id) . $k2image;
+
 					if(file_exists(JPATH_SITE . '/' . $k2img))
 					{
 						$junuimgsource     = $k2img;
