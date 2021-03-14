@@ -158,7 +158,7 @@ if(file_exists($layoutpath = ModuleHelper::getLayoutPath('mod_junewsultra', $par
 		$_tag_open2    = '';
 		$_tag_close2   = '';
 
-		if($titletag2[ 1 ])
+		if(isset($titletag2[ 1 ]))
 		{
 			$_tag_open2  = '<' . $titletag2[ 1 ] . '>';
 			$_tag_close2 = '</' . $titletag2[ 1 ] . '>';

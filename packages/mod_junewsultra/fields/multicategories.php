@@ -55,8 +55,7 @@ class JFormFieldMultiCategories extends JFormFieldList
 		}
 		else
 		{
-
-			if($options[ 0 ] != '')
+			if(isset($options[ 0 ]) != '')
 			{
 				$html[] = HTMLHelper::_('select.genericlist', $options, $this->name, trim($attr), 'value', 'text', $this->value, $this->id);
 			}
