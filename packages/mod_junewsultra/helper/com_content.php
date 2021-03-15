@@ -603,7 +603,11 @@ class com_content extends Helper
 				$junuimgsource = '';
 				if($junews[ 'image_source' ] == 0)
 				{
-					if(preg_match('/{gallery\s+(.*?)}/i', $_text, $junuimgsource) && $junews[ 'gallery' ] == 1)
+					if(preg_match('/<img(.*?)src="(.*?)"(.*?)>\s*(<\/img>)?/', $_text, $junuimgsource))
+					{
+						$junuimgsource = $junuimgsource[ 2 ];
+					}
+					elseif(preg_match('/{gallery\s+(.*?)}/i', $_text, $junuimgsource) && $junews[ 'gallery' ] == 1)
 					{
 						$folder_match = $junuimgsource[ 1 ];
 						$imglist      = explode('|', $folder_match);
@@ -637,10 +641,6 @@ class com_content extends Helper
 					elseif($junews[ 'youtube_img_show' ] == 1)
 					{
 						$junuimgsource = $this->detect_video($_text);
-					}
-					elseif(preg_match('/<img(.*?)src="(.*?)"(.*?)>\s*(<\/img>)?/', $_text, $junuimgsource))
-					{
-						$junuimgsource = $junuimgsource[ 2 ];
 					}
 				}
 
