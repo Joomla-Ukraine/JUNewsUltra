@@ -9,20 +9,6 @@
  * @license          GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-.nntoggler {
-    border: 1px solid #ccc;
-    padding: 12px;
-    margin-left: 4%;
-    margin-top: 3px;
-}
-
-.nntoggler .nntoggler {
-    border: 0 none;
-    border-top: 1px dotted #ccc;
-    padding: 12px 0 0 4%;
-    margin-left: 0;
-}
-
 /* fields */
 .spacer hr {
     border: 1px dotted #ccc;
@@ -33,11 +19,6 @@
     background: #fafafa;
     border: 1px solid #ccc;
     padding: 15px 0 15px 10px;
-}
-
-.nntoggler {
-    background: #fff;
-    width: 92%;
 }
 
 .control-group .control-label {
@@ -55,10 +36,6 @@
     font-weight: bold !important;
     font-size: 16px;
     line-height: normal !important;
-}
-
-.nntoggler .control-group .spacer .text label {
-    font-size: 14px;
 }
 
 .control-group .spacer .text label span {
@@ -80,10 +57,6 @@
 .control-group .controls .btn-group label {
     float: none;
     margin: 0 -1px 0 0;
-}
-
-.nntoggler {
-    margin: -10px 0 18px 18px;
 }
 
 .controls #jform_params_components {
