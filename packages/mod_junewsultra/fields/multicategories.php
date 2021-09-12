@@ -32,8 +32,7 @@ class JFormFieldMultiCategories extends JFormFieldList
 	protected function getInput()
 	{
 		$html = [];
-		$attr = '';
-		$attr .= $this->element[ 'class' ] ? ' class="' . (string) $this->element[ 'class' ] . '"' : '';
+		$attr = $this->element[ 'class' ] ? ' class="' . (string) $this->element[ 'class' ] . '"' : '';
 
 		if((string) $this->element[ 'readonly' ] === 'true' || (string) $this->element[ 'disabled' ] === 'true')
 		{
@@ -45,7 +44,7 @@ class JFormFieldMultiCategories extends JFormFieldList
 		$attr .= $this->element[ 'onchange' ] ? ' onchange="' . (string) $this->element[ 'onchange' ] . '"' : '';
 		$attr .= ' size="20"';
 
-		$options = (array) $this->getOptions();
+		$options = $this->getOptions();
 
 		if((string) $this->element[ 'readonly' ] === 'true')
 		{

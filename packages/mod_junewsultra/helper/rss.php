@@ -20,7 +20,7 @@ class rss extends Helper
 	 * @param $params
 	 * @param $junews
 	 *
-	 * @return array|bool|\SimpleXMLElement[]
+	 * @return array|\SimpleXMLElement[]
 	 *
 	 * @since 6.0
 	 */
@@ -33,7 +33,7 @@ class rss extends Helper
 	 * @param $params
 	 * @param $junews
 	 *
-	 * @return array|SimpleXMLElement[]|void
+	 * @return array|bool|SimpleXMLElement[]
 	 *
 	 * @since 6.0
 	 */

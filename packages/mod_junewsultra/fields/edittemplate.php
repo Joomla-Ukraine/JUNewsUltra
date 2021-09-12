@@ -41,6 +41,7 @@ if($user->get('id') < 1)
 	<html lang="<?php echo $language; ?>">
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<title></title>
 		<?php echo $csslink; ?>
 	</head>
 	<body><?php echo '<div class="alert alert-error">' . Text::_('MOD_JUNEWS_LOGIN') . '</div>'; ?></body>
@@ -99,8 +100,9 @@ $data = file_get_contents($filename);
 <html lang="<?php echo $language; ?>">
 <head>
 	<meta charset="utf-8" />
+	<title></title>
 	<?php echo $csslink; ?>
-	<style type="text/css">
+	<style>
 		body {
 			background: transparent;
 			font-size: 102%;

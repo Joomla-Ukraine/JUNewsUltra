@@ -281,7 +281,7 @@ class com_k2 extends Helper
 	/**
 	 * @param $order
 	 *
-	 * @return bool|string
+	 * @return string
 	 *
 	 * @since 6.0
 	 */

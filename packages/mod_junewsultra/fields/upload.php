@@ -24,7 +24,7 @@ class JFormFieldUpload extends FormField
 
 	/**
 	 *
-	 * @return string|void
+	 * @return string
 	 *
 	 * @since 6.0
 	 */
@@ -35,7 +35,7 @@ class JFormFieldUpload extends FormField
 			return Text::_('MOD_JUNEWS_NOT_EDIT_TEMPLATE');
 		}
 
-		if(version_compare(JVERSION, '3.10') <= 0)
+		if(version_compare(JVERSION, '4.0.0', '<'))
 		{
 			HTMLHelper::_('behavior.modal', 'a.modal');
 

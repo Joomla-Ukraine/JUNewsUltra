@@ -250,8 +250,6 @@ class Helper
 	 * @param       $image
 	 * @param array $junews
 	 *
-	 * @param int   $webp
-	 *
 	 * @return string|array
 	 *
 	 * @since 6.0
@@ -363,7 +361,7 @@ class Helper
 				$title        = trim(StringHelper::substr($title, 0, $title_limit_count));
 			}
 
-			if(!preg_match('#(\.|\?|!)$#ismu', $title))
+			if(!preg_match('#([.?!])$#ismu', $title))
 			{
 				$sufix = '';
 				if($title_length > $title_limit_count)
@@ -371,7 +369,7 @@ class Helper
 					$sufix = $end_limit_title;
 				}
 
-				$title = preg_replace('#^\s?(,|;|:|-)#ismu', '', $title);
+				$title = preg_replace('#^\s?([,;:\-])#ismu', '', $title);
 				$title = ($title ? $title . $sufix : '');
 			}
 		}
@@ -464,7 +462,7 @@ class Helper
 					break;
 			}
 
-			if((!preg_match('#(\.|\?|!)$#ismu', $description)) && $dots == 1)
+			if((!preg_match('#([.?!])$#ismu', $description)) && $dots == 1)
 			{
 				$sufix = '';
 				if($description_length > $data[ 'text_limit' ])
@@ -472,7 +470,7 @@ class Helper
 					$sufix = $data[ 'end_limit_text' ];
 				}
 
-				$description = preg_replace('#^\s?(,|;|:|-)#ismu', '', $description);
+				$description = preg_replace('#^\s?([,;:\-])#ismu', '', $description);
 				$description = ($description ? $description . $sufix : '');
 			}
 		}
@@ -609,7 +607,7 @@ class Helper
 		}
 		catch (Exception $e)
 		{
-			echo '<div class="uk-alert-warning" uk-alert>' . Text::_('MOD_JUNEWS_RSSXML_ERROR') . '</div>';
+			echo '<div class="uk-alert-warning" data-uk-alert>' . Text::_('MOD_JUNEWS_RSSXML_ERROR') . '</div>';
 		}
 
 		return $items;
@@ -650,7 +648,7 @@ class Helper
 		{
 			$direction = ($this->lang->isRtl() ? 'rtl' : 'ltr');
 
-			JHtmlBootstrap::loadCss($includeMaincss = true, $direction);
+			JHtmlBootstrap::loadCss(true, $direction);
 		}
 
 		return true;

@@ -356,7 +356,7 @@ class com_content extends Helper
 	/**
 	 * @param $order
 	 *
-	 * @return bool|string
+	 * @return string
 	 *
 	 * @since 6.0
 	 */

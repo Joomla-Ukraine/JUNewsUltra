@@ -10,7 +10,7 @@
  * @license          GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-/******************* PARAMS (update 05.12.2016) ************
+/********** PARAMS ************
  *
  * $params->get('moduleclass_sfx') - module class suffix
  *
@@ -51,9 +51,11 @@
  * $item->readmore       - display 'Read more...' or other text
  * $item->rmtext         - display 'Read more...' or other text
  *
- ************************************************************/
+ */
 
-defined('_JEXEC') or die('Restricted access');
+use Joomla\CMS\Language\Text;
+
+defined('_JEXEC') or die();
 
 ?>
 <div class="junewsultra <?php echo $params->get('moduleclass_sfx'); ?>">
@@ -92,7 +94,7 @@ defined('_JEXEC') or die('Restricted access');
 									<sup class="jn-small jn-rating-count"><?php echo $item->rating_count; ?></sup>
 								<?php endif; ?>
 								<?php if($params->get('showHits')): ?>
-									<span class="jn-small jn-hits"><?php echo JText::_('JGLOBAL_HITS'); ?>: <?php echo $item->hits; ?></span>
+									<span class="jn-small jn-hits"><?php echo Text::_('JGLOBAL_HITS'); ?>: <?php echo $item->hits; ?></span>
 								<?php endif; ?>
 							</div>
 						<?php endif; ?>

@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="module"
-           version="3.8"
-           client="site"
-           method="upgrade">
+<extension type="module" version="3.8" client="site" method="upgrade">
     <name>MOD_JUNEWSULTRA</name>
     <creationDate>@date@</creationDate>
     <author>Denys Nosov</author>
@@ -27,10 +24,7 @@
     </media>
 
     <updateservers>
-        <server type="extension"
-                priority="1"
-                name="JUNewsUltra">https://joomla-ua.org/update/mod/junewsultra.xml
-        </server>
+        <server type="extension" priority="1" name="JUNewsUltra">https://joomla-ua.org/update/mod/junewsultra.xml</server>
     </updateservers>
 
     <config addfieldpath="/modules/mod_junewsultra/fields">
