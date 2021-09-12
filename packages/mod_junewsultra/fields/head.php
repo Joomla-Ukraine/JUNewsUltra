@@ -72,7 +72,7 @@ if(isset($curent_tmp[ 'template' ]))
 	$doc->addScriptDeclaration($snipets);
 }
 
-if(version_compare(JVERSION, '3.10') <= 0)
+if(version_compare(JVERSION, '4.0.0', '<'))
 {
 	HTMLHelper::_('jquery.framework');
 }

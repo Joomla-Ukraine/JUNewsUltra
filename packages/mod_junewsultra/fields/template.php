@@ -35,7 +35,7 @@ class JFormFieldTemplate extends FormField
 			return Text::_('MOD_JUNEWS_NOT_EDIT_TEMPLATE');
 		}
 
-		if(version_compare(JVERSION, '3.10') <= 0)
+		if(version_compare(JVERSION, '4.0.0', '<'))
 		{
 			HTMLHelper::_('behavior.modal', 'a.modal');
 

@@ -115,7 +115,7 @@ class Pkg_JUNewsUltraInstallerScript
 		$lang = Factory::getLanguage();
 		$lang->load('mod_junewsultra', JPATH_SITE);
 
-		if(version_compare(JVERSION, '3.10') >= 0)
+		if(version_compare(JVERSION, '4.0.0', '>='))
 		{
 			$xml = file_get_contents(JPATH_SITE . '/modules/mod_junewsultra/mod_junewsultra.xml');
 			$xml = str_replace('class="btn-group"', 'layout="joomla.form.field.radio.switcher"', $xml);
