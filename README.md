@@ -1,5 +1,8 @@
 # JUNewsUltra
 
+## Download from JED
+https://extensions.joomla.org/extension/news-display/articles-display/junewsultra-pro/
+
 ## License
 
 GNU General Public License version 3 or later; see [LICENSE.md](LICENSE.md)
