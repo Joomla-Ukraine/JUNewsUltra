@@ -1,6 +1,8 @@
 # JUNewsUltra
 
 ## Download from JED
+
+Joomla 4.x and 3.x:
 https://extensions.joomla.org/extension/news-display/articles-display/junewsultra-pro/
 
 ## License
