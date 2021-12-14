@@ -202,7 +202,7 @@ class Helper
 			$source_set = [];
 			$array      = (array) $junews[ 'src_picture' ];
 
-			arsort($array);
+			//arsort($array);
 			foreach($array as $picture)
 			{
 				if($picture->picture && $picture->picture_w && $picture->picture_h)
@@ -250,7 +250,7 @@ class Helper
 	 * @param       $image
 	 * @param array $junews
 	 *
-	 * @return string|array
+	 * @return object|string
 	 *
 	 * @since 6.0
 	 */

@@ -33,7 +33,7 @@ class rss extends Helper
 	 * @param $params
 	 * @param $junews
 	 *
-	 * @return array|bool|SimpleXMLElement[]
+	 * @return array|SimpleXMLElement[]
 	 *
 	 * @since 6.0
 	 */

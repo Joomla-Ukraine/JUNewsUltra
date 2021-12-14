@@ -32,7 +32,7 @@ class JFormFieldMultiCategories extends JFormFieldList
 	protected function getInput()
 	{
 		$html = [];
-		$attr = $this->element[ 'class' ] ? ' class="' . (string) $this->element[ 'class' ] . '"' : '';
+		$attr = $this->element[ 'class' ] ? ' class="' . $this->element[ 'class' ] . '"' : '';
 
 		if((string) $this->element[ 'readonly' ] === 'true' || (string) $this->element[ 'disabled' ] === 'true')
 		{
@@ -41,7 +41,7 @@ class JFormFieldMultiCategories extends JFormFieldList
 
 		$attr .= $this->element[ 'size' ] ? ' size="' . (int) $this->element[ 'size' ] . '"' : '';
 		$attr .= $this->multiple ? ' multiple="multiple"' : '';
-		$attr .= $this->element[ 'onchange' ] ? ' onchange="' . (string) $this->element[ 'onchange' ] . '"' : '';
+		$attr .= $this->element[ 'onchange' ] ? ' onchange="' . $this->element[ 'onchange' ] . '"' : '';
 		$attr .= ' size="20"';
 
 		$options = $this->getOptions();
@@ -157,11 +157,7 @@ class JFormFieldMultiCategories extends JFormFieldList
 		{
 			if($option[ 2 ] == $parent)
 			{
-				$level_string = '';
-				for($i = 0; $i < $level; $i++)
-				{
-					$level_string .= '- - ';
-				}
+				$level_string    = str_repeat('- - ', $level);
 				$this->options[] = HTMLHelper::_('select.option', $option[ 0 ], $level_string . $option[ 1 ]);
 				$this->recursive_options($temp_options, $level + 1, $option[ 0 ]);
 			}
