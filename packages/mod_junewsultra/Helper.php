@@ -24,7 +24,16 @@ JLoader::register('JUImage', JPATH_LIBRARIES . '/juimage/JUImage.php');
  * Helper for mod_junewsultra
  *
  * @since       6.0
- * @package     Joomla.Site
+ * @property \Joomla\CMS\User\User                       $user* @package     Joomla.Site
+ * @property \Joomla\CMS\Date\Date                       $date
+ * @property \Joomla\CMS\Application\CMSApplication|null $app
+ * @property \JDocument|null                             $doc
+ * @property \JDatabaseDriver|null                       $db
+ * @property \JDatabaseQuery|string                      $q
+ * @property string                                      $nulldate
+ * @property string                                      $nowdate
+ * @property \JUImage                                    $juimg
+ * @property \Joomla\CMS\Language\Language|null          $lang
  * @subpackage  mod_junewsultra
  */
 class Helper
@@ -150,7 +159,7 @@ class Helper
 
 				if($junews[ 'usewebp' ] == 1)
 				{
-					if(isset($src->webp) !== '')
+					if(isset($src->webp) && $src->webp !== '')
 					{
 						$source = '<source srcset="' . $src->webp . '" type="image/webp">';
 					}
@@ -215,7 +224,7 @@ class Helper
 
 					if($junews[ 'usewebp' ] == 1)
 					{
-						if(isset($src->webp) !== '')
+						if(isset($src->webp) && $src->webp !== '')
 						{
 							$source_set[] = '<source media="(min-width: ' . $picture->picture . 'px)" srcset="' . $thumb_imgset->webp . '" type="image/webp">';
 						}
@@ -361,7 +370,7 @@ class Helper
 				$title        = trim(StringHelper::substr($title, 0, $title_limit_count));
 			}
 
-			if(!preg_match('#([.?!])$#ismu', $title))
+			if(!preg_match('#([.?!])$#imu', $title))
 			{
 				$sufix = '';
 				if($title_length > $title_limit_count)
@@ -369,7 +378,7 @@ class Helper
 					$sufix = $end_limit_title;
 				}
 
-				$title = preg_replace('#^\s?([,;:\-])#ismu', '', $title);
+				$title = preg_replace('#^\s?([,;:\-])#imu', '', $title);
 				$title = ($title ? $title . $sufix : '');
 			}
 		}
@@ -462,7 +471,7 @@ class Helper
 					break;
 			}
 
-			if((!preg_match('#([.?!])$#ismu', $description)) && $dots == 1)
+			if((!preg_match('#([.?!])$#imu', $description)) && $dots == 1)
 			{
 				$sufix = '';
 				if($description_length > $data[ 'text_limit' ])
@@ -470,7 +479,7 @@ class Helper
 					$sufix = $data[ 'end_limit_text' ];
 				}
 
-				$description = preg_replace('#^\s?([,;:\-])#ismu', '', $description);
+				$description = preg_replace('#^\s?([,;:\-])#imu', '', $description);
 				$description = ($description ? $description . $sufix : '');
 			}
 		}
@@ -503,12 +512,7 @@ class Helper
 			$starImageOff = HTMLHelper::_('image', Uri::base() . $rating_tpl . '/rating_star_blank.png', $rating, null, true);
 		}
 
-		$img = '';
-		for($i = 0; $i < $rating; $i++)
-		{
-			$img .= $starImageOn;
-		}
-
+		$img = str_repeat($starImageOn, $rating);
 		for($i = $rating; $i < 5; $i++)
 		{
 			$img .= $starImageOff;
@@ -527,11 +531,9 @@ class Helper
 	public function url($html)
 	{
 		$root_url = Uri::base();
+		$html     = preg_replace('@href="(?!http://)(?!https://)(?!mailto:)([^"]+)"@i', "href=\"{$root_url}\${1}\"", $html);
 
-		$html = preg_replace('@href="(?!http://)(?!https://)(?!mailto:)([^"]+)"@i', "href=\"{$root_url}\${1}\"", $html);
-		$html = preg_replace('@src="(?!http://)(?!https://)([^"]+)"@i', "src=\"{$root_url}\${1}\"", $html);
-
-		return $html;
+		return preg_replace('@src="(?!http://)(?!https://)([^"]+)"@i', "src=\"{$root_url}\${1}\"", $html);
 	}
 
 	/**

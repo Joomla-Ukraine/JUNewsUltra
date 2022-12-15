@@ -534,6 +534,7 @@ class com_k2 extends Helper
 					}
 				}
 
+				$item->imagesource = '';
 				if($junews[ 'image_source' ] == 0 || $junews[ 'image_source' ] == 1 || $junews[ 'image_source' ] == 2 || $junews[ 'image_source' ] == 3)
 				{
 					$k2image     = '.jpg';
@@ -560,7 +561,6 @@ class com_k2 extends Helper
 
 				$item->image       = '';
 				$item->imagelink   = '';
-				$item->imagesource = '';
 
 				switch($junews[ 'thumb_width' ])
 				{

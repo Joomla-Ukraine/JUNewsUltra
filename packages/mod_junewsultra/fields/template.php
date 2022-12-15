@@ -46,13 +46,10 @@ class JFormFieldTemplate extends FormField
 			$tmpl = 'default';
 			if(preg_match('#"template":"_:(.*?)"#is', $rows, $ok))
 			{
+				$tmpl = $ok[ 1 ];
 				if($ok[ 1 ] == 1)
 				{
 					$tmpl = 'default';
-				}
-				else
-				{
-					$tmpl = $ok[ 1 ];
 				}
 			}
 

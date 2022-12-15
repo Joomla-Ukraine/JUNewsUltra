@@ -49,6 +49,7 @@ function alert($text, $error)
 	<html lang="<?php echo $language; ?>">
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<title>Upload</title>
 	</head>
 	<body>
 	<?php echo alert(JText::_('MOD_JUNEWS_LOGIN'), 'notice'); ?>
@@ -71,6 +72,7 @@ $valid_types = [
 <html lang="<?php echo $language; ?>">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>Upload</title>
 </head>
 <body>
 <form enctype="multipart/form-data" method="post">

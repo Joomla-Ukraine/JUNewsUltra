@@ -644,6 +644,7 @@ class com_content extends Helper
 					}
 				}
 
+				$item->imagesource = '';
 				if($junews[ 'image_source' ] == 0 || $junews[ 'image_source' ] == 1 || $junews[ 'image_source' ] == 2 || $junews[ 'image_source' ] == 3)
 				{
 					$images = json_decode($item->images);
@@ -690,9 +691,8 @@ class com_content extends Helper
 					}
 				}
 
-				$item->image       = '';
-				$item->imagelink   = '';
-				$item->imagesource = '';
+				$item->image     = '';
+				$item->imagelink = '';
 
 				switch($junews[ 'thumb_width' ])
 				{
