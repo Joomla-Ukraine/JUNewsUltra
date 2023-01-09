@@ -4,8 +4,8 @@
     <packagename>junewsultra</packagename>
     <creationDate>@date@</creationDate>
     <packager>Joomla! Ukraine</packager>
-    <copyright>(C) 2009-2021 Denys Nosov, Joomla! Ukraine</copyright>
-    <packagerurl>http://joomla-ua.org</packagerurl>
+    <copyright>(C) 2009-2023 Denys Nosov, Joomla! Ukraine</copyright>
+    <packagerurl>https://joomla-ua.org</packagerurl>
     <author>Denys Nosov, Joomla! Ukraine</author>
     <authorEmail>denys@joomla-ua.org</authorEmail>
     <authorUrl>https://joomla-ua.org</authorUrl>
@@ -14,7 +14,7 @@
     <description>PKG_MOD_JUNEWS_DESCRIPTION</description>
 
     <scriptfile>script.php</scriptfile>
-    <update>http://joomla-ua.org/update/mod/junewsultra.xml</update>
+    <update>https://joomla-ua.org/update/mod/junewsultra.xml</update>
 
     <updateservers>
         <server type="extension" priority="1" name="JUNewsUltra">https://joomla-ua.org/update/mod/junewsultra.xml</server>

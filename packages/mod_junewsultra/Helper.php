@@ -6,8 +6,8 @@
  * @subpackage       mod_junewsultra
  *
  * @author           Denys Nosov, denys@joomla-ua.org
- * @copyright        2007-2021 (C) Joomla! Ukraine, http://joomla-ua.org. All rights reserved.
- * @license          GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright        2007-2023 (C) Joomla! Ukraine, https://joomla-ua.org. All rights reserved.
+ * @license          GNU/GPL - https://www.gnu.org/copyleft/gpl.html
  */
 
 use Joomla\CMS\Factory;
@@ -121,7 +121,7 @@ class Helper
 
 		if(preg_match_all('#(player.vimeo.com)/video/(\d+)#i', $html, $match))
 		{
-			return 'http://vimeo.com/' . $match[ 2 ];
+			return 'https://vimeo.com/' . $match[ 2 ];
 		}
 
 		return false;
