@@ -1,12 +1,12 @@
 <project name="junewsultra" default="dist" basedir=".">
 
-    <property name="VERSION" value="7.2"/>
+    <property name="VERSION" value="7.3"/>
 
     <tstamp>
         <format property="DATE" pattern="%d.%m.%Y" />
     </tstamp>
 
-    <property name="juimage" value="5.8"/>
+    <property name="juimage" value="5.11"/>
 
     <property name="build" value="build"/>
     <property name="temp" value="temp"/>
@@ -87,7 +87,7 @@
             <fileset dir="${temp}/tmpl_mod_junewsultra_default"/>
         </zip>
 
-        <copy file="../plg_juimage/dist/pkg_juimage_v${juimage}.zip" todir="${build}/packages"/>
+        <copy file="../JUImage/dist/pkg_juimage_v${juimage}.zip" todir="${build}/packages"/>
 
         <copy todir="${build}/language">
             <fileset dir="${temp}/language">
