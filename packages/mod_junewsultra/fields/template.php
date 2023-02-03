@@ -63,7 +63,7 @@ class JFormFieldTemplate extends FormField
 			}
 
 			$value = (int) $this->value;
-			if(0 == (int) $this->value)
+			if((int) $this->value == 0)
 			{
 				$value = '';
 			}

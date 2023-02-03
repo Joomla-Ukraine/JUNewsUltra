@@ -92,8 +92,6 @@ class JFormFieldCommentsRadio extends FormField
 			$options[] = $tmp;
 		}
 
-		reset($options);
-
 		return $options;
 	}
 }

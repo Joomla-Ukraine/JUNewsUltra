@@ -52,16 +52,13 @@ class JFormFieldMultiCategories extends JFormFieldList
 			$html[] = '<input type="hidden" name="' . $this->name . '" value="' . $this->value . '"/>';
 
 		}
+		elseif(isset($options[ 0 ]) != '')
+		{
+			$html[] = HTMLHelper::_('select.genericlist', $options, $this->name, trim($attr), 'value', 'text', $this->value, $this->id);
+		}
 		else
 		{
-			if(isset($options[ 0 ]) != '')
-			{
-				$html[] = HTMLHelper::_('select.genericlist', $options, $this->name, trim($attr), 'value', 'text', $this->value, $this->id);
-			}
-			else
-			{
-				return '<select style="display:none"></select><strong style="line-height: 2.6em">Component not installed or any categories are available.</strong>';
-			}
+			return '<select style="display:none"></select><strong style="line-height: 2.6em">Component not installed or any categories are available.</strong>';
 		}
 
 		return implode($html);
@@ -134,8 +131,6 @@ class JFormFieldMultiCategories extends JFormFieldList
 					$this->recursive_options($temp_options, 1, $option[ 0 ]);
 				}
 			}
-
-			return $this->options;
 		}
 
 		return $this->options;

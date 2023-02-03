@@ -101,7 +101,7 @@ if(isset($_FILES[ 'userfile' ]))
 		{
 			$size  = getimagesize($filename);
 			$alert = alert(JText::_('MOD_JUNEWS_ERROR3'), 'notice');
-			if(@move_uploaded_file($filename, $path . '/jn_' . $_FILES[ 'userfile' ][ 'name' ]))
+			if(move_uploaded_file($filename, $path . '/jn_' . $_FILES[ 'userfile' ][ 'name' ]))
 			{
 				$alert = alert(JText::_('MOD_JUNEWS_NOTICE8'), 'message');
 			}

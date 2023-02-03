@@ -118,8 +118,14 @@ class Pkg_JUNewsUltraInstallerScript
 		if(version_compare(JVERSION, '4.0.0', '>='))
 		{
 			$xml = file_get_contents(JPATH_SITE . '/modules/mod_junewsultra/mod_junewsultra.xml');
-			$xml = str_replace('class="btn-group"', 'layout="joomla.form.field.radio.switcher"', $xml);
-			$xml = str_replace('addfieldpath="/administrator/components/com_content/models/fields/modal"', 'addfieldprefix="Joomla\Component\Content\Administrator\Field"', $xml);
+			$xml = str_replace([
+				'class="btn-group"',
+				'addfieldpath="/administrator/components/com_content/models/fields/modal"'
+			], [
+				'layout="joomla.form.field.radio.switcher"',
+				'addfieldprefix="Joomla\Component\Content\Administrator\Field"'
+			], $xml);
+
 			file_put_contents(JPATH_SITE . '/modules/mod_junewsultra/mod_junewsultra.xml', $xml);
 		}
 
@@ -137,8 +143,7 @@ class Pkg_JUNewsUltraInstallerScript
 			$enabled[ $extension ] = $db->loadResult();
 		}
 
-		$html = '';
-		$html .= '<style type="text/css">
+		$html = '<style type="text/css">
 		.juinstall {
 			color: #333!important;
 			font-weight: normal;
@@ -339,15 +344,14 @@ class Pkg_JUNewsUltraInstallerScript
 
 	/**
 	 * @param $dir
-	 * @param $mode
 	 *
 	 * @return bool
 	 *
 	 * @since version
 	 */
-	private function MakeDirectory($dir, $mode = 0777)
+	private function MakeDirectory($dir)
 	{
-		if(@mkdir($dir, $mode, true) || is_dir($dir))
+		if(mkdir($dir, 0777, true) || is_dir($dir))
 		{
 			return true;
 		}
@@ -357,7 +361,7 @@ class Pkg_JUNewsUltraInstallerScript
 			return false;
 		}
 
-		return mkdir($dir, $mode, true);
+		return mkdir($dir, 0777, true);
 	}
 
 	/**
@@ -369,19 +373,19 @@ class Pkg_JUNewsUltraInstallerScript
 	 */
 	private function unlinkRecursive($dir, $deleteRootToo)
 	{
-		if(!$dh = @opendir($dir))
+		if(!$dh = opendir($dir))
 		{
 			return;
 		}
 
-		while(false !== ($obj = readdir($dh)))
+		while(($obj = readdir($dh)) !== false)
 		{
 			if($obj === '.' || $obj === '..')
 			{
 				continue;
 			}
 
-			if(!@unlink($dir . '/' . $obj))
+			if(!unlink($dir . '/' . $obj))
 			{
 				$this->unlinkRecursive($dir . '/' . $obj, true);
 			}
@@ -391,7 +395,7 @@ class Pkg_JUNewsUltraInstallerScript
 
 		if($deleteRootToo)
 		{
-			@rmdir($dir);
+			rmdir($dir);
 		}
 	}
 }

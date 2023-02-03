@@ -68,7 +68,7 @@ class com_k2 extends Helper
 						$categories = K2ModelItemlist::getCategoryTree($catid);
 					}
 
-					$this->q->where('a.catid IN (' . @implode(',', $categories) . ')');
+					$this->q->where('a.catid IN (' . implode(',', $categories) . ')');
 				}
 				else
 				{
@@ -89,7 +89,7 @@ class com_k2 extends Helper
 					$categories = K2ModelItemlist::getCategoryTree($catid);
 				}
 
-				$this->q->where('a.catid IN (' . @implode(',', $categories) . ')');
+				$this->q->where('a.catid IN (' . implode(',', $categories) . ')');
 			}
 			else
 			{
@@ -559,8 +559,8 @@ class com_k2 extends Helper
 					}
 				}
 
-				$item->image       = '';
-				$item->imagelink   = '';
+				$item->image     = '';
+				$item->imagelink = '';
 
 				switch($junews[ 'thumb_width' ])
 				{

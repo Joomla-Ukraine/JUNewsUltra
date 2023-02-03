@@ -103,31 +103,31 @@ $data = file_get_contents($filename);
 	<title></title>
 	<?php echo $csslink; ?>
 	<style>
-		body {
-			background: transparent;
-			font-size: 102%;
-			margin: 0 20px 0 20px;
-		}
+        body {
+            background: transparent;
+            font-size: 102%;
+            margin: 0 20px 0 20px;
+        }
 
-		.left {
-			float: left;
-		}
+        .left {
+            float: left;
+        }
 
-		.right {
-			float: right;
-		}
+        .right {
+            float: right;
+        }
 
-		.wells {
-			position: fixed;
-			z-index: 100;
-			top: 0;
-			left: 0;
-			overflow: hidden;
-			width: 100%;
-			padding: 9px;
-			background: #fff;
-			border-bottom: 1px solid #ccc;
-		}
+        .wells {
+            position: fixed;
+            z-index: 100;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            width: 100%;
+            padding: 9px;
+            background: #fff;
+            border-bottom: 1px solid #ccc;
+        }
 	</style>
 </head>
 <body>

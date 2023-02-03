@@ -128,9 +128,9 @@ class Helper
 	}
 
 	/**
-	 * @param       $params
-	 * @param       $junews
-	 * @param array $data
+	 * @param          $params
+	 * @param          $junews
+	 * @param   array  $data
 	 *
 	 * @return string
 	 *
@@ -159,10 +159,11 @@ class Helper
 
 				if($junews[ 'usewebp' ] == 1)
 				{
-					if(isset($src->webp) && $src->webp !== '')
+					if(isset($src) && $src->webp !== '')
 					{
 						$source = '<source srcset="' . $src->webp . '" type="image/webp">';
 					}
+
 					$src = $src->img;
 				}
 			}
@@ -256,8 +257,8 @@ class Helper
 	}
 
 	/**
-	 * @param       $image
-	 * @param array $junews
+	 * @param          $image
+	 * @param   array  $junews
 	 *
 	 * @return object|string
 	 *
@@ -387,8 +388,8 @@ class Helper
 	}
 
 	/**
-	 * @param       $params
-	 * @param array $data
+	 * @param          $params
+	 * @param   array  $data
 	 *
 	 * @return string|string[]|null
 	 *
@@ -561,11 +562,11 @@ class Helper
 		{
 			try
 			{
-				$string = @file_get_contents($feed_url);
+				$string = file_get_contents($feed_url);
 				$string = preg_replace('/<(\/)?([a-z0-9]+):([a-z0-9]+)/i', '<$1$2_$3', $string);
 				$string = preg_replace('/<feed.*?>/i', '<feed>', $string);
 
-				if($f = @fopen($cache_file, 'wb'))
+				if($f = fopen($cache_file, 'wb'))
 				{
 					fwrite($f, $string, strlen($string));
 					fclose($f);
@@ -587,7 +588,8 @@ class Helper
 		libxml_use_internal_errors(true);
 		try
 		{
-			$xml = new SimpleXmlElement($string);
+			$items = '';
+			$xml   = new SimpleXmlElement($string);
 
 			switch($ordering_xml)
 			{

@@ -203,5 +203,5 @@ else
 {
 	$tpl = explode(':', $params->get('template'));
 
-	echo "<strong>Template <span style=\"color: green;\">$tpl</span> do is not found!</strong><br />Please, upload new template to <em>modules/mod_junewsultra/tmpl</em> or <em>templates/$tpl[0]/html/mod_junewsultra/</em> folder or select other template from back-end!";
+	echo "<strong>Template not found!</strong><br />Please, upload new template to <em>modules/mod_junewsultra/tmpl</em> or <em>templates/$tpl[0]/html/mod_junewsultra/</em> folder or select other template from back-end!";
 }

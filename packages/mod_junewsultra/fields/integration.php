@@ -83,8 +83,6 @@ class JFormFieldIntegration extends FormField
 			$options[] = $tmp;
 		}
 
-		reset($options);
-
 		return $options;
 	}
 }
