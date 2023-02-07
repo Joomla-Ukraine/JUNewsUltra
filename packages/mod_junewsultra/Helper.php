@@ -594,7 +594,7 @@ class Helper
 			switch($ordering_xml)
 			{
 				case 'rand':
-					$items = $xml->xpath(sprintf($path . '[position()]'));
+					$items = $xml->xpath(sprintf($path . '[position()]', $xmlcount));
 					shuffle($items);
 					$items = array_slice($items, 0, $xmlcount);
 					break;

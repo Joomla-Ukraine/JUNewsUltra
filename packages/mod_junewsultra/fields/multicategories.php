@@ -73,7 +73,7 @@ class JFormFieldMultiCategories extends JFormFieldList
 		$tables   = $db->getTableList();
 		$dbprefix = $db->getPrefix();
 
-		if(in_array($dbprefix . $dbtable, $tables))
+		if(in_array($dbprefix . $dbtable, $tables, true))
 		{
 			$db->setQuery($sql);
 			$results = $db->loadObjectList();

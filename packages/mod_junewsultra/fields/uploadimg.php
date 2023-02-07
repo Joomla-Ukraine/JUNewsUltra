@@ -93,7 +93,7 @@ if(isset($_FILES[ 'userfile' ]))
 		$filename = $_FILES[ 'userfile' ][ 'tmp_name' ];
 		$ext      = pathinfo($_FILES[ 'userfile' ][ 'name' ])[ 'extension' ];
 
-		if(!in_array($ext, $valid_types))
+		if(!in_array($ext, $valid_types, true))
 		{
 			$alert = alert(JText::_('MOD_JUNEWS_ERROR2'), 'notice');
 		}
