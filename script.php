@@ -12,7 +12,8 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Language\Text;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Filesystem\Folder;
 
 /**
  * Installation class to perform additional changes during install/uninstall/update
@@ -50,18 +51,20 @@ class Pkg_JUNewsUltraInstallerScript
 	 */
 	public function preflight($type, $parent)
 	{
+		$app = Factory::getApplication();
+
 		if(version_compare(JVERSION, '3.8.0', 'lt'))
 		{
-			Factory::getApplication()->enqueueMessage('Update for Joomla! 3.8+', 'error');
+			$app->enqueueMessage('Update for Joomla! 3.8+', 'error');
 
 			return false;
 		}
 
-		$this->MakeDirectory(JPATH_SITE . '/img');
+		Folder::create(JPATH_SITE . '/img', 0777);
 
 		if(!is_dir(JPATH_SITE . '/img/'))
 		{
-			Factory::getApplication()->enqueueMessage('Error creating folder \'img\'. Please manually create the folder \'img\' in the root of the site where you installed Joomla!');
+			$app->enqueueMessage('Error creating folder \'img\'. Please manually create the folder \'img\' in the root of the site where you installed Joomla!');
 		}
 
 		$cache = Factory::getCache('mod_junewsultra');
@@ -71,50 +74,15 @@ class Pkg_JUNewsUltraInstallerScript
 	}
 
 	/**
-	 * @param $parent
-	 *
-	 *
-	 * @return bool
-	 * @since 6.0
-	 */
-	public function uninstall($parent)
-	{
-		return true;
-	}
-
-	/**
-	 * @param $parent
-	 *
-	 *
-	 * @return bool
-	 * @since 6.0
-	 */
-	public function update($parent)
-	{
-		return true;
-	}
-
-	/**
 	 * @param $type
 	 * @param $parent
-	 * @param $results
 	 *
 	 * @return bool
 	 *
-	 * @throws \Exception
 	 * @since 6.0
 	 */
-	public function postflight($type, $parent, $results)
+	public function postflight($type, $parent)
 	{
-		$enabled = [];
-
-		$db    = Factory::getDbo();
-		$query = $db->getQuery(true);
-		$app   = Factory::getApplication();
-
-		$lang = Factory::getLanguage();
-		$lang->load('mod_junewsultra', JPATH_SITE);
-
 		if(version_compare(JVERSION, '4.0.0', '>='))
 		{
 			$xml = file_get_contents(JPATH_SITE . '/modules/mod_junewsultra/mod_junewsultra.xml');
@@ -128,109 +96,6 @@ class Pkg_JUNewsUltraInstallerScript
 
 			file_put_contents(JPATH_SITE . '/modules/mod_junewsultra/mod_junewsultra.xml', $xml);
 		}
-
-		foreach($results as $result)
-		{
-			$extension = (string) $result[ 'name' ];
-
-			$query->clear();
-
-			$query->select($db->quoteName([ 'enabled' ]));
-			$query->from($db->quoteName('#__extensions'));
-			$query->where($db->quoteName('name') . ' = ' . $db->quote($extension));
-			$db->setQuery($query);
-
-			$enabled[ $extension ] = $db->loadResult();
-		}
-
-		$html = '<style type="text/css">
-		.juinstall {
-			color: #333!important;
-			font-weight: normal;
-		    margin: 0!important;
-		    padding: 0;
-		    overflow: hidden;
-		    background: #fff!important;
-		}
-			.juinstall-content {
-			    margin: 5% auto!important;
-			    padding: 35px 0 18px 0;
-				width: 50%;
-			}
-			.juinstall .newalert {
-				clear: both;
-				margin: 5px 10%!important;
-			}
-            .juinstall p {
-              	margin-left: 0;
-              	text-align: left;
-            }
-            .juinstall table td .label {
-                margin: 0 auto;
-            }
-            .juinstall hr {
-              	margin-top:6px;
-              	margin-bottom:6px;
-              	border:0;
-              	border-top:1px solid #eee
-            }
-        </style>';
-
-		$html .= '<div class="juinstall">
-        	<div class="juinstall-content">
-                <h2 style="padding: 0 0 8px 0; margin: 0;">' . Text::_('MOD_JUNEWS_TITLE') . '</h2>
-				<h2 style="padding: 0 0 8px 0; margin: 0;"><small>' . Text::_('MOD_JUNEWS_DESCRIPTION') . '</small></h2>
-        		<table class="table table-striped">
-        			<thead>
-        				<tr>
-        					<th>' . Text::_('MOD_JUNEWS_EXTENSION') . '</th>
-        					<th>' . Text::_('JSTATUS') . '</th>
-        					<th>' . Text::_('JENABLED') . '</th>
-        				</tr>
-        			</thead>
-        			<tbody>';
-
-		foreach($results as $result)
-		{
-			$extension = (string) $result[ 'name' ];
-
-			$html .= '<tr><td>';
-
-			if($extension === 'MOD_JUNEWSULTRA')
-			{
-				$html .= Text::_($extension);
-			}
-			else
-			{
-				$html .= $extension;
-			}
-
-			$html .= '</td><td><strong>';
-
-			if($result[ 'result' ] === true)
-			{
-				$html .= '<span class="label label-success">' . Text::_('MOD_JUNEWS_INSTALLED') . '</span>';
-			}
-			else
-			{
-				$html .= '<span class="label label-important">' . Text::_('MOD_JUNEWS_NOT_INSTALLED') . '</span>';
-			}
-
-			$html .= '</strong></td><td>';
-
-			if($enabled[ $extension ] == 1)
-			{
-				$html .= '<span class="label label-success">' . Text::_('JYES') . '</span>';
-			}
-			else
-			{
-				$html .= '<span class="label label-important">' . Text::_('JNO') . '</span>';
-			}
-
-			$html .= '</td></tr>';
-		}
-
-		$html .= '</tbody></table>';
 
 		$path  = JPATH_SITE . '/modules/mod_junewsultra/';
 		$files = [
@@ -258,7 +123,6 @@ class Pkg_JUNewsUltraInstallerScript
 			$path . 'assets/css/default.css',
 			$path . 'assets/css/elegant.css',
 			$path . 'assets/css/docs.css',
-
 			$path . 'fields/jumultithumbradio.php',
 			$path . 'fields/colorpicker.php',
 			$path . 'fields/imagesetting.php',
@@ -268,11 +132,9 @@ class Pkg_JUNewsUltraInstallerScript
 			$path . 'fields/toggler30.php',
 			$path . 'fields/donate.php',
 			$path . 'fields/article.php',
-
 			$path . 'tmpl/default/images/bg.jpg',
 			$path . 'tmpl/default/images/rating_star.png_',
 			$path . 'tmpl/default/images/rating_star_blank.png_',
-
 			$path . 'img/.htaccess',
 			$path . 'img/config.php',
 			$path . 'img/img.php',
@@ -287,81 +149,23 @@ class Pkg_JUNewsUltraInstallerScript
 			$path . 'assets/js/minicolors'
 		];
 
-		$i = 0;
 		foreach($files as $file)
 		{
 			if(file_exists($file))
 			{
-				$i++;
+				File::delete($file);
 			}
 		}
 
-		$j = 0;
 		foreach($folders as $folder)
 		{
 			if(is_dir($folder))
 			{
-				$j++;
+				$this->unlinkRecursive($folder);
 			}
 		}
-
-		if(($i + $j) > 0)
-		{
-			$html .= '<h2>' . Text::_('MOD_JUNEWS_REMOVE_OLD_FILES') . '</h2><table class="table table-striped"><tbody>';
-
-			foreach($files as $file)
-			{
-				if(file_exists($file))
-				{
-					$filepath = str_replace($path, '', $file);
-					unlink($file);
-
-					$html .= '<tr><td><span class="label">File:</span> <code>' . $filepath . '</code></td><td><span class="label label-inverse">Delete</span></td></tr>';
-				}
-			}
-
-			foreach($folders as $folder)
-			{
-				if(is_dir($folder))
-				{
-					$folderpath = str_replace($path, '', $folder);
-					$this->unlinkRecursive($folder, 1);
-
-					$html .= '<tr><td><span class="label">Folder:</span> <code>' . $folderpath . '</code></td><td><span class="label label-inverse">Delete</span></td></tr>';
-				}
-			}
-
-			$html .= '</tbody></table>';
-		}
-
-		$html .= '</div></div>';
-
-		//$app->enqueueMessage($html);
-		echo $html;
 
 		return true;
-	}
-
-	/**
-	 * @param $dir
-	 *
-	 * @return bool
-	 *
-	 * @since version
-	 */
-	private function MakeDirectory($dir)
-	{
-		if(mkdir($dir, 0777, true) || is_dir($dir))
-		{
-			return true;
-		}
-
-		if(!$this->MakeDirectory(dirname($dir)))
-		{
-			return false;
-		}
-
-		return mkdir($dir, 0777, true);
 	}
 
 	/**
@@ -371,7 +175,7 @@ class Pkg_JUNewsUltraInstallerScript
 	 *
 	 * @since version
 	 */
-	private function unlinkRecursive($dir, $deleteRootToo)
+	private function unlinkRecursive($dir, $deleteRootToo = 1)
 	{
 		if(!$dh = opendir($dir))
 		{
