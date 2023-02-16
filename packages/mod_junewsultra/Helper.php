@@ -212,7 +212,6 @@ class Helper
 			$source_set = [];
 			$array      = (array) $junews[ 'src_picture' ];
 
-			//arsort($array);
 			foreach($array as $picture)
 			{
 				if($picture->picture && $picture->picture_w && $picture->picture_h)
