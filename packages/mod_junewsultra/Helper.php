@@ -150,7 +150,7 @@ class Helper
 			$attr[] = 'decoding="async"';
 		}
 
-		if(isset($data[ 'src' ]))
+		if(isset($data[ 'src' ]) && $data[ 'src' ] !== '')
 		{
 			$src = $data[ 'src' ];
 			if($junews[ 'thumb_width' ] == 1)
@@ -265,58 +265,63 @@ class Helper
 	 */
 	public function thumb($image, array $junews = [])
 	{
-		$aspect = 0;
-		if($junews[ 'auto_zoomcrop' ] == 1)
+		if($image)
 		{
-			$aspect = $this->aspect($image, $junews[ 'cropaspect' ]);
-		}
-
-		$newimgparams = [
-			'zc' => $junews[ 'zoomcrop' ] == 1 ? $junews[ 'zoomcrop_params' ] : ''
-		];
-		if($aspect >= 1 && $junews[ 'auto_zoomcrop' ] == 1)
-		{
-			$newimgparams = [
-				'far' => '1',
-				'bg'  => $junews[ 'zoomcropbg' ]
-			];
-		}
-
-		if($junews[ 'farcrop' ] == 1)
-		{
-			$newimgparams = [
-				'far' => $junews[ 'farcrop_params' ],
-				'bg'  => $junews[ 'farcropbg' ]
-			];
-		}
-
-		$imgparams = [
-			'w'     => $junews[ 'w' ],
-			'h'     => $junews[ 'h' ],
-			'sx'    => $junews[ 'sx' ] ? : '',
-			'sy'    => $junews[ 'sy' ] ? : '',
-			'sw'    => $junews[ 'sw' ] ? : '',
-			'sh'    => $junews[ 'sh' ] ? : '',
-			'f'     => $junews[ 'f' ],
-			'q'     => $junews[ 'q' ],
-			'cache' => $junews[ 'image_thumb' ]
-		];
-
-		$webp    = [];
-		$webp_im = [];
-		if($junews[ 'usewebp' ] == 1)
-		{
-			$webp = [ 'webp' => true ];
-
-			if($junews[ 'usegd2webp' ] == 1)
+			$aspect = 0;
+			if($junews[ 'auto_zoomcrop' ] == 1)
 			{
-				$webp_im = [ 'imagemagick' => false ];
+				$aspect = $this->aspect($image, $junews[ 'cropaspect' ]);
 			}
+
+			$newimgparams = [
+				'zc' => $junews[ 'zoomcrop' ] == 1 ? $junews[ 'zoomcrop_params' ] : ''
+			];
+			if($aspect >= 1 && $junews[ 'auto_zoomcrop' ] == 1)
+			{
+				$newimgparams = [
+					'far' => '1',
+					'bg'  => $junews[ 'zoomcropbg' ]
+				];
+			}
+
+			if($junews[ 'farcrop' ] == 1)
+			{
+				$newimgparams = [
+					'far' => $junews[ 'farcrop_params' ],
+					'bg'  => $junews[ 'farcropbg' ]
+				];
+			}
+
+			$imgparams = [
+				'w'     => $junews[ 'w' ],
+				'h'     => $junews[ 'h' ],
+				'sx'    => $junews[ 'sx' ] ? : '',
+				'sy'    => $junews[ 'sy' ] ? : '',
+				'sw'    => $junews[ 'sw' ] ? : '',
+				'sh'    => $junews[ 'sh' ] ? : '',
+				'f'     => $junews[ 'f' ],
+				'q'     => $junews[ 'q' ],
+				'cache' => $junews[ 'image_thumb' ]
+			];
+
+			$webp    = [];
+			$webp_im = [];
+			if($junews[ 'usewebp' ] == 1)
+			{
+				$webp = [ 'webp' => true ];
+
+				if($junews[ 'usegd2webp' ] == 1)
+				{
+					$webp_im = [ 'imagemagick' => false ];
+				}
+			}
+
+			$imgparams_merge = array_merge($imgparams, $newimgparams, $webp, $webp_im);
+
+			return $this->juimg->render($image, $imgparams_merge);
 		}
 
-		$imgparams_merge = array_merge($imgparams, $newimgparams, $webp, $webp_im);
-
-		return $this->juimg->render($image, $imgparams_merge);
+		return '';
 	}
 
 	/**

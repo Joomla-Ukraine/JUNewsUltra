@@ -565,7 +565,7 @@ class com_k2 extends Helper
 				switch($junews[ 'thumb_width' ])
 				{
 					case '0':
-						if($blank == 1)
+						if($blank == 1 && $junuimgsource)
 						{
 							$item->image       = $this->image($params, $junews, [
 								'src'  => $junuimgsource,
@@ -581,7 +581,7 @@ class com_k2 extends Helper
 
 					case '1':
 					default:
-						if($blank == 1)
+						if($blank == 1 && $junuimgsource)
 						{
 							$item->image       = $this->image($params, $junews, [
 								'src'  => $junuimgsource,

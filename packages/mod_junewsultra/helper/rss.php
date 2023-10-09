@@ -157,7 +157,7 @@ class rss extends Helper
 				switch($junews[ 'thumb_width' ])
 				{
 					case '0':
-						if($blank == 1)
+						if($blank == 1 && $junuimgsource)
 						{
 							$item->image       = $this->image($params, $junews, [
 								'src'  => $junuimgsource,
@@ -173,7 +173,7 @@ class rss extends Helper
 
 					case '1':
 					default:
-						if($blank == 1)
+						if($blank == 1 && $junuimgsource)
 						{
 							$item->image       = $this->image($params, $junews, [
 								'src'    => $junuimgsource,
