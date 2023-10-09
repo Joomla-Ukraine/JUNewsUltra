@@ -11,7 +11,7 @@
     </tstamp>
 
     <property name="juimage"
-              value="5.12" />
+              value="5.15" />
 
     <property name="build"
               value="build" />
