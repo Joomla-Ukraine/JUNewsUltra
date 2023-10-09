@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<extension type="package" version="3.8" method="upgrade">
+<extension type="package"
+           version="3.8"
+           method="upgrade">
     <name>pkg_junewsultra</name>
     <packagename>junewsultra</packagename>
     <creationDate>@date@</creationDate>
@@ -17,13 +19,20 @@
     <update>https://joomla-ua.org/update/mod/junewsultra.xml</update>
 
     <updateservers>
-        <server type="extension" priority="1" name="JUNewsUltra">https://joomla-ua.org/update/mod/junewsultra.xml</server>
+        <server type="extension"
+                priority="1"
+                name="JUNewsUltra">https://joomla-ua.org/update/mod/junewsultra.xml</server>
     </updateservers>
 
     <files folder="packages">
-        <file type="module" id="mod_junewsultra" client="site">mod_junewsultra.zip</file>
-        <file type="file" id="tmpl_mod_junewsultra_default" client="site">tmpl_mod_junewsultra_default.zip</file>
-        <file type="package" id="juimage">pkg_juimage_v@juimage@.zip</file>
+        <file type="module"
+              id="mod_junewsultra"
+              client="site">mod_junewsultra.zip</file>
+        <file type="file"
+              id="tmpl_mod_junewsultra_default"
+              client="site">tmpl_mod_junewsultra_default.zip</file>
+        <file type="package"
+              id="juimage">pkg_juimage_v@juimage@.zip</file>
     </files>
 
     <languages folder="language">
@@ -36,10 +45,5 @@
         <language tag="uk-UA">uk-UA/uk-UA.pkg_junewsultra.sys.ini</language>
         <language tag="uk-UA">uk-UA/uk-UA.mod_junewsultra.ini</language>
         <language tag="uk-UA">uk-UA/uk-UA.mod_junewsultra.sys.ini</language>
-
-        <language tag="ru-RU">ru-RU/ru-RU.pkg_junewsultra.ini</language>
-        <language tag="ru-RU">ru-RU/ru-RU.pkg_junewsultra.sys.ini</language>
-        <language tag="ru-RU">ru-RU/ru-RU.mod_junewsultra.ini</language>
-        <language tag="ru-RU">ru-RU/ru-RU.mod_junewsultra.sys.ini</language>
     </languages>
 </extension>
