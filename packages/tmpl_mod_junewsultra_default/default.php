@@ -6,7 +6,7 @@
  * @subpackage       mod_junewsultra
  *
  * @author           Denys Nosov, denys@joomla-ua.org
- * @copyright        2007-2023 (C) Joomla! Ukraine, https://joomla-ua.org. All rights reserved.
+ * @copyright        2007-2025 (C) Joomla! Ukraine, https://joomla-ua.org. All rights reserved.
  * @license          GNU/GPL - https://www.gnu.org/copyleft/gpl.html
  */
 
@@ -80,10 +80,12 @@ defined('_JEXEC') or die();
 							<span class="jn-small"><?php echo $item->date; ?></span>
 						<?php endif; ?>
 						<?php if($params->get('showcat')): ?>
-							| <span class="jn-small"><?php echo $item->cattitle; ?></span>
+							|
+							<span class="jn-small"><?php echo $item->cattitle; ?></span>
 						<?php endif; ?>
 						<?php if($params->get('juauthor')): ?>
-							| <span class="jn-small"><?php echo $item->author; ?></span>
+							|
+							<span class="jn-small"><?php echo $item->author; ?></span>
 						<?php endif; ?>
 						<?php if($params->get('showRating') || $params->get('showRatingCount') || $params->get('showHits')): ?>
 							<div class="jn-hit-n-rating">
