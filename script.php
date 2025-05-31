@@ -99,6 +99,7 @@ class Pkg_JUNewsUltraInstallerScript
 
 		$path  = JPATH_SITE . '/modules/mod_junewsultra/';
 		$files = [
+			$path . 'helper/com_k2.php',
 			$path . 'assets/donate2.gif',
 			$path . 'assets/gear.png',
 			$path . 'assets/toggler.js',
