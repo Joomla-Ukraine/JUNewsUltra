@@ -14,6 +14,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Database\DatabaseInterface;
 use Joomla\String\StringHelper;
 
 defined('_JEXEC') or die;
@@ -45,12 +46,12 @@ class Helper
 	 */
 	public function __construct()
 	{
-		$this->lang     = Factory::getLanguage();
-		$this->user     = Factory::getUser();
-		$this->date     = Factory::getDate();
 		$this->app      = Factory::getApplication();
-		$this->doc      = Factory::getDocument();
-		$this->db       = Factory::getDbo();
+		$this->lang     = $this->app->getLanguage();
+		$this->user     = $this->app->getIdentity();
+		$this->date     = Factory::getDate();
+		$this->doc      = $this->app->getDocument();
+		$this->db       = Factory::getContainer()->get(DatabaseInterface::class);
 		$this->q        = $this->db->getQuery(true);
 		$this->nulldate = $this->db->getNullDate();
 		$this->nowdate  = $this->date->toSql();

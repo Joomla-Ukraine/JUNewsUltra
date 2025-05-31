@@ -14,11 +14,13 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Database\DatabaseInterface;
 
 defined('JPATH_BASE') or die;
 
-$doc   = Factory::getDocument();
-$db    = Factory::getDBO();
+$app   = Factory::getApplication();
+$doc   = $app->getDocument();
+$db    = Factory::getContainer()->get(DatabaseInterface::class);
 $query = $db->getQuery(true);
 
 $adm_url = str_replace('/administrator', '', Uri::base());

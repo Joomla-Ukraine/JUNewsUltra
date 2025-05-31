@@ -546,8 +546,8 @@ class com_content extends Helper
 		{
 			$item->link    = Route::_('index.php?option=com_users&view=login');
 			$item->catlink = $item->link;
-			$introtext     = (isset($item->introtext) ? $item->introtext : '');
-			$fulltext      = (isset($item->fulltext) ? $item->fulltext : '');
+			$introtext     = ($item->introtext ?? '');
+			$fulltext      = ($item->fulltext ?? '');
 
 			if($access || in_array($item->access, $authorised, true))
 			{

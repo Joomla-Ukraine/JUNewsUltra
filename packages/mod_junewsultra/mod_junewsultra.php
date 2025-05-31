@@ -16,9 +16,9 @@ use Joomla\CMS\Router\Route;
 
 defined('_JEXEC') or die;
 
-$app       = Factory::getApplication('site');
+$app       = Factory::getApplication();
 $menu      = $app->getMenu();
-$doc       = Factory::getDocument();
+$doc       = $app->getDocument();
 $view      = $app->input->getCmd('view');
 $option    = $app->input->getCmd('option');
 $component = trim($params->get('component', 'com_content'));
@@ -97,7 +97,7 @@ $list = $object->getList($params, [
 	'multicat'            => $params->get('contentmulticategories', 0)
 ]);
 
-if($params->get('empty_mod', 0) == 0 && count($list) == 0)
+if($params->get('empty_mod', 0) == 0 && (is_countable($list) && count($list) == 0))
 {
 	return;
 }

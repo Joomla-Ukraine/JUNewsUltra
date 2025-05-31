@@ -87,7 +87,7 @@ class youtube extends Helper
 			// rawtext
 			if($junews[ 'sourcetext' ] == 1)
 			{
-				$item->sourcetext = (isset($item->media_group->media_description) ? $item->media_group->media_description : '');
+				$item->sourcetext = ($item->media_group->media_description ?? '');
 			}
 
 			// introtext

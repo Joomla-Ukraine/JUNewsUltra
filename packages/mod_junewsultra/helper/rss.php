@@ -61,7 +61,7 @@ class rss extends Helper
 			// rawtext
 			if($junews[ 'sourcetext' ] == '1')
 			{
-				$item->sourcetext = (isset($item->content_encoded) ? $item->content_encoded : $item->description);
+				$item->sourcetext = ($item->content_encoded ?? $item->description);
 			}
 
 			// introtext
@@ -124,7 +124,7 @@ class rss extends Helper
 
 			if($junews[ 'show_image' ] == 1)
 			{
-				$_text     = (isset($item->content_encoded) ? $item->content_encoded : $item->description);
+				$_text     = ($item->content_encoded ?? $item->description);
 				$title_alt = $item->title_alt;
 
 				if(isset($item->enclosure, $item->enclosure->attributes()->url))
