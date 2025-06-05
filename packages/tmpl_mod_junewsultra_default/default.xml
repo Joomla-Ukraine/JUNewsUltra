@@ -3,13 +3,13 @@
            version="3.3"
            method="upgrade">
 	<name>JUNewsUltra - Default template</name>
-	<creationDate>17.01.2021</creationDate>
+	<creationDate>05.06.2025</creationDate>
 	<author>Joomla! Ukraine</author>
 	<authorEmail>denys@joomla-ua.org</authorEmail>
 	<authorUrl>https://joomla-ua.org</authorUrl>
 	<copyright>Copyright (C) 2008-2025 Joomla! Ukraine. All rights reserved</copyright>
 	<license>GNU/GPL - https://www.gnu.org/copyleft/gpl.html</license>
-	<version>6.5.12</version>
+	<version>6.5.13</version>
 	<description>Default template for module JUNewsUltra</description>
 
 	<fileset>

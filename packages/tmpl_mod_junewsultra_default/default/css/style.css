@@ -61,12 +61,12 @@
     width: 67%;
 }
 
-.junewsultra .jn .jn-right h4 {
+.junewsultra .jn .jn-right > a {
     font-size: 98%;
     font-weight: bolder;
 }
 
-.junewsultra .jn .jn-right .jn-info {
+.junewsultra .jn .jn-info {
     font-size: 90%;
     color: #778899;
     padding: 5px 0 0 0;

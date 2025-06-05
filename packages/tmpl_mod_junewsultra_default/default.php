@@ -58,71 +58,75 @@ use Joomla\CMS\Language\Text;
 defined('_JEXEC') or die();
 
 ?>
-<div class="junewsultra <?php echo $params->get('moduleclass_sfx'); ?>">
+<div class="junewsultra <?= $params->get('moduleclass_sfx'); ?>">
 	<?php foreach($list as $item) : ?>
 		<div class="jn">
 			<div class="jn-head">
+
 				<div class="jn-left">
-					<?php if($params->get('pik')): ?>
-						<?php echo $item->image; ?>
+					<?php if($params->get('pik') && $item->image): ?>
+						<?= $item->image; ?>
 					<?php endif; ?>
 				</div>
+
 				<div class="jn-right">
 					<?php if($params->get('show_title')): ?>
-						<h4>
-							<a href="<?php echo $item->link; ?>">
-								<?php echo $item->title; ?>
-							</a>
-						</h4>
+						<a href="<?= $item->link; ?>">
+							<?= $item->title; ?>
+						</a>
 					<?php endif; ?>
+
 					<div class="jn-info">
 						<?php if($params->get('show_date')): ?>
-							<span class="jn-small"><?php echo $item->date; ?></span>
+							<span class="jn-small"><?= $item->date; ?></span>
 						<?php endif; ?>
 						<?php if($params->get('showcat')): ?>
 							|
-							<span class="jn-small"><?php echo $item->cattitle; ?></span>
+							<span class="jn-small"><?= $item->cattitle; ?></span>
 						<?php endif; ?>
 						<?php if($params->get('juauthor')): ?>
 							|
-							<span class="jn-small"><?php echo $item->author; ?></span>
+							<span class="jn-small"><?= $item->author; ?></span>
 						<?php endif; ?>
 						<?php if($params->get('showRating') || $params->get('showRatingCount') || $params->get('showHits')): ?>
 							<div class="jn-hit-n-rating">
 								<?php if($params->get('showRating')): ?>
-									<span class="jn-small jn-rating"><?php echo $item->rating; ?></span>
+									<span class="jn-small jn-rating"><?= $item->rating; ?></span>
 								<?php endif; ?>
 								<?php if($params->get('showRatingCount') && $item->rating_count > 0): ?>
-									<sup class="jn-small jn-rating-count"><?php echo $item->rating_count; ?></sup>
+									<sup class="jn-small jn-rating-count"><?= $item->rating_count; ?></sup>
 								<?php endif; ?>
 								<?php if($params->get('showHits')): ?>
-									<span class="jn-small jn-hits"><?php echo Text::_('JGLOBAL_HITS'); ?>: <?php echo $item->hits; ?></span>
+									<span class="jn-small jn-hits"><?= Text::_('JGLOBAL_HITS'); ?>: <?= $item->hits; ?></span>
 								<?php endif; ?>
 							</div>
 						<?php endif; ?>
 					</div>
 				</div>
 			</div>
+
 			<?php if($params->get('show_intro') || $params->get('show_full')): ?>
 				<div class="jn-intro">
 					<?php if($params->get('show_intro')): ?>
-						<?php echo $item->introtext; ?>
+						<?= $item->introtext; ?>
 					<?php endif; ?>
 					<?php if($params->get('show_full')): ?>
-						<?php echo $item->fulltext; ?>
+						<?= $item->fulltext; ?>
 					<?php endif; ?>
 				</div>
 			<?php endif; ?>
+
 			<?php if($params->get('read_more') || $params->get('use_comments')): ?>
 				<div class="jn-more">
 					<?php if($params->get('read_more')): ?>
-						<a href="<?php echo $item->link; ?>" class="readmore" title="<?php echo $item->text_alt; ?>"><?php echo $params->get('rmtext'); ?></a>
+						<a href="<?= $item->link; ?>" class="readmore"><?= $params->get('rmtext'); ?></a>
 					<?php endif; ?>
 					<?php if($params->get('use_comments')): ?>
-						<a class="jn-comment-link" href="<?php echo $item->link; ?><?php echo $item->commentslink; ?>"><?php echo $item->commentstext; ?></a>
+						<a class="jn-comment-link" href="<?php echo $item->link; ?><?= $item->commentslink; ?>"><?= $item->commentstext; ?></a>
 					<?php endif; ?>
 				</div>
 			<?php endif; ?>
 		</div>
+
 	<?php endforeach; ?>
 </div>
