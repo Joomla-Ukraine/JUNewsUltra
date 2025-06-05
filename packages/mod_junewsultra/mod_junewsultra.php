@@ -23,7 +23,7 @@ $view      = $app->input->getCmd('view');
 $option    = $app->input->getCmd('option');
 $component = trim($params->get('component', 'com_content'));
 
-if($params->get('only_article', 0) == 1 && !(($option === 'com_content' && $view === 'article') || ($option === 'com_k2' && $view === 'item')))
+if($params->get('only_article', 0) == 1 && !($option === 'com_content' && $view === 'article'))
 {
 	return;
 }
@@ -56,13 +56,13 @@ $list = $object->getList($params, [
 	'cleartag'            => $params->get('clear_tag'),
 	'introtext_limit'     => (int) $params->get('introtext_limit'),
 	'end_limit_introtext' => $params->get('end_limit_introtext', '…'),
-	'allowed_intro_tags'  => trim($params->get('allowed_intro_tags')),
+	'allowed_intro_tags'  => $params->get('allowed_intro_tags') ? trim($params->get('allowed_intro_tags')) : '',
 	'li_full'             => $params->get('li_full'),
 	'lmttext_full'        => $params->get('lmttext_full'),
 	'clear_tag_full'      => $params->get('clear_tag_full'),
 	'fulltext_limit'      => (int) $params->get('fulltext_limit'),
 	'end_limit_fulltext'  => $params->get('end_limit_fulltext', '…'),
-	'allowed_full_tags'   => trim($params->get('allowed_full_tags')),
+	'allowed_full_tags'   => $params->get('allowed_full_tags') ? trim($params->get('allowed_full_tags')) : '',
 	'show_image'          => $params->get('pik'),
 	'image_thumb'         => ltrim($params->get('image_thumb', 'img'), '/'),
 	'introfulltext'       => $params->get('introfulltext', 0),

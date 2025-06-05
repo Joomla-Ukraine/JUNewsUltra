@@ -176,7 +176,7 @@
 		                default="created_desc"
 		                label="MOD_JUNEWS_FIELD_ORDERING_LABEL"
 		                filter="string"
-		                showon="component!:com_content[OR]component!:com_k2"
+		                showon="component!:com_content"
                 >
                     <option value="created_desc">MOD_JUNEWS_BY_DATE1</option>
                     <option value="created_asc">MOD_JUNEWS_BY_DATE2</option>
@@ -236,7 +236,7 @@
 		                label="MOD_JUNEWS_FIELD_COUNT_LABEL"
 		                description="MOD_JUNEWS_FIELD_COUNT_DESC"
 		                filter="integer"
-		                showon="component:com_content[OR]component:com_k2[AND]display_article:0"
+		                showon="component:com_content[AND]display_article:0"
                 />
 
                 <field
@@ -246,7 +246,7 @@
 		                label="MOD_JUNEWS_SKIPPED_ARTICLES"
 		                description="MOD_JUNEWS_SKIPPED_ARTICLES_DESC"
 		                filter="integer"
-		                showon="component:com_content[OR]component:com_k2[AND]display_article:0"
+		                showon="component:com_content[AND]display_article:0"
                 />
 
                 <field
@@ -255,7 +255,7 @@
 		                label="MOD_JUNEWS_FIELD_FEATURED_LABEL"
 		                description="MOD_JUNEWS_FIELD_FEATURED_DESC"
 		                filter="integer"
-		                showon="component:com_content[OR]component:com_k2[AND]display_article:0"
+		                showon="component:com_content[AND]display_article:0"
                 >
                     <option value="">JSHOW</option>
                     <option value="0">JHIDE</option>
@@ -274,16 +274,6 @@
                     <option value="">JOPTION_ALL_CATEGORIES</option>
                 </field>
 
-	            <field name="k2_catid"
-	                   type="multicategories"
-	                   label="JCATEGORIES"
-	                   description="COM_JURSSPUBLISHER_FIELD_CATEGORY_DESC"
-	                   dbtable="k2_categories"
-	                   sql="SELECT m.* FROM #__k2_categories m WHERE trash = 0 ORDER BY parent, ordering"
-	                   multiple="multiple"
-	                   showon="component:com_k2"
-	            />
-
                 <field
 		                name="excluded_articles"
 		                type="textarea"
@@ -291,7 +281,7 @@
 		                rows="5"
 		                label="MOD_JUNEWS_CATEGORY_FIELD_EXCLUDEDARTICLES_LABEL"
 		                description="MOD_JUNEWS_CATEGORY_FIELD_EXCLUDEDARTICLES_DESC"
-		                showon="component:com_content[OR]component:com_k2[AND]display_article:0"
+		                showon="component:com_content[AND]display_article:0"
                 />
 
                 <field
@@ -300,7 +290,7 @@
 		                default="created_desc"
 		                label="MOD_JUNEWS_FIELD_ORDERING_LABEL"
 		                filter="string"
-		                showon="component:com_content[OR]component:com_k2[AND]display_article:0"
+		                showon="component:com_content[AND]display_article:0"
                 >
                     <option value="created_desc">MOD_JUNEWS_BY_DATE1</option>
                     <option value="created_asc">MOD_JUNEWS_BY_DATE2</option>
@@ -328,7 +318,7 @@
 		                default="0"
 		                label="MOD_JUNEWS_FIELD_DATEFILTERING_LABEL"
 		                filter="integer"
-		                showon="component:com_content[OR]component:com_k2[AND]display_article:0"
+		                showon="component:com_content[AND]display_article:0"
                 >
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
@@ -341,7 +331,7 @@
 		                label="MOD_JUNEWS_FIELD_DATERANGEFIELD_LABEL"
 		                description="MOD_JUNEWS_FIELD_DATERANGEFIELD_DESC"
 		                filter="string"
-		                showon="component:com_content[OR]component:com_k2[AND]display_article:0[AND]date_filtering:1"
+		                showon="component:com_content[AND]display_article:0[AND]date_filtering:1"
                 >
                     <option value="a.created">MOD_JUNEWS_OPTION_CREATED_VALUE</option>
                     <option value="a.modified">MOD_JUNEWS_OPTION_MODIFIED_VALUE</option>
@@ -354,7 +344,7 @@
 		                default="0"
 		                label="MOD_JUNEWS_FIELD_DATE_SELECT_LABEL"
 		                filter="integer"
-		                showon="component:com_content[OR]component:com_k2[AND]display_article:0[AND]date_filtering:1"
+		                showon="component:com_content[AND]display_article:0[AND]date_filtering:1"
                 >
                     <option value="6">MOD_JUNEWS_FIELD_DATE_SELECT_CUSTOM_DAYS</option>
                     <option value="0">MOD_JUNEWS_FIELD_DATE_SELECT_1_DAY</option>
@@ -371,7 +361,7 @@
 		                default="30"
 		                label="MOD_JUNEWS_FIELD_DATERANGE_CUSTOM"
 		                description="MOD_JUNEWS_FIELD_DATERANGE_CUSTOM_DESC"
-		                showon="component:com_content[OR]component:com_k2[AND]display_article:0[AND]date_filtering:1[AND]relative_date:6"
+		                showon="component:com_content[AND]display_article:0[AND]date_filtering:1[AND]relative_date:6"
                 />
 
                 <field
@@ -394,7 +384,7 @@
 		                default="-1"
 		                label="MOD_JUNEWS_FIELD_USERS_LABEL"
 		                description="MOD_JUNEWS_FIELD_USER_DESC"
-		                showon="component:com_content[OR]component:com_k2[AND]display_article:0"
+		                showon="component:com_content[AND]display_article:0"
                 >
                     <option value="-1">MOD_JUNEWS_VALUE_ANYONE</option>
                     <option value="0">MOD_JUNEWS_USERID</option>
@@ -408,7 +398,7 @@
 		                type="user"
 		                label="MOD_JUNEWS_FIELD_USERID_LABEL"
 		                filter="integer"
-		                showon="component:com_content[OR]component:com_k2[AND]display_article:0[AND]user_id:0"
+		                showon="component:com_content[AND]display_article:0[AND]user_id:0"
                 />
 
                 <field
@@ -420,7 +410,7 @@
 		                value_field="name"
 		                label="MOD_JUNEWS_FIELD_USERSID_LABEL"
 		                description="MOD_JUNEWS_FIELD_USERSID_DESC"
-		                showon="component:com_content[OR]component:com_k2[AND]display_article:0[AND]user_id:1"
+		                showon="component:com_content[AND]display_article:0[AND]user_id:1"
                 />
 
                 <field
@@ -428,6 +418,7 @@
 		                type="list"
 		                default="0"
 		                label="MOD_JUNEWS_USE_WHERESQL_LABEL"
+		                description="MOD_JUNEWS_USE_WHERESQL_DESC"
 		                showon="component:com_content[AND]display_article:0"
                 >
                     <option value="1">JYES</option>
@@ -907,7 +898,6 @@
                        class="btn-group"
                        default="0"
                        label="MOD_JUNEWS_SHOW_RATING_STAR"
-                       showon="component!:com_k2"
                 >
                     <option value="0">JHIDE</option>
                     <option value="1">JSHOW</option>
@@ -1518,20 +1508,6 @@
 		                class="btn-group"
 		                default="1"
 		                label="MOD_JUNEWS_IMAGE_JUMULTITHUMB_GALLERY"
-		                showon="component!:com_k2"
-                >
-                    <option value="0">JNO</option>
-                    <option value="1">JYES</option>
-                </field>
-
-                <field
-		                name="contentmulticategories"
-		                path="/plugins/system/contentmulticategories/contentmulticategories.php"
-		                type="Integration"
-		                class="btn-group"
-		                default="0"
-		                label="MOD_JUNEWS_PLG_CONTENTMULTICATEGORIES"
-		                showon="component!:com_k2"
                 >
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
