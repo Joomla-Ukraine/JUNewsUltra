@@ -139,29 +139,30 @@ class youtube extends Helper
 
 			if($junews[ 'show_image' ] == 1)
 			{
-				$title_alt          = $item->title_alt;
-				$junuimgsource      = $item->media_group->media_thumbnail->attributes()->url;
-				$item->source_image = $junuimgsource;
+				$title_alt = $item->title_alt;
 
-				$blank = 1;
+				$junuimgsource = '';
+				if(isset($item->media_group->media_thumbnail, $item->media_group->media_thumbnail->attributes()->url))
+				{
+					$junuimgsource      = $item->media_group->media_thumbnail->attributes()->url;
+					$item->source_image = $junuimgsource;
+				}
+
 				if(!$junuimgsource)
 				{
-					$blank = 0;
-					if($junews[ 'defaultimg' ] == 1)
+					if($junews[ 'defaultimg' ] == 1 && $junews[ 'noimage' ])
 					{
 						$junuimgsource = 'media/mod_junewsultra/' . $junews[ 'noimage' ];
-						$blank         = 1;
 					}
 				}
 
 				$item->image       = '';
 				$item->imagelink   = '';
 				$item->imagesource = '';
-
 				switch($junews[ 'thumb_width' ])
 				{
 					case '0':
-						if($blank == 1 && $junuimgsource)
+						if($junuimgsource)
 						{
 							$item->image       = $this->image($params, $junews, [
 								'src'  => $junuimgsource,
@@ -177,7 +178,7 @@ class youtube extends Helper
 
 					case '1':
 					default:
-						if($blank == 1 && $junuimgsource)
+						if($junuimgsource)
 						{
 							$item->image       = $this->image($params, $junews, [
 								'src'    => $junuimgsource,

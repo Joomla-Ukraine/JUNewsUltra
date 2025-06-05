@@ -645,43 +645,43 @@ class com_content extends Helper
 
 					if(is_object($images))
 					{
-						$_image_intro    = file_exists($images->image_intro);
-						$_image_fulltext = file_exists($images->image_fulltext);
+						$intro_image     = $this->image_source($images->image_intro);
+						$fulltext_image  = $this->image_source($images->image_fulltext);
+						$_image_intro    = file_exists($intro_image);
+						$_image_fulltext = file_exists($fulltext_image);
 
 						if($junews[ 'image_source' ] === '1')
 						{
 							if($_image_intro)
 							{
-								$junuimgsource     = htmlspecialchars($images->image_intro);
-								$item->imagesource = htmlspecialchars($images->image_intro);
+								$junuimgsource     = htmlspecialchars($intro_image);
+								$item->imagesource = htmlspecialchars($intro_image);
 							}
 							elseif($_image_fulltext)
 							{
-								$junuimgsource     = htmlspecialchars($images->image_fulltext);
-								$item->imagesource = htmlspecialchars($images->image_fulltext);
+								$junuimgsource     = htmlspecialchars($fulltext_image);
+								$item->imagesource = htmlspecialchars($fulltext_image);
 							}
 						}
 						elseif($junews[ 'image_source' ] === '2' && $_image_intro)
 						{
-							$junuimgsource     = htmlspecialchars($images->image_intro);
-							$item->imagesource = htmlspecialchars($images->image_intro);
+							$junuimgsource     = htmlspecialchars($intro_image);
+							$item->imagesource = htmlspecialchars($intro_image);
 						}
 						elseif($junews[ 'image_source' ] === '3' && $_image_fulltext)
 						{
-							$junuimgsource     = htmlspecialchars($images->image_fulltext);
-							$item->imagesource = htmlspecialchars($images->image_fulltext);
+							$junuimgsource     = htmlspecialchars($fulltext_image);
+							$item->imagesource = htmlspecialchars($fulltext_image);
 						}
 					}
 				}
 
-				$blank = 1;
 				if(!$junuimgsource)
 				{
-					$blank = 0;
-					if($junews[ 'defaultimg' ] == 1)
+					$junuimgsource = '';
+					if($junews[ 'defaultimg' ] == 1 && $junews[ 'noimage' ])
 					{
 						$junuimgsource = 'media/mod_junewsultra/' . $junews[ 'noimage' ];
-						$blank         = 1;
 					}
 				}
 
@@ -691,7 +691,7 @@ class com_content extends Helper
 				switch($junews[ 'thumb_width' ])
 				{
 					case '0':
-						if($blank == 1 && $junuimgsource)
+						if($junuimgsource)
 						{
 							$item->image       = $this->image($params, $junews, [
 								'src'  => $junuimgsource,
@@ -707,7 +707,7 @@ class com_content extends Helper
 
 					case '1':
 					default:
-						if($blank == 1 && $junuimgsource)
+						if($junuimgsource)
 						{
 							$item->image       = $this->image($params, $junews, [
 								'src'  => $junuimgsource,

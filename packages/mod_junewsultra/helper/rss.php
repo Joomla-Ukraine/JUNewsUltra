@@ -127,9 +127,10 @@ class rss extends Helper
 				$_text     = ($item->content_encoded ?? $item->description);
 				$title_alt = $item->title_alt;
 
+				$junuimgsource = '';
 				if(isset($item->enclosure, $item->enclosure->attributes()->url))
 				{
-					$junuimgsource      = $item->enclosure->attributes()->url;
+					$junuimgsource      = (string) $item->enclosure->attributes()->url;
 					$item->source_image = $junuimgsource;
 				}
 				elseif(preg_match('/<img[^>]+>/i', $this->url($_text), $imgsource))
@@ -139,25 +140,21 @@ class rss extends Helper
 					$item->source_image = $junuimgsource;
 				}
 
-				$blank = 1;
 				if(!$junuimgsource)
 				{
-					$blank = 0;
-					if($junews[ 'defaultimg' ] == 1)
+					if($junews[ 'defaultimg' ] == 1 && $junews[ 'noimage' ])
 					{
 						$junuimgsource = 'media/mod_junewsultra/' . $junews[ 'noimage' ];
-						$blank         = 1;
 					}
 				}
 
 				$item->image       = '';
 				$item->imagelink   = '';
 				$item->imagesource = '';
-
 				switch($junews[ 'thumb_width' ])
 				{
 					case '0':
-						if($blank == 1 && $junuimgsource)
+						if($junuimgsource)
 						{
 							$item->image       = $this->image($params, $junews, [
 								'src'  => $junuimgsource,
@@ -170,10 +167,9 @@ class rss extends Helper
 							$item->imagesource = $junuimgsource;
 						}
 						break;
-
 					case '1':
 					default:
-						if($blank == 1 && $junuimgsource)
+						if($junuimgsource)
 						{
 							$item->image       = $this->image($params, $junews, [
 								'src'    => $junuimgsource,
