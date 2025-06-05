@@ -12,8 +12,8 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
 
 /**
  * Installation class to perform additional changes during install/uninstall/update
@@ -49,13 +49,13 @@ class Pkg_JUNewsUltraInstallerScript
 	 * @throws \Exception
 	 * @since 6.0
 	 */
-	public function preflight($type, $parent)
+	public function preflight($type, $parent): bool
 	{
 		$app = Factory::getApplication();
 
-		if(version_compare(JVERSION, '3.8.0', 'lt'))
+		if(version_compare(JVERSION, '4.0.0', 'lt'))
 		{
-			$app->enqueueMessage('Update for Joomla! 3.8+', 'error');
+			$app->enqueueMessage('Update for Joomla! 4.x+', 'error');
 
 			return false;
 		}
@@ -81,21 +81,18 @@ class Pkg_JUNewsUltraInstallerScript
 	 *
 	 * @since 6.0
 	 */
-	public function postflight($type, $parent)
+	public function postflight($type, $parent): bool
 	{
-		if(version_compare(JVERSION, '4.0.0', '>='))
-		{
-			$xml = file_get_contents(JPATH_SITE . '/modules/mod_junewsultra/mod_junewsultra.xml');
-			$xml = str_replace([
-				'class="btn-group"',
-				'addfieldpath="/administrator/components/com_content/models/fields/modal"'
-			], [
-				'layout="joomla.form.field.radio.switcher"',
-				'addfieldprefix="Joomla\Component\Content\Administrator\Field"'
-			], $xml);
+		$xml = file_get_contents(JPATH_SITE . '/modules/mod_junewsultra/mod_junewsultra.xml');
+		$xml = str_replace([
+			'class="btn-group"',
+			'addfieldpath="/administrator/components/com_content/models/fields/modal"'
+		], [
+			'layout="joomla.form.field.radio.switcher"',
+			'addfieldprefix="Joomla\Component\Content\Administrator\Field"'
+		], $xml);
 
-			file_put_contents(JPATH_SITE . '/modules/mod_junewsultra/mod_junewsultra.xml', $xml);
-		}
+		file_put_contents(JPATH_SITE . '/modules/mod_junewsultra/mod_junewsultra.xml', $xml);
 
 		$path  = JPATH_SITE . '/modules/mod_junewsultra/';
 		$files = [
@@ -176,7 +173,7 @@ class Pkg_JUNewsUltraInstallerScript
 	 *
 	 * @since version
 	 */
-	private function unlinkRecursive($dir, $deleteRootToo = 1)
+	private function unlinkRecursive($dir, $deleteRootToo = 1): void
 	{
 		if(!$dh = opendir($dir))
 		{

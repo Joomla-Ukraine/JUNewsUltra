@@ -28,7 +28,7 @@ $lang->load('mod_junewsultra', JPATH_SITE);
 
 $language = mb_strtolower($lang->getTag());
 
-function alert($text, $error)
+function alert($text, $error): string
 {
 	if($error === 'message')
 	{

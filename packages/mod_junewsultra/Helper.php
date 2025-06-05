@@ -19,8 +19,6 @@ use Joomla\String\StringHelper;
 
 defined('_JEXEC') or die;
 
-JLoader::register('JUImage', JPATH_LIBRARIES . '/juimage/JUImage.php');
-
 /**
  * Helper for mod_junewsultra
  *
@@ -42,6 +40,7 @@ class Helper
 	/**
 	 * modJUNewsUltraHelper constructor.
 	 *
+	 * @throws \Exception
 	 * @since 6.0
 	 */
 	public function __construct()
@@ -55,18 +54,17 @@ class Helper
 		$this->q        = $this->db->getQuery(true);
 		$this->nulldate = $this->db->getNullDate();
 		$this->nowdate  = $this->date->toSql();
-		$this->juimg    = new JUImage();
+		$this->juimg    = new JUImage\Image();
 	}
 
 	/**
 	 * @param $params
 	 * @param $junews
 	 *
-	 * @return bool
-	 *
+	 * @return bool|array
 	 * @since 6.0
 	 */
-	public function query($params, $junews)
+	public function query($params, $junews): bool|array
 	{
 		return true;
 	}
@@ -74,11 +72,10 @@ class Helper
 	/**
 	 * @param $order
 	 *
-	 * @return bool
-	 *
+	 * @return true|string
 	 * @since 6.0
 	 */
-	public function order($order)
+	public function order($order): bool|string
 	{
 		return true;
 	}
@@ -87,11 +84,10 @@ class Helper
 	 * @param $params
 	 * @param $junews
 	 *
-	 * @return string items
-	 *
+	 * @return true|array
 	 * @since 6.0
 	 */
-	public function getList($params, $junews)
+	public function getList($params, $junews): bool|array
 	{
 		return true;
 	}
@@ -103,7 +99,7 @@ class Helper
 	 *
 	 * @since 6.0
 	 */
-	public function detect_video($html)
+	public function detect_video($html): bool|string
 	{
 		$youtube = [
 			'//www.youtube.com',
@@ -137,7 +133,7 @@ class Helper
 	 *
 	 * @since 6.0
 	 */
-	public function image($params, $junews, array $data = [])
+	public function image($params, $junews, array $data = []): string
 	{
 		$attr = [];
 
@@ -160,7 +156,7 @@ class Helper
 
 				if($junews[ 'usewebp' ] == 1)
 				{
-					if(isset($src) && $src->webp !== '')
+					if($src->webp !== '')
 					{
 						$source = '<source srcset="' . $src->webp . '" type="image/webp">';
 					}
@@ -264,7 +260,7 @@ class Helper
 	 *
 	 * @since 6.0
 	 */
-	public function thumb($image, array $junews = [])
+	public function thumb($image, array $junews = []): object|string
 	{
 		if($image)
 		{
@@ -333,7 +329,7 @@ class Helper
 	 *
 	 * @since 6.0
 	 */
-	public function aspect($html, $_cropaspect)
+	public function aspect($html, $_cropaspect): float|int
 	{
 		$size   = $this->juimg->size(rawurldecode(JPATH_SITE . '/' . $html));
 		$width  = $size->width;
@@ -346,11 +342,11 @@ class Helper
 	 * @param $params
 	 * @param $title
 	 *
-	 * @return mixed|string|string[]|null
+	 * @return string
 	 *
 	 * @since 6.0
 	 */
-	public function title($params, $title)
+	public function title($params, $title): string
 	{
 		$title             = strip_tags($title);
 		$title             = htmlspecialchars($title);
@@ -396,11 +392,11 @@ class Helper
 	 * @param          $params
 	 * @param   array  $data
 	 *
-	 * @return string|string[]|null
+	 * @return string
 	 *
 	 * @since 6.0
 	 */
-	public function desc($params, array $data = [])
+	public function desc($params, array $data = []): string
 	{
 		$description = $data[ 'description' ];
 
@@ -501,7 +497,7 @@ class Helper
 	 *
 	 * @since 6.0
 	 */
-	public function rating($params, $rating)
+	public function rating($params, $rating): string
 	{
 		$tpl        = explode(':', $params->get('template'));
 		$rating_tpl = 'modules/mod_junewsultra/tmpl/' . $tpl[ 1 ] . '/images';
@@ -530,16 +526,16 @@ class Helper
 	/**
 	 * @param $html
 	 *
-	 * @return string|string[]|null
+	 * @return string|null
 	 *
 	 * @since 6.0
 	 */
-	public function url($html)
+	public function url($html): string|null
 	{
 		$root_url = Uri::base();
-		$html     = preg_replace('@href="(?!http://)(?!https://)(?!mailto:)([^"]+)"@i', "href=\"{$root_url}\${1}\"", $html);
+		$html     = preg_replace('@href="(?!http://)(?!https://)(?!mailto:)([^"]+)"@i', "href=\"$root_url\${1}\"", $html);
 
-		return preg_replace('@src="(?!http://)(?!https://)([^"]+)"@i', "src=\"{$root_url}\${1}\"", $html);
+		return preg_replace('@src="(?!http://)(?!https://)([^"]+)"@i', "src=\"$root_url\${1}\"", $html);
 	}
 
 	/**
@@ -550,11 +546,11 @@ class Helper
 	 * @param $path
 	 * @param $ordering_xml
 	 *
-	 * @return array|\SimpleXMLElement[]
+	 * @return array|string
 	 *
 	 * @since 6.0
 	 */
-	public function xml($feed_url, $xmlcount, $cache_file, $time, $path, $ordering_xml)
+	public function xml($feed_url, $xmlcount, $cache_file, $time, $path, $ordering_xml): array|string
 	{
 		$timedif = @(time() - filemtime($cache_file));
 
@@ -629,7 +625,7 @@ class Helper
 	 *
 	 * @since 6.0
 	 */
-	public function loadJQ($params)
+	public function loadJQ($params): bool
 	{
 		if($params->get('jquery') == 1)
 		{
@@ -646,7 +642,7 @@ class Helper
 	 *
 	 * @since 6.0
 	 */
-	public function loadBS($params)
+	public function loadBS($params): bool
 	{
 		if($params->get('bootstrap_js') == 1)
 		{
@@ -670,7 +666,7 @@ class Helper
 	 *
 	 * @since 6.0
 	 */
-	public function loadCSS($params)
+	public function loadCSS($params): bool
 	{
 		if($params->get('cssstyle') == 1)
 		{

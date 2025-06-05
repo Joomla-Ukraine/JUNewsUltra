@@ -20,11 +20,11 @@ class rss extends Helper
 	 * @param $params
 	 * @param $junews
 	 *
-	 * @return array|\SimpleXMLElement[]
+	 * @return array
 	 *
 	 * @since 6.0
 	 */
-	public function query($params, $junews)
+	public function query($params, $junews): array
 	{
 		return $this->xml($params->get('rssurl'), $params->get('rsscount'), 'cache/' . md5($params->get('rssurl')) . '.xml', $params->get('cache_time'), '/rss/channel/item', $params->get('ordering_xml'));
 	}
@@ -33,11 +33,11 @@ class rss extends Helper
 	 * @param $params
 	 * @param $junews
 	 *
-	 * @return array|SimpleXMLElement[]
+	 * @return array
 	 *
 	 * @since 6.0
 	 */
-	public function getList($params, $junews)
+	public function getList($params, $junews): array
 	{
 		$items = $this->query($params, $junews);
 

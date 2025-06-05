@@ -25,7 +25,7 @@ class JFormFieldIntegration extends FormField
 	 *
 	 * @since 6.0
 	 */
-	protected function getInput()
+	protected function getInput(): string
 	{
 		$html = [];
 
@@ -65,7 +65,7 @@ class JFormFieldIntegration extends FormField
 	 *
 	 * @since 6.0
 	 */
-	protected function getOptions()
+	protected function getOptions(): array
 	{
 		$options = [];
 

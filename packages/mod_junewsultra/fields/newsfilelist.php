@@ -10,16 +10,18 @@
  * @license          GNU/GPL - https://www.gnu.org/copyleft/gpl.html
  */
 
-use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
 
 defined('JPATH_PLATFORM') or die;
 
 FormHelper::loadFieldClass('list');
 
-class JFormFieldNewsFileList extends JFormFieldList
+class JFormFieldNewsFileList extends ListField
 {
 	public $type = 'NewsFileList';
 
@@ -29,7 +31,7 @@ class JFormFieldNewsFileList extends JFormFieldList
 	 *
 	 * @since 6.0
 	 */
-	protected function getOptions()
+	protected function getOptions(): array
 	{
 		$options     = [];
 		$filter      = (string) $this->element[ 'filter' ];
@@ -41,12 +43,12 @@ class JFormFieldNewsFileList extends JFormFieldList
 
 		if(!$hideNone)
 		{
-			$options[] = HTMLHelper::_('select.option', '-1', JText::alt('JOPTION_DO_NOT_USE', preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)));
+			$options[] = HTMLHelper::_('select.option', '-1', Text::alt('JOPTION_DO_NOT_USE', preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)));
 		}
 
 		if(!$hideDefault)
 		{
-			$options[] = HTMLHelper::_('select.option', '', JText::alt('JOPTION_USE_DEFAULT', preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)));
+			$options[] = HTMLHelper::_('select.option', '', Text::alt('JOPTION_USE_DEFAULT', preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname)));
 		}
 
 		$files = Folder::files($path, $filter);
@@ -64,7 +66,7 @@ class JFormFieldNewsFileList extends JFormFieldList
 					$file = File::stripExt($file);
 				}
 
-				$options[] = HTMLHelper::_('select.option', $file, JText::_('MOD_JUNEWS_INTEGR_' . strtoupper($file)));
+				$options[] = HTMLHelper::_('select.option', $file, Text::_('MOD_JUNEWS_INTEGR_' . strtoupper($file)));
 			}
 		}
 

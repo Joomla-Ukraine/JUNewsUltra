@@ -10,8 +10,10 @@
  * @license          GNU/GPL - https://www.gnu.org/copyleft/gpl.html
  */
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\Database\DatabaseInterface;
 
 defined('JPATH_PLATFORM') or die;
 
@@ -21,7 +23,7 @@ class JFormFieldMultiCategories extends JFormFieldList
 {
 	protected $type = 'MultiCategories';
 
-	public $options = [];
+	public array $options = [];
 
 	/**
 	 *
@@ -29,7 +31,7 @@ class JFormFieldMultiCategories extends JFormFieldList
 	 *
 	 * @since 3.0
 	 */
-	protected function getInput()
+	protected function getInput(): string
 	{
 		$html = [];
 		$attr = $this->element[ 'class' ] ? ' class="' . $this->element[ 'class' ] . '"' : '';
@@ -69,7 +71,7 @@ class JFormFieldMultiCategories extends JFormFieldList
 		$sql     = $this->element[ 'sql' ] ? : '';
 		$dbtable = $this->element[ 'dbtable' ] ? : '';
 
-		$db       = JFactory::getDBO();
+		$db       = Factory::getContainer()->get(DatabaseInterface::class);
 		$tables   = $db->getTableList();
 		$dbprefix = $db->getPrefix();
 
@@ -97,10 +99,6 @@ class JFormFieldMultiCategories extends JFormFieldList
 							$item->title,
 							$item->parent_id
 						];
-						break;
-
-					case 'icagenda_category':
-						$temp_options[] = [ $item->id, $item->title, '' ];
 						break;
 
 					case 'mt_cats':
@@ -146,7 +144,7 @@ class JFormFieldMultiCategories extends JFormFieldList
 		return parent::bind($array, $ignore);
 	}
 
-	public function recursive_options($temp_options, $level, $parent)
+	public function recursive_options($temp_options, $level, $parent): void
 	{
 		foreach($temp_options as $option)
 		{

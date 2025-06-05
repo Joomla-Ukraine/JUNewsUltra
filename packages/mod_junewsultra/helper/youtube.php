@@ -27,11 +27,11 @@ class youtube extends Helper
 	 * @param $params
 	 * @param $junews
 	 *
-	 * @return array|\SimpleXMLElement[]
+	 * @return array
 	 *
 	 * @since 6.0
 	 */
-	public function query($params, $junews)
+	public function query($params, $junews): array
 	{
 		switch($params->get('yttype'))
 		{
@@ -53,11 +53,11 @@ class youtube extends Helper
 	 * @param $params
 	 * @param $junews
 	 *
-	 * @return array|SimpleXMLElement[]
+	 * @return array
 	 *
 	 * @since 6.0
 	 */
-	public function getList($params, $junews)
+	public function getList($params, $junews): array
 	{
 		$items = $this->query($params, $junews);
 
@@ -87,7 +87,7 @@ class youtube extends Helper
 			// rawtext
 			if($junews[ 'sourcetext' ] == 1)
 			{
-				$item->sourcetext = ($item->media_group->media_description ?? '');
+				$item->sourcetext = $item->media_group->media_description ?? '';
 			}
 
 			// introtext

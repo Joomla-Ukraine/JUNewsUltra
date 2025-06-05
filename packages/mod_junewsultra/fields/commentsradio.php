@@ -26,7 +26,7 @@ class JFormFieldCommentsRadio extends FormField
 	 *
 	 * @since 6.0
 	 */
-	protected function getInput()
+	protected function getInput(): string
 	{
 		$html    = [];
 		$class   = $this->element[ 'class' ] ? ' class="radio ' . $this->element[ 'class' ] . '"' : ' class="radio"';
@@ -74,7 +74,7 @@ class JFormFieldCommentsRadio extends FormField
 	 *
 	 * @since 6.0
 	 */
-	protected function getOptions()
+	protected function getOptions(): array
 	{
 		$options = [];
 

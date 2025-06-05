@@ -19,12 +19,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
-
-if(version_compare(JVERSION, '4.0.0', '<'))
-{
-	require_once JPATH_SITE . '/components/com_content/router.php';
-	require_once JPATH_SITE . '/components/com_content/helpers/route.php';
-}
+use Joomla\Component\Content\Site\Helper\RouteHelper;
 
 /**
  * Helper for mod_junewsultra
@@ -39,11 +34,10 @@ class com_content extends Helper
 	 * @param $params
 	 * @param $junews
 	 *
-	 * @return bool|mixed
-	 *
+	 * @return array
 	 * @since 6.0
 	 */
-	public function query($params, $junews)
+	public function query($params, $junews): array
 	{
 		$ordering           = $params->get('ordering', 'id_desc');
 		$catid              = $params->get('catid', null);
@@ -360,7 +354,7 @@ class com_content extends Helper
 	 *
 	 * @since 6.0
 	 */
-	public function order($order)
+	public function order($order): string
 	{
 		switch($order)
 		{
@@ -440,12 +434,12 @@ class com_content extends Helper
 	 * @param $params
 	 * @param $junews
 	 *
-	 * @return mixed
+	 * @return array
 	 *
 	 * @throws \Exception
 	 * @since 6.0
 	 */
-	public function getList($params, $junews)
+	public function getList($params, $junews): array
 	{
 		$useaccess = (int) $params->get('useaccess', 0);
 		$date_type = $params->get('date_type', 'created');
@@ -462,7 +456,7 @@ class com_content extends Helper
 		$items = $this->query($params, $junews);
 
 		// Comments integration
-		if($params->get('use_comments') == 1 && count($items))
+		if($params->get('use_comments') == 1 && is_countable($items) && count($items))
 		{
 			$comments_system = $params->get('select_comments');
 			$comments        = JPATH_SITE . '/components/com_' . $comments_system . '/' . $comments_system . '.php';
@@ -555,8 +549,8 @@ class com_content extends Helper
 				$language   = (Multilanguage::isEnabled() ? $item->language : '');
 				$catid      = (!empty($item->cmc_cat) && $junews[ 'multicat' ] == 1 ? $item->cmc_cat : $item->catid);
 
-				$item->link    = Route::_(ContentHelperRoute::getArticleRoute($item->slug, $catid, $language));
-				$item->catlink = Route::_(ContentHelperRoute::getCategoryRoute($catid));
+				$item->link    = Route::_(RouteHelper::getArticleRoute($item->slug, $item->catid, $language));
+				$item->catlink = Route::_(RouteHelper::getCategoryRoute($catid));
 			}
 
 			// article title

@@ -13,9 +13,7 @@
 defined('JPATH_BASE') or die;
 
 use Joomla\CMS\Form\FormField;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Uri\Uri;
 
 class JFormFieldUpload extends FormField
 {
@@ -28,23 +26,11 @@ class JFormFieldUpload extends FormField
 	 *
 	 * @since 6.0
 	 */
-	protected function getInput()
+	protected function getInput(): string
 	{
 		if(!isset($_GET[ 'id' ]))
 		{
 			return Text::_('MOD_JUNEWS_NOT_EDIT_TEMPLATE');
-		}
-
-		if(version_compare(JVERSION, '4.0.0', '<'))
-		{
-			HTMLHelper::_('behavior.modal', 'a.modal');
-
-			$html = [];
-			$link = str_replace('/administrator', '', Uri::base()) . 'modules/mod_junewsultra/fields/uploadimg.php';
-
-			$html[] = '<a class="modal btn"  href="' . $link . '" rel="{handler: \'iframe\', size: {x: 330, y: 180}}"><i class="icon-upload"></i> ' . Text::_('MOD_JUNEWS_IMAGE_UPLOAD') . '</a>';
-
-			return implode("\n", $html);
 		}
 
 		return 'Upload image to <code>media/mod_junewsultra</code> folder';
