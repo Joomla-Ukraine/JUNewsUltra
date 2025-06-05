@@ -13,7 +13,6 @@
 defined('JPATH_BASE') or die;
 
 use Joomla\CMS\Form\FormField;
-use Joomla\CMS\Language\Text;
 
 class JFormFieldUpload extends FormField
 {
@@ -28,11 +27,6 @@ class JFormFieldUpload extends FormField
 	 */
 	protected function getInput(): string
 	{
-		if(!isset($_GET[ 'id' ]))
-		{
-			return Text::_('MOD_JUNEWS_NOT_EDIT_TEMPLATE');
-		}
-
 		return 'Upload image to <code>media/mod_junewsultra</code> folder';
 	}
 }
