@@ -19,6 +19,8 @@ use Joomla\String\StringHelper;
 
 defined('_JEXEC') or die;
 
+require_once(JPATH_SITE . '/libraries/juimage/vendor/autoload.php');
+
 /**
  * Helper for mod_junewsultra
  *
@@ -122,6 +124,27 @@ class Helper
 		}
 
 		return false;
+	}
+
+	/**
+	 *
+	 * @param   string  $image
+	 *
+	 * @return string
+	 *
+	 * @throws \Exception
+	 * @since 6.0
+	 */
+	public function image_source(string $image): string
+	{
+		if(strpos($image, '#joomlaImage') === false)
+		{
+			return $image;
+		}
+
+		$image = explode('#joomlaImage', $image);
+
+		return $image[ 0 ];
 	}
 
 	/**
