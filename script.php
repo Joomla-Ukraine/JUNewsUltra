@@ -86,30 +86,7 @@ class Pkg_JUNewsUltraInstallerScript
 		$path  = JPATH_SITE . '/modules/mod_junewsultra/';
 		$files = [
 			$path . 'helper/com_k2.php',
-			$path . 'assets/donate2.gif',
-			$path . 'assets/gear.png',
-			$path . 'assets/toggler.js',
-			$path . 'assets/script.js',
-			$path . 'assets/btn_donate.gif',
-			$path . 'assets/junewsultra.jpg',
-			$path . 'assets/js/script.js',
-			$path . 'assets/js/toggler.js',
-			$path . 'assets/js/javascript.js',
-			$path . 'assets/js/clike.js',
-			$path . 'assets/js/codemirror.js',
-			$path . 'assets/js/css.js',
-			$path . 'assets/js/overlay.js',
-			$path . 'assets/js/php.js',
-			$path . 'assets/js/runmode.js',
-			$path . 'assets/js/xml.js',
-			$path . 'assets/js/toggler30.js',
-			$path . 'assets/js/script30.js',
-			$path . 'assets/js/jquery.custom-input-file.js',
-			$path . 'assets/css/codemirror.css',
-			$path . 'assets/css/csscolors.css',
-			$path . 'assets/css/default.css',
-			$path . 'assets/css/elegant.css',
-			$path . 'assets/css/docs.css',
+			$path . 'fields/head.php',
 			$path . 'fields/jumultithumbradio.php',
 			$path . 'fields/colorpicker.php',
 			$path . 'fields/imagesetting.php',
@@ -136,7 +113,7 @@ class Pkg_JUNewsUltraInstallerScript
 		$folders = [
 			$path . 'img',
 			$path . 'lib/phpthumb',
-			$path . 'assets/js/minicolors'
+			$path . 'assets'
 		];
 
 		foreach($files as $file)

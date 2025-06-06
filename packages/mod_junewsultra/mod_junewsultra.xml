@@ -16,7 +16,6 @@
     <files>
         <filename module="mod_junewsultra">mod_junewsultra.php</filename>
         <filename>Helper.php</filename>
-        <folder>assets</folder>
         <folder>fields</folder>
         <folder>helper</folder>
     </files>
