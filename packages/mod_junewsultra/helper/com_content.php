@@ -14,7 +14,6 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Access\Access;
 use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\Language\Text;
@@ -178,14 +177,6 @@ class com_content extends Helper
 		// From
 		$this->q->from('#__content AS a');
 
-		if(is_countable($tags) && count($tags) > 0)
-		{
-			$this->q->join('INNER', '#__contentitem_tag_map AS m ON a.id = m.content_item_id');
-			$this->q->where($this->db->quoteName('m.tag_id') . ' IN (' . implode(',', $params->get('tag', [])) . ')');
-			$this->q->where($this->db->quoteName('m.type_alias') . ' = ' . $this->db->Quote('com_content.article'));
-			$this->q->group($this->db->quoteName('a.id'));
-		}
-
 		if($junews[ 'show_cat' ] == 1)
 		{
 			$this->q->select([ 'cc.title AS category_title' ]);
@@ -223,15 +214,25 @@ class com_content extends Helper
 		{
 			$this->q->where($this->db->quoteName('a.id') . ' = ' . $this->db->Quote((int) $params->get('articleid')));
 		}
-		elseif($display_article == 2)
+
+		if($display_article == 2)
 		{
 			$ids = str_replace(' ', '', $params->get('articleids'));
 			$ids = trim($ids);
 
 			$this->q->where($this->db->quoteName('a.id') . ' IN (' . $ids . ')');
 		}
-		else
+
+		if($display_article == 0)
 		{
+			if(is_countable($tags) && count($tags) > 0)
+			{
+				$this->q->join('INNER', '#__contentitem_tag_map AS m ON a.id = m.content_item_id');
+				$this->q->where($this->db->quoteName('m.tag_id') . ' IN (' . implode(',', $params->get('tag', [])) . ')');
+				$this->q->where($this->db->quoteName('m.type_alias') . ' = ' . $this->db->Quote('com_content.article'));
+				$this->q->group($this->db->quoteName('a.id'));
+			}
+
 			if($date_filtering == 1)
 			{
 				switch($relative_date)
@@ -500,7 +501,7 @@ class com_content extends Helper
 			}
 			else
 			{
-				Factory::getApplication()->enqueueMessage(Text::_('MOD_JUNEWS_COMMENTS_NOT_INSTALLED'), 'error');
+				$this->app->enqueueMessage(Text::_('MOD_JUNEWS_COMMENTS_NOT_INSTALLED'), 'error');
 			}
 		}
 
@@ -607,30 +608,28 @@ class com_content extends Helper
 
 					if(is_object($images))
 					{
-						$intro_image     = $this->image_source($images->image_intro);
-						$fulltext_image  = $this->image_source($images->image_fulltext);
-						$_image_intro    = file_exists($intro_image);
-						$_image_fulltext = file_exists($fulltext_image);
+						$intro_image    = $this->image_source(isset($images->image_intro) ? $images->image_intro : '');
+						$fulltext_image = $this->image_source(isset($images->image_fulltext) ? $images->image_fulltext : '');
 
 						if($junews[ 'image_source' ] === '1')
 						{
-							if($_image_intro)
+							if($intro_image)
 							{
 								$junuimgsource     = htmlspecialchars($intro_image);
 								$item->imagesource = htmlspecialchars($intro_image);
 							}
-							elseif($_image_fulltext)
+							elseif($fulltext_image)
 							{
 								$junuimgsource     = htmlspecialchars($fulltext_image);
 								$item->imagesource = htmlspecialchars($fulltext_image);
 							}
 						}
-						elseif($junews[ 'image_source' ] === '2' && $_image_intro)
+						elseif($junews[ 'image_source' ] === '2' && $intro_image)
 						{
 							$junuimgsource     = htmlspecialchars($intro_image);
 							$item->imagesource = htmlspecialchars($intro_image);
 						}
-						elseif($junews[ 'image_source' ] === '3' && $_image_fulltext)
+						elseif($junews[ 'image_source' ] === '3' && $fulltext_image)
 						{
 							$junuimgsource     = htmlspecialchars($fulltext_image);
 							$item->imagesource = htmlspecialchars($fulltext_image);
