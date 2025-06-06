@@ -12,6 +12,7 @@
     <license>https://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
     <version>@version@</version>
     <description>MOD_JUNEWS_XML_DESCRIPTION</description>
+	<namespace path="src">Joomla\Module\JUNewsUltra</namespace>
 
     <files>
         <filename module="mod_junewsultra">mod_junewsultra.php</filename>
