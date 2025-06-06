@@ -39,6 +39,11 @@ class com_content extends Helper
 	 */
 	public function query($params, $junews): array
 	{
+		$input = $this->app->getInput();
+		$temp  = $input->getString('id');
+		$temp  = explode(':', $temp);
+		$id    = (int) $temp[ 0 ];
+
 		$ordering           = $params->get('ordering', 'id_desc');
 		$catid              = $params->get('catid', null);
 		$tags               = $params->get('tag', []);
@@ -46,6 +51,7 @@ class com_content extends Helper
 		$wheresql           = (int) $params->get('wheresql');
 		$where              = $params->get('where');
 		$display_article    = $params->get('display_article');
+		$exclude_id         = (int) $params->get('exclude_id', 0);
 		$useaccess          = (int) $params->get('useaccess', 0);
 		$user_id            = (int) $params->get('user_id');
 		$uid                = (int) $params->get('uid');
@@ -266,6 +272,11 @@ class com_content extends Helper
 			{
 				$excluded_articles = explode("\r\n", $excluded_articles);
 				$this->q->where($this->db->quoteName('a.id') . ' NOT IN (' . implode(',', $excluded_articles) . ')');
+			}
+
+			if($exclude_id)
+			{
+				$this->q->where($this->db->quoteName('a.id') . ' != ' . $this->db->Quote($id));
 			}
 
 			switch($junews[ 'featured' ])
