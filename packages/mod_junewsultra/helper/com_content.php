@@ -181,13 +181,6 @@ class com_content extends Helper
 			$this->q->join('LEFT', '#__categories AS cc ON cc.id = a.catid');
 		}
 
-		// Multicategories plugin integration
-		if($junews[ 'multicat' ] == 1)
-		{
-			$this->q->select([ 'cmc.category_id AS cmc_cat' ]);
-			$this->q->join('LEFT', '#__contentmulticategories_categories AS cmc ON cmc.article_id = a.id');
-		}
-
 		// User
 		if($junews[ 'show_author' ] == 1)
 		{
