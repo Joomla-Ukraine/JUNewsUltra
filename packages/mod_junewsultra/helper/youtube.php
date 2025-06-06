@@ -69,28 +69,23 @@ class youtube extends Helper
 				$item->link = str_replace('/watch?v=', '/embed/', $item->link);
 			}
 
-			// article title
 			if($junews[ 'show_title' ] == 1)
 			{
 				$item->title = $this->title($params, $item->title);
 			}
 
-			// title for attr title and alt
 			$item->title_alt = htmlspecialchars(strip_tags($this->title($params, $item->title)));
 
-			// category title
 			if($junews[ 'show_cat' ] == 1)
 			{
 				$item->cattitle = '';
 			}
 
-			// rawtext
 			if($junews[ 'sourcetext' ] == 1)
 			{
 				$item->sourcetext = $item->media_group->media_description ?? '';
 			}
 
-			// introtext
 			if($junews[ 'show_intro' ] == 1)
 			{
 				$item->introtext = $this->desc($params, [
@@ -104,16 +99,13 @@ class youtube extends Helper
 				]);
 			}
 
-			// fulltext
 			$item->fulltext = '';
 
-			// author
 			if($junews[ 'show_author' ] == 1)
 			{
 				$item->author = $item->author->name;
 			}
 
-			// date
 			if($junews[ 'show_date' ] == 1)
 			{
 				$item->sqldate = date('Y-m-d H:i:s', strtotime($item->published));
@@ -125,13 +117,11 @@ class youtube extends Helper
 				$item->df_y = HTMLHelper::date($_date_type, $junews[ 'date_year' ]);
 			}
 
-			// hits
 			if($junews[ 'show_hits' ] == 1)
 			{
 				$item->hits = $item->media_group->media_community->media_statistics->attributes()->views;
 			}
 
-			// rating
 			if($junews[ 'show_rating' ] == 1)
 			{
 				$item->rating = $this->rating($params, $item->media_group->media_community->media_starRating->attributes()->count);
@@ -175,7 +165,6 @@ class youtube extends Helper
 							$item->imagesource = $junuimgsource;
 						}
 						break;
-
 					case '1':
 					default:
 						if($junuimgsource)

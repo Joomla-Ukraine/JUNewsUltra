@@ -269,6 +269,8 @@
 		                multiple="true"
 		                size="10"
 		                label="JCATEGORY"
+		                layout="joomla.form.field.list-fancy-select"
+		                filter="intarray"
 		                showon="component:com_content[AND]display_article:0"
                 >
                     <option value="">JOPTION_ALL_CATEGORIES</option>

@@ -55,7 +55,6 @@ class com_content extends Helper
 		$date_type          = $params->get('date_type', 'created');
 		$date_field         = $params->get('date_field', 'a.created');
 
-		// Access
 		$access = '1';
 		if($useaccess == 1)
 		{
@@ -63,7 +62,6 @@ class com_content extends Helper
 			$access = !ComponentHelper::getParams('com_content')->get('show_noauth');
 		}
 
-		// Category
 		$cat_arr = [];
 		if($catid)
 		{
@@ -82,7 +80,6 @@ class com_content extends Helper
 			}
 		}
 
-		// Selects data
 		$this->q->select([
 			'a.id',
 			'a.state',
@@ -189,21 +186,18 @@ class com_content extends Helper
 			$this->q->join('LEFT', '#__categories AS cc ON cc.id = a.catid');
 		}
 
-		// User
 		if($junews[ 'show_author' ] == 1)
 		{
 			$this->q->select([ 'u.name AS author' ]);
 			$this->q->join('LEFT', '#__users AS u on u.id = a.created_by');
 		}
 
-		// Rating
 		if($junews[ 'show_rating' ] == 1)
 		{
 			$this->q->select([ 'ROUND(v.rating_sum / v.rating_count, 0) AS rating' ]);
 			$this->q->join('LEFT', '#__content_rating AS v ON a.id = v.content_id');
 		}
 
-		// Uniq author post
 		if($dateuser_filtering == 1 || !empty($uid))
 		{
 			$ji_catids = '';
@@ -215,12 +209,10 @@ class com_content extends Helper
 			$this->q->join('INNER', '(SELECT max(`created`) MaxPostDate, `created_by` FROM `#__content` ' . $ji_catids . ' GROUP BY `created_by`) a2 ON a.created = a2.MaxPostDate');
 		}
 
-		// Where
 		$this->q->where($this->db->quoteName('a.state') . ' = ' . $this->db->Quote('1'));
 		$this->q->where('(' . $this->db->quoteName('a.publish_up') . ' IS NULL OR ' . $this->db->quoteName('a.publish_up') . ' < ' . $this->db->Quote($this->nowdate) . ' )');
 		$this->q->where('(' . $this->db->quoteName('a.publish_down') . ' IS NULL OR ' . $this->db->quoteName('a.publish_down') . ' > ' . $this->db->Quote($this->nowdate) . ' )');
 
-		// Select article or categories
 		if($display_article == 1)
 		{
 			$this->q->where($this->db->quoteName('a.id') . ' = ' . $this->db->Quote((int) $params->get('articleid')));
@@ -243,27 +235,21 @@ class com_content extends Helper
 						$endDateRange   = $this->db->Quote($params->get('end_date_range', date('Y-m-d H:i:s')));
 						$this->q->where('(' . $this->db->quoteName($date_field) . ' > ' . $this->db->Quote($startDateRange) . ' AND ' . $this->db->quoteName($date_field) . ' < ' . $this->db->Quote($endDateRange) . ')');
 						break;
-
 					case '2':
 						$this->q->where($this->db->quoteName($date_field) . ' > DATE_SUB(' . $this->db->Quote($this->nowdate) . ', INTERVAL 7 DAY)');
 						break;
-
 					case '3':
 						$this->q->where($this->db->quoteName($date_field) . ' > DATE_SUB(' . $this->db->Quote($this->nowdate) . ', INTERVAL 14 DAY)');
 						break;
-
 					case '4':
 						$this->q->where($this->db->quoteName($date_field) . ' > DATE_SUB(' . $this->db->Quote($this->nowdate) . ', INTERVAL ' . cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y')) . ' DAY)');
 						break;
-
 					case '5':
 						$this->q->where($this->db->quoteName($date_field) . ' > DATE_SUB(' . $this->db->Quote($this->nowdate) . ', INTERVAL 365 DAY)');
 						break;
-
 					case '6':
 						$this->q->where($this->db->quoteName($date_field) . ' > DATE_SUB(' . $this->db->Quote($this->nowdate) . ', INTERVAL ' . $params->get('custom_days', '30') . ' DAY)');
 						break;
-
 					case '0':
 					default:
 						$this->q->where($this->db->quoteName($date_field) . ' > DATE_SUB(' . $this->db->Quote($this->nowdate) . ', INTERVAL 1 DAY)');
@@ -271,17 +257,9 @@ class com_content extends Helper
 				}
 			}
 
-			// Standart categories or multicategories (plugin integration)
 			if(is_array($cat_arr) && count($cat_arr))
 			{
-				if($junews[ 'multicat' ] == 1)
-				{
-					$this->q->where('(' . $this->db->quoteName('a.catid') . ' IN (' . implode(',', $cat_arr) . ') OR cmc.category_id IN (' . implode(',', $cat_arr) . ') )');
-				}
-				else
-				{
-					$this->q->where($this->db->quoteName('a.catid') . ' IN (' . implode(',', $cat_arr) . ')');
-				}
+				$this->q->where($this->db->quoteName('a.catid') . ' IN (' . implode(',', $cat_arr) . ')');
 			}
 
 			if($excluded_articles = $params->get('excluded_articles', null))
@@ -295,7 +273,6 @@ class com_content extends Helper
 				case '1':
 					$this->q->where($this->db->quoteName('a.featured') . ' = ' . $this->db->Quote('1'));
 					break;
-
 				case '0':
 					$this->q->where($this->db->quoteName('a.featured') . ' = ' . $this->db->Quote('0'));
 					break;
@@ -309,11 +286,9 @@ class com_content extends Helper
 						$this->q->where($this->db->quoteName('a.created_by') . ' = ' . $this->db->Quote($uid));
 					}
 					break;
-
 				case 'by_me':
 					$this->q->where('(' . $this->db->quoteName('a.created_by') . ' = ' . $this->db->Quote((int) $this->user->get('id')) . ' OR ' . $this->db->quoteName('a.modified_by') . ' = ' . $this->db->Quote((int) $this->user->get('id')) . ')');
 					break;
-
 				case 'not_me':
 					$this->q->where('(' . $this->db->quoteName('a.created_by') . ' <> ' . $this->db->Quote((int) $this->user->get('id')) . ' AND ' . $this->db->quoteName('a.modified_by') . ' <> ' . $this->db->Quote((int) $this->user->get('id')) . ')');
 					break;
@@ -325,7 +300,6 @@ class com_content extends Helper
 			$this->q->where($this->db->quoteName('a.access') . ' IN (' . $groups . ')');
 		}
 
-		// Custom WHERE SQL
 		if($wheresql == 1)
 		{
 			$sqls = explode("\r\n", $where);
@@ -362,66 +336,51 @@ class com_content extends Helper
 			case 'title_asc':
 				$ordering = 'a.title';
 				break;
-
 			case 'title_desc':
 				$ordering = 'a.title DESC';
 				break;
-
 			case 'id_asc':
 				$ordering = 'a.id';
 				break;
-
 			case 'id_desc':
 				$ordering = 'a.id DESC';
 				break;
-
 			case 'hits_asc':
 				$ordering = 'a.hits';
 				break;
-
 			case 'hits_desc':
 				$ordering = 'a.hits DESC';
 				break;
-
 			case 'rating_asc':
 				$ordering = 'rating';
 				break;
-
 			case 'rating_desc':
 				$ordering = 'rating DESC';
 				break;
-
 			case 'created_asc':
 				$ordering = 'a.created';
 				break;
-
 			case 'modified_desc':
 				$ordering = 'a.modified DESC';
 				break;
-
 			case 'modified_created_dsc':
 				$ordering = 'a.modified DESC, a.created';
 				break;
 			case 'modified_touch_dsc':
 				$ordering = 'CASE WHEN (' . $this->db->quoteName('a.modified') . ' = ' . $this->db->Quote($this->nulldate) . ') THEN a.created ELSE a.modified END';
 				break;
-
 			case 'ordering_asc':
 				$ordering = 'a.ordering';
 				break;
-
 			case 'ordering_desc':
 				$ordering = 'a.ordering DESC';
 				break;
-
 			case 'rand':
 				$ordering = 'rand()';
 				break;
-
 			case 'publish_dsc':
 				$ordering = 'a.publish_up DESC';
 				break;
-
 			case 'created_desc':
 			default:
 				$ordering = 'a.created DESC';
@@ -445,7 +404,6 @@ class com_content extends Helper
 		$useaccess = (int) $params->get('useaccess', 0);
 		$date_type = $params->get('date_type', 'created');
 
-		// Access filter
 		$access     = '1';
 		$authorised = [];
 		if($useaccess == 1)
@@ -456,7 +414,6 @@ class com_content extends Helper
 
 		$items = $this->query($params, $junews);
 
-		// Comments integration
 		if($params->get('use_comments') == 1 && is_countable($items) && count($items))
 		{
 			$comments_system = $params->get('select_comments');
@@ -493,7 +450,6 @@ class com_content extends Helper
 						$comment_text2  = $comment_text1;
 						$comment_plural = 0;
 						break;
-
 					default:
 					case 'jcomments':
 						$this->q->select([
@@ -546,24 +502,20 @@ class com_content extends Helper
 
 			if($access || in_array($item->access, $authorised, true))
 			{
-				$item->slug = $item->id . ($item->alias ? ':' . $item->alias : '');
-				$language   = (Multilanguage::isEnabled() ? $item->language : '');
-				$catid      = (!empty($item->cmc_cat) && $junews[ 'multicat' ] == 1 ? $item->cmc_cat : $item->catid);
-
+				$item->slug    = $item->id . ($item->alias ? ':' . $item->alias : '');
+				$language      = (Multilanguage::isEnabled() ? $item->language : '');
+				$catid         = (!empty($item->cmc_cat) && $junews[ 'multicat' ] == 1 ? $item->cmc_cat : $item->catid);
 				$item->link    = Route::_(RouteHelper::getArticleRoute($item->slug, $item->catid, $language));
 				$item->catlink = Route::_(RouteHelper::getCategoryRoute($catid));
 			}
 
-			// article title
 			if($junews[ 'show_title' ] == 1)
 			{
 				$item->title = $this->title($params, $item->title);
 			}
 
-			// title for attr title and alt
 			$item->title_alt = $this->title($params, $item->title);
 
-			// category title
 			if($junews[ 'show_cat' ] == 1)
 			{
 				$cattitle       = strip_tags($item->category_title);
@@ -582,11 +534,9 @@ class com_content extends Helper
 					case '1':
 						$_text = $item->fulltext;
 						break;
-
 					case '2':
 						$_text = $introtext . $fulltext;
 						break;
-
 					default:
 					case '0':
 						$_text = $introtext;
@@ -688,7 +638,6 @@ class com_content extends Helper
 
 				$item->image     = '';
 				$item->imagelink = '';
-
 				switch($junews[ 'thumb_width' ])
 				{
 					case '0':
@@ -705,7 +654,6 @@ class com_content extends Helper
 							$item->imagesource = $junuimgsource;
 						}
 						break;
-
 					case '1':
 					default:
 						if($junuimgsource)
@@ -724,13 +672,11 @@ class com_content extends Helper
 				}
 			}
 
-			// rawtext
 			if($junews[ 'sourcetext' ] == 1)
 			{
 				$item->sourcetext = $introtext . $fulltext;
 			}
 
-			// introtext
 			if($junews[ 'show_intro' ] == 1)
 			{
 				$item->introtext = $this->desc($params, [
@@ -744,7 +690,6 @@ class com_content extends Helper
 				]);
 			}
 
-			// fulltext
 			if($junews[ 'show_full' ] == 1)
 			{
 				$item->fulltext = $this->desc($params, [
@@ -758,13 +703,11 @@ class com_content extends Helper
 				]);
 			}
 
-			// author
 			if($junews[ 'show_author' ] == 1 && $item->created_by_alias)
 			{
 				$item->author = $item->created_by_alias;
 			}
 
-			// date
 			if($junews[ 'show_date' ] == 1)
 			{
 				switch($date_type)
@@ -772,11 +715,9 @@ class com_content extends Helper
 					case 'modified':
 						$_date_type = $item->modified;
 						break;
-
 					case 'publish_up':
 						$_date_type = $item->publish_up;
 						break;
-
 					default:
 					case 'created':
 						$_date_type = $item->created;
@@ -790,7 +731,6 @@ class com_content extends Helper
 				$item->df_y    = HTMLHelper::date($_date_type, $junews[ 'date_year' ]);
 			}
 
-			// rating
 			if($junews[ 'show_rating' ] == 1)
 			{
 				$item->rating = $this->rating($params, $item->rating);

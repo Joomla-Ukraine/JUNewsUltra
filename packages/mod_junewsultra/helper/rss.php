@@ -43,28 +43,23 @@ class rss extends Helper
 
 		foreach($items as $item)
 		{
-			// article title
 			if($junews[ 'show_title' ] == 1)
 			{
 				$item->title = $this->title($params, $item->title);
 			}
 
-			// title for attr title and alt
 			$item->title_alt = htmlspecialchars(strip_tags($this->title($params, $item->title)));
 
-			// category title
 			if($junews[ 'show_cat' ] == 1)
 			{
 				$item->cattitle = strip_tags($item->category);
 			}
 
-			// rawtext
 			if($junews[ 'sourcetext' ] == '1')
 			{
 				$item->sourcetext = ($item->content_encoded ?? $item->description);
 			}
 
-			// introtext
 			if($junews[ 'show_intro' ] == '1')
 			{
 				$item->introtext = $this->desc($params, [
@@ -78,7 +73,6 @@ class rss extends Helper
 				]);
 			}
 
-			// fulltext
 			if($junews[ 'show_full' ] == '1' && isset($item->content_encoded))
 			{
 				$item->fulltext = $this->desc($params, [
@@ -92,14 +86,12 @@ class rss extends Helper
 				]);
 			}
 
-			// author
 			if($junews[ 'show_author' ] == 1)
 			{
 				$_author      = explode('(', $item->author);
 				$item->author = str_replace(')', '', $_author[ '1' ]);
 			}
 
-			// date
 			if($junews[ 'show_date' ] == 1)
 			{
 				$item->sqldate = date('Y-m-d H:i:s', strtotime($item->pubDate));
@@ -110,13 +102,11 @@ class rss extends Helper
 				$item->df_y    = HTMLHelper::date($_date_type, $junews[ 'date_year' ]);
 			}
 
-			// hits
 			if($junews[ 'show_hits' ] == 1)
 			{
 				$item->hits = '-';
 			}
 
-			// rating
 			if($junews[ 'show_rating' ] == 1)
 			{
 				$item->rating = $this->rating($params, $item->rating);

@@ -613,11 +613,9 @@ class Helper
 					shuffle($items);
 					$items = array_slice($items, 0, $xmlcount);
 					break;
-
 				case 'created_asc':
 					$items = $xml->xpath(sprintf($path . '[position() >= last()-%d]', $xmlcount));
 					break;
-
 				default:
 				case 'created_desc':
 					$items = $xml->xpath(sprintf($path . '[position() <= %d]', $xmlcount));
