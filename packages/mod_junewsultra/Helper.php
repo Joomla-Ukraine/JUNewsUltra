@@ -145,7 +145,12 @@ class Helper
 
 		$image = explode('#joomlaImage', $image);
 
-		return $image[ 0 ] ?? '';
+		if(file_exists($image[ 0 ]))
+		{
+			return $image[ 0 ];
+		}
+
+		return '';
 	}
 
 	/**
