@@ -83,17 +83,6 @@ class Pkg_JUNewsUltraInstallerScript
 	 */
 	public function postflight($type, $parent): bool
 	{
-		$xml = file_get_contents(JPATH_SITE . '/modules/mod_junewsultra/mod_junewsultra.xml');
-		$xml = str_replace([
-			'class="btn-group"',
-			'addfieldpath="/administrator/components/com_content/models/fields/modal"'
-		], [
-			'layout="joomla.form.field.radio.switcher"',
-			'addfieldprefix="Joomla\Component\Content\Administrator\Field"'
-		], $xml);
-
-		file_put_contents(JPATH_SITE . '/modules/mod_junewsultra/mod_junewsultra.xml', $xml);
-
 		$path  = JPATH_SITE . '/modules/mod_junewsultra/';
 		$files = [
 			$path . 'helper/com_k2.php',

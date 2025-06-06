@@ -72,7 +72,7 @@
 	            <field
 			            name="only_article"
 			            type="radio"
-			            class="btn-group"
+			            layout="joomla.form.field.radio.switcher"
 			            default="0"
 			            label="MOD_JUNEWS_ONLY_ARTICLE"
 			            filter="integer"
@@ -113,7 +113,7 @@
                 <field
 		                name="yttype"
 		                type="radio"
-		                class="btn-group"
+		                layout="joomla.form.field.radio.switcher"
 		                default="2"
 		                label="MOD_JUNEWS_FIELD_YTTYPE_LABEL"
 		                filter="integer"
@@ -160,7 +160,7 @@
                 <field
 		                name="ytlink"
 		                type="radio"
-		                class="btn-group"
+		                layout="joomla.form.field.radio.switcher"
 		                default="0"
 		                label="Link type"
 		                filter="integer"
@@ -186,7 +186,7 @@
                 <field
 		                name="useaccess"
 		                type="radio"
-		                class="btn-group"
+		                layout="joomla.form.field.radio.switcher"
 		                default="0"
 		                label="MOD_JUNEWS_USE_ACCESS"
 		                description="MOD_JUNEWS_USE_ACCESS_DESC"
@@ -217,7 +217,7 @@
 		                new="false"
 		                edit="false"
 		                label="MOD_JUNEWS_SELECTARTICLE"
-		                addfieldpath="/administrator/components/com_content/models/fields/modal"
+		                addfieldprefix="Joomla\Component\Content\Administrator\Field"
 		                showon="component:com_content[AND]display_article:1"
                 />
 
@@ -314,7 +314,7 @@
                 <field
 		                name="date_filtering"
 		                type="radio"
-		                class="btn-group"
+		                layout="joomla.form.field.radio.switcher"
 		                default="0"
 		                label="MOD_JUNEWS_FIELD_DATEFILTERING_LABEL"
 		                filter="integer"
@@ -367,7 +367,7 @@
                 <field
 		                name="dateuser_filtering"
 		                type="radio"
-		                class="btn-group"
+		                layout="joomla.form.field.radio.switcher"
 		                default="0"
 		                label="MOD_JUNEWS_FIELD_DATEUSERFILTERING_LABEL"
 		                description="MOD_JUNEWS_FIELD_DATEUSERFILTERING_DESC"
@@ -462,7 +462,7 @@
                 <field
 		                name="empty_mod"
 		                type="radio"
-		                class="btn-group"
+		                layout="joomla.form.field.radio.switcher"
 		                default="0"
 		                label="MOD_JUNEWS_DISPLAY_EMPTY_MODULE"
                 >
@@ -473,7 +473,7 @@
                 <field
 		                name="cssstyle"
 		                type="radio"
-		                class="btn-group"
+		                layout="joomla.form.field.radio.switcher"
 		                default="1"
 		                label="MOD_JUNEWS_CSS"
                 >
@@ -490,7 +490,7 @@
                 <field
 		                name="bootstrap_js"
 		                type="radio"
-		                class="btn-group"
+		                layout="joomla.form.field.radio.switcher"
 		                default="0"
 		                label="MOD_JUNEWS_USE_BOOTSTRAP_JS"
                 >
@@ -501,7 +501,7 @@
                 <field
 		                name="bootstrap_css"
 		                type="radio"
-		                class="btn-group"
+		                layout="joomla.form.field.radio.switcher"
 		                default="0"
 		                label="MOD_JUNEWS_USE_BOOTSTRAP_CSS"
                 >
@@ -512,7 +512,7 @@
                 <field
 		                name="show_title"
 		                type="radio"
-		                class="btn-group"
+		                layout="joomla.form.field.radio.switcher"
 		                default="1"
 		                label="MOD_JUNEWS_SHOW_TITLE"
                 >
@@ -523,7 +523,7 @@
                 <field
 		                name="title_limit"
 		                type="radio"
-		                class="btn-group"
+		                layout="joomla.form.field.radio.switcher"
 		                default="0"
 		                label="MOD_JUNEWS_LIMIT_TEXT"
 		                filter="integer"
@@ -567,7 +567,7 @@
                 <field
 		                name="title_prepare"
 		                type="radio"
-		                class="btn-group"
+		                layout="joomla.form.field.radio.switcher"
 		                default="0"
 		                label="MOD_JUNEWS_CONTENT_TITLE_PREPARE"
 		                description="MOD_JUNEWS_CONTENT_TITLE_PREPARE_DESC"
@@ -581,7 +581,7 @@
                 <field
 		                name="sourcetext"
 		                type="radio"
-		                class="btn-group"
+		                layout="joomla.form.field.radio.switcher"
 		                default="0"
 		                label="MOD_JUNEWS_USE_RAWTEXT"
                 >
@@ -592,7 +592,7 @@
                 <field
 		                name="show_attribs"
 		                type="radio"
-		                class="btn-group"
+		                layout="joomla.form.field.radio.switcher"
 		                default="0"
 		                label="MOD_JUNEWS_USE_ATTR"
 		                filter="integer"
@@ -605,7 +605,7 @@
                 <field
 		                name="content_prepare"
 		                type="radio"
-		                class="btn-group"
+		                layout="joomla.form.field.radio.switcher"
 		                default="0"
 		                label="MOD_JUNEWS_CONTENT_PREPARE"
                 >
@@ -616,7 +616,7 @@
                 <field
 		                name="show_intro"
 		                type="radio"
-		                class="btn-group"
+		                layout="joomla.form.field.radio.switcher"
 		                default="1"
 		                label="MOD_JUNEWS_SHOW_HIDE_INTROTEXT"
                 >
@@ -627,7 +627,7 @@
                 <field
 		                name="clear_tag"
 		                type="radio"
-		                class="btn-group"
+		                layout="joomla.form.field.radio.switcher"
 		                default="1"
 		                label="MOD_JUNEWS_CLEAR_TAG_IN_INTROTEXT"
 		                filter="integer"
@@ -648,7 +648,7 @@
                 <field
 		                name="li"
 		                type="radio"
-		                class="btn-group"
+		                layout="joomla.form.field.radio.switcher"
 		                default="1"
 		                label="MOD_JUNEWS_LIMIT_TEXT"
 		                filter="integer"
@@ -694,7 +694,7 @@
                 <field
 		                name="show_full"
 		                type="radio"
-		                class="btn-group"
+		                layout="joomla.form.field.radio.switcher"
 		                default="0"
 		                label="MOD_JUNEWS_SHOW_HIDE_FULLTEXT"
                 >
@@ -705,7 +705,7 @@
                 <field
 		                name="clear_tag_full"
 		                type="radio"
-		                class="btn-group"
+		                layout="joomla.form.field.radio.switcher"
 		                default="1"
 		                label="MOD_JUNEWS_CLEAR_TAG_IN_FULLTEXT"
 		                filter="integer"
@@ -727,7 +727,7 @@
                 <field
 		                name="li_full"
 		                type="radio"
-		                class="btn-group"
+		                layout="joomla.form.field.radio.switcher"
 		                default="1"
 		                label="MOD_JUNEWS_LIMIT_TEXT"
 		                filter="integer"
@@ -771,7 +771,7 @@
                 <field
 		                name="juauthor"
 		                type="radio"
-		                class="btn-group"
+		                layout="joomla.form.field.radio.switcher"
 		                default="0"
 		                label="MOD_JUNEWS_DISPLAY_AUTHOR"
                 >
@@ -782,7 +782,7 @@
                 <field
 		                name="read_more"
 		                type="radio"
-		                class="btn-group"
+		                layout="joomla.form.field.radio.switcher"
 		                default="0"
 		                label="MOD_JUNEWS_READ_MORE"
                 >
@@ -801,7 +801,7 @@
                 <field
 		                name="show_date"
 		                type="radio"
-		                class="btn-group"
+		                layout="joomla.form.field.radio.switcher"
 		                default="1"
 		                label="MOD_JUNEWS_SHOW_DATE"
                 >
@@ -855,7 +855,7 @@
 
                 <field name="showcat"
                        type="radio"
-                       class="btn-group"
+                       layout="joomla.form.field.radio.switcher"
                        default="0"
                        label="MOD_JUNEWS_SHOW_CATEGORY">
                     <option value="0">JHIDE</option>
@@ -864,7 +864,7 @@
 
                 <field name="showcatlink"
                        type="radio"
-                       class="btn-group"
+                       layout="joomla.form.field.radio.switcher"
                        default="0"
                        label="MOD_JUNEWS_SHOW_CATEGORY_LINK"
                        showon="showcat:1"
@@ -875,7 +875,7 @@
 
                 <field name="showHits"
                        type="radio"
-                       class="btn-group"
+                       layout="joomla.form.field.radio.switcher"
                        default="0"
                        label="MOD_JUNEWS_SHOW_HITS">
                     <option value="0">JHIDE</option>
@@ -884,7 +884,7 @@
 
                 <field name="showRating"
                        type="radio"
-                       class="btn-group"
+                       layout="joomla.form.field.radio.switcher"
                        default="0"
                        label="MOD_JUNEWS_SHOW_RATING_STAR"
                 >
@@ -894,7 +894,7 @@
 
                 <field name="all_in2"
                        type="radio"
-                       class="btn-group"
+                       layout="joomla.form.field.radio.switcher"
                        default="0"
                        label="MOD_JUNEWS_ALL_IN_CATEGORY"
                        description="MOD_JUNEWS_ALL_IN_CATEGORY_DESC"
@@ -951,7 +951,7 @@
 
                 <field name="custom_heading2"
                        type="radio"
-                       class="btn-group"
+                       layout="joomla.form.field.radio.switcher"
                        default="0"
                        label="MOD_JUNEWS_CUSTOM_HEADING"
                        showon="all_in2:1"
@@ -991,7 +991,7 @@
 
                 <field name="all_in"
                        type="radio"
-                       class="btn-group"
+                       layout="joomla.form.field.radio.switcher"
                        default="0"
                        label="MOD_JUNEWS_ALL_IN_CATEGORY2"
                        description="MOD_JUNEWS_ALL_IN_CATEGORY_DESC">
@@ -1047,7 +1047,7 @@
 
                 <field name="custom_heading"
                        type="radio"
-                       class="btn-group"
+                       layout="joomla.form.field.radio.switcher"
                        default="0"
                        label="MOD_JUNEWS_CUSTOM_HEADING"
                        showon="all_in:1"
@@ -1091,7 +1091,7 @@
 
                 <field name="pik"
                        type="radio"
-                       class="btn-group"
+                       layout="joomla.form.field.radio.switcher"
                        default="1"
                        label="MOD_JUNEWS_IMAGE_DISPLAY">
                     <option value="0">JNO</option>
@@ -1145,7 +1145,7 @@
 
 	            <field name="image_loading"
 	                   type="radio"
-	                   class="btn-group"
+	                   layout="joomla.form.field.radio.switcher"
 	                   default="1"
 	                   label="MOD_JUNEWS_IMAGE_NATIVE_LOADING"
 	                   showon="pik:1"
@@ -1156,7 +1156,7 @@
 
 	            <field name="image_decoding"
 	                   type="radio"
-	                   class="btn-group"
+	                   layout="joomla.form.field.radio.switcher"
 	                   default="1"
 	                   label="MOD_JUNEWS_IMAGE_NATIVE_DECODING"
 	                   showon="pik:1"
@@ -1180,7 +1180,7 @@
 
                 <field name="imglink"
                        type="radio"
-                       class="btn-group"
+                       layout="joomla.form.field.radio.switcher"
                        default="1"
                        label="MOD_JUNEWS_IMAGE_LINK"
                        showon="pik:1"
@@ -1191,7 +1191,7 @@
 
                 <field name="tips"
                        type="radio"
-                       class="btn-group"
+                       layout="joomla.form.field.radio.switcher"
                        default="1"
                        label="MOD_JUNEWS_IMAGE_TITLE"
                        showon="pik:1"
@@ -1227,7 +1227,7 @@
 
 	            <field name="usewebp"
 	                   type="radio"
-	                   class="btn-group"
+	                   layout="joomla.form.field.radio.switcher"
 	                   default="0"
 	                   label="MOD_JUNEWS_USE_WEBP"
 	                   showon="pik:1[AND]thumb_width:1"
@@ -1238,7 +1238,7 @@
 
 	            <field name="usegd2webp"
 	                   type="radio"
-	                   class="btn-group"
+	                   layout="joomla.form.field.radio.switcher"
 	                   default="0"
 	                   label="MOD_JUNEWS_USE_GD2"
 	                   showon="pik:1[AND]thumb_width:1[AND]usewebp:1"
@@ -1249,7 +1249,7 @@
 
 	            <field name="usesrcset"
 	                   type="radio"
-	                   class="btn-group"
+	                   layout="joomla.form.field.radio.switcher"
 	                   default="0"
 	                   label="MOD_JUNEWS_USE_SRCSET"
 	                   description="MOD_JUNEWS_USE_SRCSET_DESC"
@@ -1302,7 +1302,7 @@
 
                 <field name="zoomcrop"
                        type="radio"
-                       class="btn-group"
+                       layout="joomla.form.field.radio.switcher"
                        default="1"
                        label="MOD_JUNEWS_IMAGE_ZOOM_CROP"
                        showon="pik:1[AND]thumb_width:1"
@@ -1330,7 +1330,7 @@
 
                 <field name="auto_zoomcrop"
                        type="radio"
-                       class="btn-group"
+                       layout="joomla.form.field.radio.switcher"
                        default="0"
                        label="MOD_JUNEWS_IMAGE_AUTO_ZOOM_CROP"
                        showon="pik:1[AND]thumb_width:1[AND]zoomcrop:1"
@@ -1355,7 +1355,7 @@
 
                 <field name="farcrop"
                        type="radio"
-                       class="btn-group"
+                       layout="joomla.form.field.radio.switcher"
                        default="0"
                        label="MOD_JUNEWS_IMAGE_FAR"
                        showon="pik:1[AND]thumb_width:1"
@@ -1390,7 +1390,7 @@
 
                 <field name="defaultimg"
                        type="radio"
-                       class="btn-group"
+                       layout="joomla.form.field.radio.switcher"
                        default="1"
                        label="MOD_JUNEWS_DEFAULT_IMAGE"
                        showon="pik:1"
@@ -1421,7 +1421,7 @@
 
                 <field name="use_comments"
                        type="radio"
-                       class="btn-group"
+                       layout="joomla.form.field.radio.switcher"
                        default="0"
                        label="MOD_JUNEWS_USE_COMMENTS">
                     <option value="0">JNO</option>
@@ -1440,7 +1440,7 @@
                 <field
 		                name="youtube_img_show"
 		                type="radio"
-		                class="btn-group"
+		                layout="joomla.form.field.radio.switcher"
 		                default="1"
 		                label="MOD_JUNEWS_IMAGE_VIDEO"
                 >
@@ -1451,7 +1451,7 @@
                 <field
 		                name="gallery"
 		                type="radio"
-		                class="btn-group"
+		                layout="joomla.form.field.radio.switcher"
 		                default="1"
 		                label="MOD_JUNEWS_IMAGE_JUMULTITHUMB_GALLERY"
                 >
