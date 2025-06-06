@@ -21,7 +21,7 @@ $menu      = $app->getMenu();
 $doc       = $app->getDocument();
 $view      = $app->input->getCmd('view');
 $option    = $app->input->getCmd('option');
-$component = trim($params->get('component', 'com_content'));
+$component = $params->get('component', 'com_content') ? trim($params->get('component', 'com_content')) : '';
 
 if($params->get('only_article', 0) == 1 && !($option === 'com_content' && $view === 'article'))
 {
@@ -74,10 +74,6 @@ $list = $object->getList($params, [
 	'noimage'             => $params->get('noimage'),
 	'imglink'             => $params->get('imglink'),
 	'link_enabled'        => $params->get('link_enabled', 1),
-	'sx'                  => (int) $params->get('sx'),
-	'sy'                  => (int) $params->get('sy'),
-	'sw'                  => (int) $params->get('sw'),
-	'sh'                  => (int) $params->get('sh'),
 	'zoomcrop'            => (int) $params->get('zoomcrop', 1),
 	'zoomcrop_params'     => $params->get('zoomcrop_params', 1),
 	'auto_zoomcrop'       => (int) $params->get('auto_zoomcrop'),
@@ -93,8 +89,7 @@ $list = $object->getList($params, [
 	'usesrcset'           => $params->get('usesrcset', '0'),
 	'src_picture'         => $params->get('src_picture'),
 	'youtube_img_show'    => $params->get('youtube_img_show', 1),
-	'gallery'             => $params->get('gallery', 1),
-	'multicat'            => $params->get('contentmulticategories', 0)
+	'gallery'             => $params->get('gallery', 1)
 ]);
 
 if($params->get('empty_mod', 0) == 0 && (is_countable($list) && count($list) == 0))
@@ -102,7 +97,6 @@ if($params->get('empty_mod', 0) == 0 && (is_countable($list) && count($list) == 
 	return;
 }
 
-$helper->loadJQ($params);
 $helper->loadBS($params);
 $helper->loadCSS($params);
 
@@ -133,8 +127,8 @@ if(file_exists($layoutpath = ModuleHelper::getLayoutPath('mod_junewsultra', $par
 			$heading_link = $heading;
 		}
 
-		$item_heading = trim($params->get('item_heading'));
-		$class_all_in = trim($params->get('class_all_in'));
+		$item_heading = $params->get('item_heading') ? trim($params->get('item_heading')) : '';
+		$class_all_in = $params->get('class_all_in') ? trim($params->get('class_all_in')) : '';
 		$read_all     = '<' . $item_heading . ($class_all_in ? ' class="' . $class_all_in . '"' : '') . '>' . $heading_link . '</' . $item_heading . '>';
 	}
 
@@ -142,18 +136,18 @@ if(file_exists($layoutpath = ModuleHelper::getLayoutPath('mod_junewsultra', $par
 	{
 		if($params->get('custom_heading2') == 1)
 		{
-			$heading2      = trim($params->get('text_all_in2'));
-			$heading_link2 = trim($params->get('link_all_in2'));
+			$heading2      = $params->get('text_all_in2') ? trim($params->get('text_all_in2')) : '';
+			$heading_link2 = $params->get('link_all_in2') ? trim($params->get('link_all_in2')) : '';
 		}
 		else
 		{
-			$text_all_in22 = trim($params->get('text_all_in22'));
+			$text_all_in22 = $params->get('text_all_in22') ? trim($params->get('text_all_in22')) : '';
 			$heading2      = ($text_all_in22 ? : Route::_($menu->getItem($params->get('link_menuitem2'))->title));
 			$heading_link2 = Route::_($menu->getItem($params->get('link_menuitem2'))->link . '&amp;Itemid=' . $params->get('link_menuitem2'));
 		}
 
 		$heading2      = str_replace([ '[', ']' ], [ '<', '>' ], $heading2);
-		$item_heading2 = trim($params->get('item_heading2'));
+		$item_heading2 = $params->get('item_heading2') ? trim($params->get('item_heading2')) : '';
 		$titletag2     = explode('_', $item_heading2);
 		$_tag_open2    = '';
 		$_tag_close2   = '';
@@ -173,7 +167,7 @@ if(file_exists($layoutpath = ModuleHelper::getLayoutPath('mod_junewsultra', $par
 			$heading_link2 = $heading2;
 		}
 
-		$class_all_in2 = trim($params->get('class_all_in2'));
+		$class_all_in2 = $params->get('class_all_in2') ? trim($params->get('class_all_in2')) : '';
 		$read_all2     = '<' . $titletag2[ 0 ] . ($class_all_in2 ? ' class="' . $class_all_in2 . '"' : '') . '>' . $heading_link2 . '</' . $titletag2[ 0 ] . '>';
 	}
 

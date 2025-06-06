@@ -11,6 +11,7 @@
  */
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\Helpers\Bootstrap;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
@@ -315,10 +316,6 @@ class Helper
 			$imgparams = [
 				'w'     => $junews[ 'w' ],
 				'h'     => $junews[ 'h' ],
-				'sx'    => $junews[ 'sx' ] ? : '',
-				'sy'    => $junews[ 'sy' ] ? : '',
-				'sw'    => $junews[ 'sw' ] ? : '',
-				'sh'    => $junews[ 'sh' ] ? : '',
 				'f'     => $junews[ 'f' ],
 				'q'     => $junews[ 'q' ],
 				'cache' => $junews[ 'image_thumb' ]
@@ -373,7 +370,7 @@ class Helper
 	{
 		$title             = strip_tags($title);
 		$title             = htmlspecialchars($title);
-		$title             = trim($title);
+		$title             = $title ? trim($title) : '';
 		$end_limit_title   = $params->get('end_limit_title', '…');
 		$title_limit_count = $params->get('title_limit_count');
 
@@ -384,15 +381,13 @@ class Helper
 
 		if($params->get('title_limit', 0) == 1)
 		{
+			$title_length = StringHelper::strlen($title);
+			$title        = StringHelper::substr($title, 0, $title_limit_count);
+
 			if($params->get('title_limit_mode') == 1)
 			{
 				$title_length = count(explode(' ', $title));
 				$title        = trim(implode(' ', array_slice(explode(' ', $title), 0, $title_limit_count)));
-			}
-			else
-			{
-				$title_length = StringHelper::strlen($title);
-				$title        = trim(StringHelper::substr($title, 0, $title_limit_count));
 			}
 
 			if(!preg_match('#([.?!])$#imu', $title))
@@ -442,7 +437,7 @@ class Helper
 		{
 			$description = str_replace('&nbsp;', ' ', $description);
 			$description = preg_replace('/(<\/[^>]+?>)(<[^>\/][^>]*?>)/', '$1 $2', $description);
-
+			$description = strip_tags($description);
 			if($data[ 'allowed_tags' ] !== '')
 			{
 				$allowed_tags = str_replace([
@@ -452,10 +447,6 @@ class Helper
 				], '', $data[ 'allowed_tags' ]);
 				$tags         = '<' . str_replace(',', '><', $allowed_tags) . '>';
 				$description  = strip_tags($description, $tags);
-			}
-			else
-			{
-				$description = strip_tags($description);
 			}
 		}
 
@@ -648,23 +639,6 @@ class Helper
 	 *
 	 * @since 6.0
 	 */
-	public function loadJQ($params): bool
-	{
-		if($params->get('jquery') == 1)
-		{
-			HTMLHelper::_('jquery.framework');
-		}
-
-		return true;
-	}
-
-	/**
-	 * @param $params
-	 *
-	 * @return bool
-	 *
-	 * @since 6.0
-	 */
 	public function loadBS($params): bool
 	{
 		if($params->get('bootstrap_js') == 1)
@@ -676,7 +650,7 @@ class Helper
 		{
 			$direction = ($this->lang->isRtl() ? 'rtl' : 'ltr');
 
-			JHtmlBootstrap::loadCss(true, $direction);
+			Bootstrap::loadCss(true, $direction);
 		}
 
 		return true;
@@ -693,9 +667,10 @@ class Helper
 	{
 		if($params->get('cssstyle') == 1)
 		{
+			$wa = $this->doc->getWebAssetManager();
+
 			$tpl  = explode(':', $params->get('template'));
 			$jtpl = $tpl[ 0 ];
-
 			if($tpl[ 0 ] === '_')
 			{
 				$jtpl = $this->app->getTemplate();
@@ -704,12 +679,12 @@ class Helper
 			if(is_file(JPATH_SITE . '/templates/' . $jtpl . '/html/mod_junewsultra/' . $tpl[ 1 ] . '/css/style.css'))
 			{
 				$css = 'templates/' . $jtpl . '/html/mod_junewsultra/' . $tpl[ 1 ] . '/css/style.css';
-				$this->doc->addStyleSheet(Uri::base() . $css);
+				$wa->registerAndUseStyle('style', Uri::base() . $css);
 			}
 			elseif(is_file(JPATH_SITE . '/modules/mod_junewsultra/tmpl/' . $tpl[ 1 ] . '/css/style.css'))
 			{
 				$css = 'modules/mod_junewsultra/tmpl/' . $tpl[ 1 ] . '/css/style.css';
-				$this->doc->addStyleSheet(Uri::base() . $css);
+				$wa->registerAndUseStyle('style', Uri::base() . $css);
 			}
 		}
 

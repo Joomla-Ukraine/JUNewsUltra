@@ -16,7 +16,6 @@ use Joomla\CMS\Form\FormField;
 
 class JFormFieldUpload extends FormField
 {
-
 	protected $type = 'Upload';
 
 	/**

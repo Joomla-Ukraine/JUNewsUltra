@@ -488,17 +488,6 @@
                 />
 
                 <field
-		                name="jquery"
-		                type="radio"
-		                class="btn-group"
-		                default="0"
-		                label="MOD_JUNEWS_USE_JQUERY"
-                >
-                    <option value="0">JNO</option>
-                    <option value="1">JYES</option>
-                </field>
-
-                <field
 		                name="bootstrap_js"
 		                type="radio"
 		                class="btn-group"
@@ -1309,48 +1298,6 @@
                        last="100"
                        step="1"
                        showon="pik:1[AND]thumb_width:1"
-                />
-
-                <field name="source_rectangle"
-                       type="radio"
-                       class="btn-group"
-                       default="0"
-                       label="MOD_JUNEWS_USE_SOURCE_RECTANGLE"
-                       description="MOD_JUNEWS_IMAGE_THUMB_DESC"
-                       showon="pik:1[AND]thumb_width:1"
-                >
-                    <option value="0">JNO</option>
-                    <option value="1">JYES</option>
-                </field>
-
-                <field name="sx"
-                       type="text"
-                       default="0"
-                       label="MOD_JUNEWS_IMAGE_SX"
-                       description="MOD_JUNEWS_IMAGE_SX_DESC"
-                       showon="pik:1[AND]thumb_width:1[AND]source_rectangle:1"
-                />
-
-                <field name="sy"
-                       type="text"
-                       default="0"
-                       label="MOD_JUNEWS_IMAGE_SY"
-                       description="MOD_JUNEWS_IMAGE_SY_DESC"
-                       showon="pik:1[AND]thumb_width:1[AND]source_rectangle:1"
-                />
-
-	            <field name="sw"
-	                   type="text"
-	                   label="MOD_JUNEWS_IMAGE_SW"
-	                   description="MOD_JUNEWS_IMAGE_SW_DESC"
-	                   showon="pik:1[AND]thumb_width:1[AND]source_rectangle:1"
-	            />
-
-                <field name="sh"
-                       type="text"
-                       label="MOD_JUNEWS_IMAGE_SH"
-                       description="MOD_JUNEWS_IMAGE_SH_DESC"
-                       showon="pik:1[AND]thumb_width:1[AND]source_rectangle:1"
                 />
 
                 <field name="zoomcrop"
