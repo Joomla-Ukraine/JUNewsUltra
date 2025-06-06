@@ -274,6 +274,18 @@
                     <option value="">JOPTION_ALL_CATEGORIES</option>
                 </field>
 
+	            <field
+			            name="tag"
+			            type="tag"
+			            label="JTAG"
+			            mode="nested"
+			            multiple="true"
+			            filter="intarray"
+			            class="multipleTags"
+			            custom="deny"
+			            showon="component:com_content"
+	            />
+
                 <field
 		                name="excluded_articles"
 		                type="textarea"

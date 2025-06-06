@@ -41,6 +41,7 @@ class com_content extends Helper
 	{
 		$ordering           = $params->get('ordering', 'id_desc');
 		$catid              = $params->get('catid', null);
+		$tags               = $params->get('tag', []);
 		$show_attribs       = (int) $params->get('show_attribs');
 		$wheresql           = (int) $params->get('wheresql');
 		$where              = $params->get('where');
@@ -174,7 +175,14 @@ class com_content extends Helper
 		// From
 		$this->q->from('#__content AS a');
 
-		// Categories
+		if(is_countable($tags) && count($tags) > 0)
+		{
+			$this->q->join('INNER', '#__contentitem_tag_map AS m ON a.id = m.content_item_id');
+			$this->q->where($this->db->quoteName('m.tag_id') . ' IN (' . implode(',', $params->get('tag', [])) . ')');
+			$this->q->where($this->db->quoteName('m.type_alias') . ' = ' . $this->db->Quote('com_content.article'));
+			$this->q->group($this->db->quoteName('a.id'));
+		}
+
 		if($junews[ 'show_cat' ] == 1)
 		{
 			$this->q->select([ 'cc.title AS category_title' ]);
