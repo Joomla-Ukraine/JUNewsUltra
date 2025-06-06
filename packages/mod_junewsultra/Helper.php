@@ -64,45 +64,45 @@ class Helper
 	 * @param $params
 	 * @param $junews
 	 *
-	 * @return bool|array
+	 * @return array
 	 * @since 6.0
 	 */
-	public function query($params, $junews): bool|array
+	public function query($params, $junews): array
 	{
-		return true;
+		return [];
 	}
 
 	/**
 	 * @param $order
 	 *
-	 * @return true|string
+	 * @return string
 	 * @since 6.0
 	 */
-	public function order($order): bool|string
+	public function order($order): string
 	{
-		return true;
+		return '';
 	}
 
 	/**
 	 * @param $params
 	 * @param $junews
 	 *
-	 * @return true|array
+	 * @return array
 	 * @since 6.0
 	 */
-	public function getList($params, $junews): bool|array
+	public function getList($params, $junews): array
 	{
-		return true;
+		return [];
 	}
 
 	/**
 	 * @param $html
 	 *
-	 * @return bool|string
+	 * @return string
 	 *
 	 * @since 6.0
 	 */
-	public function detect_video($html): bool|string
+	public function detect_video($html): string
 	{
 		$youtube = [
 			'//www.youtube.com',
@@ -124,7 +124,7 @@ class Helper
 			return 'https://vimeo.com/' . $match[ 2 ];
 		}
 
-		return false;
+		return '';
 	}
 
 	/**
@@ -145,7 +145,7 @@ class Helper
 
 		$image = explode('#joomlaImage', $image);
 
-		return $image[ 0 ];
+		return $image[ 0 ] ?? '';
 	}
 
 	/**
@@ -345,11 +345,11 @@ class Helper
 	 * @param $html
 	 * @param $_cropaspect
 	 *
-	 * @return float|int
+	 * @return int
 	 *
 	 * @since 6.0
 	 */
-	public function aspect($html, $_cropaspect): float|int
+	public function aspect($html, $_cropaspect): int
 	{
 		$size   = $this->juimg->size(rawurldecode(JPATH_SITE . '/' . $html));
 		$width  = $size->width;
@@ -370,7 +370,6 @@ class Helper
 	{
 		$title             = strip_tags($title);
 		$title             = htmlspecialchars($title);
-		$title             = $title ? trim($title) : '';
 		$end_limit_title   = $params->get('end_limit_title', '…');
 		$title_limit_count = $params->get('title_limit_count');
 
@@ -403,7 +402,7 @@ class Helper
 			}
 		}
 
-		return $title;
+		return $title ? trim($title) : '';
 	}
 
 	/**
@@ -540,11 +539,11 @@ class Helper
 	/**
 	 * @param $html
 	 *
-	 * @return string|null
+	 * @return string
 	 *
 	 * @since 6.0
 	 */
-	public function url($html): string|null
+	public function url($html): string
 	{
 		$root_url = Uri::base();
 		$html     = preg_replace('@href="(?!http://)(?!https://)(?!mailto:)([^"]+)"@i', "href=\"$root_url\${1}\"", $html);
@@ -622,9 +621,9 @@ class Helper
 					break;
 			}
 		}
-		catch (Exception $e)
+		catch (\Exception)
 		{
-			echo '<div class="uk-alert-warning" data-uk-alert>' . Text::_('MOD_JUNEWS_RSSXML_ERROR') . '</div>';
+			return '<div class="uk-alert-warning" data-uk-alert>' . Text::_('MOD_JUNEWS_RSSXML_ERROR') . '</div>';
 		}
 
 		return $items;
@@ -633,11 +632,11 @@ class Helper
 	/**
 	 * @param $params
 	 *
-	 * @return bool
+	 * @return string
 	 *
 	 * @since 6.0
 	 */
-	public function loadBS($params): bool
+	public function loadBS($params): string
 	{
 		if($params->get('bootstrap_js') == 1)
 		{
@@ -651,17 +650,17 @@ class Helper
 			Bootstrap::loadCss(true, $direction);
 		}
 
-		return true;
+		return '';
 	}
 
 	/**
 	 * @param $params
 	 *
-	 * @return bool
+	 * @return string
 	 *
 	 * @since 6.0
 	 */
-	public function loadCSS($params): bool
+	public function loadCSS($params): string
 	{
 		if($params->get('cssstyle') == 1)
 		{
@@ -686,6 +685,6 @@ class Helper
 			}
 		}
 
-		return true;
+		return '';
 	}
 }
