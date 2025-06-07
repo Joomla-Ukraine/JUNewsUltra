@@ -45,5 +45,10 @@
         <language tag="uk-UA">uk-UA/uk-UA.pkg_junewsultra.sys.ini</language>
         <language tag="uk-UA">uk-UA/uk-UA.mod_junewsultra.ini</language>
         <language tag="uk-UA">uk-UA/uk-UA.mod_junewsultra.sys.ini</language>
+
+        <language tag="kk-KZ">kk-KZ/kk-KZ.pkg_junewsultra.ini</language>
+        <language tag="kk-KZ">kk-KZ/kk-KZ.pkg_junewsultra.sys.ini</language>
+        <language tag="kk-KZ">kk-KZ/kk-KZ.mod_junewsultra.ini</language>
+        <language tag="kk-KZ">kk-KZ/kk-KZ.mod_junewsultra.sys.ini</language>
     </languages>
 </extension>
