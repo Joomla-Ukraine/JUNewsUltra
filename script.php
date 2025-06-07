@@ -49,7 +49,7 @@ class Pkg_JUNewsUltraInstallerScript
 	 * @throws \Exception
 	 * @since 6.0
 	 */
-	public function preflight($type, $parent): bool
+	public function preflight(): bool
 	{
 		$app = Factory::getApplication();
 
@@ -89,6 +89,7 @@ class Pkg_JUNewsUltraInstallerScript
 		$path  = JPATH_SITE . '/modules/mod_junewsultra/';
 		$files = [
 			$path . 'helper/com_k2.php',
+			$path . 'fields/upload.php',
 			$path . 'fields/head.php',
 			$path . 'fields/jumultithumbradio.php',
 			$path . 'fields/colorpicker.php',

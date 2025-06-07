@@ -58,6 +58,7 @@ class com_content extends Helper
 		$dateuser_filtering = $params->get('dateuser_filtering', 0);
 		$date_filtering     = $params->get('date_filtering', 0);
 		$relative_date      = $params->get('relative_date', 0);
+		$related_mode       = $params->get('related_mode', 0);
 		$date_type          = $params->get('date_type', 'created');
 		$date_field         = $params->get('date_field', 'a.created');
 
@@ -211,6 +212,49 @@ class com_content extends Helper
 		$this->q->where('(' . $this->db->quoteName('a.publish_up') . ' IS NULL OR ' . $this->db->quoteName('a.publish_up') . ' < ' . $this->db->Quote($this->nowdate) . ' )');
 		$this->q->where('(' . $this->db->quoteName('a.publish_down') . ' IS NULL OR ' . $this->db->quoteName('a.publish_down') . ' > ' . $this->db->Quote($this->nowdate) . ' )');
 
+		if($display_article == 3 && $id)
+		{
+			$query = $this->db->getQuery(true);
+			$query->select($this->db->quoteName('metakey'));
+			$query->from($this->db->quoteName('#__content'));
+			$query->where($this->db->quoteName('id') . ' = ' . $this->db->Quote($id));
+			$this->db->setQuery($query);
+
+			try
+			{
+				$metakey = trim($this->db->loadResult());
+			}
+			catch (\RuntimeException)
+			{
+				$this->app->enqueueMessage(Text::_('JERROR_AN_ERROR_HAS_OCCURRED'), 'error');
+
+				return [];
+			}
+
+			$keys  = explode(',', $metakey);
+			$likes = [];
+			foreach($keys as $key)
+			{
+				$key = trim($key);
+
+				if($key)
+				{
+					$likes[] = $this->db->escape($key);
+				}
+			}
+
+			if(\count($likes))
+			{
+				$wheres = [];
+				foreach($likes as $keyword)
+				{
+					$wheres[] = $this->db->quoteName('a.metakey') . ' LIKE ' . $this->db->quote('%' . $keyword . '%');
+				}
+
+				$this->q->where('(' . implode(' OR ', $wheres) . ')');
+			}
+		}
+
 		if($display_article == 1)
 		{
 			$this->q->where($this->db->quoteName('a.id') . ' = ' . $this->db->Quote((int) $params->get('articleid')));
@@ -331,6 +375,11 @@ class com_content extends Helper
 
 		$this->q->order($this->order($ordering));
 		$this->db->setQuery($this->q, $junews[ 'count_skip' ], $junews[ 'count' ]);
+
+		/*		echo $display_article;
+				echo '<pre>';
+				echo $this->q;
+				echo '</pre>';*/
 
 		return $this->db->loadObjectList();
 	}
