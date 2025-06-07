@@ -40,9 +40,7 @@ class com_content extends Helper
 	public function query($params, $junews): array
 	{
 		$input = $this->app->getInput();
-		$temp  = $input->getString('id');
-		$temp  = explode(':', $temp);
-		$id    = (int) $temp[ 0 ];
+		$id    = $input->getInt('id');
 
 		$ordering           = $params->get('ordering', 'id_desc');
 		$catid              = $params->get('catid', null);

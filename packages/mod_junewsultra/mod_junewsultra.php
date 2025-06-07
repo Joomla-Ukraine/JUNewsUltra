@@ -106,12 +106,12 @@ if(file_exists($layoutpath = ModuleHelper::getLayoutPath('mod_junewsultra', $par
 	{
 		if($params->get('custom_heading') == 1)
 		{
-			$heading      = trim($params->get('text_all_in'));
-			$heading_link = trim($params->get('link_all_in'));
+			$heading      = $params->get('text_all_in') ? trim($params->get('text_all_in')) : '';
+			$heading_link = $params->get('link_all_in') ? trim($params->get('link_all_in')) : '';
 		}
 		else
 		{
-			$text_all_in12 = trim($params->get('text_all_in12'));
+			$text_all_in12 = $params->get('text_all_in12') ? trim($params->get('text_all_in12')) : '';
 			$heading       = ($text_all_in12 ? : Route::_($menu->getItem($params->get('link_menuitem'))->title));
 			$heading_link  = Route::_($menu->getItem($params->get('link_menuitem'))->link . '&amp;Itemid=' . $params->get('link_menuitem'));
 		}
@@ -142,8 +142,18 @@ if(file_exists($layoutpath = ModuleHelper::getLayoutPath('mod_junewsultra', $par
 		else
 		{
 			$text_all_in22 = $params->get('text_all_in22') ? trim($params->get('text_all_in22')) : '';
-			$heading2      = ($text_all_in22 ? : Route::_($menu->getItem($params->get('link_menuitem2'))->title));
-			$heading_link2 = Route::_($menu->getItem($params->get('link_menuitem2'))->link . '&amp;Itemid=' . $params->get('link_menuitem2'));
+
+			$heading2      = '';
+			$heading_link2 = '';
+			if($text_all_in22)
+			{
+				$heading2 = $text_all_in22;
+			}
+			elseif($params->get('link_menuitem2'))
+			{
+				$heading2      = Route::_($menu->getItem($params->get('link_menuitem2'))->title);
+				$heading_link2 = Route::_($menu->getItem($params->get('link_menuitem2'))->link . '&amp;Itemid=' . $params->get('link_menuitem2'));
+			}
 		}
 
 		$heading2      = str_replace([ '[', ']' ], [ '<', '>' ], $heading2);
@@ -171,24 +181,24 @@ if(file_exists($layoutpath = ModuleHelper::getLayoutPath('mod_junewsultra', $par
 		$read_all2     = '<' . $titletag2[ 0 ] . ($class_all_in2 ? ' class="' . $class_all_in2 . '"' : '') . '>' . $heading_link2 . '</' . $titletag2[ 0 ] . '>';
 	}
 
-	if($params->get('all_in') == 1 && $params->get('all_in_position') == 0)
+	if($params->get('all_in') == 1 && $params->get('all_in_position') == 0 && $read_all)
 	{
 		echo $read_all;
 	}
 
-	if($params->get('all_in2') == 1 && $params->get('all_in_position2') == 0)
+	if($params->get('all_in2') == 1 && $params->get('all_in_position2') == 0 && $read_all2)
 	{
 		echo $read_all2;
 	}
 
 	require $layoutpath;
 
-	if($params->get('all_in') == 1 && $params->get('all_in_position') == 1)
+	if($params->get('all_in') == 1 && $params->get('all_in_position') == 1 && $read_all)
 	{
 		echo $read_all;
 	}
 
-	if($params->get('all_in2') == 1 && $params->get('all_in_position2') == 1)
+	if($params->get('all_in2') == 1 && $params->get('all_in_position2') == 1 && $read_all2)
 	{
 		echo $read_all2;
 	}
