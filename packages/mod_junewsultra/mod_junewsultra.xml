@@ -208,6 +208,7 @@
                     <option value="0">MOD_JUNEWS_CATEGORIES_SELECT</option>
                     <option value="1">MOD_JUNEWS_ARTICLE_SELECT</option>
                     <option value="2">MOD_JUNEWS_ARTICLES_SELECT</option>
+                    <option value="3">MOD_JUNEWS_RELATED_SELECT</option>
                 </field>
 
                 <field
@@ -235,7 +236,7 @@
 		                label="MOD_JUNEWS_FIELD_COUNT_LABEL"
 		                description="MOD_JUNEWS_FIELD_COUNT_DESC"
 		                filter="integer"
-		                showon="component:com_content[AND]display_article:0"
+		                showon="component:com_content[AND]display_article:0[OR]display_article:3"
                 />
 
 	             <field
@@ -245,7 +246,7 @@
 			             default="0"
 			             label="MOD_JUNEWS_EXCLUDEID"
 			             filter="integer"
-			             showon="component:com_content[AND]display_article:0"
+			             showon="component:com_content[AND]display_article:0[OR]display_article:3"
 	             >
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
@@ -258,7 +259,7 @@
 		                label="MOD_JUNEWS_SKIPPED_ARTICLES"
 		                description="MOD_JUNEWS_SKIPPED_ARTICLES_DESC"
 		                filter="integer"
-		                showon="component:com_content[AND]display_article:0"
+		                showon="component:com_content[AND]display_article:0[OR]display_article:3"
                 />
 
                 <field
@@ -267,7 +268,7 @@
 		                label="MOD_JUNEWS_FIELD_FEATURED_LABEL"
 		                description="MOD_JUNEWS_FIELD_FEATURED_DESC"
 		                filter="integer"
-		                showon="component:com_content[AND]display_article:0"
+		                showon="component:com_content[AND]display_article:0[OR]display_article:3"
                 >
                     <option value="">JSHOW</option>
                     <option value="0">JHIDE</option>
@@ -283,7 +284,7 @@
 		                label="JCATEGORY"
 		                layout="joomla.form.field.list-fancy-select"
 		                filter="intarray"
-		                showon="component:com_content[AND]display_article:0"
+		                showon="component:com_content[AND]display_article:0[OR]display_article:3"
                 >
                     <option value="">JOPTION_ALL_CATEGORIES</option>
                 </field>
@@ -1430,6 +1431,7 @@
                        hide_default="1"
                        hide_none="1"
                        label="MOD_JUNEWS_IMAGE_DEFAULT"
+                       description="MOD_JUNEWS_IMAGE_DEFAULT_DESC"
                        directory="/media/mod_junewsultra/"
                        showon="pik:1[AND]defaultimg:1"
                 />
