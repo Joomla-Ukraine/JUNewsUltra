@@ -58,7 +58,6 @@ class com_content extends Helper
 		$dateuser_filtering = $params->get('dateuser_filtering', 0);
 		$date_filtering     = $params->get('date_filtering', 0);
 		$relative_date      = $params->get('relative_date', 0);
-		$related_mode       = $params->get('related_mode', 0);
 		$date_type          = $params->get('date_type', 'created');
 		$date_field         = $params->get('date_field', 'a.created');
 
