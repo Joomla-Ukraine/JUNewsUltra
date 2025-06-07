@@ -23,8 +23,8 @@
 
     <media destination="mod_junewsultra"
            folder="media">
-        <filename writable="yes">notfoundimage.png</filename>
-    </media>
+		<filename writable="yes">notfoundimage.png</filename>
+	</media>
 
     <updateservers>
         <server type="extension"

@@ -60,7 +60,8 @@ class Pkg_JUNewsUltraInstallerScript
 			return false;
 		}
 
-		Folder::create(JPATH_SITE . '/img', 0777);
+		Folder::create(JPATH_SITE . '/img');
+		Folder::create(JPATH_SITE . '/images/mod_junewsultra');
 
 		if(!is_dir(JPATH_SITE . '/img/'))
 		{
@@ -83,6 +84,8 @@ class Pkg_JUNewsUltraInstallerScript
 	 */
 	public function postflight($type, $parent): bool
 	{
+		File::copy(JPATH_SITE . '/media/mod_junewsultra/notfoundimage.png', JPATH_SITE . '/images/mod_junewsultra/notfoundimage.png');
+		
 		$path  = JPATH_SITE . '/modules/mod_junewsultra/';
 		$files = [
 			$path . 'helper/com_k2.php',
