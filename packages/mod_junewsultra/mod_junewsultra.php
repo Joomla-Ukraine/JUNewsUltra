@@ -16,6 +16,8 @@ use Joomla\CMS\Router\Route;
 
 defined('_JEXEC') or die;
 
+error_reporting(0);
+
 $app       = Factory::getApplication();
 $menu      = $app->getMenu();
 $doc       = $app->getDocument();
@@ -100,112 +102,105 @@ if($params->get('empty_mod', 0) == 0 && (is_countable($list) && count($list) == 
 $helper->loadBS($params);
 $helper->loadCSS($params);
 
-if(file_exists($layoutpath = ModuleHelper::getLayoutPath('mod_junewsultra', $params->get('template'))))
+$layoutpath = ModuleHelper::getLayoutPath('mod_junewsultra', $params->get('template'));
+
+if($params->get('all_in') == 1)
 {
-	if($params->get('all_in') == 1)
+	if($params->get('custom_heading') == 1)
 	{
-		if($params->get('custom_heading') == 1)
-		{
-			$heading      = $params->get('text_all_in') ? trim($params->get('text_all_in')) : '';
-			$heading_link = $params->get('link_all_in') ? trim($params->get('link_all_in')) : '';
-		}
-		else
-		{
-			$text_all_in12 = $params->get('text_all_in12') ? trim($params->get('text_all_in12')) : '';
-			$heading       = ($text_all_in12 ? : Route::_($menu->getItem($params->get('link_menuitem'))->title));
-			$heading_link  = Route::_($menu->getItem($params->get('link_menuitem'))->link . '&amp;Itemid=' . $params->get('link_menuitem'));
-		}
-
-		$heading = str_replace([ '[', ']' ], [ '<', '>' ], $heading);
-
-		if($heading_link)
-		{
-			$heading_link = '<a ' . ($params->get('class_all_inhref') ? ' class="' . $params->get('class_all_inhref') . '" ' : '') . 'href="' . $heading_link . '">' . $heading . '</a>';
-		}
-		else
-		{
-			$heading_link = $heading;
-		}
-
-		$item_heading = $params->get('item_heading') ? trim($params->get('item_heading')) : '';
-		$class_all_in = $params->get('class_all_in') ? trim($params->get('class_all_in')) : '';
-		$read_all     = '<' . $item_heading . ($class_all_in ? ' class="' . $class_all_in . '"' : '') . '>' . $heading_link . '</' . $item_heading . '>';
+		$heading      = $params->get('text_all_in') ? trim($params->get('text_all_in')) : '';
+		$heading_link = $params->get('link_all_in') ? trim($params->get('link_all_in')) : '';
+	}
+	else
+	{
+		$text_all_in12 = $params->get('text_all_in12') ? trim($params->get('text_all_in12')) : '';
+		$heading       = ($text_all_in12 ? : Route::_($menu->getItem($params->get('link_menuitem'))->title));
+		$heading_link  = Route::_($menu->getItem($params->get('link_menuitem'))->link . '&amp;Itemid=' . $params->get('link_menuitem'));
 	}
 
-	if($params->get('all_in2') == 1)
+	$heading = str_replace([ '[', ']' ], [ '<', '>' ], $heading);
+
+	if($heading_link)
 	{
-		if($params->get('custom_heading2') == 1)
-		{
-			$heading2      = $params->get('text_all_in2') ? trim($params->get('text_all_in2')) : '';
-			$heading_link2 = $params->get('link_all_in2') ? trim($params->get('link_all_in2')) : '';
-		}
-		else
-		{
-			$text_all_in22 = $params->get('text_all_in22') ? trim($params->get('text_all_in22')) : '';
-
-			$heading2      = '';
-			$heading_link2 = '';
-			if($text_all_in22)
-			{
-				$heading2 = $text_all_in22;
-			}
-			elseif($params->get('link_menuitem2'))
-			{
-				$heading2      = Route::_($menu->getItem($params->get('link_menuitem2'))->title);
-				$heading_link2 = Route::_($menu->getItem($params->get('link_menuitem2'))->link . '&amp;Itemid=' . $params->get('link_menuitem2'));
-			}
-		}
-
-		$heading2      = str_replace([ '[', ']' ], [ '<', '>' ], $heading2);
-		$item_heading2 = $params->get('item_heading2') ? trim($params->get('item_heading2')) : '';
-		$titletag2     = explode('_', $item_heading2);
-		$_tag_open2    = '';
-		$_tag_close2   = '';
-
-		if(isset($titletag2[ 1 ]))
-		{
-			$_tag_open2  = '<' . $titletag2[ 1 ] . '>';
-			$_tag_close2 = '</' . $titletag2[ 1 ] . '>';
-		}
-
-		if($heading_link2)
-		{
-			$heading_link2 = '<a ' . ($params->get('class_all_inhref2') ? 'class="' . $params->get('class_all_inhref2') . '" ' : '') . 'href="' . $heading_link2 . '">' . $_tag_open2 . $heading2 . $_tag_close2 . '</a>';
-		}
-		else
-		{
-			$heading_link2 = $heading2;
-		}
-
-		$class_all_in2 = $params->get('class_all_in2') ? trim($params->get('class_all_in2')) : '';
-		$read_all2     = '<' . $titletag2[ 0 ] . ($class_all_in2 ? ' class="' . $class_all_in2 . '"' : '') . '>' . $heading_link2 . '</' . $titletag2[ 0 ] . '>';
+		$heading_link = '<a ' . ($params->get('class_all_inhref') ? ' class="' . $params->get('class_all_inhref') . '" ' : '') . 'href="' . $heading_link . '">' . $heading . '</a>';
+	}
+	else
+	{
+		$heading_link = $heading;
 	}
 
-	if($params->get('all_in') == 1 && $params->get('all_in_position') == 0 && $read_all)
-	{
-		echo $read_all;
-	}
-
-	if($params->get('all_in2') == 1 && $params->get('all_in_position2') == 0 && $read_all2)
-	{
-		echo $read_all2;
-	}
-
-	require $layoutpath;
-
-	if($params->get('all_in') == 1 && $params->get('all_in_position') == 1 && $read_all)
-	{
-		echo $read_all;
-	}
-
-	if($params->get('all_in2') == 1 && $params->get('all_in_position2') == 1 && $read_all2)
-	{
-		echo $read_all2;
-	}
+	$item_heading = $params->get('item_heading') ? trim($params->get('item_heading')) : '';
+	$class_all_in = $params->get('class_all_in') ? trim($params->get('class_all_in')) : '';
+	$read_all     = '<' . $item_heading . ($class_all_in ? ' class="' . $class_all_in . '"' : '') . '>' . $heading_link . '</' . $item_heading . '>';
 }
-else
-{
-	$tpl = explode(':', $params->get('template'));
 
-	echo "<strong>Template not found!</strong><br />Please, upload new template to <em>modules/mod_junewsultra/tmpl</em> or <em>templates/$tpl[0]/html/mod_junewsultra/</em> folder or select other template from back-end!";
+if($params->get('all_in2') == 1)
+{
+	if($params->get('custom_heading2') == 1)
+	{
+		$heading2      = $params->get('text_all_in2') ? trim($params->get('text_all_in2')) : '';
+		$heading_link2 = $params->get('link_all_in2') ? trim($params->get('link_all_in2')) : '';
+	}
+	else
+	{
+		$text_all_in22 = $params->get('text_all_in22') ? trim($params->get('text_all_in22')) : '';
+
+		$heading2      = '';
+		$heading_link2 = '';
+		if($text_all_in22)
+		{
+			$heading2 = $text_all_in22;
+		}
+		elseif($params->get('link_menuitem2'))
+		{
+			$heading2      = Route::_($menu->getItem($params->get('link_menuitem2'))->title);
+			$heading_link2 = Route::_($menu->getItem($params->get('link_menuitem2'))->link . '&amp;Itemid=' . $params->get('link_menuitem2'));
+		}
+	}
+
+	$heading2      = str_replace([ '[', ']' ], [ '<', '>' ], $heading2);
+	$item_heading2 = $params->get('item_heading2') ? trim($params->get('item_heading2')) : '';
+	$titletag2     = explode('_', $item_heading2);
+	$_tag_open2    = '';
+	$_tag_close2   = '';
+
+	if(isset($titletag2[ 1 ]))
+	{
+		$_tag_open2  = '<' . $titletag2[ 1 ] . '>';
+		$_tag_close2 = '</' . $titletag2[ 1 ] . '>';
+	}
+
+	if($heading_link2)
+	{
+		$heading_link2 = '<a ' . ($params->get('class_all_inhref2') ? 'class="' . $params->get('class_all_inhref2') . '" ' : '') . 'href="' . $heading_link2 . '">' . $_tag_open2 . $heading2 . $_tag_close2 . '</a>';
+	}
+	else
+	{
+		$heading_link2 = $heading2;
+	}
+
+	$class_all_in2 = $params->get('class_all_in2') ? trim($params->get('class_all_in2')) : '';
+	$read_all2     = '<' . $titletag2[ 0 ] . ($class_all_in2 ? ' class="' . $class_all_in2 . '"' : '') . '>' . $heading_link2 . '</' . $titletag2[ 0 ] . '>';
+}
+
+if($params->get('all_in') == 1 && $params->get('all_in_position') == 0 && $read_all)
+{
+	echo $read_all;
+}
+
+if($params->get('all_in2') == 1 && $params->get('all_in_position2') == 0 && $read_all2)
+{
+	echo $read_all2;
+}
+
+require $layoutpath;
+
+if($params->get('all_in') == 1 && $params->get('all_in_position') == 1 && $read_all)
+{
+	echo $read_all;
+}
+
+if($params->get('all_in2') == 1 && $params->get('all_in_position2') == 1 && $read_all2)
+{
+	echo $read_all2;
 }
