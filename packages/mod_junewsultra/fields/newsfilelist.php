@@ -21,6 +21,7 @@ defined('JPATH_PLATFORM') or die;
 
 FormHelper::loadFieldClass('list');
 
+#[AllowDynamicProperties]
 class JFormFieldNewsFileList extends ListField
 {
 	public $type = 'NewsFileList';

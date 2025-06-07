@@ -15,6 +15,7 @@ use Joomla\CMS\Language\Text;
 
 defined('JPATH_PLATFORM') or die;
 
+#[AllowDynamicProperties]
 class JFormFieldIntegration extends FormField
 {
 	protected $type = 'Integration';

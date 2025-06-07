@@ -21,6 +21,7 @@ use Joomla\CMS\HTML\HTMLHelper;
  * @subpackage  mod_junewsultra
  * @package     Joomla.Site
  */
+#[AllowDynamicProperties]
 class youtube extends Helper
 {
 	/**

@@ -14,6 +14,14 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 
+/**
+ * Helper for mod_junewsultra
+ *
+ * @since       6.0
+ * @subpackage  mod_junewsultra
+ * @package     Joomla.Site
+ */
+#[AllowDynamicProperties]
 class rss extends Helper
 {
 	/**

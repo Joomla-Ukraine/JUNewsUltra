@@ -19,6 +19,7 @@ defined('JPATH_PLATFORM') or die;
 
 FormHelper::loadFieldClass('list');
 
+#[AllowDynamicProperties]
 class JFormFieldMultiCategories extends JFormFieldList
 {
 	protected $type = 'MultiCategories';

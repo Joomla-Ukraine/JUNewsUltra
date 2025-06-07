@@ -38,6 +38,7 @@ require_once(JPATH_SITE . '/libraries/juimage/vendor/autoload.php');
  * @property \Joomla\CMS\Language\Language|null          $lang
  * @subpackage  mod_junewsultra
  */
+#[AllowDynamicProperties]
 class Helper
 {
 	/**

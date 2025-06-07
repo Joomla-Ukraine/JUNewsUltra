@@ -27,6 +27,7 @@ use Joomla\Component\Content\Site\Helper\RouteHelper;
  * @subpackage  mod_junewsultra
  * @package     Joomla.Site
  */
+#[AllowDynamicProperties]
 class com_content extends Helper
 {
 	/**

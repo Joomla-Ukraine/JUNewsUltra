@@ -16,6 +16,7 @@ use Joomla\CMS\Language\Text;
 
 defined('_JEXEC') or die;
 
+#[AllowDynamicProperties]
 class JFormFieldCommentsRadio extends FormField
 {
 	protected $type = 'CommentsRadio';
