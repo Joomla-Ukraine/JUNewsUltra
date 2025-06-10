@@ -3,15 +3,20 @@
          basedir=".">
 
     <property name="VERSION"
-              value="7.8" />
+              value="8.0" />
 
     <tstamp>
         <format property="DATE"
                 pattern="%d.%m.%Y" />
     </tstamp>
 
+    <tstamp>
+	    <format property="YEAR"
+	            pattern="%Y" />
+    </tstamp>
+
     <property name="juimage"
-              value="5.15" />
+              value="5.20" />
 
     <property name="build"
               value="build" />
@@ -31,7 +36,6 @@
     </target>
 
     <target name="temp">
-
         <copy todir="${temp}/language">
             <fileset dir="language">
                 <include name="**" />
@@ -43,11 +47,9 @@
                 <include name="**" />
             </fileset>
         </copy>
-
     </target>
 
     <target name="replace">
-
         <copy file="pkg_junewsultra.xml"
               todir="${build}">
             <filterchain>
@@ -94,11 +96,9 @@
         <delete file="${temp}/tmpl_mod_junewsultra_default/default.xml" />
         <copy file="${temp}/temp/tmpl_mod_junewsultra_default/default.xml"
               todir="${temp}/tmpl_mod_junewsultra_default" />
-
     </target>
 
     <target name="pack-plugins">
-
         <mkdir dir="${build}/packages" />
 
         <zip destfile="${build}/packages/mod_junewsultra.zip"
@@ -125,7 +125,6 @@
 
         <copy file="script.php"
               todir="${build}" />
-
     </target>
 
     <target name="dist"
@@ -136,16 +135,35 @@
             </fileset>
         </zip>
 
+        <exec command="sha256sum ${dist}/pkg_junewsultra_pro_v${VERSION}.zip | awk '{print $1}'"
+              outputProperty="archive.sha256"
+              checkreturn="true" />
+
+	    <delete file="update.xml" />
+
+        <copy file="build_update.xml"
+              tofile="update.xml">
+            <filterchain>
+                <replacetokens>
+	                 <token key="cheksum"
+	                        value="${archive.sha256}" />
+                    <token key="version"
+                           value="${VERSION}" />
+                    <token key="date"
+                           value="${DATE}" />
+	                <token key="year"
+	                       value="${YEAR}" />
+                </replacetokens>
+            </filterchain>
+        </copy>
+
+        <echo msg="Removing old files..." />
         <delete dir="${build}" />
         <delete dir="${temp}" />
-
     </target>
 
     <target name="clean">
-
         <delete dir="${build}" />
         <delete dir="${temp}" />
-
     </target>
-
 </project>

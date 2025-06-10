@@ -14,14 +14,13 @@
     <version>@version@</version>
     <license>GNU/GPL Version 2 or later and Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License</license>
     <description>PKG_MOD_JUNEWS_DESCRIPTION</description>
-
     <scriptfile>script.php</scriptfile>
-    <update>https://joomla-ua.org/update/mod/junewsultra.xml</update>
 
+    <update>https://raw.githubusercontent.com/Joomla-Ukraine/JUNewsUltra/refs/heads/main/update.xml</update>
     <updateservers>
         <server type="extension"
                 priority="1"
-                name="JUNewsUltra">https://joomla-ua.org/update/mod/junewsultra.xml</server>
+                name="JUNewsUltra">https://raw.githubusercontent.com/Joomla-Ukraine/JUNewsUltra/refs/heads/main/update.xml</server>
     </updateservers>
 
     <files folder="packages">
