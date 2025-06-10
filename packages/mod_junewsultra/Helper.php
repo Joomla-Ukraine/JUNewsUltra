@@ -10,7 +10,6 @@
  * @license          GNU/GPL - https://www.gnu.org/copyleft/gpl.html
  */
 
-use ___PHPSTORM_HELPERS\object;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\Helpers\Bootstrap;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -628,7 +627,7 @@ class Helper
 					break;
 			}
 		}
-		catch (\Exception)
+		catch (Exception)
 		{
 			return '<div class="uk-alert-warning" data-uk-alert>' . Text::_('MOD_JUNEWS_RSSXML_ERROR') . '</div>';
 		}

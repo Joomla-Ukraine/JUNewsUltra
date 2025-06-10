@@ -139,12 +139,9 @@ class youtube extends Helper
 					$item->source_image = $junuimgsource;
 				}
 
-				if(!$junuimgsource)
+				if(!$junuimgsource && $junews[ 'defaultimg' ] == 1 && $junews[ 'noimage' ])
 				{
-					if($junews[ 'defaultimg' ] == 1 && $junews[ 'noimage' ])
-					{
-						$junuimgsource = 'media/mod_junewsultra/' . $junews[ 'noimage' ];
-					}
+					$junuimgsource = 'media/mod_junewsultra/' . $junews[ 'noimage' ];
 				}
 
 				$item->image       = '';

@@ -221,7 +221,7 @@ class com_content extends Helper
 			{
 				$metakey = trim($this->db->loadResult());
 			}
-			catch (\RuntimeException)
+			catch (RuntimeException)
 			{
 				$this->app->enqueueMessage(Text::_('JERROR_AN_ERROR_HAS_OCCURRED'), 'error');
 
@@ -240,7 +240,7 @@ class com_content extends Helper
 				}
 			}
 
-			if(\count($likes))
+			if(count($likes))
 			{
 				$wheres = [];
 				foreach($likes as $keyword)
@@ -372,11 +372,6 @@ class com_content extends Helper
 
 		$this->q->order($this->order($ordering));
 		$this->db->setQuery($this->q, $junews[ 'count_skip' ], $junews[ 'count' ]);
-
-		/*		echo $display_article;
-				echo '<pre>';
-				echo $this->q;
-				echo '</pre>';*/
 
 		return $this->db->loadObjectList();
 	}
@@ -655,8 +650,8 @@ class com_content extends Helper
 
 					if(is_object($images))
 					{
-						$intro_image    = $this->image_source(isset($images->image_intro) ? $images->image_intro : '');
-						$fulltext_image = $this->image_source(isset($images->image_fulltext) ? $images->image_fulltext : '');
+						$intro_image    = $this->image_source($images->image_intro ?? '');
+						$fulltext_image = $this->image_source($images->image_fulltext ?? '');
 
 						if($junews[ 'image_source' ] === '1')
 						{

@@ -67,7 +67,7 @@ class JFormFieldMultiCategories extends JFormFieldList
 		return implode($html);
 	}
 
-	protected function getOptions()
+	protected function getOptions(): array
 	{
 		$sql     = $this->element[ 'sql' ] ? : '';
 		$dbtable = $this->element[ 'dbtable' ] ? : '';
