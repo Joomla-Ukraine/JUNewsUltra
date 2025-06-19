@@ -7,7 +7,7 @@
  *
  * @author           Denys Nosov, denys@joomla-ua.org
  * @copyright        2007-2025 (C) Joomla! Ukraine, https://joomla-ua.org. All rights reserved.
- * @license          GNU/GPL - https://www.gnu.org/copyleft/gpl.html
+ * @license          GNU/GPL - https://gnu.org/copyleft/gpl.html
  */
 
 defined('_JEXEC') or die;
@@ -37,13 +37,13 @@ class youtube extends Helper
 		switch($params->get('yttype'))
 		{
 			case '2':
-				$ytxml = 'https://www.youtube.com/feeds/videos.xml?user=' . $params->get('ytaccount');
+				$ytxml = 'https://youtube.com/feeds/videos.xml?user=' . $params->get('ytaccount');
 				break;
 			case '1':
-				$ytxml = 'https://www.youtube.com/feeds/videos.xml?playlist_id=' . $params->get('ytplaylist');
+				$ytxml = 'https://youtube.com/feeds/videos.xml?playlist_id=' . $params->get('ytplaylist');
 				break;
 			case '3':
-				$ytxml = 'https://www.youtube.com/feeds/videos.xml?channel_id=' . $params->get('ytchannel');
+				$ytxml = 'https://youtube.com/feeds/videos.xml?channel_id=' . $params->get('ytchannel');
 				break;
 		}
 

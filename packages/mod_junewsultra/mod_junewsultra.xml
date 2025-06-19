@@ -7,9 +7,9 @@
     <creationDate>@date@</creationDate>
     <author>Denys Nosov</author>
     <authorEmail>denys@joomla-ua.org</authorEmail>
-    <authorUrl>https://www.joomla-ua.org</authorUrl>
+    <authorUrl>https://joomla-ua.org</authorUrl>
     <copyright>This module is licensed under a Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License.</copyright>
-    <license>https://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+    <license>https://gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
     <version>@version@</version>
     <description>MOD_JUNEWS_XML_DESCRIPTION</description>
 	<namespace path="src">Joomla\Module\JUNewsUltra</namespace>
@@ -29,7 +29,10 @@
     <updateservers>
         <server type="extension"
                 priority="1"
-                name="JUNewsUltra">https://joomla-ua.org/update/mod/junewsultra.xml</server>
+                name="JUNewsUltra">https://raw.githubusercontent.com/Joomla-Ukraine/JUNewsUltra/refs/heads/master/update.xml</server>
+	    <server type="extension"
+	            priority="2"
+	            name="JUNewsUltra">https://joomla-ua.org/update/mod/junewsultra.xml</server>
     </updateservers>
 
     <config addfieldpath="/modules/mod_junewsultra/fields">

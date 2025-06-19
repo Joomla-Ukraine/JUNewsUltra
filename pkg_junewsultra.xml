@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <extension type="package"
-           version="3.8"
+           version="4.1"
            method="upgrade">
     <name>pkg_junewsultra</name>
     <packagename>junewsultra</packagename>
@@ -16,11 +16,14 @@
     <description>PKG_MOD_JUNEWS_DESCRIPTION</description>
     <scriptfile>script.php</scriptfile>
 
-    <update>https://raw.githubusercontent.com/Joomla-Ukraine/JUNewsUltra/refs/heads/main/update.xml</update>
+    <update>https://raw.githubusercontent.com/Joomla-Ukraine/JUNewsUltra/refs/heads/master/update.xml</update>
     <updateservers>
         <server type="extension"
                 priority="1"
-                name="JUNewsUltra">https://raw.githubusercontent.com/Joomla-Ukraine/JUNewsUltra/refs/heads/main/update.xml</server>
+                name="JUNewsUltra">https://raw.githubusercontent.com/Joomla-Ukraine/JUNewsUltra/refs/heads/master/update.xml</server>
+	    <server type="extension"
+	            priority="2"
+	            name="JUNewsUltra">https://joomla-ua.org/update/mod/junewsultra.xml</server>
     </updateservers>
 
     <files folder="packages">

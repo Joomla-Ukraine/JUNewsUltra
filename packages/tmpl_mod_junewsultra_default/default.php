@@ -7,7 +7,7 @@
  *
  * @author           Denys Nosov, denys@joomla-ua.org
  * @copyright        2007-2025 (C) Joomla! Ukraine, https://joomla-ua.org. All rights reserved.
- * @license          GNU/GPL - https://www.gnu.org/copyleft/gpl.html
+ * @license          GNU/GPL - https://gnu.org/copyleft/gpl.html
  */
 
 /********** PARAMS ************
