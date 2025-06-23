@@ -556,10 +556,10 @@ class com_content extends Helper
 
 			if($access || in_array($item->access, $authorised, true))
 			{
-				$item->slug    = $item->id . ($item->alias ? ':' . $item->alias : '');
+				$slug          = $item->id . ($item->alias ? ':' . $item->alias : '');
 				$language      = (Multilanguage::isEnabled() ? $item->language : '');
 				$catid         = (!empty($item->cmc_cat) && $junews[ 'multicat' ] == 1 ? $item->cmc_cat : $item->catid);
-				$item->link    = Route::_(RouteHelper::getArticleRoute($item->slug, $item->catid, $language));
+				$item->link    = Route::_(RouteHelper::getArticleRoute($slug, $item->catid, $language));
 				$item->catlink = Route::_(RouteHelper::getCategoryRoute($catid));
 			}
 
