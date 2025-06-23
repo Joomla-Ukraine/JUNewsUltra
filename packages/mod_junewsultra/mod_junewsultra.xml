@@ -470,6 +470,7 @@
 		                name="where"
 		                type="textarea"
 		                label="MOD_JUNEWS_WHERESQL_LABEL"
+		                description="MOD_JUNEWS_WHERESQL_DESC"
 		                rows="10"
 		                cols="20"
 		                class="span11"
@@ -1436,12 +1437,6 @@
                        label="MOD_JUNEWS_IMAGE_DEFAULT"
                        description="MOD_JUNEWS_IMAGE_DEFAULT_DESC"
                        directory="/media/mod_junewsultra/"
-                       showon="pik:1[AND]defaultimg:1"
-                />
-
-                <field name=""
-                       type="upload"
-                       label="MOD_JUNEWS_IMAGE_UPLOAD"
                        showon="pik:1[AND]defaultimg:1"
                 />
 

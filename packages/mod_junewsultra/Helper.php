@@ -374,7 +374,7 @@ class Helper
 	 */
 	public function title($params, $title): string
 	{
-		$title             = strip_tags($title);
+		$title             = trim(strip_tags($title));
 		$title             = htmlspecialchars($title);
 		$end_limit_title   = $params->get('end_limit_title', '…');
 		$title_limit_count = $params->get('title_limit_count');
@@ -384,7 +384,7 @@ class Helper
 			$title = HTMLHelper::_('content.prepare', $title);
 		}
 
-		if($params->get('title_limit', 0) == 1)
+		if($params->get('title_limit') == 1)
 		{
 			$title_length = StringHelper::strlen($title);
 			$title        = StringHelper::substr($title, 0, $title_limit_count);
@@ -408,7 +408,7 @@ class Helper
 			}
 		}
 
-		return $title ? trim($title) : '';
+		return $title ? : '';
 	}
 
 	/**
