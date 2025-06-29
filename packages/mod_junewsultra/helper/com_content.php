@@ -782,6 +782,10 @@ class com_content extends Helper
 					'end_limit_text' => $junews[ 'end_limit_introtext' ]
 				]);
 			}
+			else
+			{
+				unset($item->introtext);
+			}
 
 			if($junews[ 'show_full' ] == 1)
 			{
@@ -795,10 +799,18 @@ class com_content extends Helper
 					'end_limit_text' => $junews[ 'end_limit_fulltext' ]
 				]);
 			}
+			else
+			{
+				unset($item->fulltext);
+			}
 
 			if($junews[ 'show_author' ] == 1 && $item->created_by_alias)
 			{
 				$item->author = $item->created_by_alias;
+			}
+			else
+			{
+				unset($item->author);
 			}
 
 			if($junews[ 'show_date' ] == 1)
@@ -827,6 +839,10 @@ class com_content extends Helper
 			if($junews[ 'show_rating' ] == 1)
 			{
 				$item->rating = $this->rating($params, $item->rating);
+			}
+			else
+			{
+				unset($item->rating);
 			}
 		}
 
