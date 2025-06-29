@@ -2,14 +2,14 @@
 <updates>
     <update>
         <name>JUNewsUltra Pro</name>
-         <description><![CDATA[JUNewsUltra Pro 8.0 - best news module for Joomla<br /><strong style="color: green;">Update to JUNewsUltra Pro 8.0 now!</strong><br /><br /><span style="font-size: 85%;">2009-2025 &copy; Joomla! Ukraine. All rights reserved!</span>]]></description>
+         <description><![CDATA[JUNewsUltra Pro 8.3 - best news module for Joomla<br /><strong style="color: green;">Update to JUNewsUltra Pro 8.3 now!</strong><br /><br /><span style="font-size: 85%;">2009-2025 &copy; Joomla! Ukraine. All rights reserved!</span>]]></description>
         <element>pkg_junewsultra</element>
         <type>package</type>
-        <version>8.0</version>
+        <version>8.3</version>
         <infourl title="Support">https://github.com/Joomla-Ukraine/JUNewsUltra</infourl>
         <downloads>
             <downloadurl type="full"
-                         format="zip">https://github.com/Joomla-Ukraine/JUNewsUltra/releases/download/8.0/pkg_junewsultra_pro_v8.0.zip</downloadurl>
+                         format="zip">https://github.com/Joomla-Ukraine/JUNewsUltra/releases/download/8.3/pkg_junewsultra_pro_v8.3.zip</downloadurl>
         </downloads>
         <tags>
             <tag>stable</tag>
@@ -22,6 +22,6 @@
         <targetplatform name="joomla"
                         version="4\.*|5\.*" />
         <php_minimum>8.1</php_minimum>
-        <sha256>f323b6d2e3f5351034e578cf9aa76d5cc302371ec04733585fd3967abbe25e88</sha256>
+        <sha256>4241770917e113008d9d0833f987bf3cea34cbde77c829bef6913736fcda8719</sha256>
     </update>
 </updates>
