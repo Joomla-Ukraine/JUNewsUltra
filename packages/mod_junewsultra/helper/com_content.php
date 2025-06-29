@@ -600,7 +600,7 @@ class com_content extends Helper
 
 			$item->title_alt = $this->title($params, $item->title);
 
-			if($junews[ 'show_cat' ] == 1 && isset($item->category_title))
+			if(($junews[ 'show_cat' ] == 1 && isset($item->category_title)) || $junews[ 'show_tags' ] == 1)
 			{
 				$cattitle       = strip_tags($item->category_title);
 				$item->cattitle = $cattitle;
