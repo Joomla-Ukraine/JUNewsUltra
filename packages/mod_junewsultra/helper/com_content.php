@@ -143,7 +143,7 @@ class com_content extends Helper
 			$this->q->select([ 'a.featured' ]);
 		}
 
-		if($junews[ 'show_author' ] == 1 || $dateuser_filtering == 1 || $user_id || $this->user->get('id') > 0)
+		if($junews[ 'show_author' ] == 1 || $dateuser_filtering == 1 || $user_id || $this->user->id > 0)
 		{
 			$this->q->select([ 'a.created_by' ]);
 		}
@@ -341,10 +341,10 @@ class com_content extends Helper
 					}
 					break;
 				case 'by_me':
-					$this->q->where('(' . $this->db->quoteName('a.created_by') . ' = ' . $this->db->Quote((int) $this->user->get('id')) . ' OR ' . $this->db->quoteName('a.modified_by') . ' = ' . $this->db->Quote((int) $this->user->get('id')) . ')');
+					$this->q->where('(' . $this->db->quoteName('a.created_by') . ' = ' . $this->db->Quote((int) $this->user->id) . ' OR ' . $this->db->quoteName('a.modified_by') . ' = ' . $this->db->Quote((int) $this->user->id) . ')');
 					break;
 				case 'not_me':
-					$this->q->where('(' . $this->db->quoteName('a.created_by') . ' <> ' . $this->db->Quote((int) $this->user->get('id')) . ' AND ' . $this->db->quoteName('a.modified_by') . ' <> ' . $this->db->Quote((int) $this->user->get('id')) . ')');
+					$this->q->where('(' . $this->db->quoteName('a.created_by') . ' <> ' . $this->db->Quote((int) $this->user->id) . ' AND ' . $this->db->quoteName('a.modified_by') . ' <> ' . $this->db->Quote((int) $this->user->id) . ')');
 					break;
 			}
 		}
@@ -463,7 +463,7 @@ class com_content extends Helper
 		if($useaccess == 1)
 		{
 			$access     = !ComponentHelper::getParams('com_content')->get('show_noauth');
-			$authorised = Access::getAuthorisedViewLevels($this->user->get('id'));
+			$authorised = Access::getAuthorisedViewLevels($this->user->id);
 		}
 
 		$items = $this->query($params, $junews);
