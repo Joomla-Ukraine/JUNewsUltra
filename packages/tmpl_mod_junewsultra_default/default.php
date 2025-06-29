@@ -69,6 +69,12 @@ defined('_JEXEC') or die();
 			<?php endif; ?>
 
 			<div class="jn-card">
+				<?php foreach($item->tags as $tag) : ?>
+					<a href="<?= $tag[ 'link' ]; ?>"><?= $tag[ 'title' ]; ?></a>
+				<?php endforeach; ?>
+			</div>
+
+			<div class="jn-card">
 				<?php if($params->get('show_title')): ?>
 					<a class="jn-title" href="<?= $item->link ?>">
 						<?= $item->title ?>

@@ -48,6 +48,7 @@ $list = $object->getList($params, [
 	'show_intro'          => $params->get('show_intro'),
 	'show_full'           => $params->get('show_full', 0),
 	'show_cat'            => $params->get('showcat'),
+	'show_tags'           => $params->get('showtags'),
 	'show_rating'         => $params->get('showRating'),
 	'data_format'         => $params->get('data_format'),
 	'date_day'            => $params->get('df_d'),
