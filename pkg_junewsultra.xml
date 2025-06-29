@@ -16,7 +16,6 @@
     <description>PKG_MOD_JUNEWS_DESCRIPTION</description>
     <scriptfile>script.php</scriptfile>
 
-    <update>https://raw.githubusercontent.com/Joomla-Ukraine/JUNewsUltra/refs/heads/master/update.xml</update>
     <updateservers>
         <server type="extension"
                 priority="1"

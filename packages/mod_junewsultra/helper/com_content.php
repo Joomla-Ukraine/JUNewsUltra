@@ -176,7 +176,7 @@ class com_content extends Helper
 		// From
 		$this->q->from('#__content AS a');
 
-		if($junews[ 'show_cat' ] == 1)
+		if($junews[ 'show_cat' ] == 1 || $junews[ 'show_tags' ] == 1)
 		{
 			$this->q->select([ 'cc.title AS category_title' ]);
 			$this->q->join('LEFT', '#__categories AS cc ON cc.id = a.catid');
@@ -600,18 +600,7 @@ class com_content extends Helper
 
 			$item->title_alt = $this->title($params, $item->title);
 
-			if($junews[ 'show_cat' ] == 1)
-			{
-				$cattitle       = strip_tags($item->category_title);
-				$item->cattitle = $cattitle;
-
-				if($params->get('showcatlink') == 1)
-				{
-					$item->cattitle = '<a href="' . $item->catlink . '">' . $cattitle . '</a>';
-				}
-			}
-
-			if($junews[ 'show_tags' ] == 1)
+			if($junews[ 'show_cat' ] == 1 && isset($item->category_title))
 			{
 				$cattitle       = strip_tags($item->category_title);
 				$item->cattitle = $cattitle;
@@ -655,7 +644,7 @@ class com_content extends Helper
 						$root         = JPATH_BASE . '/';
 						$folder       = 'images/' . $imgsource;
 						$img_folder   = $root . $folder;
-						$galleries    = glob($img_folder . '/{*.[jJ][pP][gG],*.[jJ][pP][eE][gG],*.[gG][iI][fF],*.[pP][nN][gG],*.[bB][mM][pP],*.[tT][iI][fF],*.[tT][iI][fF][fF]}', GLOB_BRACE);
+						$galleries    = glob($img_folder . '/{*.[jJ][pP][gG],*.[jJ][pP][eE][gG],*.[gG][iI][fF],*.[pP][nN][gG],*.[wE][eE][bB][pP],*.[bB][mM][pP]}', GLOB_BRACE);
 
 						$junuimgsource = '';
 						if(count($galleries) > 0 && is_dir($img_folder))
@@ -765,12 +754,12 @@ class com_content extends Helper
 				}
 			}
 
-			if($junews[ 'sourcetext' ] == 1)
+			if($junews[ 'sourcetext' ] == 1 && isset($introtext) && isset($fulltext))
 			{
 				$item->sourcetext = $introtext . $fulltext;
 			}
 
-			if($junews[ 'show_intro' ] == 1)
+			if($junews[ 'show_intro' ] == 1 && isset($item->introtext))
 			{
 				$item->introtext = $this->desc($params, [
 					'description'    => $introtext,
@@ -782,12 +771,8 @@ class com_content extends Helper
 					'end_limit_text' => $junews[ 'end_limit_introtext' ]
 				]);
 			}
-			else
-			{
-				unset($item->introtext);
-			}
 
-			if($junews[ 'show_full' ] == 1)
+			if($junews[ 'show_full' ] == 1 && isset($item->fulltext))
 			{
 				$item->fulltext = $this->desc($params, [
 					'description'    => $fulltext,
@@ -799,18 +784,10 @@ class com_content extends Helper
 					'end_limit_text' => $junews[ 'end_limit_fulltext' ]
 				]);
 			}
-			else
-			{
-				unset($item->fulltext);
-			}
 
-			if($junews[ 'show_author' ] == 1 && $item->created_by_alias)
+			if($junews[ 'show_author' ] == 1 && isset($item->created_by_alias))
 			{
 				$item->author = $item->created_by_alias;
-			}
-			else
-			{
-				unset($item->author);
 			}
 
 			if($junews[ 'show_date' ] == 1)
@@ -836,13 +813,9 @@ class com_content extends Helper
 				$item->df_y    = HTMLHelper::date($_date_type, $junews[ 'date_year' ]);
 			}
 
-			if($junews[ 'show_rating' ] == 1)
+			if($junews[ 'show_rating' ] == 1 && isset($item->rating))
 			{
 				$item->rating = $this->rating($params, $item->rating);
-			}
-			else
-			{
-				unset($item->rating);
 			}
 		}
 

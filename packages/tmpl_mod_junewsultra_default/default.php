@@ -69,12 +69,6 @@ defined('_JEXEC') or die();
 			<?php endif; ?>
 
 			<div class="jn-card">
-				<?php foreach($item->tags as $tag) : ?>
-					<a href="<?= $tag[ 'link' ]; ?>"><?= $tag[ 'title' ]; ?></a>
-				<?php endforeach; ?>
-			</div>
-
-			<div class="jn-card">
 				<?php if($params->get('show_title')): ?>
 					<a class="jn-title" href="<?= $item->link ?>">
 						<?= $item->title ?>
@@ -117,6 +111,16 @@ defined('_JEXEC') or die();
 							<?= $item->fulltext ?>
 						<?php endif; ?>
 					</div>
+				<?php endif; ?>
+
+				<?php if($params->get('showtags') == 1 && isset($item->tags)): ?>
+					<ul class="jn-card">
+						<?php foreach($item->tags as $tag) : ?>
+							<li>
+								<a href="<?= $tag[ 'link' ]; ?>"><?= $tag[ 'title' ]; ?></a>
+							</li>
+						<?php endforeach; ?>
+					</ul>
 				<?php endif; ?>
 
 				<?php if($params->get('read_more') || $params->get('use_comments')): ?>
