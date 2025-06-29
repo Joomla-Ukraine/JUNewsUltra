@@ -16,8 +16,6 @@ use Joomla\CMS\Router\Route;
 
 defined('_JEXEC') or die;
 
-error_reporting(0);
-
 $app       = Factory::getApplication();
 $menu      = $app->getMenu();
 $doc       = $app->getDocument();
