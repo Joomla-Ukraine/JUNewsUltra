@@ -10,6 +10,14 @@
     clear: both;
 }
 
+.junewsultra .jn-button {
+    display: block;
+    background: #0a2051;
+    color: #fff;
+    text-align: center;
+    padding: 2px 16px;
+}
+
 .junewsultra .jn-intro {
     padding-top: 8px;
 }

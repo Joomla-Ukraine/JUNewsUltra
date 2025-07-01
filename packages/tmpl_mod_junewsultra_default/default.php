@@ -54,6 +54,7 @@
  */
 
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 
 defined('_JEXEC') or die();
 
@@ -135,6 +136,25 @@ defined('_JEXEC') or die();
 				<?php endif; ?>
 			</div>
 		</div>
-
 	<?php endforeach; ?>
+
+	<?php if($params->get('read_all') == 1): ?>
+
+		<?php if($params->get('read_all_select') == 1): ?>
+			<a href="<?= $params->get('read_all_customlink'); ?>" class="jn-button">
+				<?= $params->get('read_all_customtext'); ?>
+			</a>
+		<?php endif; ?>
+
+		<?php if($params->get('read_all_select') == 0): ?>
+			<?php
+			$read_all_text = $params->get('text_all_in2') ? : Route::_($menu->getItem($params->get('read_all_menulink'))->title);
+			$read_all_link = Route::_('index.php?Itemid=' . $params->get('read_all_menulink'));
+			?>
+			<a href="<?= $read_all_link; ?>" class="jn-button">
+				<?= $read_all_text; ?>
+			</a>
+		<?php endif; ?>
+
+	<?php endif; ?>
 </div>

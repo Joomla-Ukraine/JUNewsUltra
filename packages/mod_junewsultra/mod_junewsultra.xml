@@ -35,7 +35,7 @@
 	            name="JUNewsUltra">https://joomla-ua.org/update/mod/junewsultra.xml</server>
     </updateservers>
 
-    <config addfieldpath="/modules/mod_junewsultra/fields">
+	<config addfieldpath="/modules/mod_junewsultra/fields">
 
         <fields name="params">
 
@@ -935,7 +935,7 @@
                     <option value="1">JSHOW</option>
                 </field>
 
-                <field name="all_in2"
+                <field name="read_all"
                        type="radio"
                        layout="joomla.form.field.radio.switcher"
                        default="0"
@@ -946,182 +946,41 @@
                     <option value="1">JSHOW</option>
                 </field>
 
-                <field name="all_in_position2"
-                       type="list"
-                       default="0"
-                       label="MOD_JUNEWS_LINK_HEADER_POSITION"
-                       showon="all_in2:1"
-                >
-                    <option value="0">MOD_JUNEWS_TOP</option>
-                    <option value="1">MOD_JUNEWS_BOTTOM</option>
-                </field>
-
-                <field name="item_heading2"
-                       type="list"
-                       default="span"
-                       label="MOD_JUNEWS_TITLE_HEADING"
-                       showon="all_in2:1"
-                >
-                    <option value="span">SPAN</option>
-                    <option value="div">DIV</option>
-                    <option value="strong">STRONG</option>
-                    <option value="h1">H1</option>
-                    <option value="h2">H2</option>
-                    <option value="h3">H3</option>
-                    <option value="h4">H4</option>
-                    <option value="h5">H5</option>
-                    <option value="h6">H6</option>
-                    <option value="h1_span">H1 span</option>
-                    <option value="h2_span">H2 span</option>
-                    <option value="h3_span">H3 span</option>
-                    <option value="h4_span">H4 span</option>
-                    <option value="h5_span">H5 span</option>
-                    <option value="h6_span">H6 span</option>
-                </field>
-
-                <field name="class_all_in2"
-                       type="text"
-                       label="MOD_JUNEWS_ALL_IN_CATEGORY_CSS"
-                       description="MOD_JUNEWS_ALL_IN_CATEGORY_CSS_DESC"
-                       showon="all_in2:1"
-                />
-
-                <field name="class_all_inhref2"
-                       type="text"
-                       label="MOD_JUNEWS_ALL_INHREF_CATEGORY_CSS"
-                       showon="all_in2:1"
-                />
-
-                <field name="custom_heading2"
+                <field name="read_all_select"
                        type="radio"
                        layout="joomla.form.field.radio.switcher"
                        default="0"
                        label="MOD_JUNEWS_CUSTOM_HEADING"
-                       showon="all_in2:1"
+                       showon="read_all:1"
                 >
                     <option value="0">MOD_JUNEWS_MENU</option>
                     <option value="1">MOD_JUNEWS_CUSTOM</option>
                 </field>
 
-                <field name="text_all_in2"
+                <field name="read_all_customtext"
                        type="text"
                        label="MOD_JUNEWS_ALL_IN_CATEGORY_DESC2"
                        filter="raw"
-                       showon="all_in2:1[AND]custom_heading2:1"
+                       showon="read_all:1[AND]read_all_select:1"
                 />
 
-                <field name="link_all_in2"
+                <field name="read_all_customlink"
                        type="text"
                        label="MOD_JUNEWS_ALL_IN_CATEGORY_LINK"
                        description="MOD_JUNEWS_ALL_IN_CATEGORY_LINK_DESC"
-                       showon="all_in2:1[AND]custom_heading2:1"
+                       showon="read_all:1[AND]read_all_select:1"
                 />
 
-                <field name="text_all_in22"
+                <field name="read_all_menutext"
                        type="text"
                        label="MOD_JUNEWS_ALL_IN_CATEGORY_DESC2"
-                       showon="all_in2:1[AND]custom_heading2:0"
+                       showon="read_all:1[AND]read_all_select:0"
                 />
 
-                <field name="link_menuitem2"
+                <field name="read_all_menulink"
                        type="menuitem"
                        label="MOD_JUNEWS_SELECT_A_MENU_ITEM"
-                       showon="all_in2:1[AND]custom_heading2:0"
-                >
-                    <option value="">JDEFAULT</option>
-                </field>
-
-                <field name="all_in"
-                       type="radio"
-                       layout="joomla.form.field.radio.switcher"
-                       default="0"
-                       label="MOD_JUNEWS_ALL_IN_CATEGORY2"
-                       description="MOD_JUNEWS_ALL_IN_CATEGORY_DESC">
-                    <option value="0">JHIDE</option>
-                    <option value="1">JSHOW</option>
-                </field>
-
-                <field name="all_in_position"
-                       type="list"
-                       default="0"
-                       label="MOD_JUNEWS_LINK_HEADER_POSITION"
-                       showon="all_in:1"
-                >
-                    <option value="0">MOD_JUNEWS_TOP</option>
-                    <option value="1">MOD_JUNEWS_BOTTOM</option>
-                </field>
-
-                <field name="item_heading"
-                       type="list"
-                       default="span"
-                       label="MOD_JUNEWS_TITLE_HEADING"
-                       showon="all_in:1"
-                >
-                    <option value="span">SPAN</option>
-                    <option value="div">DIV</option>
-                    <option value="strong">STRONG</option>
-                    <option value="h1">H1</option>
-                    <option value="h2">H2</option>
-                    <option value="h3">H3</option>
-                    <option value="h4">H4</option>
-                    <option value="h5">H5</option>
-                    <option value="h6">H6</option>
-                    <option value="h1_span">H1 span</option>
-                    <option value="h2_span">H2 span</option>
-                    <option value="h3_span">H3 span</option>
-                    <option value="h4_span">H4 span</option>
-                    <option value="h5_span">H5 span</option>
-                    <option value="h6_span">H6 span</option>
-                </field>
-
-                <field name="class_all_in"
-                       type="text"
-                       label="MOD_JUNEWS_ALL_IN_CATEGORY_CSS"
-                       description="MOD_JUNEWS_ALL_IN_CATEGORY_CSS_DESC"
-                       showon="all_in:1"
-                />
-
-                <field name="class_all_inhref"
-                       type="text"
-                       label="MOD_JUNEWS_ALL_INHREF_CATEGORY_CSS"
-                       showon="all_in:1"
-                />
-
-                <field name="custom_heading"
-                       type="radio"
-                       layout="joomla.form.field.radio.switcher"
-                       default="0"
-                       label="MOD_JUNEWS_CUSTOM_HEADING"
-                       showon="all_in:1"
-                >
-                    <option value="0">MOD_JUNEWS_MENU</option>
-                    <option value="1">MOD_JUNEWS_CUSTOM</option>
-                </field>
-
-                <field name="text_all_in"
-                       type="text"
-                       label="MOD_JUNEWS_ALL_IN_CATEGORY_DESC2"
-                       showon="all_in:1[AND]custom_heading:1"
-                />
-
-                <field name="link_all_in"
-                       type="text"
-                       label="MOD_JUNEWS_ALL_IN_CATEGORY_LINK"
-                       description="MOD_JUNEWS_ALL_IN_CATEGORY_LINK_DESC"
-                       showon="all_in:1[AND]custom_heading:1"
-                />
-
-                <field name="text_all_in12"
-                       type="text"
-                       label="MOD_JUNEWS_ALL_IN_CATEGORY_DESC2"
-                       filter="raw"
-                       showon="all_in:1[AND]custom_heading:0"
-                />
-
-                <field name="link_menuitem"
-                       type="menuitem"
-                       label="MOD_JUNEWS_SELECT_A_MENU_ITEM"
-                       showon="all_in:1[AND]custom_heading:0"
+                       showon="read_all:1[AND]read_all_select:0"
                 >
                     <option value="">JDEFAULT</option>
                 </field>
