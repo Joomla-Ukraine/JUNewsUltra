@@ -444,6 +444,33 @@ class com_content extends Helper
 		return $ordering;
 	}
 
+	protected function tags($id)
+	{
+		$qtag = $this->db->getQuery(true);
+		$qtag->select([
+			'm.tag_id',
+			't.title AS tag_title',
+			't.alias AS tag_alias'
+		]);
+		$qtag->from('#__contentitem_tag_map AS m');
+		$qtag->join('LEFT', '#__tags AS t ON t.id = m.tag_id');
+		$qtag->where($this->db->quoteName('m.content_item_id') . ' = ' . $this->db->Quote($id));
+		$this->db->setQuery($qtag);
+		$rows = $this->db->loadObjectList();
+
+		$jtags = [];
+		foreach($rows as $row)
+		{
+			$jtags[] = [
+				'id'    => $row->tag_id,
+				'title' => $row->tag_title,
+				'link'  => Route::_('index.php?option=com_tags&view=tag&id=' . $row->tag_id . ':' . $row->tag_alias),
+			];
+		}
+
+		return $jtags;
+	}
+
 	/**
 	 * @param $params
 	 * @param $junews
@@ -467,36 +494,6 @@ class com_content extends Helper
 		}
 
 		$items = $this->query($params, $junews);
-
-		if($junews[ 'show_tags' ] == 1 && is_countable($items) && count($items))
-		{
-			$jtags = [];
-			foreach($items as $item)
-			{
-				$qtag = $this->db->getQuery(true);
-				$qtag->select([
-					'm.tag_id',
-					't.title AS tag_title',
-					't.alias AS tag_alias'
-				]);
-				$qtag->from('#__contentitem_tag_map AS m');
-				$qtag->join('LEFT', '#__tags AS t ON t.id = m.tag_id');
-				$qtag->where($this->db->quoteName('m.content_item_id') . ' = ' . $this->db->Quote($item->id));
-				$this->db->setQuery($qtag);
-				$rows = $this->db->loadObjectList();
-
-				foreach($rows as $row)
-				{
-					$jtags[] = [
-						'id'    => $row->tag_id,
-						'title' => $row->tag_title,
-						'link'  => Route::_('index.php?option=com_tags&view=tag&id=' . $row->tag_id . ':' . $row->tag_alias),
-					];
-				}
-			}
-
-			$item->tags = $jtags;
-		}
 
 		if($params->get('use_comments') == 1 && is_countable($items) && count($items))
 		{
@@ -609,6 +606,11 @@ class com_content extends Helper
 				{
 					$item->cattitle = '<a href="' . $item->catlink . '">' . $cattitle . '</a>';
 				}
+			}
+
+			if($junews[ 'show_tags' ] == 1)
+			{
+				$item->tags = $this->tags($item->id);
 			}
 
 			if($junews[ 'show_image' ] == 1)
