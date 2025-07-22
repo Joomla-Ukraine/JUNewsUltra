@@ -167,6 +167,11 @@ class Helper
 	{
 		$attr = [];
 
+		if($params->get('aria_hidden', 1) == 1)
+		{
+			$attr[] = 'aria-hidden="true"';
+		}
+
 		if($params->get('image_loading', 1) == 1)
 		{
 			$attr[] = 'loading="lazy"';
