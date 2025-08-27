@@ -13,12 +13,13 @@
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\Helpers\Bootstrap;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseInterface;
 use Joomla\String\StringHelper;
 
-defined('_JEXEC') or die;
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 require_once(JPATH_SITE . '/libraries/juimage/vendor/autoload.php');
 
@@ -613,8 +614,7 @@ class Helper
 		libxml_use_internal_errors(true);
 		try
 		{
-			$items = '';
-			$xml   = new SimpleXmlElement($string);
+			$xml = new SimpleXmlElement($string);
 
 			switch($ordering_xml)
 			{
@@ -634,7 +634,7 @@ class Helper
 		}
 		catch (Exception)
 		{
-			return '<div class="uk-alert-warning" data-uk-alert>' . Text::_('MOD_JUNEWS_RSSXML_ERROR') . '</div>';
+			return [];
 		}
 
 		return $items;

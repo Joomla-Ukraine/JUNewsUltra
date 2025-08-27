@@ -10,8 +10,6 @@
  * @license          GNU/GPL - https://gnu.org/copyleft/gpl.html
  */
 
-defined('_JEXEC') or die;
-
 use Joomla\CMS\Access\Access;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -19,6 +17,10 @@ use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\Component\Content\Site\Helper\RouteHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Helper for mod_junewsultra
@@ -444,7 +446,14 @@ class com_content extends Helper
 		return $ordering;
 	}
 
-	protected function tags($id)
+	/**
+	 * @param $id
+	 *
+	 * @return array
+	 *
+	 * @since 6.0
+	 */
+	protected function tags($id): array
 	{
 		$qtag = $this->db->getQuery(true);
 		$qtag->select([
@@ -756,7 +765,7 @@ class com_content extends Helper
 				}
 			}
 
-			if($junews[ 'sourcetext' ] == 1 && isset($introtext) && isset($fulltext))
+			if(isset($introtext, $fulltext) && $junews[ 'sourcetext' ] == 1)
 			{
 				$item->sourcetext = $introtext . $fulltext;
 			}

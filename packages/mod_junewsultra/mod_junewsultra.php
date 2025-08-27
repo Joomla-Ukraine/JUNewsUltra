@@ -13,7 +13,9 @@
 use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\ModuleHelper;
 
-defined('_JEXEC') or die;
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $app       = Factory::getApplication();
 $menu      = $app->getMenu();

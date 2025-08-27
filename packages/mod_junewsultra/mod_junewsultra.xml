@@ -115,8 +115,7 @@
 
                 <field
 		                name="yttype"
-		                type="radio"
-		                layout="joomla.form.field.radio.switcher"
+		                type="list"
 		                default="2"
 		                label="MOD_JUNEWS_FIELD_YTTYPE_LABEL"
 		                filter="integer"
@@ -162,8 +161,7 @@
 
                 <field
 		                name="ytlink"
-		                type="radio"
-		                layout="joomla.form.field.radio.switcher"
+		                type="list"
 		                default="0"
 		                label="Link type"
 		                filter="integer"
@@ -947,8 +945,7 @@
                 </field>
 
                 <field name="read_all_select"
-                       type="radio"
-                       layout="joomla.form.field.radio.switcher"
+                       type="list"
                        default="0"
                        label="MOD_JUNEWS_CUSTOM_HEADING"
                        showon="read_all:1"
@@ -1160,8 +1157,7 @@
                 </field>
 
 	            <field name="usesrcset"
-	                   type="radio"
-	                   layout="joomla.form.field.radio.switcher"
+	                   type="list"
 	                   default="0"
 	                   label="MOD_JUNEWS_USE_SRCSET"
 	                   description="MOD_JUNEWS_USE_SRCSET_DESC"

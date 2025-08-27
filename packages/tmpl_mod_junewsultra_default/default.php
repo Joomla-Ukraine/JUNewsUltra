@@ -118,7 +118,7 @@ defined('_JEXEC') or die();
 					<ul class="jn-card">
 						<?php foreach($item->tags as $tag) : ?>
 							<li>
-								<a href="<?= $tag[ 'link' ]; ?>"><?= $tag[ 'title' ]; ?></a>
+								<a href="<?= $tag[ 'link' ] ?>"><?= $tag[ 'title' ] ?></a>
 							</li>
 						<?php endforeach; ?>
 					</ul>
@@ -141,8 +141,8 @@ defined('_JEXEC') or die();
 	<?php if($params->get('read_all') == 1): ?>
 
 		<?php if($params->get('read_all_select') == 1): ?>
-			<a href="<?= $params->get('read_all_customlink'); ?>" class="jn-button">
-				<?= $params->get('read_all_customtext'); ?>
+			<a href="<?= $params->get('read_all_customlink') ?>" class="jn-button">
+				<?= $params->get('read_all_customtext') ?>
 			</a>
 		<?php endif; ?>
 
@@ -151,8 +151,8 @@ defined('_JEXEC') or die();
 			$read_all_text = $params->get('text_all_in2') ? : Route::_($menu->getItem($params->get('read_all_menulink'))->title);
 			$read_all_link = Route::_('index.php?Itemid=' . $params->get('read_all_menulink'));
 			?>
-			<a href="<?= $read_all_link; ?>" class="jn-button">
-				<?= $read_all_text; ?>
+			<a href="<?= $read_all_link ?>" class="jn-button">
+				<?= $read_all_text ?>
 			</a>
 		<?php endif; ?>
 
